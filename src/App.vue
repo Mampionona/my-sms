@@ -7,6 +7,7 @@
 </template>
 
 <script>
+// import '@/assets/css/argon.css';
 import Connected from '@/components/layouts/Connected';
 import Default from '@/components/layouts/Default';
 import { mapGetters } from 'vuex';
@@ -22,3 +23,6 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  
+</style>
