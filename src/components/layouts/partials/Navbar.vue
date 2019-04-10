@@ -17,6 +17,11 @@
     </div>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
+        <router-link :to="{name: 'dashboard.index'}" class="nav-link">
+          <span class="nav-link-inner--text">Dashboard</span>
+        </router-link>
+      </li>
+      <li class="nav-item">
         <router-link :to="{name: 'login'}" class="nav-link">
           <span class="nav-link-inner--text">Login</span>
         </router-link>
