@@ -25,6 +25,9 @@
 <script>
 import vueCustomScrollbar from 'vue-custom-scrollbar';
 import Navbar from './Navbar';
+
+const { classList } = document.body;
+
 export default {
   components: { vueCustomScrollbar, Navbar },
   data () {
@@ -35,17 +38,23 @@ export default {
       }
     }
   },
+  mounted () {
+    setTimeout(() => classList.add('g-sidenav-show', 'g-sidenav-pinned'), 1000);
+  },
   methods: {
     onMouseover () {
-      document.body.classList.remove('g-sidenav-hidden');
-      document.body.classList.add('g-sidenav-show');
+      if (!classList.contains('g-sidenav-pinned')) {
+        classList.add('g-sidenav-show');
+      }
     },
     onMouseleave () {
-      document.body.classList.remove('g-sidenav-show');
-      document.body.classList.add('g-sidenav-hidden');
+      if (!classList.contains('g-sidenav-pinned')) {
+        classList.remove('g-sidenav-show');
+        classList.add('g-sidenav-hidden');
+      }
     },
     toggleSidenav () {
-      document.body.classList.toggle('g-sidenav-pinned');
+      classList.toggle('g-sidenav-pinned');
       this.isActive = !this.isActive;
     }
   }
@@ -53,9 +62,9 @@ export default {
 </script>
 <style >
 .scroll-area {
-  position: relative;
-  margin: auto;
-  width: 100%;
   height: 100%;
+  margin: auto;
+  position: relative;
+  width: 100%;
 }
 </style>
