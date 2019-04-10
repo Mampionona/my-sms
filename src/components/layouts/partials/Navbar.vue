@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-6 collapse-brand">
           <a href="../../pages/dashboards/dashboard.html">
-            <img :src="logo" alt="logo">
+            <img src="@/assets/logo.png" alt="logo">
           </a>
         </div>
         <div class="col-6 collapse-close">
@@ -65,12 +65,12 @@
   </div>
 </template>
 <script>
-import Logo from '@/assets/logo.png';
+// import Logo from '@/assets/logo.png';
 export default {
-  data () {
-    return {
-      logo: Logo
-    };
-  }
+  // data () {
+  //   return {
+  //     logo: Logo
+  //   };
+  // }
 };
 </script>
