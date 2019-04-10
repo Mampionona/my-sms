@@ -7,7 +7,7 @@
         </router-link>
         <div class="ml-auto">
           <!-- Sidenav toggler -->
-          <div class="sidenav-toggler d-none d-xl-block active" data-action="sidenav-unpin" data-target="#sidenav-main" @click="toggleSidenav">
+          <div :class="{ 'sidenav-toggler d-none d-xl-block': true, 'active': isActive }" data-action="sidenav-unpin" data-target="#sidenav-main" @click="toggleSidenav">
             <div class="sidenav-toggler-inner">
               <i class="sidenav-toggler-line"></i>
               <i class="sidenav-toggler-line"></i>
@@ -17,19 +17,19 @@
         </div>
       </div>
       <div class="navbar-inner">
-        
+        <navbar></navbar>
       </div>
     </vue-custom-scrollbar>
   </nav>
 </template>
 <script>
 import vueCustomScrollbar from 'vue-custom-scrollbar';
+import Navbar from './Navbar';
 export default {
-  components: {
-    vueCustomScrollbar
-  },
+  components: { vueCustomScrollbar, Navbar },
   data () {
     return {
+      isActive: false,
       settings: {
         suppressScrollX: true
       }
@@ -46,6 +46,7 @@ export default {
     },
     toggleSidenav () {
       document.body.classList.toggle('g-sidenav-pinned');
+      this.isActive = !this.isActive;
     }
   }
 }

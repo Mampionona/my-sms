@@ -1,6 +1,6 @@
 <template>
   <ul class="navbar-nav align-items-center ml-auto ml-md-0">
-    <li class="nav-item dropdown">
+    <li :class="{ 'nav-item dropdown': true, 'show': isVisible }">
       <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click.prevent="isVisible = !isVisible">
         <div class="media align-items-center">
           <span class="avatar avatar-sm rounded-circle">
@@ -11,7 +11,7 @@
           </div>
         </div>
       </a>
-      <div class="dropdown-menu dropdown-menu-right">
+      <div :class="{ 'dropdown-menu dropdown-menu-right': true, 'show': isVisible }">
         <div class="dropdown-header noti-title">
           <h6 class="text-overflow m-0">Welcome!</h6>
         </div>
@@ -40,3 +40,12 @@
     </li>
   </ul>
 </template>
+<script>
+export default {
+  data () {
+    return {
+      isVisible: false
+    };
+  }
+}
+</script>
