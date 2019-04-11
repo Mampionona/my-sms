@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse">
+  <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse" ref="collapse">
     <div class="navbar-collapse-header">
       <div class="row">
         <div class="col-6 collapse-brand">
@@ -70,12 +70,14 @@
   </div>
 </template>
 <script>
-// import Logo from '@/assets/logo.png';
 export default {
-  // data () {
-  //   return {
-  //     logo: Logo
-  //   };
-  // }
+  watch: {
+    '$route': 'hideCollapse'
+  },
+  methods: {
+    hideCollapse () {
+      $(this.$refs.collapse).collapse('hide');
+    }
+  }
 };
 </script>
