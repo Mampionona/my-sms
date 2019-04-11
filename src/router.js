@@ -48,6 +48,10 @@ const router = new Router({
           component: () => import('./views/dashboard/Index.vue')
         }
       ]
+    }, {
+      path: '*',
+      name: '404',
+      component: () => import('./views/404.vue')
     }
   ]
 });
