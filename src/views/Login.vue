@@ -31,6 +31,7 @@
                   <div class="text-center" v-if="isLoading">
                     <spinner></spinner>
                   </div>
+                  <alert v-if="hasError" class="mt-5" color="warning" icon="fas fa-exclamation-triangle">{{ errorMessage }}</alert>
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary my-4">Sign in</button>
                   </div>
@@ -55,12 +56,15 @@
 import PageHeader from '@/components/layouts/partials/PageHeader';
 import FormGroup from '@/components/partials/FormGroup';
 import Spinner from '@/components/Spinner';
+import Alert from '@/components/Alert';
 import { mapActions } from 'vuex';
 
 export default {
-  components: { PageHeader, FormGroup, Spinner },
+  components: { PageHeader, FormGroup, Spinner, Alert },
   data () {
     return {
+      hasError: false,
+      errorMessage: '',
       isLoading: false,
       email: '',
       password: ''
@@ -68,20 +72,25 @@ export default {
   },
   methods: {
     ...mapActions({
-      authenticate: 'auth/authenticate'
+      authenticate: 'auth/authenticate',
+      getUser: 'auth/getUser'
     }),
     onSubmit () {
       this.isLoading = true;
+      this.hasError = false;
       const { email, password } = this;
 
       this.authenticate({ email, password })
-        .then(() => {
-          this.$router.push({
-            name: 'dashboard.index'
-          });
+        .then(({ data }) => {
+          // fetch user after login success
+          this.getUser();
+          // redirection
+          this.$router.push(this.$route.query.redirect || { name: 'dashboard.index' });
         })
-        .catch((error) => {
+        .catch(({ data }) => {
           this.isLoading = false;
+          this.errorMessage = data.error;
+          this.hasError = true;
         });
     }
   }

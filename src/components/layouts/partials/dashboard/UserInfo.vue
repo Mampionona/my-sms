@@ -1,5 +1,5 @@
 <template>
-  <ul class="navbar-nav align-items-center ml-auto ml-md-0">
+  <ul class="navbar-nav align-items-center ml-auto ml-md-0" v-if="user">
     <li class="nav-item dropdown">
       <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="media align-items-center">
@@ -7,7 +7,7 @@
             <img alt="Image placeholder" src="@/assets/team-4.jpg">
           </span>
           <div class="media-body ml-2 d-none d-lg-block">
-            <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+            <span class="mb-0 text-sm  font-weight-bold">{{ user.firstname }}</span>
           </div>
         </div>
       </a>
@@ -34,17 +34,28 @@
         <div class="dropdown-divider"></div>
         <a href="#!" class="dropdown-item" @click.prevent="logout">
           <i class="ni ni-user-run"></i>
-          <span>Logout</span>
+          <span>Déconnexion</span>
         </a>
       </div>
     </li>
   </ul>
 </template>
 <script>
+import { mapActions } from 'vuex';
+
 export default {
+  props: {
+    user: {
+      type: Object
+    }
+  },
   methods: {
+    ...mapActions({
+      logoutUser: 'auth/logout'
+    }),
     logout () {
       localStorage.removeItem('token');
+      this.logoutUser();
       if ('Authorization' in window.axios.defaults.headers.common) {
         delete window.axios.defaults.headers.common.Authorization;
       }

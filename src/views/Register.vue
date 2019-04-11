@@ -36,7 +36,7 @@
                   </form-group>
                   <form-group>
                     <i slot="icon" class="ni ni-badge"></i>
-                    <input slot="input" class="form-control" placeholder="Fonction" type="text" v-model="userRole">
+                    <input slot="input" class="form-control" placeholder="Role" type="text" v-model="userRole">
                   </form-group>
                   <form-group>
                     <i slot="icon" class="ni ni-pin-3"></i>
@@ -82,7 +82,7 @@
                     <spinner></spinner>
                   </div>
                   
-                  <!-- <p v-if="hasError" class="text-danger mb-0">{{ errorMessage | capitalize }}</p> -->
+                  <alert v-if="hasError" class="mt-5" color="warning" icon="fas fa-exclamation-triangle">{{ errorMessage }}</alert>
                   
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary mt-4">Create account</button>
@@ -99,10 +99,11 @@
 import PageHeader from '@/components/layouts/partials/PageHeader';
 import FormGroup from '@/components/partials/FormGroup';
 import Spinner from '@/components/Spinner';
+import Alert from '@/components/Alert';
 import { mapActions } from 'vuex';
 
 export default {
-  components: { PageHeader, FormGroup, Spinner },
+  components: { PageHeader, FormGroup, Spinner, Alert },
   data () {
     return {
       isLoading: false,
@@ -125,16 +126,27 @@ export default {
   },
   methods: {
     ...mapActions({
-      register: 'auth/register'
+      register: 'auth/register',
+      getUser: 'auth/getUser'
     }),
     onSubmit () {
       this.isLoading = true;
-      const { company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password } = this;
+      this.hasError = false;
+      const { company, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password } = this;
+      let { siren, tva } = this;
+      // remove spaces
+      siren = siren.removeSpaces();
+      tva = tva.removeSpaces();
+
       this.register({ company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password })
+        .then(() => {
+          // fetch logged in user
+          this.getUser();
+        })
         .catch(({ data }) => {
           this.isLoading = false;
-          this.hasError = true;
           this.errorMessage = data.error;
+          this.hasError = true;
         });
     }
   }

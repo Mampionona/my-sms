@@ -26,6 +26,11 @@ export default {
   created () {
     this.routeChanged();
   },
+  mounted () {
+    this.$nextTick(function () {
+      this.getUser();
+    });
+  },
   computed: {
     ...mapGetters({
       layout: 'layout/layout'
@@ -33,7 +38,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      setLayout: 'layout/setLayout'
+      setLayout: 'layout/setLayout',
+      getUser: 'auth/getUser'
     }),
     // Update application layout
     routeChanged () {
