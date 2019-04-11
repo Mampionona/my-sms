@@ -1,12 +1,17 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import * as auth from './api/auth';
 
 Vue.use(Router);
 
 const router = new Router({
   // mode: 'history',
   base: process.env.BASE_URL,
+  // scrollBehavior(to, from, savedPosition) {
+  //   // return desired position
+  //   return { x: 0, y: 0 };
+  // },
   routes: [
     {
       path: '/',
@@ -29,6 +34,9 @@ const router = new Router({
     {
       path: '/dashboard',
       component: () => import('./views/Dashboard.vue'),
+      meta: {
+        requiresAuth: true
+      },
       children: [
         {
           path: '/',
@@ -46,15 +54,14 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    // if (!auth.loggedIn()) {
-    //   next({
-    //     path: '/login',
-    //     query: { redirect: to.fullPath }
-    //   })
-    // } else {
-    //   next()
-    // }
-    next();
+    if (!auth.isLoggedIn()) {
+      next({
+        name: 'login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
   } else {
     next(); // make sure to always call next()!
   }
