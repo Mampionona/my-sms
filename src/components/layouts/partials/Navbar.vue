@@ -69,15 +69,3 @@
     </ul>
   </div>
 </template>
-<script>
-export default {
-  watch: {
-    '$route': 'hideCollapse'
-  },
-  methods: {
-    hideCollapse () {
-      $(this.$refs.collapse).collapse('hide');
-    }
-  }
-};
-</script>

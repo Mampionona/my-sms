@@ -21,10 +21,10 @@ export default {
     Connected
   },
   watch: {
-    '$route': 'updateLayout'
+    '$route': 'routeChanged'
   },
   created () {
-    this.updateLayout();
+    this.routeChanged();
   },
   computed: {
     ...mapGetters({
@@ -36,10 +36,12 @@ export default {
       setLayout: 'layout/setLayout'
     }),
     // Update application layout
-    updateLayout () {
+    routeChanged () {
       const layout = this.$route.meta.layout;
       this.setLayout(layout || 'default');
       layout ? body.classList.remove('bg-default') : body.classList.add('bg-default');
+
+      $('.collapse.show').collapse('hide');
     }
   }
 }
