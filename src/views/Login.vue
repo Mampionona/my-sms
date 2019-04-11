@@ -1,7 +1,7 @@
 <template>
   <div>
     <page-header>
-      <template slot="title">Welcome!</template>
+      <template slot="title">Connexion</template>
       <template slot="text">Magni officiis odio laboriosam eum eos consequatur praesentium.</template>
     </page-header>
     
@@ -14,22 +14,14 @@
                   <small>Sign in with credentials</small>
                 </div>
                 <form role="form" @submit.prevent="onSubmit">
-                  <div class="form-group mb-3">
-                    <div class="input-group input-group-merge input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                      </div>
-                      <input class="form-control" placeholder="Email" type="email" v-model="email">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-group input-group-merge input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                      </div>
-                      <input class="form-control" placeholder="Password" type="password" v-model="password">
-                    </div>
-                  </div>
+                  <form-group class="mb-3">
+                    <i slot="icon" class="ni ni-email-83"></i>
+                    <input slot="input" class="form-control" placeholder="E-mail" type="email" v-model="email">
+                  </form-group>
+                  <form-group>
+                    <i slot="icon" class="ni ni-lock-circle-open"></i>
+                    <input slot="input" class="form-control" placeholder="Mot de passe" type="password" v-model="password">
+                  </form-group>
                   <div class="custom-control custom-control-alternative custom-checkbox">
                     <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
                     <label class="custom-control-label" for=" customCheckLogin">
@@ -56,10 +48,12 @@
   </div>
 </template>
 <script>
-import * as auth from '@/api/auth';
+// import * as auth from '@/api/auth';
 import PageHeader from '@/components/layouts/partials/PageHeader';
+import FormGroup from '@/components/partials/FormGroup';
+
 export default {
-  components: { PageHeader },
+  components: { PageHeader, FormGroup },
   data () {
     return {
       email: '',
@@ -69,10 +63,6 @@ export default {
   methods: {
     onSubmit () {
       const { email, password } = this;
-      // promise
-      auth.login({ email, password })
-        .then(() => this.$router.push({ name: 'dashboard.index' }))
-        .catch(() => alert('unauthenticated!'));
     }
   }
 }

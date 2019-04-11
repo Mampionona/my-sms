@@ -11,34 +11,62 @@
             <div class="card bg-secondary border-0">
               <div class="card-body px-lg-5 py-lg-5">
                 <div class="text-center text-muted mb-4">
-                  <small>Or sign up with credentials</small>
+                  <small>Sign up with credentials</small>
                 </div>
-                <form role="form">
-                  <div class="form-group">
-                    <div class="input-group input-group-merge input-group-alternative mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                      </div>
-                      <input class="form-control" placeholder="Name" type="text">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-group input-group-merge input-group-alternative mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                      </div>
-                      <input class="form-control" placeholder="Email" type="email">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-group input-group-merge input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                      </div>
-                      <input class="form-control" placeholder="Password" type="password">
-                    </div>
-                  </div>
-                  <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div>
+                <form role="form" @submit.prevent="onSubmit">
+                  <form-group>
+                    <i slot="icon" class="ni ni-building"></i>
+                    <input slot="input" class="form-control" placeholder="Société" type="text" v-model="company">
+                  </form-group>
+                  <form-group>
+                    <i slot="icon" class="ni ni-hat-3"></i>
+                    <input slot="input" class="form-control" placeholder="SIREN" type="text" v-model="siren">
+                  </form-group>
+                  <form-group>
+                    <i slot="icon" class="fas fa-money-check-alt"></i>
+                    <input slot="input" class="form-control" placeholder="TVA" type="text" v-model="tva">
+                  </form-group>
+                  <form-group>
+                    <i slot="icon" class="ni ni-circle-08"></i>
+                    <input slot="input" class="form-control" placeholder="Prénom" type="text" v-model="firstname">
+                  </form-group>
+                  <form-group>
+                    <i slot="icon" class="ni ni-circle-08"></i>
+                    <input slot="input" class="form-control" placeholder="Nom" type="text" v-model="lastname">
+                  </form-group>
+                  <form-group>
+                    <i slot="icon" class="ni ni-badge"></i>
+                    <input slot="input" class="form-control" placeholder="Fonction" type="text" v-model="userRole">
+                  </form-group>
+                  <form-group>
+                    <i slot="icon" class="ni ni-pin-3"></i>
+                    <input slot="input" class="form-control" placeholder="Rue" type="text" v-model="street">
+                  </form-group>
+                  <form-group>
+                    <i slot="icon" class="ni ni-square-pin"></i>
+                    <input slot="input" class="form-control" placeholder="Ville" type="text" v-model="city">
+                  </form-group>
+                  <form-group>
+                    <i slot="icon" class="fas fa-map-pin"></i>
+                    <input slot="input" class="form-control" placeholder="Code postal" type="number" v-model="postcode">
+                  </form-group>
+                  <form-group>
+                    <i slot="icon" class="fa fa-phone fa-flip-horizontal"></i>
+                    <input slot="input" class="form-control" placeholder="Téléphone" type="text" v-model="telephone">
+                  </form-group>
+                  <form-group>
+                    <i slot="icon" class="fas fa-mobile-alt"></i>
+                    <input slot="input" class="form-control" placeholder="Mobile" type="text" v-model="mobile">
+                  </form-group>
+                  <form-group>
+                    <i slot="icon" class="ni ni-email-83"></i>
+                    <input slot="input" class="form-control" placeholder="E-mail" type="email" v-model="email">
+                  </form-group>
+                  <form-group>
+                    <i slot="icon" class="ni ni-lock-circle-open"></i>
+                    <input slot="input" class="form-control" placeholder="Mot de passe" type="password" v-model="password">
+                  </form-group>                  
+                  <!-- <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div> -->
                   <div class="row my-4">
                     <div class="col-12">
                       <div class="custom-control custom-control-alternative custom-checkbox">
@@ -50,7 +78,7 @@
                     </div>
                   </div>
                   <div class="text-center">
-                    <button type="button" class="btn btn-primary mt-4">Create account</button>
+                    <button type="submit" class="btn btn-primary mt-4">Create account</button>
                   </div>
                 </form>
               </div>
@@ -62,8 +90,34 @@
 </template>
 <script>
 import PageHeader from '@/components/layouts/partials/PageHeader';
+import FormGroup from '@/components/partials/FormGroup';
 
 export default {
-  components: { PageHeader }  
+  components: { PageHeader, FormGroup },
+  data () {
+    return {
+      company: '',
+      siren: '',
+      tva: '',
+      firstname: '',
+      lastname: '',
+      userRole: '',
+      street: '',
+      city: '',
+      postcode: '',
+      telephone: '',
+      mobile: '',
+      email: '',
+      password: ''
+    };
+  },
+  methods: {
+    removeSpaces(event) {
+      event.target.value = event.target.value.removeSpaces();
+    },
+    onSubmit () {
+      const { company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password } = this;
+    }
+  }
 }
 </script>
