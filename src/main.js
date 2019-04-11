@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from '@/store';
 import './bootstrap';
+import './filters';
 import '@/styles/argon.scss';
 
 Vue.config.productionTip = false;
