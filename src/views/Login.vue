@@ -81,7 +81,7 @@ export default {
       const { email, password } = this;
 
       this.authenticate({ email, password })
-        .then(({ data }) => {
+        .then(() => {
           // fetch user after login success
           this.getUser();
           // redirection
