@@ -5,7 +5,7 @@ import store from '@/store';
 import './bootstrap';
 import './filters';
 import 'vue-progress-path/dist/vue-progress-path.css';
-import '@/styles/argon.scss';
+import '@/assets/styles/argon.scss';
 import VueProgress from 'vue-progress-path';
 
 Vue.use(VueProgress);

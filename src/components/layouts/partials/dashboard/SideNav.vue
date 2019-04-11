@@ -3,7 +3,7 @@
     <vue-custom-scrollbar class="scroll-area" :settings="settings">
       <div class="sidenav-header d-flex align-items-center">
         <router-link :to="{ name: 'dashboard.index' }" class="navbar-brand">
-          <img src="@/assets/blue.png" class="navbar-brand-img" alt="...">
+          <img src="@/assets/images/blue.png" class="navbar-brand-img" alt="...">
         </router-link>
         <div class="ml-auto">
           <!-- Sidenav toggler -->

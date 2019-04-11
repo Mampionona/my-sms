@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-6 collapse-brand">
           <a href="../../pages/dashboards/dashboard.html">
-            <img src="@/assets/logo.png" alt="logo">
+            <img src="@/assets/images/logo.png" alt="logo">
           </a>
         </div>
         <div class="col-6 collapse-close">
