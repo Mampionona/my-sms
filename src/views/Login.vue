@@ -28,6 +28,9 @@
                       <span class="text-muted">Remember me</span>
                     </label>
                   </div>
+                  <div class="text-center" v-if="isLoading">
+                    <spinner></spinner>
+                  </div>
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary my-4">Sign in</button>
                   </div>
@@ -51,18 +54,35 @@
 // import * as auth from '@/api/auth';
 import PageHeader from '@/components/layouts/partials/PageHeader';
 import FormGroup from '@/components/partials/FormGroup';
+import Spinner from '@/components/Spinner';
+import { mapActions } from 'vuex';
 
 export default {
-  components: { PageHeader, FormGroup },
+  components: { PageHeader, FormGroup, Spinner },
   data () {
     return {
+      isLoading: false,
       email: '',
       password: ''
     };
   },
   methods: {
+    ...mapActions({
+      authenticate: 'auth/authenticate'
+    }),
     onSubmit () {
+      this.isLoading = true;
       const { email, password } = this;
+
+      this.authenticate({ email, password })
+        .then(() => {
+          this.$router.push({
+            name: 'dashboard.index'
+          });
+        })
+        .catch((error) => {
+          this.isLoading = false;
+        });
     }
   }
 }

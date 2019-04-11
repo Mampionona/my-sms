@@ -41,7 +41,7 @@ export default {
       this.setLayout(layout || 'default');
       layout ? body.classList.remove('bg-default') : body.classList.add('bg-default');
 
-      $('.collapse.show').collapse('hide');
+      this.$jQuery('.collapse.show').collapse('hide');
     }
   }
 }

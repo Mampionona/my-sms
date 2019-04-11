@@ -19,7 +19,7 @@
                     <input slot="input" class="form-control" placeholder="Société" type="text" v-model="company">
                   </form-group>
                   <form-group>
-                    <i slot="icon" class="ni ni-hat-3"></i>
+                    <i slot="icon" class="fas fa-building"></i>
                     <input slot="input" class="form-control" placeholder="SIREN" type="text" v-model="siren">
                   </form-group>
                   <form-group>
@@ -77,6 +77,13 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="text-center" v-if="isLoading">
+                    <spinner></spinner>
+                  </div>
+                  
+                  <!-- <p v-if="hasError" class="text-danger mb-0">{{ errorMessage | capitalize }}</p> -->
+                  
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary mt-4">Create account</button>
                   </div>
@@ -91,11 +98,16 @@
 <script>
 import PageHeader from '@/components/layouts/partials/PageHeader';
 import FormGroup from '@/components/partials/FormGroup';
+import Spinner from '@/components/Spinner';
+import { mapActions } from 'vuex';
 
 export default {
-  components: { PageHeader, FormGroup },
+  components: { PageHeader, FormGroup, Spinner },
   data () {
     return {
+      isLoading: false,
+      hasError: false,
+      errorMessage: '',
       company: '',
       siren: '',
       tva: '',
@@ -112,11 +124,18 @@ export default {
     };
   },
   methods: {
-    removeSpaces(event) {
-      event.target.value = event.target.value.removeSpaces();
-    },
+    ...mapActions({
+      register: 'auth/register'
+    }),
     onSubmit () {
+      this.isLoading = true;
       const { company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password } = this;
+      this.register({ company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password })
+        .catch(({ data }) => {
+          this.isLoading = false;
+          this.hasError = true;
+          this.errorMessage = data.error;
+        });
     }
   }
 }
