@@ -1,7 +1,7 @@
 <template>
   <ul class="navbar-nav align-items-center ml-auto ml-md-0">
     <li class="nav-item dropdown">
-      <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click.prevent="isVisible = !isVisible">
+      <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="media align-items-center">
           <span class="avatar avatar-sm rounded-circle">
             <img alt="Image placeholder" src="@/assets/team-4.jpg">
@@ -19,7 +19,7 @@
           <i class="ni ni-single-02"></i>
           <span>My profile</span>
         </a>
-        <a href="#!" class="dropdown-item">
+        <!-- <a href="#!" class="dropdown-item">
           <i class="ni ni-settings-gear-65"></i>
           <span>Settings</span>
         </a>
@@ -30,9 +30,9 @@
         <a href="#!" class="dropdown-item">
           <i class="ni ni-support-16"></i>
           <span>Support</span>
-        </a>
+        </a> -->
         <div class="dropdown-divider"></div>
-        <a href="#!" class="dropdown-item">
+        <a href="#!" class="dropdown-item" @click.prevent="logout">
           <i class="ni ni-user-run"></i>
           <span>Logout</span>
         </a>
@@ -40,3 +40,16 @@
     </li>
   </ul>
 </template>
+<script>
+export default {
+  methods: {
+    logout () {
+      localStorage.removeItem('token');
+      if ('Authorization' in window.axios.defaults.headers.common) {
+        delete window.axios.defaults.headers.common.Authorization;
+      }
+      this.$router.push({ name: 'login' });
+    }
+  }
+}
+</script>

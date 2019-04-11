@@ -32,14 +32,14 @@ export default {
   components: { vueCustomScrollbar, Navbar },
   data () {
     return {
-      isActive: false,
+      isActive: true,
       settings: {
         suppressScrollX: true
       }
     }
   },
   mounted () {
-    setTimeout(() => classList.add('g-sidenav-show', 'g-sidenav-pinned'), 1000);
+    classList.add('g-sidenav-show', 'g-sidenav-pinned');
   },
   methods: {
     onMouseover () {
