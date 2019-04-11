@@ -8,10 +8,6 @@ Vue.use(Router);
 const router = new Router({
   // mode: 'history',
   base: process.env.BASE_URL,
-  // scrollBehavior(to, from, savedPosition) {
-  //   // return desired position
-  //   return { x: 0, y: 0 };
-  // },
   routes: [
     {
       path: '/',
@@ -62,9 +58,9 @@ router.beforeEach((to, from, next) => {
       next({
         name: 'login',
         query: { redirect: to.fullPath }
-      })
+      });
     } else {
-      next()
+      next();
     }
   } else {
     next(); // make sure to always call next()!
