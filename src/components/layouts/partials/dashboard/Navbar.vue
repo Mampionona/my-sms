@@ -15,7 +15,7 @@
         <div class="collapse" id="navbar-examples" style="">
           <ul class="nav nav-sm flex-column">
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'contacts.list' }">Liste des contacts</router-link>
+              <router-link class="nav-link" :to="{ name: 'lists' }">Liste des contacts</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="#">Importer des contacts</router-link>

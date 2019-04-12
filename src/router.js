@@ -45,13 +45,22 @@ const router = new Router({
         },
         // Base de contacts
         {
-          path: '/contacts',
-          name: 'contacts.list',
+          path: '/lists',
+          name: 'lists',
           meta: {
             requiresAuth: true,
             layout: 'connected'
           },
           component: () => import('./views/dashboard/Lists.vue')
+        },
+        {
+          path: '/lists/import',
+          name: 'list.import',
+          meta: {
+            requiresAuth: true,
+            layout: 'connected'
+          },
+          component: () => import('./views/dashboard/Import.vue')
         }
       ]
     }, {
