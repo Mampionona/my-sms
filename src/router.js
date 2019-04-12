@@ -42,6 +42,16 @@ const router = new Router({
             layout: 'connected'
           },
           component: () => import('./views/dashboard/Index.vue')
+        },
+        // Base de contacts
+        {
+          path: '/contacts',
+          name: 'contacts.list',
+          meta: {
+            requiresAuth: true,
+            layout: 'connected'
+          },
+          component: () => import('./views/dashboard/Lists.vue')
         }
       ]
     }, {
