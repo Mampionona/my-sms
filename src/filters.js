@@ -16,3 +16,5 @@ Vue.filter('limit', (str, len, more = '...') => {
   }
   return str.substring(0, len) + more;
 });
+Vue.filter('fullname', ({ firstname, lastname }) => `${lastname} ${firstname}`);
+Vue.filter('formatCurrency', number => `${number.toString().replace('.', ',')} €`);
