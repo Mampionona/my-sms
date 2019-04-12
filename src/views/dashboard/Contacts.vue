@@ -30,6 +30,9 @@
     </div>
     <div class="col-lg-8">
       <div class="card">
+        <div class="p-3">
+          <v-btn color="primary" icon="fas fa-plus-square">Ajouter un contact</v-btn>
+        </div>
         <v-table>
           <thead class="thead-light">
             <tr>
