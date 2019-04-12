@@ -24,6 +24,11 @@ export default {
             resolve(data);
           });
       });
+    },
+    updateListName(context, { id, name }) {
+      return new Promise((resolve, reject) => {
+        Axios.patch(`/lists/${id}/`, { name });
+      });
     }
   }
 };
