@@ -16,7 +16,15 @@
             <small>lignes</small>
           </div>
           <p class="text-center">Créé le {{ '20190412 14:00:00' | full }}</p>
-          <alert class="text-center" color="secondary">Non vérifié</alert>
+          <alert class="text-center mb-4" color="secondary">Non vérifié</alert>
+          <div class="compose">
+            <!-- <button type="button" class="btn btn-primary btn-lg btn-block">Composer un SMS</button> -->
+            <button class="btn btn-icon btn-primary btn-block" type="button" @click="compose">
+              <span class="btn-inner--icon"><i class="fas fa-pencil-alt"></i></span>
+              <span class="btn-inner--text">Composer un SMS</span>
+            </button>
+            <p class="text-center mt-3">Seul les numéros valides, non STOP-SMS et actifs seront envoyés.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -36,7 +44,7 @@
             </tr>
           </thead>
           <tbody class="list">
-            <contact v-for="contact in contacts" :contact="contact" :key="contact.id">
+            <contact v-for="contact in contacts" :contact="contact" :key="contact.id" @remove-contact="removeContact">
               <div slot="foobar" class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" :id="`contact-${contact.id}`" :value="contact.id" v-model="selectedContacts">
                 <label class="custom-control-label" :for="`contact-${contact.id}`"></label>
@@ -77,11 +85,21 @@ export default {
   methods: {
     ...mapActions({
       getContacts: 'contacts/getContactsOfList',
-      updateListName: 'lists/updateListName'
+      updateListName: 'lists/updateListName',
+      remove: 'contacts/removeContact'
     }),
     onSubmit () {
       const { name } = this;
       this.updateListName({ id: this.$route.params.listId, name });
+    },
+    compose () {
+      alert('composer un sms')
+    },
+    removeContact (contact) {
+      this.remove({ listId: this.$route.params.listId, contactId: contact.id })
+        .then(() => {
+          alert('via')
+        })
     }
   }
 };

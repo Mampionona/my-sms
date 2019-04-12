@@ -11,7 +11,7 @@
       </div>
     </th>
     <td class="text-right">
-      <v-btn icon="fas fa-trash-alt" color="danger"></v-btn>
+      <v-btn icon="fas fa-trash-alt" color="danger" @click.native="$emit('remove-contact', contact)"></v-btn>
       <v-btn icon="fas fa-pencil-alt" color="outline-secondary"></v-btn>
     </td>
   </tr>
@@ -21,11 +21,6 @@ import vBtn from '@/components/vBtn';
 
 export default {
   components: { vBtn },
-  // data () {
-  //   return {
-  //     contact: null
-  //   };
-  // },
   props: {
     contact: {
       required: true,

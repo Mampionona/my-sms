@@ -37,6 +37,14 @@ export default {
             context.commit(SET_CONTACTS, data);
           });
       });
+    },
+    removeContact(context, { contactId, listId }) {
+      return new Promise((resolve, reject) => {
+        Axios.delete(`/contacts/${contactId}/lists/${listId}/`)
+          .then(() => {
+            resolve();
+          });
+      });
     }
   }
 };
