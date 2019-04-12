@@ -7,7 +7,7 @@
         </router-link>
         <div class="ml-auto">
           <!-- Sidenav toggler -->
-          <div :class="{ 'sidenav-toggler d-none d-xl-block': true, 'active': isActive }" data-action="sidenav-unpin" data-target="#sidenav-main" @click="toggleSidenav">
+          <div :class="classObject" data-action="sidenav-unpin" data-target="#sidenav-main" @click="toggleSidenav">
             <div class="sidenav-toggler-inner">
               <i class="sidenav-toggler-line"></i>
               <i class="sidenav-toggler-line"></i>
@@ -40,6 +40,16 @@ export default {
   },
   mounted () {
     classList.add('g-sidenav-show', 'g-sidenav-pinned');
+  },
+  computed: {
+    classObject () {
+      return {
+        'sidenav-toggler': true,
+        'd-none': true,
+        'd-xl-block': true,
+        'active': this.isActive
+      };
+    }
   },
   methods: {
     onMouseover () {
