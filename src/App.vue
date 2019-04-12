@@ -42,9 +42,10 @@ export default {
     // Update application layout
     routeChanged () {
       const layout = this.$route.meta.layout;
-      this.setLayout(layout || 'default');
+      if (this.layout != layout) {
+        this.setLayout(layout || 'default');
+      }
       layout ? body.classList.remove('bg-default') : body.classList.add('bg-default');
-
       this.$jQuery('.collapse.show').collapse('hide');
     }
   }
