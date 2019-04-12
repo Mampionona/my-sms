@@ -64,7 +64,7 @@
                   </form-group>
                   <form-group>
                     <i slot="icon" class="ni ni-lock-circle-open"></i>
-                    <input slot="input" class="form-control" placeholder="Mot de passe" type="password" v-model="password">
+                    <input slot="input" class="form-control" placeholder="Mot de passe" type="password" v-model="password" autocomplete="new-password">
                   </form-group>                  
                   <!-- <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div> -->
                   <div class="row my-4">

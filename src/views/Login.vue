@@ -20,7 +20,7 @@
                   </form-group>
                   <form-group>
                     <i slot="icon" class="ni ni-lock-circle-open"></i>
-                    <input slot="input" class="form-control" placeholder="Mot de passe" type="password" v-model="password">
+                    <input slot="input" class="form-control" placeholder="Mot de passe" type="password" v-model="password" autocomplete="new-password">
                   </form-group>
                   <div class="custom-control custom-control-alternative custom-checkbox">
                     <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
