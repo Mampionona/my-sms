@@ -33,7 +33,12 @@ export default {
       alert('delete ' + id);
     },
     showContacts(id) {
-      alert('show ' + id);
+      this.$router.push({
+        name: 'contacts',
+        params: {
+          listId: id
+        }
+      });
     }
   }
 };
