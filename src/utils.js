@@ -14,9 +14,9 @@ export function workbookToArray (file, complete) {
 
     /* convert from workbook to array of arrays */
     const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
-    
+    const array = XLSX.utils.sheet_to_json(first_worksheet, { header: 1 });
     if (complete) {
-      complete(XLSX.utils.sheet_to_json(first_worksheet, { header: 1 }), file);
+      complete(array, file);
     }
   };
   reader.readAsArrayBuffer(file);

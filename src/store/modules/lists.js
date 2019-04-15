@@ -2,11 +2,13 @@ import { doAsync, createAsyncMutation } from '@/utils';
 
 const GET_LISTS = createAsyncMutation('GET_LISTS');
 const UPDATE_NAME = createAsyncMutation('UPDATE_NAME');
+const CREATE_NEW_LIST = createAsyncMutation('CREATE_NEW_LIST');
 
 export default {
   namespaced: true,
   state: {
-    lists: []
+    lists: [],
+    newListId: null
   },
   getters: {
     lists: state => state.lists
@@ -17,9 +19,18 @@ export default {
       state.lists = payload;
     },
     [GET_LISTS.FAILURE] (state) {},
+    // update list name
     [UPDATE_NAME.PENDING] (state) {},
-    [UPDATE_NAME.SUCCESS] (state, payload) {},
-    [UPDATE_NAME.FAILURE] (state, payload) {}
+    [UPDATE_NAME.SUCCESS] (state, payload) {
+
+    },
+    [UPDATE_NAME.FAILURE] (state, payload) {},
+    // create a new list
+    [CREATE_NEW_LIST.PENDING] (state) {},
+    [CREATE_NEW_LIST.SUCCESS] (state, payload) {
+      state.newListId = payload.id;
+    },
+    [CREATE_NEW_LIST.FAILURE] (state) {}
   },
   actions: {
     getUserLists(context) {
@@ -34,6 +45,14 @@ export default {
         method: 'patch',
         data: { name },
         mutationTypes: UPDATE_NAME
+      });
+    },
+    createNewList(context, { name }) {
+      return doAsync(context, {
+        url: '/lists',
+        method: 'post',
+        data: { name },
+        mutationTypes: CREATE_NEW_LIST
       });
     }
   }

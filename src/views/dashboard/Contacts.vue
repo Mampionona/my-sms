@@ -31,7 +31,7 @@
     <div class="col-lg-8">
       <div class="card">
         <div class="p-3">
-          <v-btn color="primary" icon="fas fa-plus-square">Ajouter un contact</v-btn>
+          <v-btn color="primary" icon="fas fa-plus-square" @click.native="add">Ajouter un contact</v-btn>
         </div>
         <v-table>
           <thead class="thead-light">
@@ -89,7 +89,8 @@ export default {
     ...mapActions({
       getContacts: 'contacts/getContactsOfList',
       updateListName: 'lists/updateListName',
-      remove: 'contacts/removeContact'
+      remove: 'contacts/removeContact',
+      addContacts: 'contacts/addContacts'
     }),
     onSubmit () {
       const { name } = this;
@@ -103,6 +104,31 @@ export default {
         .then(() => {
           alert('via')
         })
+    },
+    add () {
+      this.addContacts({
+        listId: 2,
+        contacts: [
+          {
+            telephone: '+33626835621',
+            firstname: 'John',
+            lastname: 'Doe',
+            attributes: []
+          },
+          {
+            telephone: '+33626835622',
+            firstname: 'John',
+            lastname: 'Doe',
+            attributes: []
+          },
+          {
+            telephone: '+33626835623',
+            firstname: 'John',
+            lastname: 'Doe',
+            attributes: []
+          }
+        ]
+      });
     }
   }
 };
