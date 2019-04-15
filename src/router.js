@@ -69,7 +69,7 @@ const router = new Router({
             requiresAuth: true,
             layout: 'connected'
           },
-          component: () => import('./views/dashboard/Import.vue')
+          component: () => import('./views/dashboard/ImportContacts.vue')
         }
       ]
     }, {
