@@ -114,14 +114,20 @@ export default {
 
         workbookToArray(f, (contacts, file) => {
           const countLines = contacts.length;
+          this.filename = '';
+          this.contacts = [];
+          
           if (countLines > COUNT_MAX_LINES || countLines < COUNT_MIN_LINES) {
             alert(`Le nombre de lignes du fichier doit être au maximum de ${COUNT_MAX_LINES} et au minimum de ${COUNT_MIN_LINES}.`);
-            this.filename = '';
-            this.contacts = [];
             return;
           }
 
           const columns = contacts.shift();
+
+          if (!columns.includes('telephone')) {
+            alert('Le fichier Excel doit avoir au moins une colonne nommée "telephone"');
+            return;
+          }
 
           contacts = contacts.map(contact => {
             const contactObject = {};
