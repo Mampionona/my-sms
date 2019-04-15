@@ -53,10 +53,10 @@
         </div>
         <div class="card-body">
           <ul>
-            <li>Téléchargez un exemple de fichier simple <a href="#" class="exemple-csv" target="_blank">CSV</a></li>
-            <li>Téléchargez un exemple de fichier avec variables <a href="#" class="exemple-csv" target="_blank">CSV</a></li>
-            <li>Téléchargez un exemple de fichier simple <a href="#" class="exemple-csv" target="_blank">XLS</a></li>
-            <li>Téléchargez un exemple de fichier avec variables <a href="#" class="exemple-csv" target="_blank">XLS</a></li>
+            <li>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_exemple_simple.csv`" class="exemple-csv">CSV</a></li>
+            <li>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_exemple_variable.csv`" class="exemple-csv">CSV</a></li>
+            <li>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_xls_exemple_simple.xls`" class="exemple-csv">XLS</a></li>
+            <li>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_xls_exemple_variable.xls`" class="exemple-csv">XLS</a></li>
           </ul>
         </div>
       </div>
@@ -73,6 +73,7 @@ export default {
   components: { vBtn, Alert },
   data () {
     return {
+      publicPath: process.env.BASE_URL,
       certify: false,
       filename: '',
       contacts: []
