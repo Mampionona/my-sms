@@ -1,6 +1,7 @@
-import Axios from "axios";
+import { doAsync, createAsyncMutation } from '@/utils';
 
-const SET_LISTS = 'SET_LISTS';
+const GET_LISTS = createAsyncMutation('GET_LISTS');
+const UPDATE_NAME = createAsyncMutation('UPDATE_NAME');
 
 export default {
   namespaced: true,
@@ -11,23 +12,28 @@ export default {
     lists: state => state.lists
   },
   mutations: {
-    [ SET_LISTS ] (state, lists) {
-      state.lists = lists;
-    }
+    [GET_LISTS.PENDING] (state) {},
+    [GET_LISTS.SUCCESS] (state, payload) {
+      state.lists = payload;
+    },
+    [GET_LISTS.FAILURE] (state) {},
+    [UPDATE_NAME.PENDING] (state) {},
+    [UPDATE_NAME.SUCCESS] (state, payload) {},
+    [UPDATE_NAME.FAILURE] (state, payload) {}
   },
   actions: {
     getUserLists(context) {
-      return new Promise((resolve, reject) => {
-        Axios('/lists')
-          .then(({ data }) => {
-            context.commit(SET_LISTS, data);
-            resolve(data);
-          });
+      return doAsync(context, {
+        url: '/lists',
+        mutationTypes: GET_LISTS
       });
     },
     updateListName(context, { id, name }) {
-      return new Promise((resolve, reject) => {
-        Axios.patch(`/lists/${id}/`, { name });
+      return doAsync(context, {
+        url: `/lists/${id}/`,
+        method: 'patch',
+        data: { name },
+        mutationTypes: UPDATE_NAME
       });
     }
   }

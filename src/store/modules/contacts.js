@@ -1,8 +1,8 @@
-import Axios from "axios";
+import { doAsync, createAsyncMutation } from '@/utils';
 
-const SET_LIST_ID = 'SET_LIST_ID';
-const SET_CONTACTS = 'SET_CONTACTS';
-const SET_CONTACTS_COUNT = 'SET_CONTACTS_COUNT';
+const LIST_ID = 'LIST_ID';
+const CONTACTS_COUNT = 'CONTACTS_COUNT';
+const GET_CONTACTS = createAsyncMutation('GET_CONTACTS');
 
 export default {
   namespaced: true,
@@ -17,34 +17,41 @@ export default {
     count: state => state.count
   },
   mutations: {
-    [SET_LIST_ID] (state, id) {
+    [LIST_ID] (state, id) {
       state.listId = id;
     },
-    [SET_CONTACTS] (state, contacts) {
-      state.contactsOfList = contacts;
-    },
-    [SET_CONTACTS_COUNT] (state, count) {
+    [CONTACTS_COUNT](state, count) {
       state.count = count;
-    }
+    },
+    [GET_CONTACTS.PENDING] (state) {},
+    [GET_CONTACTS.SUCCESS] (state, payload) {
+      state.contactsOfList = payload;
+    },
+    [GET_CONTACTS.FAILURE] (state) {}
   },
   actions: {
     getContactsOfList(context, id) {
-      context.commit(SET_LIST_ID, id);
-      return new Promise((resolve, reject) => {
-        Axios(`/contacts/lists/${id}/`)
-          .then(({ data }) => {
-            context.commit(SET_CONTACTS_COUNT, data.length);
-            context.commit(SET_CONTACTS, data);
-          });
+      context.commit(LIST_ID, id);
+      // return new Promise((resolve, reject) => {
+      //   Axios(`/contacts/lists/${id}/`)
+      //     .then(({ data }) => {
+      //       context.commit(CONTACTS_COUNT, data.length);
+      //       context.commit(SET_CONTACTS, data);
+      //     });
+      // });
+
+      doAsync(context, {
+        url: `/contacts/lists/${id}`,
+        mutationTypes: GET_CONTACTS
       });
     },
     removeContact(context, { contactId, listId }) {
-      return new Promise((resolve, reject) => {
-        Axios.delete(`/contacts/${contactId}/lists/${listId}/`)
-          .then(() => {
-            resolve();
-          });
-      });
+      // return new Promise((resolve, reject) => {
+      //   Axios.delete(`/contacts/${contactId}/lists/${listId}/`)
+      //     .then(() => {
+      //       resolve();
+      //     });
+      // });
     }
   }
 };
