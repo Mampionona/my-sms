@@ -8,29 +8,37 @@ export default {
   namespaced: true,
   state: {
     lists: [],
-    newListId: null
+    newListId: null,
+    error: ''
   },
   getters: {
-    lists: state => state.lists
+    lists: state => state.lists,
+    error: state => state.error
   },
   mutations: {
     [GET_LISTS.PENDING] (state) {},
     [GET_LISTS.SUCCESS] (state, payload) {
       state.lists = payload;
     },
-    [GET_LISTS.FAILURE] (state) {},
+    [GET_LISTS.FAILURE] (state, payload) {
+      state.error = payload.data;
+    },
     // update list name
     [UPDATE_NAME.PENDING] (state) {},
     [UPDATE_NAME.SUCCESS] (state, payload) {
 
     },
-    [UPDATE_NAME.FAILURE] (state, payload) {},
+    [UPDATE_NAME.FAILURE] (state, payload) {
+      state.error = payload.data;
+    },
     // create a new list
     [CREATE_NEW_LIST.PENDING] (state) {},
     [CREATE_NEW_LIST.SUCCESS] (state, payload) {
       state.newListId = payload.id;
     },
-    [CREATE_NEW_LIST.FAILURE] (state) {}
+    [CREATE_NEW_LIST.FAILURE] (state, payload) {
+      state.error = payload.data;
+    }
   },
   actions: {
     getUserLists(context) {

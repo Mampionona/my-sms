@@ -19,6 +19,7 @@ export default {
     count: state => state.count
   },
   mutations: {
+    // set list id
     [LIST_ID] (state, id) {
       state.listId = id;
     },

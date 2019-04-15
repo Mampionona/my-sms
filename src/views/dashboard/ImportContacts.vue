@@ -39,6 +39,7 @@
               <li>Je n'enverrai avec SMS Partner que des informations légales et légitimes.</li>
             </ul>
           </div>
+          <alert v-if="error" color="danger" icon="fas fa-exclamation-triangle">{{ error }}</alert>
           <div class="text-right">
             <v-btn color="primary" :disabled="!certify" @click.native="importWorkbook">Télécharger le fichier</v-btn>
           </div>
@@ -65,10 +66,11 @@
 <script>
 import { validFileExtensions, workbookToArray, COUNT_MAX_LINES, COUNT_MIN_LINES } from '@/utils';
 import vBtn from '@/components/vBtn';
-import { mapActions } from 'vuex';
+import Alert from '@/components/Alert';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  components: { vBtn },
+  components: { vBtn, Alert },
   data () {
     return {
       certify: false,
@@ -78,6 +80,11 @@ export default {
   },
   mounted () {
     this.$refs.csv.addEventListener('change', this.handleFiles, false);
+  },
+  computed: {
+    ...mapGetters({
+      error: 'lists/error'
+    })
   },
   methods: {
     ...mapActions({
@@ -136,10 +143,12 @@ export default {
         })
           .then(data => {
             // add contacts to the new list
+            this.error = '';
             this.addContacts({
               listId: data.id,
               contacts
-            });
+            })
+              .then(data => this.error = '');
           });
       }
     }
