@@ -6,7 +6,13 @@
           <div class="card">
             <div class="card-header"><i class="fas fa-users mr-2"></i> Destinataires</div>
             <div class="card-body">
-              <model-select :options="options" v-model="to" placeholder="Sélectionner un fichier"></model-select>
+              <model-list-select
+                :list="lists" 
+                option-value="id" 
+                option-text="name" 
+                v-model="to" 
+                placeholder="Sélectionner un fichier"
+              ></model-list-select>
             </div>
           </div>
           <div class="card">
@@ -20,8 +26,8 @@
           <div class="card">
             <div class="card-header"><i class="fas fa-envelope-open mr-2"></i> Votre message</div>
             <div class="card-body">
-              <div class="p-3 border">
-                <textarea class="form-control-plaintext small no-resize" @keyup="countChars" v-model="text" rows="6"></textarea>
+              <div class="p-2 border">
+                <textarea class="form-control-plaintext small no-resize" placeholder="Votre message" v-model="text" rows="6"></textarea>
                 <p class="small text-right">
                   <strong>{{ countSMS }}</strong> SMS - {{ $tc("remainingChars", remainingChars) }} <strong>{{ remainingChars }}</strong>
                 </p>
@@ -47,9 +53,11 @@
                 lang="fr"
                 format="YYYY-MM-DD H:mm"
                 :time-picker-options="{ start: '08:00', step: '00:05', end: '18:00' }"
+                :not-before="new Date()"
+                :first-day-of-week="1"
                 type="datetime"
                 class="mt-4"
-              ></date-picker>            
+              ></date-picker>
             </div>
           </div>
         </div>
@@ -66,34 +74,47 @@
   </div>
 </template>
 <script>
-import { ModelSelect } from 'vue-search-select';
+import { ModelListSelect } from 'vue-search-select';
 import DatePicker from 'vue2-datepicker';
-import { computeNumberOfSMS, computeRemainingChars } from '@/utils';
+import { computeNumberOfSMS, computeRemainingChars, MESSAGE } from '@/utils';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  components: { ModelSelect, DatePicker },
+  components: { ModelListSelect, DatePicker },
   data () {
     return {
       to: '',
       text: '',
       senderName:'',
       sendDate: '',
-      remainingChars: 147,
+      remainingChars: MESSAGE.firstMaxLength,
       countSMS: 1,
-      firstMaxLength: 147,
-      subsequentsMaxLength: 153,
       sendingMode: 'immediate',
-      options: [
-        // { value, text }
-      ]
+      selectedList: null
     };
   },
-  methods: {
-    countChars () {
-      let len = this.text.length;
+  mounted () {
+    // Get a user's lists
+    this.getUserLists();
+  },
+  watch: {
+    text (newText) {
+      let len = newText.length;
       this.countSMS = computeNumberOfSMS(this.text);
       this.remainingChars = computeRemainingChars(this.countSMS, len);
+    },
+    to (id) {
+      const list = this.lists.filter(list => list.id === id);
+      if (list.length > 0) {
+        this.selectedList = list[0];
+      }
     }
+  },
+  computed: {
+    ...mapGetters({ lists:'lists/lists' })
+  },
+  methods: {
+    ...mapActions({ getUserLists: 'lists/getUserLists' })
   }
 }
 </script>
