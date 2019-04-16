@@ -44,7 +44,7 @@ export function doAsync(context, { url, method = 'get', mutationTypes, data = {}
   });
 }
 
-const MESSAGE = {
+export const MESSAGE = {
   firstMaxLength: 147,
   subsequentsMaxLength: 153
 };
