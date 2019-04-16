@@ -14,6 +14,7 @@
                   v-model="to" 
                   placeholder="Sélectionner un fichier"
                 ></model-list-select>
+                <p v-if="countContacts > 0" class="small mt-4">{{ $tc('redaction.countContacts', countContacts) }}</p>
               </div>
             </div>
             <div class="card">
@@ -130,15 +131,21 @@ export default {
           vm.name = list.name;
         }
       });
+
+      this.getContactsOfList(listId);
     }
   },
   computed: {
-    ...mapGetters({ lists:'lists/lists' })
+    ...mapGetters({
+      lists:'lists/lists',
+      countContacts: 'contacts/count'
+    })
   },
   methods: {
     ...mapActions({
       getUserLists: 'lists/getUserLists',
-      createNewCampaign: 'campaign/createNewCampaign'
+      createNewCampaign: 'campaign/createNewCampaign',
+      getContactsOfList: 'contacts/getContactsOfList'
     }),
     dateChange (currentValue) {
       this.sendDate = currentValue.toISOString();
