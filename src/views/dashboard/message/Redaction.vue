@@ -22,7 +22,9 @@
             <div class="card-body">
               <div class="p-3 border">
                 <textarea class="form-control-plaintext small no-resize" v-model="text" rows="6"></textarea>
-                <p class="small text-right">{{ countSMS }}</p>
+                <p class="small text-right">
+                  <strong>1</strong> SMS - {{ $tc("remainingChars", remainingChars) }} <strong>{{ remainingChars }}</strong>
+                </p>
               </div>
             </div>
           </div>
@@ -75,7 +77,7 @@ export default {
       text: '',
       senderName:'',
       sendDate: '',
-      countSMS: '1 SMS - caractères restants 149',
+      remainingChars: 50,
       sendingMode: 'immediate',
       options: [
         // { value, text }
