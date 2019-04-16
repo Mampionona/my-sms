@@ -21,9 +21,9 @@
             <div class="card-header"><i class="fas fa-envelope-open mr-2"></i> Votre message</div>
             <div class="card-body">
               <div class="p-3 border">
-                <textarea class="form-control-plaintext small no-resize" v-model="text" rows="6"></textarea>
+                <textarea class="form-control-plaintext small no-resize" @keyup="countChars" v-model="text" rows="6"></textarea>
                 <p class="small text-right">
-                  <strong>1</strong> SMS - {{ $tc("remainingChars", remainingChars) }} <strong>{{ remainingChars }}</strong>
+                  <strong>{{ countSMS }}</strong> SMS - {{ $tc("remainingChars", remainingChars) }} <strong>{{ remainingChars }}</strong>
                 </p>
               </div>
             </div>
@@ -68,6 +68,7 @@
 <script>
 import { ModelSelect } from 'vue-search-select';
 import DatePicker from 'vue2-datepicker';
+import { computeNumberOfSMS, computeRemainingChars } from '@/utils';
 
 export default {
   components: { ModelSelect, DatePicker },
@@ -77,11 +78,21 @@ export default {
       text: '',
       senderName:'',
       sendDate: '',
-      remainingChars: 50,
+      remainingChars: 147,
+      countSMS: 1,
+      firstMaxLength: 147,
+      subsequentsMaxLength: 153,
       sendingMode: 'immediate',
       options: [
         // { value, text }
       ]
+    };
+  },
+  methods: {
+    countChars () {
+      let len = this.text.length;
+      this.countSMS = computeNumberOfSMS(this.text);
+      this.remainingChars = computeRemainingChars(this.countSMS, len);
     }
   }
 }

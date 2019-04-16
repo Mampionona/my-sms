@@ -43,3 +43,37 @@ export function doAsync(context, { url, method = 'get', mutationTypes, data = {}
       });
   });
 }
+
+const MESSAGE = {
+  firstMaxLength: 147,
+  subsequentsMaxLength: 153
+};
+
+/**
+ * Compute number of SMS for this message
+ * @param { String } message
+ * @return { Number }
+ */
+export function computeNumberOfSMS(message) {
+  const { firstMaxLength, subsequentsMaxLength } = MESSAGE;
+  const utf16CharsLength = message.length;
+
+  if (utf16CharsLength <= firstMaxLength) return 1;
+  if (utf16CharsLength > firstMaxLength) return 1 + (Math.ceil((utf16CharsLength - firstMaxLength) / subsequentsMaxLength));
+}
+
+/**
+ * Compute remaining chars for this message
+ * @param { Number } countSMS
+ * @param { Number } len
+ * @return { Number }
+ */
+export function computeRemainingChars(countSMS, len) {
+  const { firstMaxLength, subsequentsMaxLength } = MESSAGE;
+  if (countSMS === 1) {
+    return firstMaxLength - len;
+  }
+
+  len -= firstMaxLength;
+  return (subsequentsMaxLength * (countSMS - 1)) - len; // 1 = first message
+}
