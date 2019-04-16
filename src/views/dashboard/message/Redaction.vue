@@ -18,7 +18,7 @@
           <div class="card">
             <div class="card-header"><i class="fas fa-arrow-right mr-2"></i> Émetteur du message</div>
             <div class="card-body">
-              <input type="text" class="form-control" v-model="senderName">
+              <input type="text" class="form-control" v-model="senderName" placeholder="Nom de l'émetteur">
             </div>
           </div>
         </div>
@@ -99,14 +99,16 @@ export default {
   },
   watch: {
     text (newText) {
-      let len = newText.length;
-      this.countSMS = computeNumberOfSMS(this.text);
-      this.remainingChars = computeRemainingChars(this.countSMS, len);
+      this.countSMS = computeNumberOfSMS(newText);
+      this.remainingChars = computeRemainingChars(this.countSMS, newText.length);
     },
-    to (id) {
-      const list = this.lists.filter(list => list.id === id);
+    to (listId) {
+      const list = this.lists.filter(list => list.id === listId);
       if (list.length > 0) {
-        this.selectedList = list[0];
+        this.selectedList = {
+          listId,
+          name: list[0].name
+        };
       }
     }
   },
