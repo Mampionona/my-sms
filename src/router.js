@@ -70,7 +70,25 @@ const router = new Router({
             layout: 'connected'
           },
           component: () => import('./views/dashboard/ImportContacts.vue')
-        }
+        },
+        {
+          path: 'message/redaction',
+          name: 'message.redaction',
+          meta: {
+            requiresAuth: true,
+            layout: 'connected'
+          },
+          component: () => import('./views/dashboard/message/Redaction.vue')
+        },
+        {
+          path: 'message/drafts',
+          name: 'message.drafts',
+          meta: {
+            requiresAuth: true,
+            layout: 'connected'
+          },
+          component: () => import('./views/dashboard/message/Drafts.vue')
+        },
       ]
     }, {
       path: '*',

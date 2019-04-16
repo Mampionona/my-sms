@@ -1,0 +1,6 @@
+.form-control,
+.form-control-plaintext {
+  &.no-resize {
+    resize: none;
+  }
+}

@@ -49,3 +49,13 @@ export default {
   }
 }
 </script>
+<style>
+textarea {
+  resize: none;
+}
+
+.form-control-plaintext {
+  outline: 0;
+}
+</style>
+

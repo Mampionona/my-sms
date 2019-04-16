@@ -16,8 +16,11 @@
     "popper.js": "^1.15.0",
     "vue": "^2.6.6",
     "vue-custom-scrollbar": "^1.0.0",
+    "vue-i18n": "^8.10.0",
     "vue-progress-path": "^0.0.2",
     "vue-router": "^3.0.1",
+    "vue-search-select": "^2.8.3",
+    "vue2-datepicker": "^2.11.0",
     "vuex": "^3.0.1",
     "xlsx": "^0.14.2"
   },
