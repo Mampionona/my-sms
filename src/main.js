@@ -2,14 +2,16 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from '@/store';
+import VueProgress from 'vue-progress-path';
+import i18n from './i18n';
+import VueTextareaAutosize from 'vue-textarea-autosize';
 import './bootstrap';
 import './filters';
-import VueProgress from 'vue-progress-path';
 // styles
 import 'vue-progress-path/dist/vue-progress-path.css';
 import '@/assets/styles/argon.scss';
-import i18n from './i18n'
 
+Vue.use(VueTextareaAutosize);
 Vue.use(VueProgress);
 Vue.config.productionTip = false;
 
