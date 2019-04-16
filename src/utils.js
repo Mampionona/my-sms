@@ -31,7 +31,7 @@ export const createAsyncMutation = type => ({
 export function doAsync(context, { url, method = 'get', mutationTypes, data = {} }) {
   context.commit(mutationTypes.PENDING);
   return new Promise((resolve, reject) => {
-    url = `${url}?timestamp=${new Date().getTime()}`;
+    // url = `${url}?timestamp=${new Date().getTime()}`;
     Axios[method](url, data)
       .then(({ data }) => {
         context.commit(mutationTypes.SUCCESS, data);

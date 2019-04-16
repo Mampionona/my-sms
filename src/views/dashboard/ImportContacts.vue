@@ -39,9 +39,8 @@
               <li>Je n'enverrai avec SMS Partner que des informations légales et légitimes.</li>
             </ul>
           </div>
-          <alert v-if="error" color="danger" icon="fas fa-exclamation-triangle">{{ error }}</alert>
           <div class="text-right">
-            <v-btn color="primary" :disabled="!certify" @click.native="importWorkbook">Télécharger le fichier</v-btn>
+            <button class="btn-primary btn" @click.prevent="importWorkbook">Télécharger le fichier</button>
           </div>
         </div>
       </div>
@@ -81,11 +80,6 @@ export default {
   },
   mounted () {
     this.$refs.csv.addEventListener('change', this.handleFiles, false);
-  },
-  computed: {
-    ...mapGetters({
-      error: 'lists/error'
-    })
   },
   methods: {
     ...mapActions({
@@ -141,23 +135,18 @@ export default {
         });
       }
     },
-    importWorkbook () {
+    importWorkbook: function () {
       const { filename, contacts } = this;
+      const vm = this;
       // create a new list
       if (this.certify) {
-        this.createNewList({
-          name: filename
-        })
-          .then(data => {
-            // add contacts to the new list
-            this.error = '';
-            this.addContacts({
-              listId: data.id,
-              contacts
-            })
-              .then(data => this.error = '');
-          });
+        this.createNewList({ name: filename }).then(function(data) {
+          vm.addContactsToAList(data.id, contacts);
+        });
       }
+    },
+    addContactsToAList: function (listId, contacts) {
+      this.addContacts({ listId, contacts });
     }
   }
 }
