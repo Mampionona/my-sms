@@ -10,10 +10,10 @@
                 :list="lists" 
                 option-value="id" 
                 option-text="name" 
-                v-model="to" 
+                v-model="to"
                 placeholder="Sélectionner un fichier"
               ></model-list-select>
-              <p v-if="countContacts > 0" class="small mt-4">{{ $tc('redaction.countContacts', countContacts) }}</p>
+              <p v-if="countContacts > 0 && to" class="small mt-4">{{ $tc('redaction.countContacts', countContacts) }}</p>
             </div>
           </div>
           <div class="card">
@@ -82,7 +82,7 @@
       <div class="row">
         <div class="col">
           <div class="text-right pr-3">
-            <button class="btn btn-secondary">Envoyer un test</button>
+            <button class="btn btn-secondary" type="button">Envoyer un test</button>
             <button class="btn btn-primary" type="submit">Terminer</button>
           </div>
         </div>
@@ -145,7 +145,7 @@ export default {
 
       this.getContactsOfList(listId);
     },
-    '$route': 'routeChanged'
+    '$route': 'populateCampainFields'
   },
   computed: {
     ...mapGetters({
@@ -197,6 +197,7 @@ export default {
     populateCampainFields () {
       const vm = this;
       const query = vm.$route.query;
+      
       // Fetch user's campaigns
       this.getUserCampaigns().then(() => {
         if (!!this.drafts.length && 'campaign_id' in query) {
@@ -214,9 +215,6 @@ export default {
       if (!('campaign_id' in this.$route.query)) {
         this.senderName = this.to = this.text = '';
       }
-    },
-    routeChanged () {
-      this.populateCampainFields();
     }
   }
 }
