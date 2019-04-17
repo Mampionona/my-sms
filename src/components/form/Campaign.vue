@@ -102,10 +102,10 @@ export default {
     campaign: {
       type: Object
     },
-    action: {
-      default: 'new',
-      type: String
-    },
+    // action: {
+    //   default: 'new',
+    //   type: String
+    // },
     pending: Function,
     complete: Function,
     fail: Function
@@ -127,6 +127,7 @@ export default {
   mounted () {
     // Get a user's lists
     this.getUserLists();
+    this.populateCampainFields();
   },
   watch: {
     text (newText) {
@@ -143,27 +144,31 @@ export default {
       });
 
       this.getContactsOfList(listId);
-    }
+    },
+    '$route': 'routeChanged'
   },
   computed: {
     ...mapGetters({
       lists:'lists/lists',
-      countContacts: 'contacts/count'
+      countContacts: 'contacts/count',
+      drafts: 'campaign/drafts'
     })
   },
   methods: {
     ...mapActions({
       getUserLists: 'lists/getUserLists',
       createOrUpdateCampaign: 'campaign/createNewCampaign',
-      getContactsOfList: 'contacts/getContactsOfList'
+      getContactsOfList: 'contacts/getContactsOfList',
+      getUserCampaigns: 'campaign/getUserCampaigns'
     }),
     dateChange (currentValue) {
       this.sendDate = currentValue.toISOString();
     },
     submitCampaign () {
-      const { listId, name, text, senderName, sendingMode, action } = this;
+      const { listId, name, text, senderName, sendingMode } = this;
+      const action = 'campaign_id' in this.$route.query ? 'update' : 'new';
+      const campaignId = 'campaign_id' in this.$route.query ? this.$route.query.campaign_id : null;
       let { sendDate, status } = this;
-      const campaignId = ('object' === typeof campaign) ? campaign.id : null;
       sendDate = (sendingMode === 'immediate') ? '' : sendDate;
       status = status ? 'draft': 'live';
 
@@ -183,11 +188,35 @@ export default {
           }
         })
         .catch(error => {
-          alert(error.data.error)
+          alert('object' === typeof error.data ? error.data.error : error.data);
           if (this.fail) {
             this.fail(error);
           }
         });
+    },
+    populateCampainFields () {
+      const vm = this;
+      const query = vm.$route.query;
+      // Fetch user's campaigns
+      this.getUserCampaigns().then(() => {
+        if (!!this.drafts.length && 'campaign_id' in query) {
+          this.drafts.forEach(draft => {
+            if (draft.id == query.campaign_id) {
+              vm.senderName = draft.sender_name;
+              vm.to = draft.list_id;
+              vm.text = draft.text;
+            }
+          });
+        }
+      });
+
+      // !isset(query[campaign_id])
+      if (!('campaign_id' in this.$route.query)) {
+        this.senderName = this.to = this.text = '';
+      }
+    },
+    routeChanged () {
+      this.populateCampainFields();
     }
   }
 }

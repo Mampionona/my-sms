@@ -1,4 +1,5 @@
 import { doAsync, createAsyncMutation } from '@/utils';
+import { campaigns } from '@/mock-data';
 
 const CREATE_OR_UPDATE_CAMPAIGN = createAsyncMutation('CREATE_OR_UPDATE_CAMPAIGN');
 const GET_USER_CAMPAIGNS = createAsyncMutation('GET_USER_CAMPAIGNS');
@@ -8,10 +9,9 @@ const state = {
 };
 
 const getters = {
-  campaigns: state => state.campaigns
+  campaigns: state => state.campaigns,
+  drafts: state => state.campaigns.filter(campaign => campaign.status === 'draft')
 };
-
-let nextCampaignId = 0;
 
 const mutations = {
   // create or update campaign
@@ -30,25 +30,7 @@ const mutations = {
   },
   [GET_USER_CAMPAIGNS.SUCCESS] (state, payload) {
     // state.campaigns = payload;
-    for (let i = 1; i < 10; i++) {
-      state.campaigns.push({
-        "id": nextCampaignId++,
-        "user_id": 1,
-        "list_id": 2,
-        "name": "Campgne de Ouf",
-        "text": "lol 😎",
-        "send_date": "2022-10-21T01:24:15.000Z",
-        "sender_name": "Buzut",
-        "messages": null,
-        "sms": null,
-        "net_err": null,
-        "waiting": null,
-        "npai": null,
-        "expired": null,
-        "received": null,
-        "status": "draft"
-      });
-    }
+    state.campaigns = campaigns;
   },
   [GET_USER_CAMPAIGNS.FAILURE] (state) {
 

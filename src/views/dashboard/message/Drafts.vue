@@ -35,12 +35,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      campaigns: 'campaign/campaigns'
-    }),
-    drafts () {
-      // return campaigns marked as draft
-      return this.campaigns.filter(campaign => campaign.status === 'draft');
-    }
+      drafts: 'campaign/drafts'
+    })
   },
   methods: {
     ...mapActions({
@@ -54,12 +50,7 @@ export default {
     }) {
       this.$router.push({
         name: 'message.redaction',
-        query: {
-          campaign_id: id,
-          list_id,
-          status,
-          sender_name
-        }
+        query: { campaign_id: id }
       });
     }
   }
