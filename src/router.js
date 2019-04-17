@@ -89,6 +89,24 @@ const router = new Router({
           },
           component: () => import('./views/dashboard/message/Drafts.vue')
         },
+        {
+          path: 'message/list',
+          name: 'message.list',
+          meta: {
+            requiresAuth: true,
+            layout: 'connected'
+          },
+          component: () => import('./views/dashboard/message/List.vue')
+        },
+        {
+          path: 'message/scheduled',
+          name: 'message.scheduled',
+          meta: {
+            requiresAuth: true,
+            layout: 'connected'
+          },
+          component: () => import('./views/dashboard/message/Scheduled.vue')
+        },
       ]
     }, {
       path: '*',

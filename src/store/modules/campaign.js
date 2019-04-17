@@ -9,8 +9,14 @@ const state = {
 };
 
 const getters = {
+  // all campaigns
   campaigns: state => state.campaigns,
-  drafts: state => state.campaigns.filter(campaign => campaign.status === 'draft')
+  // all campaigns marked as draft
+  drafts: state => state.campaigns.filter(campaign => campaign.status === 'draft'),
+  // all campaigns marked as sent
+  sent: state => state.campaigns.filter(campaign => false),
+  // all campaigns marked as scheduled
+  scheduled: state => state.campaigns.filter(campaign => false)
 };
 
 const mutations = {

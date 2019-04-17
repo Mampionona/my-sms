@@ -6,7 +6,7 @@
           <router-link class="btn btn-primary" :to="{ name: 'message.redaction' }">Créer une campaigne</router-link>
         </div>
         <div class="card-body">
-          <messages :click-callback="onClickCallback" :messages="drafts">Aucun brouillons</messages>
+          <messages :click-callback="onMessageClick" :messages="sent" component="message">Aucun envois effectués</messages>
         </div>
       </div>
     </div>
@@ -17,29 +17,21 @@ import Messages from '@/components/Messages';
 import { mapActions, mapGetters } from 'vuex';
 export default {
   components: { Messages },
-  mounted () {
-    this.getUserCampaigns();
-  },
   computed: {
     ...mapGetters({
-      drafts: 'campaign/drafts'
+      sent: 'campaign/sent'
     })
   },
   methods: {
     ...mapActions({
       getUserCampaigns: 'campaign/getUserCampaigns'
     }),
-    onClickCallback ({
-      id,
-      list_id,
-      status,
-      sender_name
-    }) {
-      this.$router.push({
-        name: 'message.redaction',
-        query: { campaign_id: id }
-      });
+    onMessageClick (message) {
+      // console.log(message);
     }
+  },
+  mounted () {
+    this.getUserCampaigns();
   }
 }
 </script>
