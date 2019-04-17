@@ -106,6 +106,7 @@ export default {
       default: 'new',
       type: String
     },
+    pending: Function,
     complete: Function,
     fail: Function
   },
@@ -165,6 +166,10 @@ export default {
       const campaignId = ('object' === typeof campaign) ? campaign.id : null;
       sendDate = (sendingMode === 'immediate') ? '' : sendDate;
       status = status ? 'draft': 'live';
+
+      if (this.pending) {
+        this.pending();
+      }
 
       this.createOrUpdateCampaign({ action, listId, name, text, senderName, sendDate, status, campaignId })
         .then((data) => {
