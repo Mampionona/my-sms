@@ -1,5 +1,5 @@
 import { doAsync, createAsyncMutation } from '@/utils';
-import { campaigns } from '@/mock-data';
+// import { campaigns } from '@/mock-data';
 
 const CREATE_OR_UPDATE_CAMPAIGN = createAsyncMutation('CREATE_OR_UPDATE_CAMPAIGN');
 const GET_USER_CAMPAIGNS = createAsyncMutation('GET_USER_CAMPAIGNS');
@@ -35,8 +35,7 @@ const mutations = {
 
   },
   [GET_USER_CAMPAIGNS.SUCCESS] (state, payload) {
-    // state.campaigns = payload;
-    state.campaigns = campaigns;
+    state.campaigns = payload;
   },
   [GET_USER_CAMPAIGNS.FAILURE] (state) {
 

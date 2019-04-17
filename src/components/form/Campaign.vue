@@ -1,7 +1,7 @@
 <template>
   <div class="campaign-form">
     <form @submit.prevent="submitCampaign" class="pb-5">
-      <div class="row">
+      <div class="row custom-row">
         <div class="col-lg-4">
           <div class="card">
             <div class="card-header"><i class="far fa-comment mr-2"></i> Nom de la campagne</div>
@@ -28,15 +28,15 @@
           <div class="card">
             <div class="card-header"><i class="fas fa-envelope-open mr-2"></i> Votre message</div>
             <div class="card-body">
-              <div class="p-2 border">
+              <div class="pt-2 px-2 border">
                 <textarea-autosize
                   placeholder="Votre message..."
                   v-model="text"
-                  :min-height="129"
-                  :max-height="210"
-                  class="form-control-plaintext small"
+                  :min-height="150"
+                  :max-height="220"
+                  class="form-control-plaintext message pt-0"
                 ></textarea-autosize>
-                <p class="small text-right">
+                <p class="small text-right mb-1">
                   <strong>{{ countSMS }}</strong> SMS - {{ $tc("remainingChars", remainingChars) }} <strong>{{ remainingChars }}</strong>
                 </p>
               </div>
@@ -202,6 +202,7 @@ export default {
               vm.senderName = draft.sender_name;
               vm.listId = draft.list_id;
               vm.text = draft.text;
+              vm.name = draft.name;
             }
           });
         }
@@ -219,5 +220,9 @@ export default {
 .mx-input {
   height: calc(2.75rem + 2px);
   line-height: 1.5;
+}
+
+.message {
+  font-size: 14px;
 }
 </style>
