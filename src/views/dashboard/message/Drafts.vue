@@ -55,7 +55,7 @@ export default {
       this.$router.push({
         name: 'message.redaction',
         query: {
-          id,
+          campaign_id: id,
           list_id,
           status,
           sender_name
