@@ -1,6 +1,6 @@
 import { doAsync, createAsyncMutation } from '@/utils';
 
-const CREATE_NEW_CAMPAIGN = createAsyncMutation('CREATE_NEW_CAMPAIGN');
+const CREATE_OR_UPDATE_CAMPAIGN = createAsyncMutation('CREATE_OR_UPDATE_CAMPAIGN');
 
 const state = {
   campaigns: []
@@ -11,13 +11,13 @@ const getters = {
 };
 
 const mutations = {
-  [CREATE_NEW_CAMPAIGN.PENDING] (state) {
+  [CREATE_OR_UPDATE_CAMPAIGN.PENDING] (state) {
     //
   },
-  [CREATE_NEW_CAMPAIGN.SUCCESS] (state, payload) {
+  [CREATE_OR_UPDATE_CAMPAIGN.SUCCESS] (state, payload) {
     //
   },
-  [CREATE_NEW_CAMPAIGN.FAILURE] (state, payload) {
+  [CREATE_OR_UPDATE_CAMPAIGN.FAILURE] (state, payload) {
     // console.log(payload)
   }
 };
@@ -33,11 +33,13 @@ const actions = {
    * @return {Promise}
    */
   createNewCampaign (context, campaign) {
+    const url = campaign.action === 'new' ? `/campaigns` : `/campaigns/${campaign.campaignId}`;
+    const method = campaign.action === 'new' ? 'post' : 'patch';
     return doAsync(context, {
-      url: '/campaigns',
+      url,
       data: { campaign },
-      method: 'post',
-      mutationTypes: CREATE_NEW_CAMPAIGN
+      method,
+      mutationTypes: CREATE_OR_UPDATE_CAMPAIGN
     });
   }
 };
