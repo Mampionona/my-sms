@@ -4,7 +4,7 @@ import 'moment/locale/fr';
 
 Moment.locale('fr');
 // Date
-Vue.filter('full', date => Moment(date, 'YYYYMMDD H:mm:ss').format('DD-MM-YYYY à H:mm:ss'));
+Vue.filter('full', date => Moment(date, 'YYYYMMDD H:mm:ss').format('DD-MM-YYYY à HH:mm'));
 Vue.filter('ago', date => Moment(date, 'YYYYMMDD H:mm:ss').fromNow());
 // String
 Vue.filter('capitalize', str => str.charAt(0).toUpperCase() + str.slice(1));
