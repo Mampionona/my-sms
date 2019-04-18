@@ -1,4 +1,4 @@
-import { doAsync, createAsyncMutation } from '@/utils';
+import { doAsync, createAsyncMutation } from '@/async-utils';
 
 const GET_LISTS = createAsyncMutation('GET_LISTS');
 const UPDATE_NAME = createAsyncMutation('UPDATE_NAME');
@@ -16,7 +16,7 @@ export default {
     error: state => state.error
   },
   mutations: {
-    [GET_LISTS.PENDING] (state) {},
+    [GET_LISTS.PENDING] () {},
     [GET_LISTS.SUCCESS] (state, payload) {
       state.lists = payload;
     },
@@ -24,15 +24,13 @@ export default {
       state.error = payload.data;
     },
     // update list name
-    [UPDATE_NAME.PENDING] (state) {},
-    [UPDATE_NAME.SUCCESS] (state, payload) {
-
-    },
+    [UPDATE_NAME.PENDING] () {},
+    [UPDATE_NAME.SUCCESS] () {},
     [UPDATE_NAME.FAILURE] (state, payload) {
       state.error = payload.data;
     },
     // create a new list
-    [CREATE_NEW_LIST.PENDING] (state) {},
+    [CREATE_NEW_LIST.PENDING] () {},
     [CREATE_NEW_LIST.SUCCESS] (state, payload) {
       state.newListId = payload.id;
     },

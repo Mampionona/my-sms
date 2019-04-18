@@ -1,4 +1,4 @@
-import { doAsync, createAsyncMutation } from '@/utils';
+import { doAsync, createAsyncMutation } from '@/async-utils';
 
 const GET_PLANS = createAsyncMutation('GET_PLANS');
 

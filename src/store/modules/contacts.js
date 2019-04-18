@@ -1,4 +1,4 @@
-import { doAsync, createAsyncMutation } from '@/utils';
+import { doAsync, createAsyncMutation } from '@/async-utils';
 
 const LIST_ID = 'LIST_ID';
 const CONTACTS_COUNT = 'CONTACTS_COUNT';
@@ -27,21 +27,19 @@ export default {
       state.count = count;
     },
     // get contacts
-    [GET_CONTACTS.PENDING] (state) {},
+    [GET_CONTACTS.PENDING] () {},
     [GET_CONTACTS.SUCCESS] (state, payload) {
       state.contactsOfList = payload;
     },
-    [GET_CONTACTS.FAILURE] (state) {},
+    [GET_CONTACTS.FAILURE] () {},
     // add contact to a list
-    [ADD_CONTACTS.PENDING] (state) {},
-    [ADD_CONTACTS.SUCCESS] (state, payload) {
-      console.log(payload);
-    },
-    [ADD_CONTACTS.FAILURE] (state) {},
+    [ADD_CONTACTS.PENDING] () {},
+    [ADD_CONTACTS.SUCCESS] () {},
+    [ADD_CONTACTS.FAILURE] () {},
     // remove a contact from a list
-    [REMOVE_CONTACT_FROM_A_LIST.PENDING] (state) {},
-    [REMOVE_CONTACT_FROM_A_LIST.SUCCESS] (state) {},
-    [REMOVE_CONTACT_FROM_A_LIST.FAILURE] (state) {},
+    [REMOVE_CONTACT_FROM_A_LIST.PENDING] () {},
+    [REMOVE_CONTACT_FROM_A_LIST.SUCCESS] () {},
+    [REMOVE_CONTACT_FROM_A_LIST.FAILURE] () {},
   },
   actions: {
     getContactsOfList(context, id) {

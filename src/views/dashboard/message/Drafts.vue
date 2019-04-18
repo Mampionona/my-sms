@@ -22,19 +22,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      drafts: 'campaign/drafts'
+      drafts: 'campaigns/drafts'
     })
   },
   methods: {
     ...mapActions({
-      getUserCampaigns: 'campaign/getUserCampaigns'
+      getUserCampaigns: 'campaigns/getUserCampaigns'
     }),
-    onClickCallback ({
-      id,
-      list_id,
-      status,
-      sender_name
-    }) {
+    onClickCallback ({ id }) {
       this.$router.push({
         name: 'message.redaction',
         query: { campaign_id: id }

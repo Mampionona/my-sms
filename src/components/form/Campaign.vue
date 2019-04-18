@@ -147,15 +147,15 @@ export default {
     ...mapGetters({
       lists:'lists/lists',
       countContacts: 'contacts/count',
-      drafts: 'campaign/drafts'
+      drafts: 'campaigns/drafts'
     })
   },
   methods: {
     ...mapActions({
       getUserLists: 'lists/getUserLists',
-      createOrUpdateCampaign: 'campaign/createNewCampaign',
+      createOrUpdateCampaign: 'campaigns/createNewCampaign',
       getContactsOfList: 'contacts/getContactsOfList',
-      getUserCampaigns: 'campaign/getUserCampaigns'
+      getUserCampaigns: 'campaigns/getUserCampaigns'
     }),
     dateChange (currentValue) {
       this.sendDate = currentValue.toISOString();

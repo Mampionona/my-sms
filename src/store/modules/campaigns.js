@@ -1,4 +1,4 @@
-import { doAsync, createAsyncMutation } from '@/utils';
+import { doAsync, createAsyncMutation } from '@/async-utils';
 // import { campaigns } from '@/mock-data';
 
 const CREATE_OR_UPDATE_CAMPAIGN = createAsyncMutation('CREATE_OR_UPDATE_CAMPAIGN');
@@ -14,32 +14,22 @@ const getters = {
   // all campaigns marked as draft
   drafts: state => state.campaigns.filter(campaign => campaign.status === 'draft'),
   // all campaigns marked as sent
-  sent: state => state.campaigns.filter(campaign => false),
+  sent: state => state.campaigns.filter(() => false),
   // all campaigns marked as scheduled
-  scheduled: state => state.campaigns.filter(campaign => false)
+  scheduled: state => state.campaigns.filter(() => false)
 };
 
 const mutations = {
   // create or update campaign
-  [CREATE_OR_UPDATE_CAMPAIGN.PENDING] (state) {
-    //
-  },
-  [CREATE_OR_UPDATE_CAMPAIGN.SUCCESS] (state, payload) {
-    //
-  },
-  [CREATE_OR_UPDATE_CAMPAIGN.FAILURE] (state, payload) {
-    // console.log(payload)
-  },
+  [CREATE_OR_UPDATE_CAMPAIGN.PENDING] () {},
+  [CREATE_OR_UPDATE_CAMPAIGN.SUCCESS] () {},
+  [CREATE_OR_UPDATE_CAMPAIGN.FAILURE] () {},
   // get user's campaign
-  [GET_USER_CAMPAIGNS.PENDING] (state) {
-
-  },
+  [GET_USER_CAMPAIGNS.PENDING] () {},
   [GET_USER_CAMPAIGNS.SUCCESS] (state, payload) {
     state.campaigns = payload;
   },
-  [GET_USER_CAMPAIGNS.FAILURE] (state) {
-
-  },
+  [GET_USER_CAMPAIGNS.FAILURE] () {},
 };
 
 const actions = {

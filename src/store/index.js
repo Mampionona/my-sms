@@ -1,9 +1,9 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
-import { layout, auth, lists, contacts, campaign, plans } from './modules';
+import { layout, auth, lists, contacts, campaigns, plans } from './modules';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: { layout, auth, lists, contacts, campaign, plans }
+  modules: { layout, auth, lists, contacts, campaigns, plans }
 });

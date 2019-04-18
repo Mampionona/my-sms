@@ -19,14 +19,14 @@ export default {
   components: { Messages },
   computed: {
     ...mapGetters({
-      sent: 'campaign/sent'
+      sent: 'campaigns/sent'
     })
   },
   methods: {
     ...mapActions({
-      getUserCampaigns: 'campaign/getUserCampaigns'
+      getUserCampaigns: 'campaigns/getUserCampaigns'
     }),
-    onMessageClick (message) {
+    onMessageClick () {
       // console.log(message);
     }
   },

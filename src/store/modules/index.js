@@ -2,7 +2,7 @@ import layout from './layout';
 import auth from './auth';
 import lists from './lists';
 import contacts from './contacts';
-import campaign from './campaign';
+import campaigns from './campaigns';
 import plans from './plans';
 
 export {
@@ -10,6 +10,6 @@ export {
   auth,
   lists,
   contacts,
-  campaign,
+  campaigns,
   plans
 };
