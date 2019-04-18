@@ -16,6 +16,9 @@
                   <input type="file" hidden ref="csv">
                 </label>
               </div>
+              <p class="mt-4 mb-0 text-sm" v-if="selectedFile">
+                <strong>Fichier sélectionné :</strong> {{ filename }} <a href="#" @click.prevent="dismissFile"><i class="fas fa-trash"></i></a>
+              </p>
             </div>
           </div>
           <div class="alert alert-info" role="alert">
@@ -75,7 +78,8 @@ export default {
       publicPath: process.env.BASE_URL,
       certify: false,
       filename: '',
-      contacts: []
+      contacts: [],
+      selectedFile: false
     };
   },
   mounted () {
@@ -147,6 +151,17 @@ export default {
     },
     addContactsToAList: function (listId, contacts) {
       this.addContacts({ listId, contacts });
+    },
+    dismissFile () {
+      this.selectedFile = false;
+      this.contacts = [];
+      this.filename = '';
+    }
+  },
+  watch: {
+    filename (newFilename) {
+      // alert(newFilename);
+      this.selectedFile = newFilename;
     }
   }
 }
