@@ -139,7 +139,6 @@ export default {
       this.remainingChars = computeRemainingChars(this.countSMS, newText.length);
     },
     listId (newListId) {
-      const vm = this;
       this.getContactsOfList(newListId);
     },
     '$route': 'populateCampainFields'
