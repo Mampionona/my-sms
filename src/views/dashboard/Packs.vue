@@ -14,12 +14,13 @@
             <plan v-for="plan in selectedPlan" :key="plan.id" :plan="plan"></plan>
           </tbody>
         </v-table>
+        <hr v-if="selectedPlan.length > 0">
         <div class="card-body">
           <div class="row">
             <div class="col-lg-4">
               <div class="form-group">
                 <label for="number-of-sms" class="form-control-label">Combien de SMS désirez-vous envoyer ?</label>
-                <input class="form-control" type="number" id="number-of-sms" min="0" v-model="numberOfSMS">
+                <input class="form-control" type="number" id="number-of-sms" min="0" placeholder="Nombre de SMS" v-model="numberOfSMS">
               </div>
               <button v-if="displayButton" class="ml-2 btn btn-primary" @click.prevent="processPayment">{{ buttonLabel }}</button>
             </div>
@@ -54,8 +55,7 @@ export default {
   },
   mounted () {
     this.getPlans().then(plans => {
-      this.plans = plans;
-      this.selectedPlan = plans;
+      this.plans = this.selectedPlan = plans;
     });
   },
   watch: {
