@@ -4,7 +4,7 @@
       <div class="row custom-row">
         <div class="col-lg-4">
           <div class="card">
-            <div class="card-header"><i class="far fa-comment mr-2"></i> Nom de la campagne</div>
+            <div class="card-header"><i class="ni ni-chat-round mr-2"></i> Nom de la campagne</div>
             <div class="card-body">
               <input type="text" class="form-control" v-model="name" placeholder="Nom de la campagne">
             </div>
