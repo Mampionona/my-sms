@@ -8,6 +8,9 @@
         </router-link>
       </li>
       <li class="nav-item">
+        <router-link class="nav-link" :to="{ name: 'packs' }"><i class="ni ni-credit-card"></i> Acheter des SMS</router-link>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="#base-contacts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="base-contacts">
           <i class="ni ni-ungroup"></i>
           <span class="nav-link-text">Base de contacts</span>

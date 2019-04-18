@@ -105,6 +105,15 @@ const router = new Router({
           },
           component: () => import('./views/dashboard/message/Scheduled')
         },
+        {
+          path: 'packs',
+          name: 'packs',
+          meta: {
+            requiresAuth: true,
+            layout: 'dashboard-layout'
+          },
+          component: () => import('./views/dashboard/Packs')
+        },
       ]
     }, {
       path: '*',

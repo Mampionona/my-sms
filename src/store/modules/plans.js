@@ -11,8 +11,14 @@ const getters = {
 };
 
 const mutations = {
+  [GET_PLANS.PENDING] () {
+    // 
+  },
   [GET_PLANS.SUCCESS] (state, payload) {
     state.plans = payload;
+  },
+  [GET_PLANS.FAILURE] () {
+    // 
   }
 };
 
@@ -20,7 +26,7 @@ const actions = {
   getPlans (context) {
     return doAsync(context, {
       url: '/plans',
-      mutationsTypes: GET_PLANS
+      mutationTypes: GET_PLANS
     });
   },
   updatePlan (context, planId) {

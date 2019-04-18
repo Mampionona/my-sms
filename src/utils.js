@@ -29,19 +29,16 @@ export const createAsyncMutation = type => ({
 });
 
 export function doAsync(context, { url, method = 'get', mutationTypes = null, data = {} }) {
-  if (mutationTypes.PENDING)
-    context.commit(mutationTypes.PENDING);
+  context.commit(mutationTypes.PENDING);
   return new Promise((resolve, reject) => {
     // url = `${url}?timestamp=${new Date().getTime()}`;
     Axios[method](url, data)
       .then(({ data }) => {
-        if (mutationTypes.SUCCESS)
-          context.commit(mutationTypes.SUCCESS, data);
+        context.commit(mutationTypes.SUCCESS, data);
         resolve(data);
       })
       .catch(({ response }) => {
-        if (mutationTypes.FAILURE)
-          context.commit(mutationTypes.FAILURE, response);
+        context.commit(mutationTypes.FAILURE, response);
         reject(response);
       });
   });
