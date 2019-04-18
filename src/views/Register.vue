@@ -1,17 +1,13 @@
 <template>
   <div>
-    <page-header>
-      <template slot="title">Create an account</template>
-      <template slot="text">Use these awesome forms to login or create new account in your project for free.</template>
-    </page-header>
-
+    <page-header></page-header>
     <div class="container mt--8 pb-5">
       <div class="row justify-content-center">
         <div class="col-lg-6 col-md-8">
             <div class="card bg-secondary border-0">
               <div class="card-body px-lg-5 py-lg-5">
                 <div class="text-center text-muted mb-4">
-                  <small>Sign up with credentials</small>
+                  <h1>Créer un nouveau compte</h1>
                 </div>
                 <form role="form" @submit.prevent="onSubmit">
                   <form-group>
@@ -66,13 +62,12 @@
                     <i slot="icon" class="ni ni-lock-circle-open"></i>
                     <input slot="input" class="form-control" placeholder="Mot de passe" type="password" v-model="password" autocomplete="new-password">
                   </form-group>                  
-                  <!-- <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div> -->
                   <div class="row my-4">
                     <div class="col-12">
                       <div class="custom-control custom-control-alternative custom-checkbox">
-                        <input class="custom-control-input" id="customCheckRegister" type="checkbox">
+                        <input class="custom-control-input" id="customCheckRegister" type="checkbox" v-model="privacy">
                         <label class="custom-control-label" for="customCheckRegister">
-                          <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
+                          <span class="text-muted">J'accèpte la politique <a href="#!">de Confidentialité</a></span>
                         </label>
                       </div>
                     </div>
@@ -85,7 +80,7 @@
                   <alert v-if="hasError" class="mt-5" color="warning" icon="fas fa-exclamation-triangle">{{ errorMessage }}</alert>
                   
                   <div class="text-center">
-                    <button type="submit" class="btn btn-primary mt-4">Create account</button>
+                    <button type="submit" :disabled="!privacy" class="btn btn-primary mt-4">Créer le compte</button>
                   </div>
                 </form>
               </div>
@@ -121,7 +116,8 @@ export default {
       telephone: '',
       mobile: '',
       email: '',
-      password: ''
+      password: '',
+      privacy: false
     };
   },
   methods: {

@@ -1,17 +1,13 @@
 <template>
   <div>
-    <page-header>
-      <template slot="title">Connexion</template>
-      <template slot="text">Magni officiis odio laboriosam eum eos consequatur praesentium.</template>
-    </page-header>
-    
+    <page-header></page-header>    
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
           <div class="col-lg-5 col-md-7">
             <div class="card bg-secondary border-0 mb-0">
               <div class="card-body px-lg-5 py-lg-5">
                 <div class="text-center text-muted mb-4">
-                  <small>Sign in with credentials</small>
+                  <h1>Connexion à votre compte</h1>
                 </div>
                 <form role="form" @submit.prevent="onSubmit">
                   <form-group class="mb-3">
@@ -25,7 +21,7 @@
                   <div class="custom-control custom-control-alternative custom-checkbox">
                     <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
                     <label class="custom-control-label" for=" customCheckLogin">
-                      <span class="text-muted">Remember me</span>
+                      <span class="text-muted">Rester connecté</span>
                     </label>
                   </div>
                   <div class="text-center" v-if="isLoading">
@@ -33,17 +29,17 @@
                   </div>
                   <alert v-if="hasError" class="mt-5" color="warning" icon="fas fa-exclamation-triangle">{{ errorMessage }}</alert>
                   <div class="text-center">
-                    <button type="submit" class="btn btn-primary my-4">Sign in</button>
+                    <button type="submit" class="btn btn-primary my-4">Connexion</button>
                   </div>
                 </form>
               </div>
             </div>
             <div class="row mt-3">
               <div class="col-6">
-                <a href="#" class="text-light"><small>Forgot password?</small></a>
+                <a href="#" class="text-light"><small>Mot de passe oublié ?</small></a>
               </div>
               <div class="col-6 text-right">
-                <router-link :to="{ name: 'register' }" class="text-light"><small>Create new account</small></router-link>
+                <router-link :to="{ name: 'register' }" class="text-light"><small>Créer un compte</small></router-link>
               </div>
             </div>
           </div>
