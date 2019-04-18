@@ -16,3 +16,19 @@
     }
   }
 }
+
+.bg-default {
+  background: url('../images/phone.jpg') fixed no-repeat center;
+  position: relative;
+
+  &::before {
+    background-color: rgba(0,0,0,.2);
+    content: '';
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}

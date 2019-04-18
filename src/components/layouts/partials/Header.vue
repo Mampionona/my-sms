@@ -12,10 +12,8 @@
   </nav>
 </template>
 <script>
-import Navbar from './Navbar';
+import Navbar from '@/components/layouts/partials/Navbar';
 export default {
-  components: {
-    Navbar
-  }
+  components: { Navbar }
 }
 </script>

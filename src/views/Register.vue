@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="register">
     <page-header></page-header>
     <div class="container mt--8 pb-5">
       <div class="row justify-content-center">
