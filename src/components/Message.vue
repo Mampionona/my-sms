@@ -10,10 +10,10 @@
   </tr>
 </template>
 <script>
-import vBtn from '@/components/vBtn';
+// import vBtn from '@/components/vBtn';
 
 export default {
-  components: { vBtn },
+  // components: { vBtn },
   props: {
     campaign: {
       required: true,

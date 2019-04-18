@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
+import Home from './views/Home';
 import * as auth from './api/auth';
+import store from '@/store';
 
 Vue.use(Router);
 
@@ -17,19 +18,16 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('./views/Login.vue')
+      component: () => import('./views/Login')
     },
     {
       path: '/register',
       name: 'register',
-      component: () => import('./views/Register.vue')
+      component: () => import('./views/Register')
     },
     {
       path: '/dashboard',
-      component: () => import('./views/Dashboard.vue'),
+      component: () => import('./views/Dashboard'),
       meta: {
         requiresAuth: true
       },
@@ -39,9 +37,9 @@ const router = new Router({
           name: 'dashboard.index',
           meta: {
             requiresAuth: true,
-            layout: 'connected'
+            layout: 'dashboard-layout'
           },
-          component: () => import('./views/dashboard/Index.vue')
+          component: () => import('./views/dashboard/Index')
         },
         // Base de contacts
         {
@@ -49,75 +47,76 @@ const router = new Router({
           name: 'lists',
           meta: {
             requiresAuth: true,
-            layout: 'connected'
+            layout: 'dashboard-layout'
           },
-          component: () => import('./views/dashboard/Lists.vue')
+          component: () => import('./views/dashboard/Lists')
         },
         {
           path: 'lists/:listId([0-9]+)',
           name: 'contacts',
           meta: {
             requiresAuth: true,
-            layout: 'connected'
+            layout: 'dashboard-layout'
           },
-          component: () => import('./views/dashboard/Contacts.vue')
+          component: () => import('./views/dashboard/Contacts')
         },
         {
           path: 'lists/importer',
           name: 'list.import',
           meta: {
             requiresAuth: true,
-            layout: 'connected'
+            layout: 'dashboard-layout'
           },
-          component: () => import('./views/dashboard/ImportContacts.vue')
+          component: () => import('./views/dashboard/ImportContacts')
         },
         {
           path: 'message/redaction',
           name: 'message.redaction',
           meta: {
             requiresAuth: true,
-            layout: 'connected'
+            layout: 'dashboard-layout'
           },
-          component: () => import('./views/dashboard/message/Redaction.vue')
+          component: () => import('./views/dashboard/message/Redaction')
         },
         {
           path: 'message/drafts',
           name: 'message.drafts',
           meta: {
             requiresAuth: true,
-            layout: 'connected'
+            layout: 'dashboard-layout'
           },
-          component: () => import('./views/dashboard/message/Drafts.vue')
+          component: () => import('./views/dashboard/message/Drafts')
         },
         {
           path: 'message/list',
           name: 'message.list',
           meta: {
             requiresAuth: true,
-            layout: 'connected'
+            layout: 'dashboard-layout'
           },
-          component: () => import('./views/dashboard/message/List.vue')
+          component: () => import('./views/dashboard/message/List')
         },
         {
           path: 'message/scheduled',
           name: 'message.scheduled',
           meta: {
             requiresAuth: true,
-            layout: 'connected'
+            layout: 'dashboard-layout'
           },
-          component: () => import('./views/dashboard/message/Scheduled.vue')
+          component: () => import('./views/dashboard/message/Scheduled')
         },
       ]
     }, {
       path: '*',
       name: '404',
-      component: () => import('./views/404.vue')
+      component: () => import('./views/404')
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
+    store.dispatch('layout/setLayout', auth.isLoggedIn() ? to.meta.layout : 'default-layout');
     if (!auth.isLoggedIn()) {
       next({
         name: 'login',
@@ -127,7 +126,8 @@ router.beforeEach((to, from, next) => {
       next();
     }
   } else {
-    next(); // make sure to always call next()!
+    store.dispatch('layout/setLayout', 'default-layout');
+    next();
   }
 });
 

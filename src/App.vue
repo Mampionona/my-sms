@@ -7,16 +7,16 @@
 </template>
 
 <script>
-import Connected from '@/components/layouts/Connected';
-import Default from '@/components/layouts/Default';
+import DashboardLayout from '@/components/layouts/DashboardLayout';
+import DefaultLayout from '@/components/layouts/DefaultLayout';
 import { mapGetters, mapActions } from 'vuex';
 
 const body = document.body;
 
 export default {
   components: {
-    Default,
-    Connected
+    DefaultLayout,
+    DashboardLayout
   },
   watch: {
     '$route': 'routeChanged'
@@ -35,15 +35,9 @@ export default {
     })
   },
   methods: {
-    ...mapActions({
-      setLayout: 'layout/setLayout',
-      getUser: 'auth/getUser'
-    }),
-    // Update application layout
+    ...mapActions({ getUser: 'auth/getUser' }),
     routeChanged () {
-      const layout = this.$route.meta.layout;
-      this.setLayout(layout || 'default');
-      layout ? body.classList.remove('bg-default') : body.classList.add('bg-default');
+      this.$route.meta.layout ? body.classList.remove('bg-default') : body.classList.add('bg-default');
       // this.$jQuery('.collapse.show').collapse('hide');
     }
   }
