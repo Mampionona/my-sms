@@ -103,6 +103,24 @@ module.exports = [
         },
         component: () => import('@/views/dashboard/Packs')
       },
+      {
+        path: 'inbox',
+        name: 'inbox',
+        meta: {
+          requiresAuth: true,
+          layout: 'dashboard-layout'
+        },
+        component: () => import('@/views/dashboard/message/Inbox')
+      },
+      {
+        path: 'inbox/:messageId([0-9]+)/receipt',
+        name: 'replies',
+        meta: {
+          requiresAuth: true,
+          layout: 'dashboard-layout'
+        },
+        component: () => import('@/views/dashboard/message/Detail')
+      },
     ]
   }, {
     path: '*',

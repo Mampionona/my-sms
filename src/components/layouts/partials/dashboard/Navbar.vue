@@ -58,6 +58,12 @@
           </ul>
         </div>
       </li>
+      <li class="nav-item">
+        <router-link :to="{ name: 'inbox' }" class="nav-link">
+          <i class="fas fa-inbox"></i>
+          <span class="nav-link-text">Boîte de réception</span>
+        </router-link>
+      </li>
     </ul>
   </div>
 </template>
