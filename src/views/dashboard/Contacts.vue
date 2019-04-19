@@ -3,7 +3,7 @@
     <div class="col-lg-4">
       <div class="card">
         <div class="p-3">
-          <form @submit.prevent="onSubmit">
+          <form @submit.prevent="updateListName">
             <div class="input-group mb-3">
               <input type="text" class="form-control" aria-label="Recipient's username" v-model="name">
               <div class="input-group-append">
@@ -36,7 +36,7 @@
               Actions
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#" @click.prevent>Supprimer</a>
+              <a class="dropdown-item" href="#" @click.prevent="deleteContacts">Supprimer</a>
               <a class="dropdown-item" href="#" @click.prevent>Activer/Désactiver</a>
             </div>
           </div>
@@ -56,7 +56,7 @@
             </tr>
           </thead>
           <tbody class="list">
-            <contact v-for="contact in contacts" :contact="contact" :key="contact.id" @remove-contact="removeContact">
+            <contact v-for="contact in contacts" :contact="contact" :key="contact.id" :delete-click-callback="onDelete">
               <div slot="foobar" class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" :id="`contact-${contact.id}`" :value="contact.id" v-model="selectedContacts">
                 <label class="custom-control-label" :for="`contact-${contact.id}`"></label>
@@ -109,16 +109,29 @@ export default {
     ...mapMutations({
       updateContacts: 'contacts/UPDATE_CONTACTS'
     }),
-    onSubmit () {
+    updateListName () {
       const { name } = this;
       this.updateListName({ id: this.$route.params.listId, name });
     },
+    onDelete ({ id }) {
+      this.deleteContact(id);
+    },
+    deleteContacts () {
+      this.selectedContacts.forEach(id => this.deleteContact(id));
+    },
+    // delete a contact from a list
+    deleteContact (id) {
+      this.remove({
+        listId: this.$route.params.listId,
+        contactId: id
+      })
+        .then(() => {
+          this.updateContacts(this.contacts.filter(contact => contact.id !== id));
+        });
+    },
+    // compose an SMS
     compose () {
       this.$router.push({ name: 'message.redaction', query: { listId: this.$route.params.listId } });
-    },
-    removeContact (contact) {
-      this.remove({ listId: this.$route.params.listId, contactId: contact.id })
-        .then(() => this.updateContacts(this.contacts.filter(({ id }) => id !== contact.id)));
     },
     add () {
       this.addContacts({

@@ -11,7 +11,8 @@
       </div>
     </th>
     <td class="text-right">
-      <v-btn icon="fas fa-trash-alt" color="danger" @click.native="$emit('remove-contact', contact)"></v-btn>
+      <!-- <v-btn icon="fas fa-trash-alt" color="danger" @click.native="$emit('remove-contact', contact)"></v-btn> -->
+      <v-btn icon="fas fa-trash-alt" color="danger" @click.native="onDelete(contact)"></v-btn>
       <v-btn icon="fas fa-pencil-alt" color="outline-secondary"></v-btn>
     </td>
   </tr>
@@ -25,6 +26,15 @@ export default {
     contact: {
       required: true,
       type: Object
+    },
+    deleteClickCallback: Function,
+    editClickCallback: Function
+  },
+  methods: {
+    onDelete (contact) {
+      if (this.deleteClickCallback) {
+        this.deleteClickCallback(contact);
+      }
     }
   }
 };
