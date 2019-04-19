@@ -5,6 +5,7 @@ import store from '@/store';
 import VueProgress from 'vue-progress-path';
 import i18n from './i18n';
 import VueTextareaAutosize from 'vue-textarea-autosize';
+import VueBreadcrumbs from 'vue-breadcrumbs';
 import './bootstrap';
 import './filters';
 // styles
@@ -13,6 +14,7 @@ import '@/assets/styles/argon.scss';
 
 Vue.use(VueTextareaAutosize);
 Vue.use(VueProgress);
+Vue.use(VueBreadcrumbs);
 Vue.config.productionTip = false;
 
 new Vue({

@@ -8173,6 +8173,11 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-breadcrumbs@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/vue-breadcrumbs/-/vue-breadcrumbs-1.2.0.tgz#7d33a4499e2448a3f0fb637d19885d7263dd257c"
+  integrity sha512-5vh3ZKQYfJK5NBJdgyB0fgLgsLQnabdrlRMh3kZVekUxHiYW1NskKCITGcnjbPUscwjys5isOb2Ts0+/6oHG7w==
+
 vue-cli-plugin-i18n@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/vue-cli-plugin-i18n/-/vue-cli-plugin-i18n-0.6.0.tgz#8b15a5e817b6f55a05e411a565f7f3c5bb86c16b"

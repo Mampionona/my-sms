@@ -12,6 +12,9 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  // document title
+  document.title = to.matched.some(record => record.meta.title) ? to.meta.title : '';
+  // route navigation guards
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!auth.isLoggedIn()) {
       next({
