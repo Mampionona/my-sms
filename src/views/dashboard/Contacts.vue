@@ -64,7 +64,7 @@ import vTable from '@/components/vTable';
 import Contact from '@/components/Contact';
 import vBtn from '@/components/vBtn';
 import Alert from '@/components/Alert';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
   components: { vTable, Contact, vBtn, Alert },
@@ -92,6 +92,9 @@ export default {
       remove: 'contacts/removeContact',
       addContacts: 'contacts/addContacts'
     }),
+    ...mapMutations({
+      updateContacts: 'contacts/UPDATE_CONTACTS'
+    }),
     onSubmit () {
       const { name } = this;
       this.updateListName({ id: this.$route.params.listId, name });
@@ -101,9 +104,7 @@ export default {
     },
     removeContact (contact) {
       this.remove({ listId: this.$route.params.listId, contactId: contact.id })
-        .then(() => {
-          alert('via')
-        })
+        .then(() => this.updateContacts(this.contacts.filter(({ id }) => id !== contact.id)));
     },
     add () {
       this.addContacts({

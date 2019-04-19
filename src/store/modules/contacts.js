@@ -1,10 +1,10 @@
 import { doAsync, createAsyncMutation } from '@/async-utils';
 
 const LIST_ID = 'LIST_ID';
-const CONTACTS_COUNT = 'CONTACTS_COUNT';
 const GET_CONTACTS = createAsyncMutation('GET_CONTACTS');
 const ADD_CONTACTS = createAsyncMutation('ADD_CONTACTS');
 const REMOVE_CONTACT_FROM_A_LIST = createAsyncMutation('REMOVE_CONTACT_FROM_A_LIST');
+const UPDATE_CONTACTS = 'UPDATE_CONTACTS';
 
 export default {
   namespaced: true,
@@ -16,15 +16,12 @@ export default {
   getters: {
     listId: state => state.listId,
     contacts: state => state.contactsOfList,
-    count: state => state.count
+    count: state => state.contactsOfList.length
   },
   mutations: {
     // set list id
     [LIST_ID] (state, id) {
       state.listId = id;
-    },
-    [CONTACTS_COUNT](state, count) {
-      state.count = count;
     },
     // get contacts
     [GET_CONTACTS.PENDING] () {},
@@ -40,6 +37,9 @@ export default {
     [REMOVE_CONTACT_FROM_A_LIST.PENDING] () {},
     [REMOVE_CONTACT_FROM_A_LIST.SUCCESS] () {},
     [REMOVE_CONTACT_FROM_A_LIST.FAILURE] () {},
+    [UPDATE_CONTACTS] (state, payload) {
+      state.contactsOfList = payload;
+    }
   },
   actions: {
     getContactsOfList(context, id) {
@@ -49,10 +49,7 @@ export default {
           url: `/contacts/lists/${id}`,
           mutationTypes: GET_CONTACTS
         })
-          .then(data => {
-            context.commit(CONTACTS_COUNT, data.length);
-            resolve(data);
-          })
+          .then(data => resolve(data))
           .catch(error => reject(error));
       });
     },
