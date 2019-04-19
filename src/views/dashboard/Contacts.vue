@@ -31,6 +31,15 @@
     <div class="col-lg-8">
       <div class="card">
         <div class="p-3">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Actions
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#" @click.prevent>Supprimer</a>
+              <a class="dropdown-item" href="#" @click.prevent>Activer/Désactiver</a>
+            </div>
+          </div>
           <v-btn color="primary" icon="fas fa-plus-square" @click.native="add">Ajouter un contact</v-btn>
         </div>
         <v-table>
