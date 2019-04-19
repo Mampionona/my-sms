@@ -46,7 +46,7 @@ export default {
       const layout = this.$route.meta.layout || 'default';
       this.setBodyClass();
       this.setLayout(`${layout}-layout`);
-      // this.$jQuery('.collapse.show').collapse('hide');
+      this.$jQuery('.collapse.show.closable').collapse('hide');
     }
   }
 }

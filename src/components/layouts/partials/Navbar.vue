@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse" ref="collapse">
+  <div class="navbar-collapse navbar-custom-collapse collapse closable" id="navbar-collapse" ref="collapse">
     <div class="navbar-collapse-header">
       <div class="row">
         <div class="col-6 collapse-brand">
