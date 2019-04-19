@@ -33,7 +33,13 @@
             </tr>
           </thead>
           <tbody class="list">
-            <List v-for="list in lists" :list="list" :key="list.id"/>
+            <List
+              v-for="list in lists"
+              :list="list"
+              :key="list.id"
+              :delete-click-callback="onDelete"
+              :show-click-callback="onShow"
+            />
           </tbody>
         </v-table>
       </div>
@@ -44,7 +50,7 @@
 import vTable from '@/components/vTable';
 import List from '@/components/List';
 import vBtn from '@/components/vBtn';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
   components: { vTable, List, vBtn },
@@ -64,10 +70,25 @@ export default {
   },
   methods: {
     ...mapActions({
-      getUserLists: 'lists/getUserLists'
+      getUserLists: 'lists/getUserLists',
+      deleteList: 'lists/deleteList'
+    }),
+    ...mapMutations({
+      updateLists: 'lists/UPDATE_LIST'
     }),
     search () {
       alert('searching ' + this.number)
+    },
+    onDelete (listId) {
+      if (confirm('Attention ! Les contacts rattachés à cette liste sera aussi supprimés.')) {
+        this.deleteList(listId).then(() => {
+          const newLists = this.lists.filter(({ id }) => id !== listId);
+          this.updateLists(newLists);
+        });
+      }
+    },
+    onShow (listId) {
+      this.$router.push({ name: 'contacts', params: { listId } });
     }
   }
 };

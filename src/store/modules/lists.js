@@ -3,6 +3,8 @@ import { doAsync, createAsyncMutation } from '@/async-utils';
 const GET_LISTS = createAsyncMutation('GET_LISTS');
 const UPDATE_NAME = createAsyncMutation('UPDATE_NAME');
 const CREATE_NEW_LIST = createAsyncMutation('CREATE_NEW_LIST');
+const DELETE_LIST = createAsyncMutation('DELETE_LIST');
+const UPDATE_LIST = 'UPDATE_LIST';
 
 export default {
   namespaced: true,
@@ -36,6 +38,13 @@ export default {
     },
     [CREATE_NEW_LIST.FAILURE] (state, payload) {
       state.error = payload.data;
+    },
+    // Delete a list
+    [DELETE_LIST.PENDING] (state) {},
+    [DELETE_LIST.SUCCESS] (state) {},
+    [DELETE_LIST.FAILURE] (state) {},
+    [UPDATE_LIST] (state, payload) {
+      state.lists = payload;
     }
   },
   actions: {
@@ -59,6 +68,13 @@ export default {
         method: 'post',
         data: { name },
         mutationTypes: CREATE_NEW_LIST
+      });
+    },
+    deleteList(context, listId) {
+      return doAsync(context, {
+        url: `/lists/${listId}/`,
+        method: 'delete',
+        mutationTypes: DELETE_LIST
       });
     }
   }

@@ -11,34 +11,32 @@
     <td>date</td>
     <td>non verifie</td>
     <td class="text-right">
-      <v-btn icon="fas fa-check-circle" color="primary"></v-btn>
-      <v-btn icon="fas fa-trash-alt" color="danger" @click.native="removeList(list.id)"></v-btn>
-      <v-btn icon="fas fa-bars" color="success" @click.native="showContacts(list.id)"></v-btn>
+      <button class="btn btn-primary"><i class="fas fa-check-circle"></i></button>
+      <button class="btn btn-danger" @click.prevent="deleteList(list.id)"><i class="fas fa-trash-alt"></i></button>
+      <button class="btn btn-success" @click.prevent="showList(list.id)"><i class="fas fa-bars"></i></button>
     </td>
   </tr>
 </template>
 <script>
-import vBtn from '@/components/vBtn';
-
 export default {
-  components: { vBtn },
   props: {
     list: {
       required: true,
       type: Object
-    }
+    },
+    deleteClickCallback: Function,
+    showClickCallback: Function
   },
   methods: {
-    removeList(id) {
-      alert('delete ' + id);
+    deleteList (listId) {
+      if (this.deleteClickCallback) {
+        this.deleteClickCallback(listId);
+      }
     },
-    showContacts(id) {
-      this.$router.push({
-        name: 'contacts',
-        params: {
-          listId: id
-        }
-      });
+    showList (listId) {
+      if (this.showClickCallback) {
+        this.showClickCallback(listId);
+      }
     }
   }
 };
