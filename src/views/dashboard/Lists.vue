@@ -3,24 +3,7 @@
     <div class="col">
       <div class="card">
         <div class="card-header border-0">
-          <div class="mb-5">
-            <router-link :to="{ name: 'list.import' }" class="btn btn-primary">Importer des contacts</router-link>
-          </div>
-          <form @submit.prevent="search">
-            <div class="form-group">
-              <div class="d-flex justify-content-between">
-                <div>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="search-label"><i class="fas fa-search"></i></span>
-                    </div>
-                    <input v-model="number" type="text" class="form-control" placeholder="Rechercher un numéro" aria-label="Rechercher un numéro" aria-describedby="search-label">
-                  </div>
-                </div>
-                <v-btn color="primary" icon="fas fa-search">Rechercher</v-btn>
-              </div>              
-            </div>
-          </form>
+          <router-link :to="{ name: 'list.import' }" class="btn btn-primary">Importer des contacts</router-link>
         </div>
         <v-table>
           <thead class="thead-light">
@@ -54,11 +37,6 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
   components: { vTable, List, vBtn },
-  data () {
-    return {
-      number: ''
-    };
-  },
   mounted () {
     // dispatch get user's lists action
     this.getUserLists();
@@ -76,9 +54,6 @@ export default {
     ...mapMutations({
       updateLists: 'lists/UPDATE_LIST'
     }),
-    search () {
-      alert('searching ' + this.number)
-    },
     onDelete (listId) {
       if (confirm('Attention ! Les contacts rattachés à cette liste sera aussi supprimés.')) {
         this.deleteList(listId).then(() => {
