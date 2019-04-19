@@ -17,10 +17,7 @@ export default {
     DashboardLayout
   },
   watch: {
-    '$route': 'routeChanged'
-  },
-  created () {
-    this.routeChanged();
+    '$route': 'routeDidChange'
   },
   mounted () {
     this.$nextTick(function () {
@@ -33,8 +30,21 @@ export default {
     })
   },
   methods: {
-    ...mapActions({ getUser: 'auth/getUser' }),
-    routeChanged () {
+    ...mapActions({
+      getUser: 'auth/getUser',
+      setLayout: 'layout/setLayout'
+    }),
+    setBodyClass () {
+      const body = document.body;
+      if (this.$route.meta.layout) {
+        body.classList.remove('bg-default');
+        return;
+      }
+      body.classList.add('bg-default');
+    },
+    routeDidChange () {
+      this.setBodyClass();
+      this.setLayout(this.$route.meta.layout || 'default-layout');
       // this.$jQuery('.collapse.show').collapse('hide');
     }
   }
