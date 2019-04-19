@@ -64,6 +64,12 @@
           <span class="nav-link-text">Boîte de réception</span>
         </router-link>
       </li>
+      <li class="nav-item">
+        <router-link :to="{ name: 'admin' }" class="nav-link">
+          <i class="fas fa-users-cog"></i>
+          <span class="nav-link-text">Admin</span>
+        </router-link>
+      </li>
     </ul>
   </div>
 </template>
