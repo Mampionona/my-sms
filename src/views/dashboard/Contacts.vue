@@ -135,7 +135,12 @@ export default {
         contactId: id
       })
         .then(() => {
+          // update contacts array
           this.updateContacts(this.contacts.filter(contact => contact.id !== id));
+          // uncheck select all
+          if (this.contacts.length === 0) {
+            this.allContacts = false;
+          }
         });
     },
     // compose an SMS
