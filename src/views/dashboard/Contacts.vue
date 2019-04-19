@@ -97,7 +97,7 @@ export default {
       this.updateListName({ id: this.$route.params.listId, name });
     },
     compose () {
-      alert('composer un sms')
+      this.$router.push({ name: 'message.redaction', query: { listId: this.$route.params.listId } });
     },
     removeContact (contact) {
       this.remove({ listId: this.$route.params.listId, contactId: contact.id })

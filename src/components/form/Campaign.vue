@@ -130,7 +130,11 @@ export default {
   },
   mounted () {
     // Get a user's lists
-    this.getUserLists();
+    this.getUserLists().then(() => {
+      if (this.$route.query.listId) {
+        this.listId = parseInt(this.$route.query.listId);
+      }
+    });
     this.populateCampainFields();
   },
   watch: {
