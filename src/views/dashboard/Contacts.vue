@@ -37,7 +37,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" href="#" @click.prevent="deleteContacts">Supprimer</a>
-              <a class="dropdown-item" href="#" @click.prevent>Activer/Désactiver</a>
+              <!-- <a class="dropdown-item" href="#" @click.prevent>Activer/Désactiver</a> -->
             </div>
           </div>
           <v-btn color="primary" icon="fas fa-plus-square" @click.native="add">Ajouter un contact</v-btn>
@@ -47,7 +47,7 @@
             <tr>
               <th>
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="all-contacts" v-model="all">
+                  <input type="checkbox" class="custom-control-input" id="all-contacts" v-model="allContacts">
                   <label class="custom-control-label" for="all-contacts"></label>
                 </div>
               </th>
@@ -84,7 +84,7 @@ export default {
   components: { vTable, Contact, vBtn, Alert },
   data () {
     return {
-      all: false,
+      allContacts: false,
       selectedContacts: [],
       name: ''
     };
@@ -98,6 +98,15 @@ export default {
       contacts: 'contacts/contacts',
       countContacts: 'contacts/count'
     })
+  },
+  watch: {
+    allContacts (isChecked) {
+      if (isChecked) {
+        this.contacts.forEach(contact => this.selectedContacts.push(contact.id));
+        return;
+      }
+      this.selectedContacts = [];
+    }
   },
   methods: {
     ...mapActions({
