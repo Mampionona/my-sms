@@ -11,7 +11,6 @@
     <td>{{ JSON.stringify(contact.attributes) }}</td>
     <td class="text-right">
       <v-btn icon="fas fa-trash-alt" color="danger" @click.native="onDelete(contact)"></v-btn>
-      <v-btn icon="fas fa-pencil-alt" color="outline-secondary"></v-btn>
     </td>
   </tr>
 </template>
