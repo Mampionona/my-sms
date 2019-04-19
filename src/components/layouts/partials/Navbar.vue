@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <router-link :to="{name: 'login'}" class="nav-link">
           <span class="nav-link-inner--text">Connexion</span>
