@@ -13,7 +13,7 @@
           </form>
           <div v-if="countContacts" class="d-flex align-items-center justify-content-center mb-2">
             <span class="badge badge-default mr-1">{{ countContacts }}</span>
-            <small>lignes</small>
+            <small>{{ $tc('numberOfLines', countContacts) }}</small>
           </div>
           <p class="text-center">Créé le {{ '20190412 14:00:00' | full }}</p>
           <alert class="text-center mb-4" color="secondary">Non vérifié</alert>
@@ -53,6 +53,11 @@
                 <label class="custom-control-label" :for="`contact-${contact.id}`"></label>
               </div>
             </contact>
+            <tr v-if="contacts.length === 0">
+              <td colspan="3">
+                <div class="text-sm text-center">Aucun contact</div>
+              </td>
+            </tr>
           </tbody>
         </v-table>
       </div>
