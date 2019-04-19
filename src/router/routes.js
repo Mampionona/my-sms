@@ -1,4 +1,9 @@
-module.exports = [
+const dashboard_metas = {
+  requiresAuth: true,
+  layout: 'dashboard'
+};
+
+const routes = [
   {
     path: '/',
     name: 'home',
@@ -17,108 +22,72 @@ module.exports = [
   {
     path: '/dashboard',
     component: () => import('@/views/Dashboard'),
-    meta: {
-      requiresAuth: true
-    },
     children: [
       {
         path: '/',
         name: 'dashboard.index',
-        meta: {
-          requiresAuth: true,
-          layout: 'dashboard-layout'
-        },
+        meta: { ...dashboard_metas },
         component: () => import('@/views/dashboard/Index')
       },
       // Base de contacts
       {
         path: 'lists',
         name: 'lists',
-        meta: {
-          requiresAuth: true,
-          layout: 'dashboard-layout'
-        },
+        meta: { ...dashboard_metas },
         component: () => import('@/views/dashboard/Lists')
       },
       {
         path: 'lists/:listId([0-9]+)',
         name: 'contacts',
-        meta: {
-          requiresAuth: true,
-          layout: 'dashboard-layout'
-        },
+        meta: { ...dashboard_metas },
         component: () => import('@/views/dashboard/Contacts')
       },
       {
         path: 'lists/importer',
         name: 'list.import',
-        meta: {
-          requiresAuth: true,
-          layout: 'dashboard-layout'
-        },
+        meta: { ...dashboard_metas },
         component: () => import('@/views/dashboard/ImportContacts')
       },
       {
         path: 'message/redaction',
         name: 'message.redaction',
-        meta: {
-          requiresAuth: true,
-          layout: 'dashboard-layout'
-        },
+        meta: { ...dashboard_metas },
         component: () => import('@/views/dashboard/message/Redaction')
       },
       {
         path: 'message/drafts',
         name: 'message.drafts',
-        meta: {
-          requiresAuth: true,
-          layout: 'dashboard-layout'
-        },
+        meta: { ...dashboard_metas },
         component: () => import('@/views/dashboard/message/Drafts')
       },
       {
         path: 'message/list',
         name: 'message.list',
-        meta: {
-          requiresAuth: true,
-          layout: 'dashboard-layout'
-        },
+        meta: { ...dashboard_metas },
         component: () => import('@/views/dashboard/message/List')
       },
       {
         path: 'message/scheduled',
         name: 'message.scheduled',
-        meta: {
-          requiresAuth: true,
-          layout: 'dashboard-layout'
-        },
+        meta: { ...dashboard_metas },
         component: () => import('@/views/dashboard/message/Scheduled')
       },
       {
         path: 'packs',
         name: 'packs',
-        meta: {
-          requiresAuth: true,
-          layout: 'dashboard-layout'
-        },
+        meta: { ...dashboard_metas },
         component: () => import('@/views/dashboard/Packs')
       },
       {
         path: 'inbox',
         name: 'inbox',
-        meta: {
-          requiresAuth: true,
-          layout: 'dashboard-layout'
-        },
+        meta: { ...dashboard_metas },
         component: () => import('@/views/dashboard/message/Inbox')
       },
       {
         path: 'inbox/:messageId([0-9]+)/receipt',
         name: 'replies',
-        meta: {
-          requiresAuth: true,
-          layout: 'dashboard-layout'
-        },
+        meta: { ...dashboard_metas },
         component: () => import('@/views/dashboard/message/Detail')
       },
     ]
@@ -128,3 +97,5 @@ module.exports = [
     component: () => import('@/views/404')
   }
 ];
+
+export default routes;

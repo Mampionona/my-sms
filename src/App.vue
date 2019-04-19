@@ -43,8 +43,9 @@ export default {
       body.classList.add('bg-default');
     },
     routeDidChange () {
+      const layout = this.$route.meta.layout || 'default';
       this.setBodyClass();
-      this.setLayout(this.$route.meta.layout || 'default-layout');
+      this.setLayout(`${layout}-layout`);
       // this.$jQuery('.collapse.show').collapse('hide');
     }
   }
