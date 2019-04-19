@@ -5,9 +5,7 @@
         <div class="card-header">
           <router-link class="btn btn-primary" :to="{ name: 'message.redaction' }">Créer une campaigne</router-link>
         </div>
-        <div class="card-body">
-          <messages :click-callback="onMessageClick" :messages="scheduled" component="message">Aucun envois planifiés</messages>
-        </div>
+        <messages :click-callback="onMessageClick" :messages="scheduled" component="message">Aucun envois planifiés</messages>
       </div>
     </div>
   </div>
