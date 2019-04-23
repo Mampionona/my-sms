@@ -146,6 +146,16 @@ const routes = [
         },
         component: () => import('@/views/dashboard/message/Detail')
       },
+      {
+        path: 'profile',
+        name: 'profile',
+        meta: {
+          ...dashboard_metas,
+          title: 'Profil',
+          breadcrumb: 'Profil'
+        },
+        component: () => import('@/views/dashboard/Profile')
+      }
     ]
   }, {
     path: '*',

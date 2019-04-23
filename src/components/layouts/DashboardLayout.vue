@@ -3,7 +3,8 @@
     <side-nav></side-nav>
     <div class="main-content" id="panel">
       <top-nav></top-nav>
-      <div class="header bg-primary pb-6">
+      <profile-header :user="user" v-if="$route.name === 'profile'"></profile-header>
+      <div v-else class="header bg-primary pb-6">
         <div class="container-fluid">
           <div class="header-body">
             <div class="row align-items-center py-4">
@@ -27,10 +28,15 @@
 import SideNav from './partials/dashboard/SideNav.vue';
 import TopNav from './partials/dashboard/TopNav.vue';
 import Breadcrumb from './partials/dashboard/Breadcrumb';
+import ProfileHeader from '@/components/partials/ProfileHeader';
+import { mapGetters } from 'vuex';
 
 export default {
-  components: { SideNav, TopNav, Breadcrumb },
+  components: { SideNav, TopNav, Breadcrumb, ProfileHeader },
   computed: {
+    ...mapGetters({
+      user: 'auth/user'
+    }),
     metaTitle () {
       return this.$route.meta.title || '';
     }

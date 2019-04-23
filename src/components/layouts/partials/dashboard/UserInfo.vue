@@ -13,10 +13,10 @@
         <div class="dropdown-header noti-title">
           <h6 class="text-overflow m-0">Bienvenue!</h6>
         </div>
-        <a href="#!" class="dropdown-item">
+        <router-link :to="{ name: 'profile' }" class="dropdown-item">
           <i class="ni ni-single-02"></i>
           <span>Mon compte</span>
-        </a>
+        </router-link>
         <div class="dropdown-divider"></div>
         <a href="#!" class="dropdown-item" @click.prevent="logout">
           <i class="ni ni-user-run"></i>
