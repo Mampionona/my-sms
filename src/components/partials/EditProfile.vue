@@ -165,7 +165,7 @@ export default {
     }),
     onSubmit () {
       let { company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password } = this;
-      siren = siren.toString().removeSpaces(); // 844723064
+      siren = siren.toString().removeSpaces();
       tva = tva.toString().removeSpaces();
 
       this.updateAccount({ company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password })
