@@ -23,7 +23,7 @@
           </div>
         </div>
       </div>
-      <edit-profile :user="user"></edit-profile>
+      <edit-profile :user="user" :submit-callback="onSubmit"></edit-profile>
     </div>
   </div>
 </template>
@@ -41,6 +41,11 @@ export default {
     ...mapGetters({
       user: 'auth/user'
     })
+  },
+  methods: {
+    onSubmit (vars) {
+      console.log(vars);
+    }
   }
 };
 </script>
