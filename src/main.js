@@ -10,6 +10,7 @@ import './bootstrap';
 import './filters';
 // styles
 import 'vue-progress-path/dist/vue-progress-path.css';
+import 'axios-progress-bar/dist/nprogress.css';
 import '@/assets/styles/argon.scss';
 
 Vue.use(VueTextareaAutosize);

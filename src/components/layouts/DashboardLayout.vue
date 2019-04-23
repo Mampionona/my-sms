@@ -30,9 +30,13 @@ import TopNav from './partials/dashboard/TopNav.vue';
 import Breadcrumb from './partials/dashboard/Breadcrumb';
 import ProfileHeader from '@/components/partials/ProfileHeader';
 import { mapGetters } from 'vuex';
+import { loadProgressBar  } from 'axios-progress-bar';
 
 export default {
   components: { SideNav, TopNav, Breadcrumb, ProfileHeader },
+  mounted () {
+    loadProgressBar();
+  },
   computed: {
     ...mapGetters({
       user: 'auth/user'
@@ -56,5 +60,16 @@ export default {
 /* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translateX(10px);
   opacity: 0;
+}
+
+#nprogress {
+  .bar {
+    background: #f5365c  !important;
+    z-index: 9999 !important;
+  }
+
+  .peg {
+    box-shadow: none !important;
+  }
 }
 </style>

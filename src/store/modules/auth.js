@@ -4,6 +4,7 @@ import { doAsync, createAsyncMutation } from '@/async-utils';
 const SET_TOKEN = 'SET_TOKEN';
 const LOGOUT = 'LOGOUT';
 const FETCH_USER = createAsyncMutation('FETCH_USER');
+const UPDATE_ACCOUNT = createAsyncMutation('UPDATE_ACCOUNT');
 
 function loggedInOrRegistered(context, token, resolve) {
   // update state
@@ -39,6 +40,12 @@ export default {
       state.user = payload[0];
     },
     [FETCH_USER.FAILURE] () {},
+    [UPDATE_ACCOUNT.PENDING] () {},
+    [UPDATE_ACCOUNT.SUCCESS] (state, payload) {
+      // state.user = payload[0];
+      console.log(payload);
+    },
+    [UPDATE_ACCOUNT.FAILURE] () {},
   },
   actions: {
     authenticate(context, credentials) {
@@ -76,6 +83,18 @@ export default {
           mutationTypes: FETCH_USER
         })
           .then(([user]) => resolve(user))
+          .catch(error => reject(error));
+      });
+    },
+    updateAccount(context, user) {
+      return new Promise((resolve, reject) => {
+        doAsync(context, {
+          url: '/users/me',
+          method: 'patch',
+          data: user,
+          mutationTypes: UPDATE_ACCOUNT
+        })
+          .then(data => resolve(data))
           .catch(error => reject(error));
       });
     },
