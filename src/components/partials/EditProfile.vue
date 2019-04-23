@@ -3,10 +3,7 @@
     <div class="card-header">
       <div class="row align-items-center">
         <div class="col-8">
-          <h3 class="mb-0">Edit profile </h3>
-        </div>
-        <div class="col-4 text-right">
-          <button class="btn btn-sm btn-primary">Mettre à jour</button>
+          <h3 class="mb-0">Mon compte</h3>
         </div>
       </div>
     </div>
@@ -113,6 +110,9 @@
             </div>
           </div>
         </div>
+        <div v-if="isUpdated" class="pl-lg-4 mb-4">
+          <alert icon="fas fa-user-check" color="success">Profil mis à jour</alert>
+        </div>
         <div class="pr-2 text-right">
           <button class="btn btn-primary">Mettre à jour</button>
         </div>
@@ -121,8 +121,11 @@
   </div>
 </template>
 <script>
+import Alert from '@/components/Alert';
 import _ from 'lodash';
+import { mapActions } from 'vuex';
 export default {
+  components: { Alert },
   props: {
     user: {
       required: true,
@@ -140,6 +143,7 @@ export default {
   },
   data () {
     return {
+      isUpdated: false,
       company: '',
       siren: '',
       tva: '',
@@ -156,8 +160,23 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      updateAccount: 'auth/updateAccount'
+    }),
     onSubmit () {
+      let { company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password } = this;
+      siren = siren.toString().removeSpaces();
+      tva = tva.toString().removeSpaces();
 
+      this.updateAccount({ company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password })
+        .then(() => {
+          this.isUpdated = true;
+        })
+        .catch(error => {
+          this.isUpdated = false;
+          // console.log(error);
+          alert(error.data.error);
+        });
     }
   }
 }
