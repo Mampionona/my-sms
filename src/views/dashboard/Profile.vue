@@ -28,12 +28,15 @@
   </div>
 </template>
 <script>
+import { loadProgressBar } from 'axios-progress-bar';
 import EditProfile from '@/components/partials/EditProfile';
 import { mapGetters } from 'vuex';
 import store from '@/store';
+
 export default {
   // Fetch user before navigation
   beforeRouteEnter (to, from, next) {
+    loadProgressBar();
     store.dispatch('auth/getUser').then(next);
   },
   components: { EditProfile },
@@ -49,3 +52,13 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+#nprogress .bar {
+  background: #fff !important;
+  z-index: 99999999999;
+}
+
+#nprogress .peg {
+  box-shadow: none !important;
+}
+</style>
