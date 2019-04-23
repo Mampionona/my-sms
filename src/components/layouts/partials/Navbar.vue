@@ -1,10 +1,10 @@
 <template>
-  <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse">
+  <div class="navbar-collapse navbar-custom-collapse collapse closable" id="navbar-collapse" ref="collapse">
     <div class="navbar-collapse-header">
       <div class="row">
         <div class="col-6 collapse-brand">
           <a href="../../pages/dashboards/dashboard.html">
-            <img :src="logo" alt="logo">
+            <img src="@/assets/images/logo.png" alt="logo">
           </a>
         </div>
         <div class="col-6 collapse-close">
@@ -15,62 +15,17 @@
         </div>
       </div>
     </div>
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <router-link :to="{name: 'login'}" class="nav-link">
-          <span class="nav-link-inner--text">Login</span>
+          <span class="nav-link-inner--text">Connexion</span>
         </router-link>
       </li>
       <li class="nav-item">
         <router-link :to="{name: 'register'}" class="nav-link">
-          <span class="nav-link-inner--text">Register</span>
+          <span class="nav-link-inner--text">Inscription</span>
         </router-link>
-      </li>
-    </ul>
-    <hr class="d-lg-none" />
-    <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-      <li class="nav-item">
-        <a class="nav-link nav-link-icon" href="https://www.facebook.com/creativetim" target="_blank" data-toggle="tooltip" data-original-title="Like us on Facebook">
-          <i class="fab fa-facebook-square"></i>
-          <span class="nav-link-inner--text d-lg-none">Facebook</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link nav-link-icon" href="https://www.instagram.com/creativetimofficial" target="_blank" data-toggle="tooltip" data-original-title="Follow us on Instagram">
-          <i class="fab fa-instagram"></i>
-          <span class="nav-link-inner--text d-lg-none">Instagram</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link nav-link-icon" href="https://twitter.com/creativetim" target="_blank" data-toggle="tooltip" data-original-title="Follow us on Twitter">
-          <i class="fab fa-twitter-square"></i>
-          <span class="nav-link-inner--text d-lg-none">Twitter</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link nav-link-icon" href="https://github.com/creativetimofficial" target="_blank" data-toggle="tooltip" data-original-title="Star us on Github">
-          <i class="fab fa-github"></i>
-          <span class="nav-link-inner--text d-lg-none">Github</span>
-        </a>
-      </li>
-      <li class="nav-item d-none d-lg-block ml-lg-4">
-        <a href="https://www.creative-tim.com/product/argon-dashboard-pro" target="_blank" class="btn btn-neutral btn-icon">
-          <span class="btn-inner--icon">
-            <i class="fas fa-shopping-cart mr-2"></i>
-          </span>
-          <span class="nav-link-inner--text">Purchase now</span>
-        </a>
       </li>
     </ul>
   </div>
 </template>
-<script>
-import Logo from '@/assets/logo.png';
-export default {
-  data () {
-    return {
-      logo: Logo
-    };
-  }
-};
-</script>

@@ -1,0 +1,53 @@
+export const campaigns = [
+  {
+    "id": 1,
+    "user_id": 1,
+    "list_id": 2,
+    "name": "Campgne de Ouf",
+    "text": "lol 😎",
+    "send_date": "2022-10-21T01:24:15.000Z",
+    "sender_name": "Buzut",
+    "messages": null,
+    "sms": null,
+    "net_err": null,
+    "waiting": null,
+    "npai": null,
+    "expired": null,
+    "received": null,
+    "status": "draft"
+  },
+  {
+    "id": 2,
+    "user_id": 1,
+    "list_id": 2,
+    "name": "Campgne de Ouf",
+    "text": "Hello World",
+    "send_date": "2022-11-21T07:44:15.000Z",
+    "sender_name": "John Doe",
+    "messages": null,
+    "sms": null,
+    "net_err": null,
+    "waiting": null,
+    "npai": null,
+    "expired": null,
+    "received": null,
+    "status": "draft"
+  },
+  {
+    "id": 3,
+    "user_id": 1,
+    "list_id": 2,
+    "name": "Mes amis",
+    "text": "Demain c'est mon anniversaire :)",
+    "send_date": "2022-01-24T09:37:15.000Z",
+    "sender_name": "Mary",
+    "messages": null,
+    "sms": null,
+    "net_err": null,
+    "waiting": null,
+    "npai": null,
+    "expired": null,
+    "received": null,
+    "status": "draft"
+  }
+];

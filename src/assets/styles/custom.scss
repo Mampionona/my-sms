@@ -1,0 +1,50 @@
+.form-control,
+.form-control-plaintext {
+  &.no-resize {
+    resize: none;
+  }
+}
+
+.row {
+  &.custom-row {
+    margin-left: -8px;
+    margin-right: -8px;
+
+    [class*="col-"] {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+}
+
+.bg-default {
+  background: url('../images/phone.jpg') fixed no-repeat center;
+  position: relative;
+
+  &::before {
+    background-color: rgba(0,0,0,.2);
+    content: '';
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+
+.table {
+  td,
+  th {
+    white-space: normal;
+  }
+}
+
+.navbar-vertical .navbar-brand-img,
+.navbar-vertical .navbar-brand > img {
+  max-height: inherit;
+}
+
+.navbar-horizontal .navbar-brand img {
+  height: initial;
+}

@@ -1,0 +1,7 @@
+{
+  "remainingChars": "caractère restant | caractères restants",
+  "redaction": {
+    "countContacts": "Le fichier ne contient aucun numéro | Le fichier contient un numéro pouvant être envoyé | Le fichier contient {n} numéros pouvant être envoyés"
+  },
+  "numberOfLines": "ligne | lignes"
+}
