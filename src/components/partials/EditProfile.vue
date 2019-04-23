@@ -127,8 +127,7 @@ export default {
     user: {
       required: true,
       type: Object
-    },
-    submitCallback: Function
+    }
   },
   mounted () {
     const user = this.user;
@@ -158,9 +157,7 @@ export default {
   },
   methods: {
     onSubmit () {
-      if (this.submitCallback) {
-        this.submitCallback(this);
-      }
+
     }
   }
 }
