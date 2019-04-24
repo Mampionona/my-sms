@@ -6,14 +6,6 @@ const dashboard_metas = {
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: () => import('@/views/Home'),
-    meta: {
-      title: 'Welcome'
-    }
-  },
-  {
-    path: '/login',
     name: 'login',
     component: () => import('@/views/Login'),
     meta: {
