@@ -14,7 +14,7 @@ const getters = {
   // all campaigns marked as draft
   drafts: state => state.campaigns.filter(campaign => campaign.status === 'draft'),
   // all campaigns marked as sent
-  sent: state => state.campaigns.filter(() => false),
+  sent: state => state.campaigns.filter(campaign => campaign.status === 'sent'),
   // all campaigns marked as scheduled
   scheduled: state => state.campaigns.filter(() => false)
 };

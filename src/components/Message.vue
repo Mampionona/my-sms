@@ -1,32 +1,23 @@
 <template>
-  <tr @click="onClick" :style="style">
-    <td><span class="name text-sm">Nom de la campagne</span></td>
+  <tr @click="onClick" :style="{cursor: 'pointer'}">
+    <td><span class="name text-sm">{{ campaign.name }}</span></td>
     <td>{{ campaign.text }}</td>
-    <td>{{ campaign.sender_name }}</td>
-    <td>{{ campaign.send_date | full }}</td>
+    <td>{{ campaign.senderName }}</td>
+    <td>{{ campaign.sendDate | full }}</td>
     <td>{{ campaign.name }}</td>
     <td></td>
     <td></td>
   </tr>
 </template>
 <script>
-// import vBtn from '@/components/vBtn';
-
 export default {
-  // components: { vBtn },
   props: {
     campaign: {
       required: true,
       type: Object
     },
-    clickCallback: Function
-  },
-  computed: {
-    style () {
-      return {
-        cursor: 'pointer'
-      };
-    }
+    clickCallback: Function,
+    lists: Array
   },
   methods: {
     onClick () {

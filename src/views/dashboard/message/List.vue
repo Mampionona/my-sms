@@ -22,14 +22,14 @@ export default {
   },
   methods: {
     ...mapActions({
-      getUserCampaigns: 'campaigns/getUserCampaigns'
+      getCampaigns: 'campaigns/getUserCampaigns'
     }),
     onMessageClick () {
       // console.log(message);
     }
   },
   mounted () {
-    this.getUserCampaigns();
+    this.getCampaigns();
   }
 }
 </script>

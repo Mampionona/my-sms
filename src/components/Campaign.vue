@@ -1,6 +1,6 @@
 <template>
   <tr @click="onClick" :style="{cursor: 'pointer'}">
-    <th class="name">
+    <th>
       <span class="name mb-0 text-sm">{{ campaign.text }}</span>
     </th>
     <td>{{ campaign.senderName }}</td>
@@ -9,10 +9,7 @@
   </tr>
 </template>
 <script>
-import vBtn from '@/components/vBtn';
-
 export default {
-  components: { vBtn },
   props: {
     campaign: {
       required: true,
