@@ -46,8 +46,13 @@ const actions = {
    * @return {Promise}
    */
   createNewCampaign (context, campaign) {
-    const url = campaign.action === 'new' ? `/campaigns` : `/campaigns/${campaign.campaignId}`;
+    let url = '/campaigns';
+    if (campaign.action === 'update') {
+      url += `/${campaign.campaignId}`;
+    }
     const method = campaign.action === 'new' ? 'post' : 'patch';
+    delete campaign.action;
+    delete campaign.campaignId;
     return doAsync(context, {
       url,
       data: { campaign },
