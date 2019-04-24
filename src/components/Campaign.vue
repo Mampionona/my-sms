@@ -1,11 +1,22 @@
 <template>
   <tr @click="onClick" :style="{cursor: 'pointer'}">
-    <th>
-      <span class="name mb-0 text-sm">{{ campaign.text }}</span>
-    </th>
-    <td>{{ campaign.senderName }}</td>
-    <td>{{ campaign.sendDate | full }}</td>
-    <td>{{ listName }}</td>
+    <template v-if="isDraft">
+      <td>
+        <span class="text-sm">{{ campaign.text }}</span>
+      </td>
+      <td>{{ campaign.senderName }}</td>
+      <td>{{ campaign.sendDate | full }}</td>
+      <td>{{ listName }}</td>
+    </template>
+    <template v-else>
+      <td><span class="text-sm">{{ campaign.name }}</span></td>
+      <td>{{ campaign.text }}</td>
+      <td>{{ campaign.senderName }}</td>
+      <td>{{ campaign.sendDate | full }}</td>
+      <td>{{ listName }}</td>
+      <td>rapport</td>
+      <td>reponses</td>
+    </template>
   </tr>
 </template>
 <script>
@@ -16,20 +27,26 @@ export default {
       type: Object
     },
     clickCallback: Function,
-    lists: Array
+    lists: Array,
+    isDraft: {
+      default: false,
+      type: Boolean
+    }
   },
   computed: {
     listName () {
-      for (let i = 0; i < this.lists.length; i++) {
-        if (this.lists[i].id === this.campaign.list_id) {
-          return this.lists[i].name;
-        }
+      const lists = this.lists;
+      for (let i = 0, list = lists[i]; i < lists.length; i++) {
+        if (list.id === this.campaign.list_id)
+          return list.name;
       }
     }
   },
   methods: {
     onClick () {
-      if (this.clickCallback) this.clickCallback(this.campaign);
+      if (this.clickCallback) {
+        this.clickCallback(this.campaign);
+      }
     }
   }
 };

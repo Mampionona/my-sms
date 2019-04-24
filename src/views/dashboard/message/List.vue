@@ -5,7 +5,7 @@
         <div class="card-header">
           <router-link class="btn btn-primary" :to="{ name: 'message.redaction' }">Créer une campagne</router-link>
         </div>
-        <messages :click-callback="onMessageClick" :messages="sent" component="message">Aucun envois effectués</messages>
+        <messages :click-callback="onMessageClick" :messages="sent">Aucun envois effectués</messages>
       </div>
     </div>
   </div>
@@ -24,8 +24,15 @@ export default {
     ...mapActions({
       getCampaigns: 'campaigns/getUserCampaigns'
     }),
-    onMessageClick () {
-      // console.log(message);
+    onMessageClick ({ status, id }) {
+      switch (status) {
+        case 'sent':
+          this.$router.push({
+            name: 'replies',
+            params: { messageId: id }
+          })
+          break;
+      }
     }
   },
   mounted () {

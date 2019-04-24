@@ -5,7 +5,7 @@
         <div class="card-header">
           <router-link class="btn btn-primary" :to="{ name: 'message.redaction' }">Créer une campagne</router-link>
         </div>
-        <messages :click-callback="onClickCallback" :messages="drafts">Aucun brouillons</messages>
+        <messages :click-callback="onClickCallback" :messages="drafts" is-draft>Aucun brouillons</messages>
       </div>
     </div>
   </div>
