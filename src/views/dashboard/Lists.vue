@@ -11,7 +11,6 @@
               <th scope="col">Fichiers</th>
               <th scope="col">Contacts actifs</th>
               <th scope="col">Créé le</th>
-              <th scope="col">Vérifié le</th>
               <th scope="col"></th>
             </tr>
           </thead>
@@ -23,6 +22,9 @@
               :delete-click-callback="onDelete"
               :show-click-callback="onShow"
             />
+            <tr v-if="lists.length === 0">
+              <td colspan="4" class="text-center text-sm">Aucun fichier</td>
+            </tr>
           </tbody>
         </v-table>
       </div>
