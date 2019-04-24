@@ -5,7 +5,7 @@
         <div class="p-3">
           <form @submit.prevent="updateListName">
             <div class="input-group mb-3">
-              <input type="text" class="form-control" aria-label="Recipient's username" v-model="name">
+              <input type="text" class="form-control" aria-label="Recipient's username" v-model="name" placeholder="Nom du fichier">
               <div class="input-group-append">
                 <v-btn icon="fas fa-check" color="success" type="submit"></v-btn>
               </div>
@@ -15,10 +15,9 @@
             <span class="badge badge-default mr-1">{{ countContacts }}</span>
             <small>{{ $tc('numberOfLines', countContacts) }}</small>
           </div>
-          <p class="text-center">Créé le {{ '20190412 14:00:00' | full }}</p>
-          <alert class="text-center mb-4" color="secondary">Non vérifié</alert>
+          <p v-if="list" class="text-center">Créé le {{ list.updateDate | full }}</p>
           <div class="compose">
-            <button class="btn btn-icon btn-primary btn-block" type="button" @click="compose">
+            <button class="btn btn-icon btn-primary btn-block" type="button" @click="$router.push(composeUrl)">
               <span class="btn-inner--icon"><i class="fas fa-pencil-alt"></i></span>
               <span class="btn-inner--text">Composer un SMS</span>
             </button>
@@ -97,6 +96,7 @@ import Contact from '@/components/Contact';
 import vBtn from '@/components/vBtn';
 import Alert from '@/components/Alert';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
+import store from '@/store';
 
 export default {
   components: { vTable, Contact, vBtn, Alert },
@@ -104,8 +104,16 @@ export default {
     return {
       allContacts: false,
       selectedContacts: [],
-      name: ''
+      name: '',
+      list: null
     };
+  },
+  beforeRouteEnter (to, from, next) {
+    store.dispatch('lists/getUserLists').then(lists => lists.forEach(list => {
+      if (list.id == to.params.listId) {
+        next(vm => vm.setData(list));
+      }
+    }));
   },
   mounted () {
     // dispatch an action to get contacts of a list
@@ -115,7 +123,13 @@ export default {
     ...mapGetters({
       contacts: 'contacts/contacts',
       countContacts: 'contacts/count'
-    })
+    }),
+    composeUrl () {
+      return {
+        name: 'message.redaction',
+        query: { listId: this.$route.params.listId }
+      };
+    }
   },
   watch: {
     allContacts (isChecked) {
@@ -129,16 +143,19 @@ export default {
   methods: {
     ...mapActions({
       getContacts: 'contacts/getContactsOfList',
-      updateListName: 'lists/updateListName',
-      remove: 'contacts/removeContact',
-      addContacts: 'contacts/addContacts'
+      update: 'lists/updateListName',
+      remove: 'contacts/removeContact'
     }),
     ...mapMutations({
       updateContacts: 'contacts/UPDATE_CONTACTS'
     }),
+    setData (list) {
+      this.list = list;
+      this.name = list.name;
+    },
     updateListName () {
       const { name } = this;
-      this.updateListName({ id: this.$route.params.listId, name });
+      this.update({ id: this.$route.params.listId, name });
     },
     onDelete ({ id }) {
       this.deleteContact(id);
@@ -160,10 +177,6 @@ export default {
             this.allContacts = false;
           }
         });
-    },
-    // compose an SMS
-    compose () {
-      this.$router.push({ name: 'message.redaction', query: { listId: this.$route.params.listId } });
     }
   }
 };
