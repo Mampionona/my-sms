@@ -55,7 +55,7 @@ const actions = {
     delete campaign.campaignId;
     return doAsync(context, {
       url,
-      data: { campaign },
+      data: campaign,
       method,
       mutationTypes: CREATE_OR_UPDATE_CAMPAIGN
     });

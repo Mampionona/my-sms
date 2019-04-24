@@ -15,6 +15,7 @@
         v-for="campaign in messages"
         :campaign="campaign"
         :key="campaign.id"
+        :lists="lists"
       />
       <tr v-if="messages.length === 0">
         <td :colspan="colspan" class="text-sm text-center">
@@ -28,9 +29,13 @@
 import vTable from '@/components/vTable';
 import Campaign from '@/components/Campaign';
 import Message from '@/components/Message';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   components: { vTable, Campaign, Message },
   computed: {
+    ...mapGetters({
+      lists: 'lists/lists'
+    }),
     isCampaign () {
       return this.component === 'campaign';
     },
@@ -40,6 +45,9 @@ export default {
       return this.isCampaign ? FOUR_COLUMN : SEVEN_COLUMN;
     }
   },
+  created () {
+    this.getLists();
+  },
   data () {
     return {
       columns: {
@@ -47,6 +55,11 @@ export default {
         message: ['Nom de la campagne', 'Message', 'Emetteur', 'Date d\'envoi', 'SMS', 'Rapport', 'Réponses']
       }
     };
+  },
+  methods: {
+    ...mapActions({
+      getLists: 'lists/getUserLists'
+    })
   },
   props: {
     messages: Array,

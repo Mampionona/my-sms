@@ -1,15 +1,11 @@
 <template>
-  <tr @click="onClick" :style="style">
-    <th scope="row">
-      <div class="media align-items-center">                    
-        <div class="media-body">
-          <span class="name mb-0 text-sm">{{ campaign.text }}</span>
-        </div>
-      </div>
+  <tr @click="onClick" :style="{cursor: 'pointer'}">
+    <th class="name">
+      <span class="name mb-0 text-sm">{{ campaign.text }}</span>
     </th>
-    <td class="budget">{{ campaign.sender_name }}</td>
-    <td>{{ campaign.send_date | full }}</td>
-    <td>{{ campaign.name }}</td>
+    <td>{{ campaign.senderName }}</td>
+    <td>{{ campaign.sendDate | full }}</td>
+    <td>{{ listName }}</td>
   </tr>
 </template>
 <script>
@@ -22,13 +18,16 @@ export default {
       required: true,
       type: Object
     },
-    clickCallback: Function
+    clickCallback: Function,
+    lists: Array
   },
   computed: {
-    style () {
-      return {
-        cursor: 'pointer'
-      };
+    listName () {
+      for (let i = 0; i < this.lists.length; i++) {
+        if (this.lists[i].id === this.campaign.list_id) {
+          return this.lists[i].name;
+        }
+      }
     }
   },
   methods: {
@@ -38,3 +37,4 @@ export default {
   }
 };
 </script>
+
