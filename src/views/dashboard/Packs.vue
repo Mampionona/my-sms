@@ -67,9 +67,9 @@ export default {
       this.selectedPlan = this.plans.filter(({ id }) => {
         if (number === 0 || isNaN(number)) {
           return true;
-        } else if (number < 500000) {
+        } else if (number < 200000) {
           return id === LIBERTE;
-        } else if (number >= 500000 && number < 1000000) {
+        } else if (number >= 200000 && number < 1000000) {
           return id === BUSINESS;
         } else {
           return id === GRAND_COMPTE;
