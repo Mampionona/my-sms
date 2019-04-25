@@ -29,10 +29,10 @@ export default {
     isAdmin: (state, getters) => getters.user !== null && getters.user.id === 1
   },
   mutations: {
-    [ SET_TOKEN ] (state, token) {
+    [SET_TOKEN] (state, token) {
       state.token = token;
     },
-    [ LOGOUT ] (state) {
+    [LOGOUT] (state) {
       state.user = null;
       state.token = null;
     },
