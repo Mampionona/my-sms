@@ -4,7 +4,7 @@ export const UNAUTHENTICATED = 401;
 export const COUNT_MAX_LINES = 100000;
 export const COUNT_MIN_LINES = 5;
 export const validFileExtensions = ['.xls', '.xlsx', '.csv'];
-export const MAIL_TO = 'julienmadonna@mac.com';
+export const MAIL_TO = 'julien@my-sms.pro';
 
 export function workbookToArray (file, complete) {
   const reader = new FileReader();
