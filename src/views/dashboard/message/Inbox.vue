@@ -4,19 +4,20 @@
       <div class="card">
         <v-table>
           <thead class="thead-light">
-            <th>Téléphone</th>
-            <th>Réponses</th>
+            <th class="w-50">Téléphone</th>
             <th>Envoyé le</th>
             <th></th>
           </thead>
           <tbody class="list">
             <sent-message
-              v-for="message in messages"
+              v-for="message in sentMessages"
               :key="message.id"
               :message="message"
-              :delete-click-callback="onDelete"
               :show-click-callback="onShow"
             />
+            <tr v-if="isEmpty">
+              <td colspan="3" class="text-center text-sm">Aucune campagne expédiée</td>
+            </tr>
           </tbody>
         </v-table>
       </div>
@@ -26,26 +27,27 @@
 <script>
 import vTable from '@/components/vTable';
 import SentMessage from '@/components/SentMessage';
+import { mapActions, mapGetters } from 'vuex';
 export default {
   components: { vTable, SentMessage },
-  data () {
-    return {
-      messages: [
-        {
-          "id": 1,
-          "text": "Bonjour",
-          "date": "2022-10-21T01:24:15.000Z"
-        }
-      ]
-    };
+  computed: {
+    ...mapGetters({
+      sentMessages: 'campaigns/sent'
+    }),
+    isEmpty () {
+      return this.sentMessages.length === 0;
+    }
+  },
+  created () {
+    this.getCampaigns();
   },
   methods: {
-    onDelete (messageId) {
-      alert(messageId);
-    },
+    ...mapActions({
+      getCampaigns: 'campaigns/getUserCampaigns'
+    }),
     onShow (messageId) {
       this.$router.push({
-        name: 'replies',
+        name: 'answers',
         params: { messageId }
       });
     }

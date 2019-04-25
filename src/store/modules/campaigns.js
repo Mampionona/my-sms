@@ -1,11 +1,12 @@
 import { doAsync, createAsyncMutation } from '@/async-utils';
-// import { campaigns } from '@/mock-data';
 
 const CREATE_OR_UPDATE_CAMPAIGN = createAsyncMutation('CREATE_OR_UPDATE_CAMPAIGN');
 const GET_USER_CAMPAIGNS = createAsyncMutation('GET_USER_CAMPAIGNS');
+const GET_CAMPAIGN_ANSWERS = createAsyncMutation('GET_CAMPAIGN_ANSWERS');
 
 const state = {
-  campaigns: []
+  campaigns: [],
+  answers: []
 };
 
 const getters = {
@@ -16,7 +17,8 @@ const getters = {
   // all campaigns marked as sent
   sent: state => state.campaigns.filter(campaign => campaign.status === 'sent'),
   // all campaigns marked as scheduled
-  scheduled: state => state.campaigns.filter(() => false)
+  scheduled: state => state.campaigns.filter(() => false),
+  answers: state => state.answers
 };
 
 const mutations = {
@@ -30,6 +32,11 @@ const mutations = {
     state.campaigns = payload;
   },
   [GET_USER_CAMPAIGNS.FAILURE] () {},
+  [GET_CAMPAIGN_ANSWERS.PENDING] () {},
+  [GET_CAMPAIGN_ANSWERS.SUCCESS] (state, payload) {
+    state.answers = payload;
+  },
+  [GET_CAMPAIGN_ANSWERS.FAILURE] () {}
 };
 
 const actions = {
@@ -40,11 +47,6 @@ const actions = {
     });
   },
 
-  /**
-   * @param {Object} context 
-   * @param {Object} campaign
-   * @return {Promise}
-   */
   createNewCampaign (context, campaign) {
     let url = '/campaigns';
     if (campaign.action === 'update') {
@@ -58,6 +60,13 @@ const actions = {
       data: campaign,
       method,
       mutationTypes: CREATE_OR_UPDATE_CAMPAIGN
+    });
+  },
+
+  campaignAnswers(context, campaignId) {
+    return doAsync(context, {
+      url: `/campaigns/${campaignId}/answers/`,
+      mutationTypes: GET_CAMPAIGN_ANSWERS
     });
   }
 };

@@ -129,14 +129,14 @@ const routes = [
         component: () => import('@/views/dashboard/message/Inbox')
       },
       {
-        path: 'inbox/:messageId([0-9]+)/receipt',
-        name: 'replies',
+        path: 'inbox/:messageId([0-9]+)/answers',
+        name: 'answers',
         meta: {
           ...dashboard_metas,
           title: 'Réponses',
           breadcrumb: 'Réponses',
         },
-        component: () => import('@/views/dashboard/message/Detail')
+        component: () => import('@/views/dashboard/message/Answers')
       },
       {
         path: 'profile',

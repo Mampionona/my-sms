@@ -28,7 +28,7 @@ export default {
       switch (status) {
         case 'sent':
           this.$router.push({
-            name: 'replies',
+            name: 'answers',
             params: { messageId: id }
           })
           break;
