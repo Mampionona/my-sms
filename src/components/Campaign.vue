@@ -36,9 +36,11 @@ export default {
   computed: {
     listName () {
       const lists = this.lists;
-      for (let i = 0, list = lists[i]; i < lists.length; i++) {
-        if (list.id === this.campaign.list_id)
+      for (let i = 0; i < lists.length; i++) {
+        const list = lists[i];
+        if (list.id === this.campaign.list_id) {
           return list.name;
+        }
       }
     }
   },
