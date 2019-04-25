@@ -4,18 +4,19 @@
       <div class="card">
         <div class="p-3">
           <form @submit.prevent="updateListName">
-            <div class="input-group mb-3">
+            <div class="input-group">
               <input type="text" class="form-control" aria-label="Recipient's username" v-model="name" placeholder="Nom du fichier">
               <div class="input-group-append">
                 <v-btn icon="fas fa-check" color="success" type="submit"></v-btn>
               </div>
             </div>
+            <p v-if="updateTextStatus" :class="updateTextClass">{{ updateTextStatus }}</p>
           </form>
-          <div v-if="countContacts" class="d-flex align-items-center justify-content-center mb-2">
+          <div v-if="countContacts" class="d-flex align-items-center justify-content-center mt-3">
             <span class="badge badge-default mr-1">{{ countContacts }}</span>
             <small>{{ $tc('numberOfLines', countContacts) }}</small>
           </div>
-          <p v-if="list" class="text-center">Créé le {{ list.updateDate | full }}</p>
+          <p v-if="list" class="text-center mt-2">Créé le {{ list.updateDate | full }}</p>
           <div class="compose">
             <button class="btn btn-icon btn-primary btn-block" type="button" @click="$router.push(composeUrl)">
               <span class="btn-inner--icon"><i class="fas fa-pencil-alt"></i></span>
@@ -105,7 +106,10 @@ export default {
       allContacts: false,
       selectedContacts: [],
       name: '',
-      list: null
+      list: null,
+      updateSuccess: false,
+      updateError: false,
+      updateTextStatus: ''
     };
   },
   beforeRouteEnter (to, from, next) {
@@ -128,6 +132,15 @@ export default {
       return {
         name: 'message.redaction',
         query: { listId: this.$route.params.listId }
+      };
+    },
+    updateTextClass () {
+      return {
+        'font-weight-bold': true,
+        'small': true,
+        'mb-0': true,
+        'text-success': this.updateSuccess,
+        'text-danger': this.updateError
       };
     }
   },
@@ -155,7 +168,17 @@ export default {
     },
     updateListName () {
       const { name } = this;
-      this.update({ id: this.$route.params.listId, name });
+      this.update({ id: this.$route.params.listId, name })
+        .then(() => {
+          this.updateTextStatus = 'Nom du fichier modifié !';
+          this.updateSuccess = true;
+          this.updateError = false;
+        })
+        .catch(() => {
+          this.updateTextStatus = 'Le nom du fichier ne peut pas dépasser 50 caractères';
+          this.updateSuccess = false;
+          this.updateError = true;
+        });
     },
     onDelete ({ id }) {
       this.deleteContact(id);
