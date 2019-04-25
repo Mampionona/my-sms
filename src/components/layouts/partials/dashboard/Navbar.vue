@@ -67,7 +67,7 @@
           <span class="nav-link-text">Boîte de réception</span>
         </router-link>
       </li>
-      <li class="nav-item">
+      <li v-if="isAdmin" class="nav-item">
         <router-link :to="{ name: 'admin' }" class="nav-link">
           <i class="fas fa-users-cog"></i>
           <span class="nav-link-text">Admin</span>
@@ -76,3 +76,13 @@
     </ul>
   </div>
 </template>
+<script>
+import { mapGetters } from 'vuex';
+export default {
+  computed: {
+    ...mapGetters({
+      isAdmin: 'auth/isAdmin'
+    })
+  }
+}
+</script>

@@ -25,7 +25,8 @@ export default {
   getters: {
     token: state => state.token,
     isLoggedIn: state => !!state.token,
-    user: state => state.user
+    user: state => state.user,
+    isAdmin: (state, getters) => getters.user !== null && getters.user.id === 1
   },
   mutations: {
     [ SET_TOKEN ] (state, token) {
