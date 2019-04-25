@@ -53,3 +53,7 @@
   background-image: url('../images/squared-metal.png');
   border-radius: 0.375rem;
 }
+
+p:only-child {
+  margin-bottom: 0;
+}

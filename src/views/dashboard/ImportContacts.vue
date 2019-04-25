@@ -30,23 +30,25 @@
 
           <div class="alert alert-info" role="alert">
             <ul class="pl-2 mb-0">
-              <li>La première ligne du fichier doit être le nom des colonnes.</li>
-              <li>La liste des contacts doit être au format Excel ou CSV</li>
-              <li>Pour un fichier CSV le séparateur doit être le pint-virgule et l'encoding UTF-8</li>
-              <li>Le fichier doit contenir au minimum 1 colonne avec les numéros de portable</li>
-              <li>Le nombre de lignes du fichier doit être au maximum de 100000 et au minimum de 5.</li>
+              <li><p>La première ligne du fichier doit être le nom des colonnes.</p></li>
+              <li><p>La liste des contacts doit être au format Excel ou CSV</p></li>
+              <li><p>Pour un fichier CSV le séparateur doit être le pint-virgule et l'encoding UTF-8</p></li>
+              <li><p>Le fichier doit contenir au minimum 1 colonne avec les numéros de portable</p></li>
+              <li><p>Le nombre de lignes du fichier doit être au maximum de 100000 et au minimum de 5.</p></li>
             </ul>
           </div>
           <div class="alert">
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="certify" v-model="certify">
-              <label class="custom-control-label" for="certify">Je certifie que :</label>
+              <p>
+                <input type="checkbox" class="custom-control-input" id="certify" v-model="certify">
+                <label class="custom-control-label" for="certify">Je certifie que :</label>
+              </p>
             </div>
             <ul class="mb-0">
-              <li>J'ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.</li>
-              <li>Aucun de mes contacts n'a été acquis via des listes de diffusion tierces.</li>
-              <li>J'inclurai la mention STOP dans toute campagne marketing.</li>
-              <li>Je n'enverrai avec SMS Partner que des informations légales et légitimes.</li>
+              <li><p>J'ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.</p></li>
+              <li><p>Aucun de mes contacts n'a été acquis via des listes de diffusion tierces.</p></li>
+              <li><p>J'inclurai la mention STOP dans toute campagne marketing.</p></li>
+              <li><p>Je n'enverrai avec SMS Partner que des informations légales et légitimes.</p></li>
             </ul>
           </div>
           <div class="text-right">
@@ -62,10 +64,10 @@
         </div>
         <div class="card-body">
           <ul>
-            <li>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_exemple_simple.csv`" class="exemple-csv">CSV</a></li>
-            <li>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_exemple_variable.csv`" class="exemple-csv">CSV</a></li>
-            <li>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_xls_exemple_simple.xls`" class="exemple-csv">XLS</a></li>
-            <li>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_xls_exemple_variable.xls`" class="exemple-csv">XLS</a></li>
+            <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_exemple_simple.csv`" class="exemple-csv">CSV</a></p></li>
+            <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_exemple_variable.csv`" class="exemple-csv">CSV</a></p></li>
+            <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_xls_exemple_simple.xls`" class="exemple-csv">XLS</a></p></li>
+            <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_xls_exemple_variable.xls`" class="exemple-csv">XLS</a></p></li>
           </ul>
         </div>
       </div>
@@ -180,6 +182,7 @@ export default {
       this.contacts = [];
       this.filename = '';
       this.errorMessage = '';
+      this.$refs.csv.value = '';
     }
   },
   watch: {
