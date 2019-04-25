@@ -87,6 +87,10 @@ export default {
   mounted () {
     const vm = this;
     const collapses = vm.$jQuery('.navbar-nav .collapse');
+    const routes = ['lists', 'list.import', 'message.redaction', 'message.drafts', 'message.list', 'message.scheduled'];
+    const pathName = vm.$route.name;
+    let collapseElement;
+
     collapses.on('show.bs.collapse', e => {
       collapses.each((i, collapse) => {
         if (collapse !== e.currentTarget) {
@@ -94,6 +98,24 @@ export default {
         }
       });
     });
+
+    vm.$jQuery('.navbar-nav > .nav-item > .nav-link').on('click', () => {
+      if (!routes.includes(vm.$route.name)) {
+        vm.$jQuery('.navbar-nav .collapse').collapse('hide');
+      }
+    });
+    
+    if (['lists', 'list.import'].includes(pathName)) {
+      collapseElement = '#base-contacts';
+    } else if (['message.redaction', 'message.drafts'].includes(pathName)) {
+      collapseElement = '#campagne-sms';
+    } else if (['message.list', 'message.scheduled'].includes(pathName)) {
+      collapseElement = '#boite-envoi';
+    }
+
+    if (collapseElement) {
+      vm.$jQuery(collapseElement).collapse('show');
+    }
   }
 }
 </script>
