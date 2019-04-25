@@ -14,7 +14,7 @@
         </router-link>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#base-contacts" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="base-contacts">
+        <a :class="dropdownToggleClass(baseContacts)" href="#base-contacts" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="base-contacts">
           <i class="ni ni-ungroup"></i>
           <span class="nav-link-text">Base de contacts</span>
         </a>
@@ -30,7 +30,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#campagne-sms" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="campagne-sms">
+        <a :class="dropdownToggleClass(campagneSMS)" href="#campagne-sms" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="campagne-sms">
           <i class="fa fa-th-large"></i>
           <span class="nav-link-text">Campagne SMS</span>
         </a>
@@ -46,7 +46,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#boite-envoi" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="boite-envoi">
+        <a :class="dropdownToggleClass(boiteEnvoi)" href="#boite-envoi" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="boite-envoi">
           <i class="ni ni-send"></i>
           <span class="nav-link-text">Boîte d'envoi</span>
         </a>
@@ -68,10 +68,23 @@
         </router-link>
       </li>
       <li v-if="isAdmin" class="nav-item">
-        <router-link :to="{ name: 'admin' }" class="nav-link">
+        <a :class="dropdownToggleClass(administration)" href="#administration" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="administration">
           <i class="fas fa-users-cog"></i>
           <span class="nav-link-text">Admin</span>
-        </router-link>
+        </a>
+        <div class="collapse" id="administration">
+          <ul class="nav nav-sm flex-column">
+            <li class="nav-item">
+              <router-link class="nav-link" to="">Utilisateurs</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="">Paiements effectués</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="">Plan</router-link>
+            </li>
+          </ul>
+        </div>
       </li>
     </ul>
   </div>
@@ -82,12 +95,33 @@ export default {
   computed: {
     ...mapGetters({
       isAdmin: 'auth/isAdmin'
-    })
+    }),
+  },
+  data () {
+    return {
+      baseContacts: ['lists', 'list.import'],
+      campagneSMS: ['message.redaction', 'message.drafts'],
+      boiteEnvoi: ['message.list', 'message.scheduled'],
+      administration: []
+    };
+  },
+  methods: {
+    dropdownToggleClass (classes) {
+      return {
+        'nav-link': true,
+        'active': classes.includes(this.$route.name)
+      };
+    }
   },
   mounted () {
     const vm = this;
     const collapses = vm.$jQuery('.navbar-nav .collapse');
-    const routes = ['lists', 'list.import', 'message.redaction', 'message.drafts', 'message.list', 'message.scheduled'];
+    const routes = [
+      ...this.baseContacts,
+      ...this.campagneSMS,
+      ...this.boiteEnvoi,
+      ...this.administration
+    ];
     const pathName = vm.$route.name;
     let collapseElement;
 
@@ -105,12 +139,14 @@ export default {
       }
     });
     
-    if (['lists', 'list.import'].includes(pathName)) {
+    if (this.baseContacts.includes(pathName)) {
       collapseElement = '#base-contacts';
-    } else if (['message.redaction', 'message.drafts'].includes(pathName)) {
+    } else if (this.campagneSMS.includes(pathName)) {
       collapseElement = '#campagne-sms';
-    } else if (['message.list', 'message.scheduled'].includes(pathName)) {
+    } else if (this.boiteEnvoi.includes(pathName)) {
       collapseElement = '#boite-envoi';
+    } else if (this.administration.includes(pathName)) {
+      collapseElement = '#administration';
     }
 
     if (collapseElement) {

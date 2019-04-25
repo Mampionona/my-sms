@@ -7,6 +7,7 @@ Vue.use(Router);
 
 const router = new Router({
   // mode: 'history',
+  linkExactActiveClass: 'active',
   base: process.env.BASE_URL,
   routes
 });
