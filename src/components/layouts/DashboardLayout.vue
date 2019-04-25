@@ -48,23 +48,23 @@ export default {
 }
 </script>
 <style lang="scss">
-/* Enter and leave animations can use different */
-/* durations and timing functions.              */
 .slide-fade-enter-active {
   transition: all .4s ease;
 }
+
 .slide-fade-leave-active {
   transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
+
+.slide-fade-enter,
+.slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
 }
 
 #nprogress {
   .bar {
-    background: #f5365c  !important;
+    background: #f5365c !important;
     z-index: 9999 !important;
   }
 
