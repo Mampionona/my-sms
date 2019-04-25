@@ -14,7 +14,7 @@
         </router-link>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#base-contacts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="base-contacts">
+        <a class="nav-link" href="#base-contacts" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="base-contacts">
           <i class="ni ni-ungroup"></i>
           <span class="nav-link-text">Base de contacts</span>
         </a>
@@ -30,7 +30,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#campagne-sms" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="campagne-sms">
+        <a class="nav-link" href="#campagne-sms" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="campagne-sms">
           <i class="fa fa-th-large"></i>
           <span class="nav-link-text">Campagne SMS</span>
         </a>
@@ -46,7 +46,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#boite-envoi" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="boite-envoi">
+        <a class="nav-link" href="#boite-envoi" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="boite-envoi">
           <i class="ni ni-send"></i>
           <span class="nav-link-text">Boîte d'envoi</span>
         </a>
@@ -83,6 +83,17 @@ export default {
     ...mapGetters({
       isAdmin: 'auth/isAdmin'
     })
+  },
+  mounted () {
+    const vm = this;
+    const collapses = vm.$jQuery('.navbar-nav .collapse');
+    collapses.on('show.bs.collapse', e => {
+      collapses.each((i, collapse) => {
+        if (collapse !== e.currentTarget) {
+          vm.$jQuery(collapse).collapse('hide');
+        }
+      });
+    });
   }
 }
 </script>
