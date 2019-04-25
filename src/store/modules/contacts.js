@@ -13,11 +13,13 @@ export default {
     contactsOfList: [],
     count: 0
   },
+
   getters: {
     listId: state => state.listId,
     contacts: state => state.contactsOfList,
     count: state => state.contactsOfList.length
   },
+
   mutations: {
     // set list id
     [LIST_ID] (state, id) {
@@ -41,6 +43,7 @@ export default {
       state.contactsOfList = payload;
     }
   },
+
   actions: {
     getContactsOfList(context, id) {
       context.commit(LIST_ID, id);

@@ -8,15 +8,18 @@ const UPDATE_LIST = 'UPDATE_LIST';
 
 export default {
   namespaced: true,
+
   state: {
     lists: [],
     newListId: null,
     error: ''
   },
+
   getters: {
     lists: state => state.lists,
     error: state => state.error
   },
+
   mutations: {
     [GET_LISTS.PENDING] () {},
     [GET_LISTS.SUCCESS] (state, payload) {
@@ -47,6 +50,7 @@ export default {
       state.lists = payload;
     }
   },
+
   actions: {
     getUserLists(context) {
       return doAsync(context, {
