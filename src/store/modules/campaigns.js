@@ -13,11 +13,11 @@ const getters = {
   // all campaigns
   campaigns: state => state.campaigns,
   // all campaigns marked as draft
-  drafts: state => state.campaigns.filter(campaign => campaign.status === 'draft'),
+  drafts: (state, getters) => getters.campaigns.filter(campaign => campaign.status === 'draft'),
   // all campaigns marked as sent
-  sent: state => state.campaigns.filter(campaign => campaign.status === 'sent'),
+  sent: (state, getters) => getters.campaigns.filter(campaign => campaign.status === 'sent'),
   // all campaigns marked as scheduled
-  scheduled: state => state.campaigns.filter(() => false),
+  scheduled: (state, getters) => getters.campaigns.filter(() => false),
   answers: state => state.answers
 };
 
@@ -29,12 +29,12 @@ const mutations = {
   // get user's campaign
   [GET_USER_CAMPAIGNS.PENDING] () {},
   [GET_USER_CAMPAIGNS.SUCCESS] (state, payload) {
-    state.campaigns = payload;
+    state.campaigns = payload.reverse();
   },
   [GET_USER_CAMPAIGNS.FAILURE] () {},
   [GET_CAMPAIGN_ANSWERS.PENDING] () {},
   [GET_CAMPAIGN_ANSWERS.SUCCESS] (state, payload) {
-    state.answers = payload;
+    state.answers = payload.reverse();
   },
   [GET_CAMPAIGN_ANSWERS.FAILURE] () {}
 };
