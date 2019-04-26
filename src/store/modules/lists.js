@@ -21,32 +21,32 @@ export default {
   },
 
   mutations: {
-    [GET_LISTS.PENDING] () {},
-    [GET_LISTS.SUCCESS] (state, payload) {
+    [GET_LISTS.PENDING]() {},
+    [GET_LISTS.SUCCESS](state, payload) {
       state.lists = payload.reverse();
     },
-    [GET_LISTS.FAILURE] (state, payload) {
+    [GET_LISTS.FAILURE](state, payload) {
       state.error = payload.data;
     },
     // update list name
-    [UPDATE_NAME.PENDING] () {},
-    [UPDATE_NAME.SUCCESS] () {},
-    [UPDATE_NAME.FAILURE] (state, payload) {
+    [UPDATE_NAME.PENDING]() {},
+    [UPDATE_NAME.SUCCESS]() {},
+    [UPDATE_NAME.FAILURE](state, payload) {
       state.error = payload.data;
     },
     // create a new list
-    [CREATE_NEW_LIST.PENDING] () {},
-    [CREATE_NEW_LIST.SUCCESS] (state, payload) {
+    [CREATE_NEW_LIST.PENDING]() {},
+    [CREATE_NEW_LIST.SUCCESS](state, payload) {
       state.newListId = payload.id;
     },
-    [CREATE_NEW_LIST.FAILURE] (state, payload) {
+    [CREATE_NEW_LIST.FAILURE](state, payload) {
       state.error = payload.data;
     },
     // Delete a list
-    [DELETE_LIST.PENDING] (state) {},
-    [DELETE_LIST.SUCCESS] (state) {},
-    [DELETE_LIST.FAILURE] (state) {},
-    [UPDATE_LIST] (state, payload) {
+    [DELETE_LIST.PENDING]() {},
+    [DELETE_LIST.SUCCESS]() {},
+    [DELETE_LIST.FAILURE]() {},
+    [UPDATE_LIST](state, payload) {
       state.lists = payload;
     }
   },

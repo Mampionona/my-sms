@@ -23,9 +23,9 @@ export function currency (value, symbol = '€', precision = 3) {
   return Currency(value, {
     formatWithSymbol: true,
     precision,
-    pattern: `# !`,
+    pattern: '# !',
     symbol
   }).format();
-}
+};
 
 Vue.filter('formatCurrency', currency);

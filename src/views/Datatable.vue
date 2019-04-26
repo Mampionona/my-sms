@@ -488,8 +488,8 @@
 </template>
 <script>
 export default {
-  mounted () {
+  mounted() {
     this.$jQuery(this.$el).DataTable();
   }
-}
+};
 </script>

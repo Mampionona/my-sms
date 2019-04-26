@@ -14,25 +14,25 @@ export default {
   },
 
   mutations: {
-    [GET_PLANS.PENDING] () {
+    [GET_PLANS.PENDING]() {
       //
     },
-    [GET_PLANS.SUCCESS] (state, payload) {
+    [GET_PLANS.SUCCESS](state, payload) {
       state.plans = payload;
     },
-    [GET_PLANS.FAILURE] () {
+    [GET_PLANS.FAILURE]() {
       //
     }
   },
 
   actions: {
-    getPlans (context) {
+    getPlans(context) {
       return doAsync(context, {
         url: '/plans',
         mutationTypes: GET_PLANS
       });
     },
-    updatePlan (context, planId) {
+    updatePlan(context, planId) {
       return doAsync(context, {
         url: `/plans/${planId}`,
         method: 'post'

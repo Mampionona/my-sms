@@ -17,10 +17,9 @@ export default {
     showClickCallback: Function
   },
   methods: {
-    onShow () {
-      if (this.showClickCallback)
-        this.showClickCallback(this.message.id);
-    },
+    onShow() {
+      if (this.showClickCallback) this.showClickCallback(this.message.id);
+    }
   }
-}
+};
 </script>

@@ -11,8 +11,9 @@
   </div>
 </template>
 <script>
-import Messages from '@/components/Messages';
 import { mapActions, mapGetters } from 'vuex';
+import Messages from '@/components/Messages';
+
 export default {
   components: { Messages },
   computed: {
@@ -24,12 +25,12 @@ export default {
     ...mapActions({
       getUserCampaigns: 'campaigns/getUserCampaigns'
     }),
-    onMessageClick () {
+    onMessageClick() {
       // console.log(message);
     }
   },
-  mounted () {
+  mounted() {
     this.getUserCampaigns();
   }
-}
+};
 </script>

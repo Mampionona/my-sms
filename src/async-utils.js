@@ -1,5 +1,7 @@
 import Axios from 'axios';
 
+// system explained in details here
+// https://medium.com/@lachlanmiller_52885/reducing-vuex-boilerplate-for-ajax-calls-1cd4a74cef26
 export const createAsyncMutation = type => ({
   PENDING: `${type}_PENDING`,
   SUCCESS: `${type}_SUCCESS`,
@@ -10,12 +12,10 @@ export function doAsync(context, { url, method = 'get', mutationTypes = null, da
   context.commit(mutationTypes.PENDING);
 
   return new Promise((resolve, reject) => {
-    url = `${url}?timestamp=${new Date().getTime()}`;
-
-    Axios[method](url, data)
-      .then(({ data }) => {
-        context.commit(mutationTypes.SUCCESS, data);
-        resolve(data);
+    Axios[method](`${url}?timestamp=${new Date().getTime()}`, data)
+      .then((response) => {
+        context.commit(mutationTypes.SUCCESS, response.data);
+        resolve(response.data);
       })
       .catch(({ response }) => {
         context.commit(mutationTypes.FAILURE, response);

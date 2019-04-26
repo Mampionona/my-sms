@@ -1,8 +1,9 @@
+import Vue from 'vue';
+import { UNAUTHENTICATED } from './utils';
+
 window.axios = require('axios');
 window.Popper = require('popper.js').default;
-window.$ = window.jQuery = require('jquery');
-import { UNAUTHENTICATED } from './utils';
-import Vue from 'vue';
+window.$ = window.jQuery = require('jquery'); // eslint-disable-line
 
 require('bootstrap');
 
@@ -16,24 +17,19 @@ if (token) {
 }
 
 // Add a response interceptor
-window.axios.interceptors.response.use(function (response) {
+window.axios.interceptors.response.use((response) => { // eslint-disable-line
   // Do something with response data
   return response;
-}, function (error) {
+}, (error) => {
   // Do something with response error
-  const { status } = error.response;
-  switch (status) {
-    case UNAUTHENTICATED:
-      localStorage.removeItem('token');
-      if ('Authorization' in window.axios.defaults.headers.common) {
-        delete window.axios.defaults.headers.common.Authorization;
-      }
-      break;
+  // const { status } = error.response;
+  if (error.response === UNAUTHENTICATED) {
+    localStorage.removeItem('token');
+
+    if ('Authorization' in window.axios.defaults.headers.common) {
+      delete window.axios.defaults.headers.common.Authorization;
+    }
   }
+
   return Promise.reject(error);
 });
-
-// Remove spaces
-String.prototype.removeSpaces = function() {
-  return this.replace(/\s/g, '').trim();
-};

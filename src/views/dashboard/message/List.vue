@@ -11,8 +11,9 @@
   </div>
 </template>
 <script>
-import Messages from '@/components/Messages';
 import { mapActions, mapGetters } from 'vuex';
+import Messages from '@/components/Messages';
+
 export default {
   components: { Messages },
   computed: {
@@ -24,7 +25,7 @@ export default {
     ...mapActions({
       getCampaigns: 'campaigns/getUserCampaigns'
     }),
-    onMessageClick ({ status, id }) {
+    onMessageClick({ status, id }) {
       switch (status) {
         case 'sent':
           this.$router.push({
@@ -35,8 +36,8 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getCampaigns();
   }
-}
+};
 </script>

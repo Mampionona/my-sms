@@ -6,15 +6,15 @@ export const COUNT_MIN_LINES = 5;
 export const validFileExtensions = ['.xls', '.xlsx', '.csv'];
 export const MAIL_TO = 'julien@my-sms.pro';
 
-export function workbookToArray (file, complete) {
+export function workbookToArray(file, complete) {
   const reader = new FileReader();
   reader.onload = (e) => {
     const data = new Uint8Array(e.target.result);
     const workbook = XLSX.read(data, { type: 'array' });
 
     /* convert from workbook to array of arrays */
-    const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
-    let arrays = XLSX.utils.sheet_to_json(first_worksheet, { header: 1 });
+    const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
+    let arrays = XLSX.utils.sheet_to_json(firstWorksheet, { header: 1 });
     // console.log(array);
     arrays = arrays.filter(array => array.length > 0);
     if (complete) {
@@ -39,7 +39,7 @@ export function computeNumberOfSMS(message) {
   const utf16CharsLength = message.length;
 
   if (utf16CharsLength <= firstMaxLength) return 1;
-  if (utf16CharsLength > firstMaxLength) return 1 + (Math.ceil((utf16CharsLength - firstMaxLength) / subsequentsMaxLength));
+  return 1 + (Math.ceil((utf16CharsLength - firstMaxLength) / subsequentsMaxLength));
 }
 
 /**
@@ -50,10 +50,19 @@ export function computeNumberOfSMS(message) {
  */
 export function computeRemainingChars(countSMS, len) {
   const { firstMaxLength, subsequentsMaxLength } = MESSAGE;
-  if (countSMS === 1) {
-    return firstMaxLength - len;
-  }
+  let remainingLen = len;
 
-  len -= firstMaxLength;
-  return (subsequentsMaxLength * (countSMS - 1)) - len; // 1 = first message
+  if (countSMS === 1) return firstMaxLength - len;
+  remainingLen -= firstMaxLength;
+
+  return (subsequentsMaxLength * (countSMS - 1)) - remainingLen; // 1 = first message
+}
+
+/**
+ * Remove spaces in a string
+ * @param { String } str
+ * @return { String }
+ */
+export function removeSpaces(str) {
+  return str.replace(/\s/g, '').trim();
 }

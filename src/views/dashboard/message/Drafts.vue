@@ -11,11 +11,13 @@
   </div>
 </template>
 <script>
-import Messages from '@/components/Messages';
+
 import { mapActions, mapGetters } from 'vuex';
+import Messages from '@/components/Messages';
+
 export default {
   components: { Messages },
-  mounted () {
+  mounted() {
     this.getUserCampaigns();
   },
   computed: {
@@ -27,12 +29,12 @@ export default {
     ...mapActions({
       getUserCampaigns: 'campaigns/getUserCampaigns'
     }),
-    onClickCallback ({ id }) {
+    onClickCallback({ id }) {
       this.$router.push({
         name: 'message.redaction',
         query: { campaign_id: id }
       });
     }
   }
-}
+};
 </script>

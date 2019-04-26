@@ -1,4 +1,4 @@
-import Axios from "axios";
+import Axios from 'axios';
 import { doAsync, createAsyncMutation } from '@/async-utils';
 
 const SET_TOKEN = 'SET_TOKEN';
@@ -29,24 +29,24 @@ export default {
     isAdmin: (state, getters) => getters.user !== null && getters.user.id === 1
   },
   mutations: {
-    [SET_TOKEN] (state, token) {
+    [SET_TOKEN](state, token) {
       state.token = token;
     },
-    [LOGOUT] (state) {
+    [LOGOUT](state) {
       state.user = null;
       state.token = null;
     },
-    [FETCH_USER.PENDING] () {},
-    [FETCH_USER.SUCCESS] (state, payload) {
-      state.user = payload[0];
+    [FETCH_USER.PENDING]() {},
+    [FETCH_USER.SUCCESS](state, payload) {
+      [state.user] = payload;
     },
-    [FETCH_USER.FAILURE] () {},
-    [UPDATE_ACCOUNT.PENDING] () {},
-    [UPDATE_ACCOUNT.SUCCESS] (state, payload) {
+    [FETCH_USER.FAILURE]() {},
+    [UPDATE_ACCOUNT.PENDING]() {},
+    [UPDATE_ACCOUNT.SUCCESS](state, payload) {
       // state.user = payload[0];
       console.log(payload);
     },
-    [UPDATE_ACCOUNT.FAILURE] () {},
+    [UPDATE_ACCOUNT.FAILURE]() {}
   },
   actions: {
     authenticate(context, credentials) {
@@ -75,7 +75,7 @@ export default {
     },
     getUser(context) {
       if (!context.getters.isLoggedIn) {
-        return;
+        return false;
       }
 
       return new Promise((resolve, reject) => {

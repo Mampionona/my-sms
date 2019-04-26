@@ -16,11 +16,11 @@ export default {
     }
   },
   computed: {
-    buttonClass () {
+    buttonClass() {
       return {
         btn: true,
         'btn-icon': !!this.icon,
-        [ `btn-${this.color}` ]: !!this.color
+        [`btn-${this.color}`]: !!this.color
       };
     }
   }

@@ -22,12 +22,12 @@ router.beforeEach((to, from, next) => {
         name: 'login',
         query: { redirect: to.fullPath }
       });
-    } else {
-      next();
     }
-  } else {
-    next();
+
+    else next();
   }
+
+  else next();
 });
 
 export default router;

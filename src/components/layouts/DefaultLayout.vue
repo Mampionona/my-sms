@@ -13,12 +13,13 @@
 <script>
 import Header from './partials/Header';
 import Footer from './partials/Footer';
+
 export default {
   components: {
     AppHeader: Header,
     AppFooter: Footer
   }
-}
+};
 </script>
 <style lang="scss">
 /* Enter and leave animations can use different */

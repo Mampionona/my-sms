@@ -25,31 +25,31 @@ export default {
 
   mutations: {
     // create or update campaign
-    [CREATE_OR_UPDATE_CAMPAIGN.PENDING] () {},
-    [CREATE_OR_UPDATE_CAMPAIGN.SUCCESS] () {},
-    [CREATE_OR_UPDATE_CAMPAIGN.FAILURE] () {},
+    [CREATE_OR_UPDATE_CAMPAIGN.PENDING]() {},
+    [CREATE_OR_UPDATE_CAMPAIGN.SUCCESS]() {},
+    [CREATE_OR_UPDATE_CAMPAIGN.FAILURE]() {},
     // get user's campaign
-    [GET_USER_CAMPAIGNS.PENDING] () {},
-    [GET_USER_CAMPAIGNS.SUCCESS] (state, payload) {
+    [GET_USER_CAMPAIGNS.PENDING]() {},
+    [GET_USER_CAMPAIGNS.SUCCESS](state, payload) {
       state.campaigns = payload.reverse();
     },
-    [GET_USER_CAMPAIGNS.FAILURE] () {},
-    [GET_CAMPAIGN_ANSWERS.PENDING] () {},
-    [GET_CAMPAIGN_ANSWERS.SUCCESS] (state, payload) {
+    [GET_USER_CAMPAIGNS.FAILURE]() {},
+    [GET_CAMPAIGN_ANSWERS.PENDING]() {},
+    [GET_CAMPAIGN_ANSWERS.SUCCESS](state, payload) {
       state.answers = payload.reverse();
     },
-    [GET_CAMPAIGN_ANSWERS.FAILURE] () {}
+    [GET_CAMPAIGN_ANSWERS.FAILURE]() {}
   },
 
   actions: {
-    getUserCampaigns (context) {
+    getUserCampaigns(context) {
       return doAsync(context, {
         url: '/campaigns/',
         mutationTypes: GET_USER_CAMPAIGNS
       });
     },
 
-    createNewCampaign (context, campaign) {
+    createNewCampaign(context, campaign) {
       let url = '/campaigns';
       if (campaign.action === 'update') {
         url += `/${campaign.campaignId}`;

@@ -11,13 +11,13 @@ export default {
   },
 
   mutations: {
-    [SET_LAYOUT] (state, layout) {
+    [SET_LAYOUT](state, layout) {
       state.layout = layout;
     }
   },
 
   actions: {
-    setLayout (context, layout) {
+    setLayout(context, layout) {
       context.commit(SET_LAYOUT, layout);
     }
   }

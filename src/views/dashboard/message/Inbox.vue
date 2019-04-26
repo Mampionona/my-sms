@@ -25,32 +25,33 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import vTable from '@/components/vTable';
 import SentMessage from '@/components/SentMessage';
-import { mapActions, mapGetters } from 'vuex';
+
 export default {
   components: { vTable, SentMessage },
   computed: {
     ...mapGetters({
       sentMessages: 'campaigns/sent'
     }),
-    isEmpty () {
+    isEmpty() {
       return this.sentMessages.length === 0;
     }
   },
-  created () {
+  created() {
     this.getCampaigns();
   },
   methods: {
     ...mapActions({
       getCampaigns: 'campaigns/getUserCampaigns'
     }),
-    onShow (messageId) {
+    onShow(messageId) {
       this.$router.push({
         name: 'answers',
         params: { messageId }
       });
     }
   }
-}
+};
 </script>

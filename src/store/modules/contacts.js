@@ -22,24 +22,24 @@ export default {
 
   mutations: {
     // set list id
-    [LIST_ID] (state, id) {
+    [LIST_ID](state, id) {
       state.listId = id;
     },
     // get contacts
-    [GET_CONTACTS.PENDING] () {},
-    [GET_CONTACTS.SUCCESS] (state, payload) {
+    [GET_CONTACTS.PENDING]() {},
+    [GET_CONTACTS.SUCCESS](state, payload) {
       state.contactsOfList = payload;
     },
-    [GET_CONTACTS.FAILURE] () {},
+    [GET_CONTACTS.FAILURE]() {},
     // add contact to a list
-    [ADD_CONTACTS.PENDING] () {},
-    [ADD_CONTACTS.SUCCESS] () {},
-    [ADD_CONTACTS.FAILURE] () {},
+    [ADD_CONTACTS.PENDING]() {},
+    [ADD_CONTACTS.SUCCESS]() {},
+    [ADD_CONTACTS.FAILURE]() {},
     // remove a contact from a list
-    [REMOVE_CONTACT_FROM_A_LIST.PENDING] () {},
-    [REMOVE_CONTACT_FROM_A_LIST.SUCCESS] () {},
-    [REMOVE_CONTACT_FROM_A_LIST.FAILURE] () {},
-    [UPDATE_CONTACTS] (state, payload) {
+    [REMOVE_CONTACT_FROM_A_LIST.PENDING]() {},
+    [REMOVE_CONTACT_FROM_A_LIST.SUCCESS]() {},
+    [REMOVE_CONTACT_FROM_A_LIST.FAILURE]() {},
+    [UPDATE_CONTACTS](state, payload) {
       state.contactsOfList = payload;
     }
   },
@@ -63,7 +63,7 @@ export default {
         mutationTypes: REMOVE_CONTACT_FROM_A_LIST
       });
     },
-    addContacts (context, { listId, contacts }) {
+    addContacts(context, { listId, contacts }) {
       return doAsync(context, {
         url: `/contacts/lists/${listId}/`,
         method: 'post',

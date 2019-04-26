@@ -13,16 +13,16 @@
             <div class="card-header"><i class="fas fa-users mr-2"></i> Destinataires</div>
             <div class="card-body">
               <model-list-select
-                :list="lists" 
-                option-value="id" 
-                option-text="name" 
+                :list="lists"
+                option-value="id"
+                option-text="name"
                 v-model="listId"
                 placeholder="Sélectionner un fichier"
               ></model-list-select>
               <p v-if="countContacts > 0 && listId" class="small mt-4">{{ $tc('redaction.countContacts', countContacts) }}</p>
             </div>
           </div>
-          
+
         </div>
         <div class="col-lg-4">
           <div class="card">
@@ -69,7 +69,7 @@
               </div>
               <date-picker
                 v-if="sendingMode === 'delayed'"
-                v-model="sendDate" 
+                v-model="sendDate"
                 lang="fr"
                 format="YYYY-MM-DD H:mm"
                 :time-picker-options="{ start: '08:00', step: '00:05', end: '18:00' }"
@@ -115,10 +115,10 @@ export default {
     complete: Function,
     fail: Function
   },
-  data () {
+  data() {
     return {
       text: '',
-      senderName:'',
+      senderName: '',
       sendDate: '',
       remainingChars: MESSAGE.firstMaxLength,
       countSMS: 1,
@@ -128,28 +128,28 @@ export default {
       name: ''
     };
   },
-  mounted () {
+  mounted() {
     // Get a user's lists
     this.getUserLists().then(() => {
       if (this.$route.query.listId) {
-        this.listId = parseInt(this.$route.query.listId);
+        this.listId = parseInt(this.$route.query.listId, 10);
       }
     });
     this.populateCampainFields();
   },
   watch: {
-    text (newText) {
+    text(newText) {
       this.countSMS = computeNumberOfSMS(newText);
       this.remainingChars = computeRemainingChars(this.countSMS, newText.length);
     },
-    listId (newListId) {
+    listId(newListId) {
       this.getContactsOfList(newListId);
     },
-    '$route': 'populateCampainFields'
+    $route: 'populateCampainFields'
   },
   computed: {
     ...mapGetters({
-      lists:'lists/lists',
+      lists: 'lists/lists',
       countContacts: 'contacts/count',
       drafts: 'campaigns/drafts'
     })
@@ -161,16 +161,16 @@ export default {
       getContactsOfList: 'contacts/getContactsOfList',
       getUserCampaigns: 'campaigns/getUserCampaigns'
     }),
-    dateChange (currentValue) {
+    dateChange(currentValue) {
       this.sendDate = currentValue.toISOString();
     },
-    submitCampaign () {
+    submitCampaign() {
       const { listId, name, text, senderName, sendingMode } = this;
       const action = 'campaign_id' in this.$route.query ? 'update' : 'new';
       const campaignId = 'campaign_id' in this.$route.query ? this.$route.query.campaign_id : null;
       let { sendDate, status } = this;
       sendDate = (sendingMode === 'immediate') ? '' : sendDate;
-      status = status ? 'draft': 'live';
+      status = status ? 'draft' : 'live';
 
       if (this.pending) {
         this.pending();
@@ -186,22 +186,23 @@ export default {
             this.complete(data);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           alert('object' === typeof error.data ? error.data.error : error.data);
+
           if (this.fail) {
             this.fail(error);
           }
         });
     },
-    populateCampainFields () {
+    populateCampainFields() {
       const vm = this;
-      const query = vm.$route.query;
-      
+      const { query } = vm.$route;
+
       // Fetch user's campaigns
       this.getUserCampaigns().then(() => {
         if (!!this.drafts.length && 'campaign_id' in query) {
-          this.drafts.forEach(draft => {
-            if (draft.id == query.campaign_id) {
+          this.drafts.forEach((draft) => {
+            if (draft.id == query.campaign_id) { // is this to make sure 'number' == number (String vs Number) ?
               vm.senderName = draft.sender_name;
               vm.listId = draft.list_id;
               vm.text = draft.text;
@@ -213,11 +214,11 @@ export default {
 
       // !isset(query[campaign_id])
       if (!('campaign_id' in this.$route.query)) {
-        this.senderName = this.listId = this.text = '';
+        this.senderName = this.listId = this.text = ''; // purpose is unclear
       }
     }
   }
-}
+};
 </script>
 <style>
 .mx-input {

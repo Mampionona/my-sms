@@ -91,13 +91,14 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+
 export default {
   computed: {
     ...mapGetters({
       isAdmin: 'auth/isAdmin'
-    }),
+    })
   },
-  data () {
+  data() {
     return {
       baseContacts: ['lists', 'list.import'],
       campagneSMS: ['message.redaction', 'message.drafts'],
@@ -106,15 +107,15 @@ export default {
     };
   },
   methods: {
-    dropdownToggleClass (classes) {
+    dropdownToggleClass(classes) {
       return {
         'nav-link': true,
-        'active': classes.includes(this.$route.name)
+        active: classes.includes(this.$route.name)
       };
     }
   },
-  mounted () {
-    const vm = this;
+  mounted() {
+    const vm = this; // no need with arrow ƒns
     const collapses = vm.$jQuery('.navbar-nav .collapse');
     const routes = [
       ...this.baseContacts,
@@ -125,7 +126,7 @@ export default {
     const pathName = vm.$route.name;
     let collapseElement;
 
-    collapses.on('show.bs.collapse', e => {
+    collapses.on('show.bs.collapse', (e) => {
       collapses.each((i, collapse) => {
         if (collapse !== e.currentTarget) {
           vm.$jQuery(collapse).collapse('hide');
@@ -138,20 +139,13 @@ export default {
         vm.$jQuery('.navbar-nav .collapse').collapse('hide');
       }
     });
-    
-    if (this.baseContacts.includes(pathName)) {
-      collapseElement = '#base-contacts';
-    } else if (this.campagneSMS.includes(pathName)) {
-      collapseElement = '#campagne-sms';
-    } else if (this.boiteEnvoi.includes(pathName)) {
-      collapseElement = '#boite-envoi';
-    } else if (this.administration.includes(pathName)) {
-      collapseElement = '#administration';
-    }
 
-    if (collapseElement) {
-      vm.$jQuery(collapseElement).collapse('show');
-    }
+    if (this.baseContacts.includes(pathName)) collapseElement = '#base-contacts';
+    else if (this.campagneSMS.includes(pathName)) collapseElement = '#campagne-sms';
+    else if (this.boiteEnvoi.includes(pathName)) collapseElement = '#boite-envoi';
+    else if (this.administration.includes(pathName)) collapseElement = '#administration';
+
+    if (collapseElement) vm.$jQuery(collapseElement).collapse('show');
   }
-}
+};
 </script>

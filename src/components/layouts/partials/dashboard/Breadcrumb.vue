@@ -19,12 +19,12 @@
 <script>
 export default {
   methods: {
-    isFirst (index) {
+    isFirst(index) {
       return index === 0;
     },
-    isLast (index) {
+    isLast(index) {
       return index === (this.$breadcrumbs.length - 1);
     }
   }
-}
+};
 </script>

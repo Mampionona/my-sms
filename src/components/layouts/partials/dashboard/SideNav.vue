@@ -30,45 +30,45 @@ const { classList } = document.body;
 
 export default {
   components: { vueCustomScrollbar, Navbar },
-  data () {
+  data() {
     return {
       isActive: true,
       settings: {
         suppressScrollX: true
       }
-    }
+    };
   },
-  mounted () {
+  mounted() {
     classList.add('g-sidenav-show', 'g-sidenav-pinned');
   },
   computed: {
-    classObject () {
+    classObject() {
       return {
         'sidenav-toggler': true,
         'd-none': true,
         'd-xl-block': true,
-        'active': this.isActive
+        active: this.isActive
       };
     }
   },
   methods: {
-    onMouseover () {
+    onMouseover() {
       if (!classList.contains('g-sidenav-pinned')) {
         classList.add('g-sidenav-show');
       }
     },
-    onMouseleave () {
+    onMouseleave() {
       if (!classList.contains('g-sidenav-pinned')) {
         classList.remove('g-sidenav-show');
         classList.add('g-sidenav-hidden');
       }
     },
-    toggleSidenav () {
+    toggleSidenav() {
       classList.toggle('g-sidenav-pinned');
       this.isActive = !this.isActive;
     }
   }
-}
+};
 </script>
 <style >
 .scroll-area {

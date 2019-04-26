@@ -21,38 +21,39 @@
   </v-table>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import vTable from '@/components/vTable';
 import Campaign from '@/components/Campaign';
-import { mapGetters, mapActions } from 'vuex';
+
 export default {
   components: { vTable, Campaign },
   computed: {
     ...mapGetters({
       lists: 'lists/lists'
     }),
-    __columns () {
+    __columns() {
       if (this.isDraft) {
         return this.columns.campaign;
       }
       return this.columns.message;
     },
-    isEmpty () {
+    isEmpty() {
       return this.messages.length === 0;
     },
-    colspan () {
+    colspan() {
       const FOUR_COLUMN = 4;
       const SEVEN_COLUMN = 7;
       return this.isDraft ? FOUR_COLUMN : SEVEN_COLUMN;
     }
   },
-  created () {
+  created() {
     this.getLists();
   },
-  data () {
+  data() {
     return {
       columns: {
-        campaign: ['Message', 'Emetteur', 'Date d\'envoi', 'SMS/Destinataires'],
-        message: ['Nom de la campagne', 'Message', 'Emetteur', 'Date d\'envoi', 'SMS', 'Rapport', 'Réponses']
+        campaign: ['Message', 'Emetteur', 'Date d’envoi', 'SMS/Destinataires'],
+        message: ['Nom de la campagne', 'Message', 'Emetteur', 'Date d’envoi', 'SMS', 'Rapport', 'Réponses']
       }
     };
   },
@@ -69,5 +70,5 @@ export default {
       type: Boolean
     }
   }
-}
+};
 </script>
