@@ -154,7 +154,7 @@ export default {
     importWorkbook: function () {
       const { customName, filename, contacts } = this;
       const len = contacts.length;
-      const vm = this;
+      // const vm = this;
       if (len < COUNT_MIN_LINES || len > COUNT_MAX_LINES) {
         return;
       }
@@ -164,7 +164,7 @@ export default {
           name: customName ? customName : filename
         })
         .then(function(data) {
-          vm.addContactsToAList(data.id, contacts);
+          this.addContactsToAList(data.id, contacts);
         });
       }
     },

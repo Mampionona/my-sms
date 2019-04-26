@@ -193,19 +193,16 @@ export default {
           }
         });
     },
-    populateCampainFields () {
-      const vm = this;
-      const query = vm.$route.query;
-      
+    populateCampainFields () {      
       // Fetch user's campaigns
       this.getUserCampaigns().then(() => {
-        if (!!this.drafts.length && 'campaign_id' in query) {
+        if (!!this.drafts.length && 'campaign_id' in this.$route.query) {
           this.drafts.forEach(draft => {
-            if (draft.id === query.campaign_id) {
-              vm.senderName = draft.sender_name;
-              vm.listId = draft.list_id;
-              vm.text = draft.text;
-              vm.name = draft.name;
+            if (draft.id === this.$route.query.campaign_id) {
+              this.senderName = draft.senderName;
+              this.listId = draft.list_id;
+              this.text = draft.text;
+              this.name = draft.name;
             }
           });
         }

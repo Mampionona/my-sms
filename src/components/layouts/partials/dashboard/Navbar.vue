@@ -114,28 +114,27 @@ export default {
     }
   },
   mounted () {
-    const vm = this;
-    const collapses = vm.$jQuery('.navbar-nav .collapse');
+    const collapses = this.$jQuery('.navbar-nav .collapse');
     const routes = [
       ...this.baseContacts,
       ...this.campagneSMS,
       ...this.boiteEnvoi,
       ...this.administration
     ];
-    const pathName = vm.$route.name;
+    const pathName = this.$route.name;
     let collapseElement;
 
     collapses.on('show.bs.collapse', e => {
       collapses.each((i, collapse) => {
         if (collapse.id !== e.currentTarget.id) {
-          vm.$jQuery(collapse).collapse('hide');
+          this.$jQuery(collapse).collapse('hide');
         }
       });
     });
 
-    vm.$jQuery('.navbar-nav > .nav-item > .nav-link').on('click', () => {
-      if (!routes.includes(vm.$route.name)) {
-        vm.$jQuery('.navbar-nav .collapse').collapse('hide');
+    this.$jQuery('.navbar-nav > .nav-item > .nav-link').on('click', () => {
+      if (!routes.includes(this.$route.name)) {
+        this.$jQuery('.navbar-nav .collapse').collapse('hide');
       }
     });
     
@@ -150,7 +149,7 @@ export default {
     }
 
     if (collapseElement) {
-      vm.$jQuery(collapseElement).collapse('show');
+      this.$jQuery(collapseElement).collapse('show');
     }
   }
 }
