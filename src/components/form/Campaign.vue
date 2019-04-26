@@ -201,7 +201,7 @@ export default {
       this.getUserCampaigns().then(() => {
         if (!!this.drafts.length && 'campaign_id' in query) {
           this.drafts.forEach(draft => {
-            if (draft.id == query.campaign_id) {
+            if (draft.id === query.campaign_id) {
               vm.senderName = draft.sender_name;
               vm.listId = draft.list_id;
               vm.text = draft.text;

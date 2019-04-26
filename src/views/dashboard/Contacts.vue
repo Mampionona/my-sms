@@ -113,7 +113,7 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     store.dispatch('lists/getUserLists').then(lists => lists.forEach(list => {
-      if (list.id == to.params.listId) {
+      if (list.id === to.params.listId) {
         next(vm => vm.setData(list));
       }
     }));
