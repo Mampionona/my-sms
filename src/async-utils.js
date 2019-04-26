@@ -6,10 +6,9 @@ export const createAsyncMutation = type => ({
   FAILURE: `${type}_FAILURE`
 });
 
-export function doAsync(context, { url, method = 'get', mutationTypes = null, data = {} }) {
+export function doAsync(context, { url, method = 'get', mutationTypes, data = {} }) {
   context.commit(mutationTypes.PENDING);
   return new Promise((resolve, reject) => {
-    url = `${url}?timestamp=${new Date().getTime()}`;
     Axios[method](url, data)
       .then(({ data }) => {
         context.commit(mutationTypes.SUCCESS, data);
