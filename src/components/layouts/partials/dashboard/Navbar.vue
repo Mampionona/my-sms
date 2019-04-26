@@ -21,10 +21,10 @@
         <div class="collapse" id="base-contacts" style="">
           <ul class="nav nav-sm flex-column">
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'lists' }">Liste des contacts</router-link>
+              <router-link class="nav-link" :to="{ name: 'contacts_list' }">Liste des contacts</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'list.import' }">Importer des contacts</router-link>
+              <router-link class="nav-link" :to="{ name: 'import_file' }">Importer des contacts</router-link>
             </li>
           </ul>
         </div>
@@ -37,10 +37,10 @@
         <div class="collapse" id="campagne-sms" style="">
           <ul class="nav nav-sm flex-column">
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'message.redaction' }">Créer une campagne</router-link>
+              <router-link class="nav-link" :to="{ name: 'create_campaign' }">Créer une campagne</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'message.drafts' }">Brouillons</router-link>
+              <router-link class="nav-link" :to="{ name: 'drafts_messages' }">Brouillons</router-link>
             </li>
           </ul>
         </div>
@@ -53,10 +53,10 @@
         <div class="collapse" id="boite-envoi" style="">
           <ul class="nav nav-sm flex-column">
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'message.list' }">Envois effectués</router-link>
+              <router-link class="nav-link" :to="{ name: 'sent_messages' }">Envois effectués</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'message.scheduled' }">Envois planifiés</router-link>
+              <router-link class="nav-link" :to="{ name: 'scheduled_messages' }">Envois planifiés</router-link>
             </li>
           </ul>
         </div>
@@ -99,9 +99,9 @@ export default {
   },
   data () {
     return {
-      baseContacts: ['lists', 'list.import'],
-      campagneSMS: ['message.redaction', 'message.drafts'],
-      boiteEnvoi: ['message.list', 'message.scheduled'],
+      baseContacts: ['contacts_list', 'import_file'],
+      campagneSMS: ['create_campaign', 'drafts_messages'],
+      boiteEnvoi: ['sent_messages', 'scheduled_messages'],
       administration: []
     };
   },
@@ -127,7 +127,7 @@ export default {
 
     collapses.on('show.bs.collapse', e => {
       collapses.each((i, collapse) => {
-        if (collapse !== e.currentTarget) {
+        if (collapse.id !== e.currentTarget.id) {
           vm.$jQuery(collapse).collapse('hide');
         }
       });

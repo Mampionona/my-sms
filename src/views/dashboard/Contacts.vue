@@ -130,7 +130,7 @@ export default {
     }),
     composeUrl () {
       return {
-        name: 'message.redaction',
+        name: 'create_campaign',
         query: { listId: this.$route.params.listId }
       };
     },

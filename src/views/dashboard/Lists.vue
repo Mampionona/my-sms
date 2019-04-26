@@ -3,7 +3,7 @@
     <div class="col">
       <div class="card">
         <div class="card-header border-0">
-          <router-link :to="{ name: 'list.import' }" class="btn btn-primary">Importer des contacts</router-link>
+          <router-link :to="{ name: 'import_file' }" class="btn btn-primary">Importer des contacts</router-link>
         </div>
         <v-table>
           <thead class="thead-light">

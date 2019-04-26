@@ -3,7 +3,7 @@
     <div class="col">
       <div class="card">
         <div class="card-header">
-          <router-link class="btn btn-primary" :to="{ name: 'message.redaction' }">Créer une campagne</router-link>
+          <router-link class="btn btn-primary" :to="{ name: 'create_campaign' }">Créer une campagne</router-link>
         </div>
         <messages :click-callback="onClickCallback" :messages="drafts" is-draft>Aucun brouillons</messages>
       </div>
@@ -29,7 +29,7 @@ export default {
     }),
     onClickCallback ({ id }) {
       this.$router.push({
-        name: 'message.redaction',
+        name: 'create_campaign',
         query: { campaign_id: id }
       });
     }

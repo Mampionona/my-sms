@@ -3,7 +3,7 @@
     <div class="col">
       <div class="card">
         <div class="card-header">
-          <router-link class="btn btn-primary" :to="{ name: 'message.redaction' }">Créer une campagne</router-link>
+          <router-link class="btn btn-primary" :to="{ name: 'create_campaign' }">Créer une campagne</router-link>
         </div>
         <messages :click-callback="onMessageClick" :messages="scheduled" component="message">Aucun envois planifiés</messages>
       </div>
