@@ -1,17 +1,11 @@
 <template>
   <tr>
     <th scope="row">
-      <div class="media align-items-center">                    
-        <div class="media-body">
-          <span class="name mb-0 text-sm">{{ list.name }}</span>
-        </div>
-      </div>
+      <span class="name mb-0 text-sm">{{ list.name }}</span>
     </th>
-    <td class="budget">nb contacts</td>
-    <td>date</td>
-    <td>non verifie</td>
+    <td class="budget">{{ list.contacts }}</td>
+    <td>{{ list.updateDate | full }}</td>
     <td class="text-right">
-      <button class="btn btn-primary"><i class="fas fa-check-circle"></i></button>
       <button class="btn btn-danger" @click.prevent="deleteList(list.id)"><i class="fas fa-trash-alt"></i></button>
       <button class="btn btn-success" @click.prevent="showList(list.id)"><i class="fas fa-bars"></i></button>
     </td>

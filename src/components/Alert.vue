@@ -18,6 +18,7 @@ export default {
         alert: true,
         fade: true,
         show: true,
+        'd-flex': true,
         [ color ]: this.color,
         'alert-dismissible': this.dismissible
       }

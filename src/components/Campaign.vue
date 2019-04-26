@@ -1,40 +1,56 @@
 <template>
-  <tr @click="onClick" :style="style">
-    <th scope="row">
-      <div class="media align-items-center">                    
-        <div class="media-body">
-          <span class="name mb-0 text-sm">{{ campaign.text }}</span>
-        </div>
-      </div>
-    </th>
-    <td class="budget">{{ campaign.sender_name }}</td>
-    <td>{{ campaign.send_date | full }}</td>
-    <td>{{ campaign.name }}</td>
+  <tr @click="onClick" :style="{cursor: 'pointer'}">
+    <template v-if="isDraft">
+      <td>
+        <span class="text-sm">{{ campaign.text }}</span>
+      </td>
+      <td>{{ campaign.senderName }}</td>
+      <td>{{ campaign.sendDate | full }}</td>
+      <td>{{ listName }}</td>
+    </template>
+    <template v-else>
+      <td><span class="text-sm">{{ campaign.name }}</span></td>
+      <td>{{ campaign.text }}</td>
+      <td>{{ campaign.senderName }}</td>
+      <td>{{ campaign.sendDate | full }}</td>
+      <td>{{ listName }}</td>
+      <td>rapport</td>
+      <td>reponses</td>
+    </template>
   </tr>
 </template>
 <script>
-import vBtn from '@/components/vBtn';
-
 export default {
-  components: { vBtn },
   props: {
     campaign: {
       required: true,
       type: Object
     },
-    clickCallback: Function
+    clickCallback: Function,
+    lists: Array,
+    isDraft: {
+      default: false,
+      type: Boolean
+    }
   },
   computed: {
-    style () {
-      return {
-        cursor: 'pointer'
-      };
+    listName () {
+      const lists = this.lists;
+      for (let i = 0; i < lists.length; i++) {
+        const list = lists[i];
+        if (list.id === this.campaign.list_id) {
+          return list.name;
+        }
+      }
     }
   },
   methods: {
     onClick () {
-      if (this.clickCallback) this.clickCallback(this.campaign);
+      if (this.clickCallback) {
+        this.clickCallback(this.campaign);
+      }
     }
   }
 };
 </script>
+

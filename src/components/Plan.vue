@@ -1,8 +1,8 @@
 <template>
   <tr>
     <th>{{ plan.name }}</th>
-    <td>{{ plan.sms_price | formatCurrency }}</td>
-    <td>{{ plan.plan_price | formatCurrency }}</td>
+    <td>{{ (plan.smsPrice / 1000) | formatCurrency }}</td>
+    <td>{{ plan.planPrice | formatCurrency }}</td>
   </tr>
 </template>
 <script>

@@ -1,8 +1,8 @@
 <template>
   <tr>
     <td>{{ thread.telephone }}</td>
-    <td>{{ thread.text }}</td>
-    <td>{{ thread.date | full }}</td>
+    <td>{{ thread.answer }}</td>
+    <!-- <td>{{ thread.date | full }}</td> -->
     <td class="text-right">
       <button class="btn btn-danger" @click.prevent="onClick"><i class="fas fa-trash-alt"></i></button>
     </td>

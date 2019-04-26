@@ -3,10 +3,10 @@
     <div class="col-lg-8">
       <div class="card">
         <div class="card-body">
-          <div class="dropzone p-5 mb-5" @drop.stop.prevent="handleFiles($event)" @dragenter.stop.prevent @dragover.stop.prevent>
+          <div class="dropzone p-5 mb-4" @drop.stop.prevent="handleFiles($event)" @dragenter.stop.prevent @dragover.stop.prevent>
             <div class="text-center">
               <div>Glisser et déposer votre fichier</div>
-              <div class="my-3">- Ou -</div>
+              <div class="my-2 small">- Ou -</div>
               <div>
                 <label class="btn btn-icon btn-primary">
                   <span class="btn-inner--icon">
@@ -17,29 +17,38 @@
                 </label>
               </div>
               <p class="mt-4 mb-0 text-sm" v-if="selectedFile">
-                <strong>Fichier sélectionné :</strong> {{ filename }} <a href="#" @click.prevent="dismissFile"><i class="fas fa-trash"></i></a>
+                <strong>Fichier sélectionné :</strong> {{ filename }} <a href="#" @click.prevent="dismissFile"><i class="fas fa-trash-alt"></i></a>
               </p>
+              <p v-if="errorMessage" class="text-danger mb-0 mt-4 font-weight-bold error-message">{{ errorMessage }}</p>
             </div>
           </div>
+
+          <div class="form-group mb-5">
+            <label for="custom-name" class="form-control-label">Personnaliser le nom du fichier</label>
+            <input class="form-control" type="text" id="custom-name" v-model="customName">
+          </div>
+
           <div class="alert alert-info" role="alert">
-            <ul class="pl-2">
-              <li>La première ligne du fichier doit être le nom des colonnes.</li>
-              <li>La liste des contacts doit être au format Excel ou CSV</li>
-              <li>Pour un fichier CSV le séparateur doit être le pint-virgule et l'encoding UTF-8</li>
-              <li>Le fichier doit contenir au minimum 1 colonne avec les numéros de portable</li>
-              <li>Le nombre de lignes du fichier doit être au maximum de 100000 et au minimum de 5.</li>
+            <ul class="pl-2 mb-0">
+              <li><p>La première ligne du fichier doit être le nom des colonnes.</p></li>
+              <li><p>La liste des contacts doit être au format Excel ou CSV</p></li>
+              <li><p>Pour un fichier CSV le séparateur doit être le pint-virgule et l'encoding UTF-8</p></li>
+              <li><p>Le fichier doit contenir au minimum 1 colonne avec les numéros de portable</p></li>
+              <li><p>Le nombre de lignes du fichier doit être au maximum de 100000 et au minimum de 5.</p></li>
             </ul>
           </div>
           <div class="alert">
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="certify" v-model="certify">
-              <label class="custom-control-label" for="certify">Je certifie que :</label>
+              <p>
+                <input type="checkbox" class="custom-control-input" id="certify" v-model="certify">
+                <label class="custom-control-label" for="certify">Je certifie que :</label>
+              </p>
             </div>
-            <ul>
-              <li>J'ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.</li>
-              <li>Aucun de mes contacts n'a été acquis via des listes de diffusion tierces.</li>
-              <li>J'inclurai la mention STOP dans toute campagne marketing.</li>
-              <li>Je n'enverrai avec SMS Partner que des informations légales et légitimes.</li>
+            <ul class="mb-0">
+              <li><p>J'ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.</p></li>
+              <li><p>Aucun de mes contacts n'a été acquis via des listes de diffusion tierces.</p></li>
+              <li><p>J'inclurai la mention STOP dans toute campagne marketing.</p></li>
+              <li><p>Je n'enverrai avec SMS Partner que des informations légales et légitimes.</p></li>
             </ul>
           </div>
           <div class="text-right">
@@ -55,10 +64,10 @@
         </div>
         <div class="card-body">
           <ul>
-            <li>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_exemple_simple.csv`" class="exemple-csv">CSV</a></li>
-            <li>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_exemple_variable.csv`" class="exemple-csv">CSV</a></li>
-            <li>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_xls_exemple_simple.xls`" class="exemple-csv">XLS</a></li>
-            <li>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_xls_exemple_variable.xls`" class="exemple-csv">XLS</a></li>
+            <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_exemple_simple.csv`" class="exemple-csv">CSV</a></p></li>
+            <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_exemple_variable.csv`" class="exemple-csv">CSV</a></p></li>
+            <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_xls_exemple_simple.xls`" class="exemple-csv">XLS</a></p></li>
+            <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_xls_exemple_variable.xls`" class="exemple-csv">XLS</a></p></li>
           </ul>
         </div>
       </div>
@@ -79,7 +88,9 @@ export default {
       certify: false,
       filename: '',
       contacts: [],
-      selectedFile: false
+      selectedFile: false,
+      errorMessage: '',
+      customName: ''
     };
   },
   mounted () {
@@ -101,30 +112,31 @@ export default {
           files = event.target.files;
       }
 
+      this.prepareImport(files);
+    },
+    prepareImport (files) {
       if (files.length > 0) {
         const f = files[0];
+        this.filename = f.name;
         // get file extension
         const file_extension = f.name.substring(f.name.lastIndexOf('.'));
 
         if (!validFileExtensions.includes(file_extension.toLowerCase())) {
-          alert('Les contacts doivent être enregistrées au format .xls, .xlsx ou .csv.');
+          this.errorMessage = 'Les contacts doivent être enregistrés au format .xls, .xlsx ou .csv.';
           return;
         }
 
         workbookToArray(f, (contacts, file) => {
           const countLines = contacts.length;
-          this.filename = '';
+          // this.filename = '';
           this.contacts = [];
+          const columns = contacts.shift();
           
           if (countLines > COUNT_MAX_LINES || countLines < COUNT_MIN_LINES) {
-            alert(`Le nombre de lignes du fichier doit être au maximum de ${COUNT_MAX_LINES} et au minimum de ${COUNT_MIN_LINES}.`);
+            this.errorMessage = `Le nombre de lignes du fichier doit être au maximum de ${COUNT_MAX_LINES} et au minimum de ${COUNT_MIN_LINES}.`;
             return;
-          }
-
-          const columns = contacts.shift();
-
-          if (!columns.includes('telephone')) {
-            alert('Le fichier Excel doit avoir au moins une colonne nommée "telephone"');
+          } else if (!columns.includes('telephone')) {
+            this.errorMessage = 'Le fichier Excel doit avoir au moins une colonne nommée "telephone"';
             return;
           }
 
@@ -134,49 +146,62 @@ export default {
             return contactObject;
           });
 
-          this.filename = file.name;
+          this.errorMessage = '';
+          // this.filename = file.name;
           this.contacts = contacts;
         });
       }
     },
     importWorkbook: function () {
-      const { filename, contacts } = this;
+      const { customName, filename, contacts } = this;
+      const len = contacts.length;
       const vm = this;
+      if (len < COUNT_MIN_LINES || len > COUNT_MAX_LINES) {
+        return;
+      }
       // create a new list
       if (this.certify) {
-        this.createNewList({ name: filename }).then(function(data) {
+        this.createNewList({
+          name: customName ? customName : filename
+        })
+        .then(function(data) {
           vm.addContactsToAList(data.id, contacts);
         });
       }
     },
     addContactsToAList: function (listId, contacts) {
-      this.addContacts({ listId, contacts });
+      this.addContacts({ listId, contacts }).then(() => {
+        this.$router.push({
+          name: 'contacts',
+          params: { listId }
+        });
+      });
     },
     dismissFile () {
       this.selectedFile = false;
       this.contacts = [];
       this.filename = '';
+      this.errorMessage = '';
+      this.$refs.csv.value = '';
     }
   },
   watch: {
     filename (newFilename) {
-      // alert(newFilename);
       this.selectedFile = newFilename;
     }
   }
 }
 </script>
 <style lang="scss">
-.dropzone {
-  border: 2px dashed #b5b5b5;
-  border-radius: 0.375rem;
-}
-
 .selected {
   font-size: 14px;
 }
 
 .exemple-csv {
   font-weight: 600;
+}
+
+.error-message {
+  font-size: 0.875rem;
 }
 </style>

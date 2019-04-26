@@ -6,14 +6,6 @@ const dashboard_metas = {
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: () => import('@/views/Home'),
-    meta: {
-      title: 'Welcome'
-    }
-  },
-  {
-    path: '/login',
     name: 'login',
     component: () => import('@/views/Login'),
     meta: {
@@ -48,7 +40,7 @@ const routes = [
       // Base de contacts
       {
         path: 'lists',
-        name: 'lists',
+        name: 'contacts_list',
         meta: {
           ...dashboard_metas,
           title: 'Liste des contacts',
@@ -67,8 +59,8 @@ const routes = [
         component: () => import('@/views/dashboard/Contacts')
       },
       {
-        path: 'lists/importer',
-        name: 'list.import',
+        path: 'import/file',
+        name: 'import_file',
         meta: {
           ...dashboard_metas,
           title: 'Importer des contacts',
@@ -78,7 +70,7 @@ const routes = [
       },
       {
         path: 'message/redaction',
-        name: 'message.redaction',
+        name: 'create_campaign',
         meta: {
           ...dashboard_metas,
           title: 'Créer une campagne',
@@ -87,8 +79,8 @@ const routes = [
         component: () => import('@/views/dashboard/message/Redaction')
       },
       {
-        path: 'message/drafts',
-        name: 'message.drafts',
+        path: 'message/list/drafts',
+        name: 'drafts_messages',
         meta: {
           ...dashboard_metas,
           title: 'Brouillons',
@@ -98,7 +90,7 @@ const routes = [
       },
       {
         path: 'message/list',
-        name: 'message.list',
+        name: 'sent_messages',
         meta: {
           ...dashboard_metas,
           title: 'Envois effectués',
@@ -107,8 +99,8 @@ const routes = [
         component: () => import('@/views/dashboard/message/List')
       },
       {
-        path: 'message/scheduled',
-        name: 'message.scheduled',
+        path: 'message/list/scheduled',
+        name: 'scheduled_messages',
         meta: {
           ...dashboard_metas,
           title: 'Envois planifiés',
@@ -137,14 +129,14 @@ const routes = [
         component: () => import('@/views/dashboard/message/Inbox')
       },
       {
-        path: 'inbox/:messageId([0-9]+)/receipt',
-        name: 'replies',
+        path: 'inbox/:messageId([0-9]+)/answers',
+        name: 'answers',
         meta: {
           ...dashboard_metas,
           title: 'Réponses',
           breadcrumb: 'Réponses',
         },
-        component: () => import('@/views/dashboard/message/Detail')
+        component: () => import('@/views/dashboard/message/Answers')
       },
       {
         path: 'profile',
@@ -159,7 +151,7 @@ const routes = [
     ]
   }, {
     path: '*',
-    name: '404',
+    name: 'not_found',
     meta: {
       title: '404 - Page introuvable'
     },

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Moment from 'moment';
 import 'moment/locale/fr';
+import Currency from 'currency.js';
 
 Moment.locale('fr');
 // Date
@@ -18,30 +19,13 @@ Vue.filter('limit', (str, len, more = '...') => {
 });
 Vue.filter('fullname', ({ firstname, lastname }) => `${lastname} ${firstname}`);
 
-// https://github.com/vuejs/vuex/blob/dev/examples/shopping-cart/currency.js
-const digitsRE = /(\d{3})(?=\d)/g
-
-export function currency (value, currency, decimals) {
-  value = parseFloat(value)
-  if (!isFinite(value) || (!value && value !== 0)) return ''
-  currency = currency != null ? currency : '€'
-  decimals = decimals != null ? decimals : 2
-  var stringified = Math.abs(value).toFixed(decimals)
-  var _int = decimals
-    ? stringified.slice(0, -1 - decimals)
-    : stringified
-  var i = _int.length % 3
-  var head = i > 0
-    ? (_int.slice(0, i) + (_int.length > 3 ? ',' : ''))
-    : ''
-  var _float = decimals
-    ? stringified.slice(-1 - decimals)
-    : ''
-  var sign = value < 0 ? '-' : ''
-  return sign + head +
-    _int.slice(i).replace(digitsRE, '$1,') +
-    _float +
-    currency
+export function currency (value, symbol = '€', precision = 3) {
+  return Currency(value, {
+    formatWithSymbol: true,
+    precision,
+    pattern: `# !`,
+    symbol
+  }).format();
 }
 
 Vue.filter('formatCurrency', currency);

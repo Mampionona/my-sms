@@ -4,6 +4,7 @@ export const UNAUTHENTICATED = 401;
 export const COUNT_MAX_LINES = 100000;
 export const COUNT_MIN_LINES = 5;
 export const validFileExtensions = ['.xls', '.xlsx', '.csv'];
+export const MAIL_TO = 'julienmadonna@mac.com';
 
 export function workbookToArray (file, complete) {
   const reader = new FileReader();
@@ -13,9 +14,11 @@ export function workbookToArray (file, complete) {
 
     /* convert from workbook to array of arrays */
     const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
-    const array = XLSX.utils.sheet_to_json(first_worksheet, { header: 1 });
+    let arrays = XLSX.utils.sheet_to_json(first_worksheet, { header: 1 });
+    // console.log(array);
+    arrays = arrays.filter(array => array.length > 0);
     if (complete) {
-      complete(array, file);
+      complete(arrays, file);
     }
   };
   reader.readAsArrayBuffer(file);

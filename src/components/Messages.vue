@@ -1,22 +1,18 @@
 <template>
   <v-table>
     <thead class="thead-light">
-      <tr v-if="isCampaign">
-        <th v-for="(c1, index) in columns.campaign" :key="index">{{ c1 }}</th>
-      </tr>
-      <tr v-else>
-        <th v-for="(c2, index) in columns.message" :key="index">{{ c2 }}</th>
-      </tr>
+      <th v-for="(column, index) in __columns" :key="index">{{ column }}</th>
     </thead>
     <tbody class="list">
-      <component
-        :is="component"
-        :click-callback="clickCallback"
+      <campaign
         v-for="campaign in messages"
-        :campaign="campaign"
         :key="campaign.id"
+        :campaign="campaign"
+        :lists="lists"
+        :click-callback="clickCallback"
+        :is-draft="isDraft"
       />
-      <tr v-if="messages.length === 0">
+      <tr v-if="isEmpty">
         <td :colspan="colspan" class="text-sm text-center">
           <slot></slot>
         </td>
@@ -27,18 +23,30 @@
 <script>
 import vTable from '@/components/vTable';
 import Campaign from '@/components/Campaign';
-import Message from '@/components/Message';
+import { mapGetters, mapActions } from 'vuex';
 export default {
-  components: { vTable, Campaign, Message },
+  components: { vTable, Campaign },
   computed: {
-    isCampaign () {
-      return this.component === 'campaign';
+    ...mapGetters({
+      lists: 'lists/lists'
+    }),
+    __columns () {
+      if (this.isDraft) {
+        return this.columns.campaign;
+      }
+      return this.columns.message;
+    },
+    isEmpty () {
+      return this.messages.length === 0;
     },
     colspan () {
       const FOUR_COLUMN = 4;
       const SEVEN_COLUMN = 7;
-      return this.isCampaign ? FOUR_COLUMN : SEVEN_COLUMN;
+      return this.isDraft ? FOUR_COLUMN : SEVEN_COLUMN;
     }
+  },
+  created () {
+    this.getLists();
   },
   data () {
     return {
@@ -48,12 +56,17 @@ export default {
       }
     };
   },
+  methods: {
+    ...mapActions({
+      getLists: 'lists/getUserLists'
+    })
+  },
   props: {
     messages: Array,
     clickCallback: Function,
-    component: {
-      default: 'campaign',
-      type: String
+    isDraft: {
+      default: false,
+      type: Boolean
     }
   }
 }

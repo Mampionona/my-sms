@@ -27,9 +27,9 @@ export default {
     deleteClickCallback: Function,
     editClickCallback: Function
   },
-  created () {
-    console.log(this.contact.attributes);
-  },
+  // created () {
+  //   console.log(this.contact.attributes);
+  // },
   methods: {
     onDelete (contact) {
       if (this.deleteClickCallback) {
