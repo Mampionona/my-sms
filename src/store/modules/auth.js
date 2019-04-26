@@ -12,7 +12,7 @@ function loggedInOrRegistered(context, token, resolve) {
   // store the generated token
   localStorage.setItem('token', token);
   // set authorization
-  window.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   resolve(token);
 }
 

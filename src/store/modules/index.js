@@ -4,6 +4,7 @@ import lists from './lists';
 import contacts from './contacts';
 import campaigns from './campaigns';
 import plans from './plans';
+import users from './users';
 
 export {
   layout,
@@ -11,5 +12,6 @@ export {
   lists,
   contacts,
   campaigns,
-  plans
+  plans,
+  users
 };

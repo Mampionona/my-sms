@@ -147,6 +147,16 @@ const routes = [
           breadcrumb: 'Profil'
         },
         component: () => import('@/views/dashboard/Profile')
+      },
+      {
+        path: 'users',
+        name: 'users',
+        meta: {
+          ...dashboard_metas,
+          title: 'Utilisateurs',
+          breadcrumb: 'Utilisateurs'
+        },
+        component: () => import('@/views/dashboard/Users')
       }
     ]
   }, {

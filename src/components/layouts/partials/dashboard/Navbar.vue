@@ -75,13 +75,13 @@
         <div class="collapse" id="administration">
           <ul class="nav nav-sm flex-column">
             <li class="nav-item">
-              <router-link class="nav-link" to="">Utilisateurs</router-link>
+              <router-link class="nav-link" :to="{name: 'users'}">Utilisateurs</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="">Paiements effectués</router-link>
+              <router-link class="nav-link" :to="{name: 'payments'}">Paiements effectués</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="">Plan</router-link>
+              <router-link class="nav-link" :to="{name: 'plans'}">Plans</router-link>
             </li>
           </ul>
         </div>
@@ -103,7 +103,7 @@ export default {
       baseContacts: ['contacts_list', 'import_file'],
       campagneSMS: ['create_campaign', 'drafts_messages'],
       boiteEnvoi: ['sent_messages', 'scheduled_messages'],
-      administration: []
+      administration: ['users', 'payments', 'plans']
     };
   },
   methods: {
@@ -133,11 +133,12 @@ export default {
       });
     });
 
-    this.$jQuery('.navbar-nav > .nav-item > .nav-link').on('click', () => {
-      if (!routes.includes(this.$route.name)) {
-        this.$jQuery('.navbar-nav .collapse').collapse('hide');
-      }
-    });
+    const handleClick = e => {
+      const navItem = e.target.closest('.nav-item');
+      if (navItem.children.length === 1) this.$jQuery('.navbar-nav .collapse').collapse('hide');
+    };
+
+    document.querySelectorAll('.navbar-nav > .nav-item > .nav-link').forEach(link => link.addEventListener('click', handleClick));
 
     if (this.baseContacts.includes(pathName)) collapseElement = '#base-contacts';
     else if (this.campagneSMS.includes(pathName)) collapseElement = '#campagne-sms';
