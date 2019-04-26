@@ -39,7 +39,7 @@
 </template>
 <script>
 import EditProfile from '@/components/partials/EditProfile';
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import store from '@/store';
 
 export default {

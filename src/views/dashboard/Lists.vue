@@ -15,7 +15,7 @@
             </tr>
           </thead>
           <tbody class="list">
-            <List
+            <list
               v-for="list in lists"
               :list="list"
               :key="list.id"
@@ -34,11 +34,10 @@
 <script>
 import vTable from '@/components/vTable';
 import List from '@/components/List';
-import vBtn from '@/components/vBtn';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
-  components: { vTable, List, vBtn },
+  components: { vTable, List },
   mounted () {
     // dispatch get user's lists action
     this.getUserLists();

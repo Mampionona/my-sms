@@ -95,12 +95,11 @@
 import vTable from '@/components/vTable';
 import Contact from '@/components/Contact';
 import vBtn from '@/components/vBtn';
-import Alert from '@/components/Alert';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import store from '@/store';
 
 export default {
-  components: { vTable, Contact, vBtn, Alert },
+  components: { vTable, Contact, vBtn },
   data () {
     return {
       allContacts: false,

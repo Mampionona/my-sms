@@ -77,11 +77,10 @@
 <script>
 import { validFileExtensions, workbookToArray, COUNT_MAX_LINES, COUNT_MIN_LINES } from '@/utils';
 import vBtn from '@/components/vBtn';
-import Alert from '@/components/Alert';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
-  components: { vBtn, Alert },
+  components: { vBtn },
   data () {
     return {
       publicPath: process.env.BASE_URL,
