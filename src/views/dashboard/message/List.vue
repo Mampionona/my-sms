@@ -25,13 +25,11 @@ export default {
       getCampaigns: 'campaigns/getUserCampaigns'
     }),
     onMessageClick ({ status, id }) {
-      switch (status) {
-        case 'sent':
-          this.$router.push({
-            name: 'answers',
-            params: { messageId: id }
-          })
-          break;
+      if (status === 'sent') {
+        this.$router.push({
+          name: 'answers',
+          params: { messageId: id }
+        });
       }
     }
   },
