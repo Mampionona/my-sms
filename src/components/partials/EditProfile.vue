@@ -122,7 +122,6 @@
 </template>
 <script>
 import Alert from '@/components/Alert';
-import _ from 'lodash';
 import { mapActions } from 'vuex';
 export default {
   components: { Alert },
@@ -133,11 +132,9 @@ export default {
     }
   },
   mounted () {
-    const user = this.user;
-    for (let column in user) {
-      const property = _.camelCase(column);
-      if (property in this.$data) {
-        this[property] = user[column];
+    for (let column in this.user) {
+      if (column in this.$data) {
+        this[column] = this.user[column];
       }
     }
   },
