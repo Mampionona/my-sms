@@ -153,10 +153,33 @@ const routes = [
         name: 'users',
         meta: {
           ...dashboard_metas,
+          visibility: 'admin_only',          
           title: 'Utilisateurs',
           breadcrumb: 'Utilisateurs'
         },
         component: () => import('@/views/dashboard/Users')
+      },
+      {
+        path: 'payments',
+        name: 'payments',
+        meta: {
+          ...dashboard_metas,
+          visibility: 'admin_only',
+          title: 'Paiements effectués',
+          breadcrumb: 'Paiements effectués'
+        },
+        component: () => import('@/views/dashboard/Payments')
+      },
+      {
+        path: 'plans',
+        name: 'plans',
+        meta: {
+          ...dashboard_metas,
+          visibility: 'admin_only',
+          title: 'Plans',
+          breadcrumb: 'Plans'
+        },
+        component: () => import('@/views/dashboard/Plans')
       }
     ]
   }, {
