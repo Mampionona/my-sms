@@ -3,7 +3,7 @@ const SET_LAYOUT = 'SET_LAYOUT';
 export default {
   namespaced: true,
   state: {
-    layout: 'default'
+    layout: ''
   },
   getters: {
     layout: state => state.layout
