@@ -1,34 +1,30 @@
-window.axios = require('axios');
-window.Popper = require('popper.js').default;
-window.$ = window.jQuery = require('jquery');
-import { UNAUTHENTICATED } from './utils';
+import Axios from 'axios';
 import Vue from 'vue';
-
+import { UNAUTHENTICATED } from './utils';
+// Bootstrap JS
 require('bootstrap');
 
-Vue.prototype.$jQuery = window.$;
+// Add jQuery into vue instance
+Vue.prototype.$jQuery = require('jquery');
 
 // Global axios defaults
-window.axios.defaults.baseURL = 'https://api.my-sms.pro';
+Axios.defaults.baseURL = 'https://api.my-sms.pro';
 const token = localStorage.getItem('token');
 if (token) {
-  window.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 }
 
 // Add a response interceptor
-window.axios.interceptors.response.use(function (response) {
+Axios.interceptors.response.use(function (response) {
   // Do something with response data
   return response;
 }, function (error) {
   // Do something with response error
-  const { status } = error.response;
-  switch (status) {
-    case UNAUTHENTICATED:
-      localStorage.removeItem('token');
-      if ('Authorization' in window.axios.defaults.headers.common) {
-        delete window.axios.defaults.headers.common.Authorization;
-      }
-      break;
+  if (error.response.status === UNAUTHENTICATED) {
+    localStorage.removeItem('token');
+    if ('Authorization' in Axios.defaults.headers.common) {
+      delete Axios.defaults.headers.common.Authorization;
+    }
   }
   return Promise.reject(error);
 });
