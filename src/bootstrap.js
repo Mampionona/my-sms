@@ -15,10 +15,10 @@ if (token) {
 }
 
 // Add a response interceptor
-Axios.interceptors.response.use(function (response) {
+Axios.interceptors.response.use((response) => { // eslint-disable-line
   // Do something with response data
   return response;
-}, function (error) {
+}, (error) => {
   // Do something with response error
   if (error.response.status === UNAUTHENTICATED) {
     localStorage.removeItem('token');
@@ -26,10 +26,6 @@ Axios.interceptors.response.use(function (response) {
       delete Axios.defaults.headers.common.Authorization;
     }
   }
+
   return Promise.reject(error);
 });
-
-// Remove spaces
-String.prototype.removeSpaces = function() {
-  return this.replace(/\s/g, '').trim();
-};

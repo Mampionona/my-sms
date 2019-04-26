@@ -1,12 +1,11 @@
 import Vue from 'vue';
-import Moment from 'moment';
-import 'moment/locale/fr';
 import Currency from 'currency.js';
+import humanTime from 'humantime';
 
-Moment.locale('fr');
 // Date
-Vue.filter('full', date => Moment(date, 'YYYYMMDD H:mm:ss').format('DD-MM-YYYY à HH:mm'));
-Vue.filter('ago', date => Moment(date, 'YYYYMMDD H:mm:ss').fromNow());
+Vue.filter('full', date => new Date(date).toLocaleString('fr-FR'));
+Vue.filter('ago', humanTime);
+
 // String
 Vue.filter('capitalize', str => str.charAt(0).toUpperCase() + str.slice(1));
 Vue.filter('upper', str => str.toUpperCase());
@@ -23,7 +22,7 @@ export function currency (value, symbol = '€', precision = 3) {
   return Currency(value, {
     formatWithSymbol: true,
     precision,
-    pattern: `# !`,
+    pattern: '# !',
     symbol
   }).format();
 }

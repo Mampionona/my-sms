@@ -18,9 +18,9 @@ export default {
     }
   },
   methods: {
-    onClick () {
+    onClick() {
       if (this.clickCallback) this.clickCallback(this.thread.id);
     }
   }
-}
+};
 </script>

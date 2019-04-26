@@ -9,9 +9,9 @@
   </nav>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import UserInfo from './UserInfo';
 import Links from './Links';
-import { mapGetters } from 'vuex';
 
 export default {
   components: { UserInfo, Links },
@@ -20,5 +20,5 @@ export default {
       user: 'auth/user'
     })
   }
-}
+};
 </script>

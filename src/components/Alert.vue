@@ -12,16 +12,16 @@
 <script>
 export default {
   computed: {
-    classObject () {
+    classObject() {
       const color = `alert-${this.color}`;
       return {
         alert: true,
         fade: true,
         show: true,
         'd-flex': true,
-        [ color ]: this.color,
+        [color]: this.color,
         'alert-dismissible': this.dismissible
-      }
+      };
     }
   },
   props: {
@@ -29,5 +29,5 @@ export default {
     dismissible: { type: Boolean },
     color: { type: String }
   }
-}
+};
 </script>

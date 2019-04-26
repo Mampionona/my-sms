@@ -11,8 +11,9 @@
   </div>
 </template>
 <script>
-import Messages from '@/components/Messages';
 import { mapActions, mapGetters } from 'vuex';
+import Messages from '@/components/Messages';
+
 export default {
   components: { Messages },
   computed: {
@@ -33,8 +34,8 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getCampaigns();
   }
-}
+};
 </script>

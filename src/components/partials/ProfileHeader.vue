@@ -17,5 +17,5 @@ export default {
   props: {
     user: Object
   }
-}
+};
 </script>

@@ -6,7 +6,8 @@
 </template>
 <script>
 import PageHeader from '@/components/layouts/partials/PageHeader';
+
 export default {
   components: { PageHeader }
-}
+};
 </script>

@@ -92,7 +92,7 @@ export default {
       customName: ''
     };
   },
-  mounted () {
+  mounted() {
     this.$refs.csv.addEventListener('change', this.handleFiles, false);
   },
   methods: {
@@ -100,58 +100,53 @@ export default {
       addContacts: 'contacts/addContacts',
       createNewList: 'lists/createNewList'
     }),
-    handleFiles (event) {
-      let files;
-      switch (event.type) {
-        case 'drop':
-          files = event.dataTransfer.files;
-          break;
-
-        case 'change':
-          files = event.target.files;
-      }
-
+    handleFiles(event) {
+      const { files } = event.type === 'drop' ? event.dataTransfer : event.target;
       this.prepareImport(files);
     },
-    prepareImport (files) {
+    prepareImport(files) {
       if (files.length > 0) {
         const f = files[0];
         this.filename = f.name;
         // get file extension
-        const file_extension = f.name.substring(f.name.lastIndexOf('.'));
+        const fileExtension = f.name.substring(f.name.lastIndexOf('.'));
 
-        if (!validFileExtensions.includes(file_extension.toLowerCase())) {
+        if (!validFileExtensions.includes(fileExtension.toLowerCase())) {
           this.errorMessage = 'Les contacts doivent être enregistrés au format .xls, .xlsx ou .csv.';
           return;
         }
 
-        workbookToArray(f, (contacts, file) => {
+        workbookToArray(f, (contacts) => {
           const countLines = contacts.length;
           // this.filename = '';
           this.contacts = [];
           const columns = contacts.shift();
-          
+
           if (countLines > COUNT_MAX_LINES || countLines < COUNT_MIN_LINES) {
             this.errorMessage = `Le nombre de lignes du fichier doit être au maximum de ${COUNT_MAX_LINES} et au minimum de ${COUNT_MIN_LINES}.`;
             return;
-          } else if (!columns.includes('telephone')) {
+          }
+
+          if (!columns.includes('telephone')) {
             this.errorMessage = 'Le fichier Excel doit avoir au moins une colonne nommée "telephone"';
             return;
           }
 
-          contacts = contacts.map(contact => {
+          this.contacts = contacts.map((contact) => {
             const contactObject = {};
-            columns.forEach((column, index) => contactObject[column] = contact[index]);
+            columns.forEach((column, index) => {
+              contactObject[column] = contact[index];
+            });
+
             return contactObject;
           });
 
           this.errorMessage = '';
           // this.filename = file.name;
-          this.contacts = contacts;
         });
       }
     },
-    importWorkbook: function () {
+    importWorkbook: () => {
       const { customName, filename, contacts } = this;
       const len = contacts.length;
       if (len < COUNT_MIN_LINES || len > COUNT_MAX_LINES) {
@@ -160,12 +155,12 @@ export default {
       // create a new list
       if (this.certify) {
         this.createNewList({
-          name: customName ? customName : filename
+          name: customName || filename
         })
         .then(data => this.addContactsToAList(data.id, contacts));
       }
     },
-    addContactsToAList: function (listId, contacts) {
+    addContactsToAList: (listId, contacts) => {
       this.addContacts({ listId, contacts }).then(() => {
         this.$router.push({
           name: 'contacts',
@@ -173,7 +168,7 @@ export default {
         });
       });
     },
-    dismissFile () {
+    dismissFile() {
       this.selectedFile = false;
       this.contacts = [];
       this.filename = '';
@@ -182,11 +177,11 @@ export default {
     }
   },
   watch: {
-    filename (newFilename) {
+    filename(newFilename) {
       this.selectedFile = newFilename;
     }
   }
-}
+};
 </script>
 <style lang="scss">
 .selected {

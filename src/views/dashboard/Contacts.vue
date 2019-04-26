@@ -111,16 +111,14 @@ export default {
       updateTextStatus: ''
     };
   },
-  beforeRouteEnter (to, from, next) {
-    store.dispatch('lists/getUserLists').then(lists => {
-      lists.forEach(list => {
-        if (list.id == to.params.listId) {
-          next(vm => vm.setData(list));
-        }
-      });
-    });
+  beforeRouteEnter(to, from, next) {
+    store.dispatch('lists/getUserLists').then(lists => lists.forEach((list) => {
+      if (list.id == to.params.listId) { // precise intent
+        next(vm => vm.setData(list));
+      }
+    }));
   },
-  mounted () {
+  mounted() {
     // dispatch an action to get contacts of a list
     this.getContacts(this.$route.params.listId);
   },
@@ -129,16 +127,16 @@ export default {
       contacts: 'contacts/contacts',
       countContacts: 'contacts/count'
     }),
-    composeUrl () {
+    composeUrl() {
       return {
         name: 'create_campaign',
         query: { listId: this.$route.params.listId }
       };
     },
-    updateTextClass () {
+    updateTextClass() {
       return {
         'font-weight-bold': true,
-        'small': true,
+        small: true,
         'mb-0': true,
         'text-success': this.updateSuccess,
         'text-danger': this.updateError
@@ -146,7 +144,7 @@ export default {
     }
   },
   watch: {
-    allContacts (isChecked) {
+    allContacts(isChecked) {
       if (isChecked) {
         this.contacts.forEach(contact => this.selectedContacts.push(contact.id));
         return;
@@ -163,11 +161,11 @@ export default {
     ...mapMutations({
       updateContacts: 'contacts/UPDATE_CONTACTS'
     }),
-    setData (list) {
+    setData(list) {
       this.list = list;
       this.name = list.name;
     },
-    updateListName () {
+    updateListName() {
       const { name } = this;
       this.update({ id: this.$route.params.listId, name })
         .then(() => {
@@ -181,14 +179,14 @@ export default {
           this.updateError = true;
         });
     },
-    onDelete ({ id }) {
+    onDelete({ id }) {
       this.deleteContact(id);
     },
-    deleteContacts () {
+    deleteContacts() {
       this.selectedContacts.forEach(id => this.deleteContact(id));
     },
     // delete a contact from a list
-    deleteContact (id) {
+    deleteContact(id) {
       this.remove({
         listId: this.$route.params.listId,
         contactId: id

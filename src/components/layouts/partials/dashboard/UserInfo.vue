@@ -39,7 +39,7 @@ export default {
     ...mapActions({
       logoutUser: 'auth/logout'
     }),
-    logout () {
+    logout() {
       localStorage.removeItem('token');
       this.logoutUser();
       if ('Authorization' in window.axios.defaults.headers.common) {
@@ -48,5 +48,5 @@ export default {
       this.$router.push({ name: 'login' });
     }
   }
-}
+};
 </script>

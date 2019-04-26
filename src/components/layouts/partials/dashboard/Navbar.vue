@@ -91,13 +91,14 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+
 export default {
   computed: {
     ...mapGetters({
       isAdmin: 'auth/isAdmin'
-    }),
+    })
   },
-  data () {
+  data() {
     return {
       baseContacts: ['contacts_list', 'import_file'],
       campagneSMS: ['create_campaign', 'drafts_messages'],
@@ -106,10 +107,10 @@ export default {
     };
   },
   methods: {
-    dropdownToggleClass (classes) {
+    dropdownToggleClass(classes) {
       return {
         'nav-link': true,
-        'active': classes.includes(this.$route.name)
+        active: classes.includes(this.$route.name)
       };
     }
   },
@@ -124,7 +125,7 @@ export default {
     const pathName = this.$route.name;
     let collapseElement;
 
-    collapses.on('show.bs.collapse', e => {
+    collapses.on('show.bs.collapse', (e) => {
       collapses.each((i, collapse) => {
         if (collapse.id !== e.currentTarget.id) {
           this.$jQuery(collapse).collapse('hide');
@@ -137,20 +138,13 @@ export default {
         this.$jQuery('.navbar-nav .collapse').collapse('hide');
       }
     });
-    
-    if (this.baseContacts.includes(pathName)) {
-      collapseElement = '#base-contacts';
-    } else if (this.campagneSMS.includes(pathName)) {
-      collapseElement = '#campagne-sms';
-    } else if (this.boiteEnvoi.includes(pathName)) {
-      collapseElement = '#boite-envoi';
-    } else if (this.administration.includes(pathName)) {
-      collapseElement = '#administration';
-    }
 
-    if (collapseElement) {
-      this.$jQuery(collapseElement).collapse('show');
-    }
+    if (this.baseContacts.includes(pathName)) collapseElement = '#base-contacts';
+    else if (this.campagneSMS.includes(pathName)) collapseElement = '#campagne-sms';
+    else if (this.boiteEnvoi.includes(pathName)) collapseElement = '#boite-envoi';
+    else if (this.administration.includes(pathName)) collapseElement = '#administration';
+
+    if (collapseElement) this.$jQuery(collapseElement).collapse('show');
   }
-}
+};
 </script>

@@ -16,7 +16,7 @@
           </div>
         </div>
       </div>
-      <div class="card card-profile">        
+      <div class="card card-profile">
         <div class="card-body">
           <div class="text-center">
             <h5 class="h3">{{ user | fullname }}</h5>
@@ -44,7 +44,7 @@ import store from '@/store';
 
 export default {
   // Fetch user before navigation
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     store.dispatch('auth/getUser').then(next);
   },
   components: { EditProfile },
