@@ -1,6 +1,7 @@
 import { doAsync, createAsyncMutation } from '@/async-utils';
 
 const GET_PLANS = createAsyncMutation('GET_PLANS');
+const UPDATE_PLAN = createAsyncMutation('UPDATE_PLAN');
 
 export default {
   namespaced: true,
@@ -22,6 +23,15 @@ export default {
     },
     [GET_PLANS.FAILURE]() {
       //
+    },
+    [UPDATE_PLAN.PENDING] (state) {
+      //
+    },
+    [UPDATE_PLAN.SUCCESS] (state) {
+      //
+    },
+    [UPDATE_PLAN.FAILURE] (state) {
+
     }
   },
 
@@ -32,10 +42,13 @@ export default {
         mutationTypes: GET_PLANS
       });
     },
-    updatePlan(context, planId) {
+    updatePlan(context, plan) {
+      const { planId } = plan;
       return doAsync(context, {
         url: `/plans/${planId}`,
-        method: 'post'
+        method: 'patch',
+        data: plan,
+        mutationTypes: UPDATE_PLAN
       });
     }
   }
