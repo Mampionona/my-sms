@@ -5,6 +5,7 @@ const SET_TOKEN = 'SET_TOKEN';
 const LOGOUT = 'LOGOUT';
 const FETCH_USER = createAsyncMutation('FETCH_USER');
 const UPDATE_ACCOUNT = createAsyncMutation('UPDATE_ACCOUNT');
+const UNAUTHENTICATED = 'UNAUTHENTICATED';
 
 function loggedInOrRegistered(context, token, resolve) {
   // update state
@@ -46,7 +47,10 @@ export default {
       // state.user = payload[0];
       console.log(payload);
     },
-    [UPDATE_ACCOUNT.FAILURE]() {}
+    [UPDATE_ACCOUNT.FAILURE]() {},
+    [UNAUTHENTICATED] (state, payload) {
+
+    }
   },
   actions: {
     authenticate(context, credentials) {
@@ -84,7 +88,9 @@ export default {
           mutationTypes: FETCH_USER
         })
           .then(([user]) => resolve(user))
-          .catch(error => reject(error));
+          .catch(({ response }) => {
+            reject(response);
+          });
       });
     },
     updateAccount(context, user) {

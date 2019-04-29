@@ -9,7 +9,8 @@ const routes = [
     name: 'login',
     component: () => import('@/views/Login'),
     meta: {
-      title: 'Connexion'
+      title: 'Connexion',
+      redirectIfLoggedIn: true
     }
   },
   {
@@ -17,7 +18,8 @@ const routes = [
     name: 'register',
     component: () => import('@/views/Register'),
     meta: {
-      title: 'Inscription'
+      title: 'Inscription',
+      redirectIfLoggedIn: true
     }
   },
   {

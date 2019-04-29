@@ -10,6 +10,7 @@
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 import DefaultLayout from '@/components/layouts/DefaultLayout';
 import { mapGetters, mapActions } from 'vuex';
+import { UNAUTHENTICATED } from '@/utils';
 
 export default {
   components: {
@@ -21,7 +22,12 @@ export default {
   },
   mounted() {
     this.$nextTick(function () {
-      this.getUser();
+      this.getUser().catch(error => {
+        const { status } = error;
+        if (status === UNAUTHENTICATED) {
+          this.$router.push({ name: 'login' });
+        }
+      });
     });
   },
   computed: {

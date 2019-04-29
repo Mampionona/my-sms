@@ -11,8 +11,11 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes
 });
-
-const isAdmin = () => Axios('/users/me/');
+const ADMIN_ID = 1;
+const fetchUser = () => Axios('/users/me/');
+const dashboard = {
+  name: 'dashboard.index'
+};
 
 router.beforeEach((to, from, next) => {
   // document title
@@ -27,18 +30,22 @@ router.beforeEach((to, from, next) => {
       });
     } else {
       if (to.matched.some(record => record.meta.visibility === 'admin_only')) {
-        isAdmin()
+        fetchUser()
           .then(({ data }) => {
-            if (data[0].id === 1) next();
-            else next({name: 'dashboard.index'});
+            if (data[0].id === ADMIN_ID) next();
+            else next(dashboard);
           })
-          .catch(() => next({name: 'dashboard.index'}));
+          .catch(() => next(dashboard));
       }
       else next();
     }
-  }
-
-  else next();
+  } else if (to.matched.some(record => record.meta.redirectIfLoggedIn)) {
+    // when user is logged in
+    // redirect to /dashboard
+    if (localStorage.getItem('token')) next(dashboard);
+    // continue navigation
+    else next();
+  } else next();
 });
 
 export default router;
