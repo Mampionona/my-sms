@@ -5,6 +5,7 @@ import contacts from './contacts';
 import campaigns from './campaigns';
 import plans from './plans';
 import users from './users';
+import payment from './payment';
 
 export {
   layout,
@@ -13,5 +14,6 @@ export {
   contacts,
   campaigns,
   plans,
-  users
+  users,
+  payment
 };

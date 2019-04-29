@@ -48,10 +48,16 @@ export default {
   },
   methods: {
     ...mapActions({
-      getPlans: 'plans/getPlans'
+      getPlans: 'plans/getPlans',
+      getPaymentUrl: 'payment/getPaymentUrl'
     }),
     processPayment() {
-      alert('redirection vers la page de paiement');
+      let amount;
+
+      if (!this.selectedPlan[0].planPrice) amount = Math.round((this.selectedPlan[0].smsPrice * this.numberOfSMS) / 10); // convert in cents
+      else amount = this.selectedPlan[0].planPrice * 100; // convert in cents
+
+      this.getPaymentUrl({ amount }).then(res => window.location.replace(res.paymentUrl));
     }
   },
   mounted() {
