@@ -23,6 +23,16 @@ const routes = [
     }
   },
   {
+    path: '/payment-cancel',
+    name: 'payment_cancel',
+    component: () => import('@/views/Payment/Cancel')
+  },
+  {
+    path: '/payment-result',
+    name: 'payment_result',
+    component: () => import('@/views/Payment/Result')
+  },
+  {
     path: '/dashboard',
     component: () => import('@/views/Dashboard'),
     meta: {
