@@ -147,7 +147,7 @@ export default {
         });
       }
     },
-    importWorkbook: () => {
+    importWorkbook() {
       const { customName, filename, contacts } = this;
       const len = contacts.length;
       const vm = this;
@@ -164,7 +164,7 @@ export default {
           });
       }
     },
-    addContactsToAList: (listId, contacts) => {
+    addContactsToAList(listId, contacts) {
       this.addContacts({ listId, contacts }).then(() => {
         this.$router.push({
           name: 'contacts',
