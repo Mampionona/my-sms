@@ -3,15 +3,16 @@
 </template>
 <script>
 import CampaignForm from '@/components/form/Campaign.vue';
+
 export default {
   components: { CampaignForm },
   methods: {
-    onComplete (data) {
+    onComplete(data) {
       console.log(data);
     },
-    onFail (error) {
+    onFail(error) {
       console.log(error);
     }
   }
-}
+};
 </script>

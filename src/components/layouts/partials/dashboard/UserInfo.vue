@@ -27,6 +27,7 @@
   </ul>
 </template>
 <script>
+import Axios from 'axios';
 import { mapActions } from 'vuex';
 
 export default {
@@ -39,14 +40,14 @@ export default {
     ...mapActions({
       logoutUser: 'auth/logout'
     }),
-    logout () {
+    logout() {
       localStorage.removeItem('token');
       this.logoutUser();
-      if ('Authorization' in window.axios.defaults.headers.common) {
-        delete window.axios.defaults.headers.common.Authorization;
+      if ('Authorization' in Axios.defaults.headers.common) {
+        delete Axios.defaults.headers.common.Authorization;
       }
       this.$router.push({ name: 'login' });
     }
   }
-}
+};
 </script>

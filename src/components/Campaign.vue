@@ -34,8 +34,9 @@ export default {
     }
   },
   computed: {
-    listName () {
-      const lists = this.lists;
+    listName() { // eslint-disable-line
+      const { lists } = this;
+
       for (let i = 0; i < lists.length; i++) {
         const list = lists[i];
         if (list.id === this.campaign.list_id) {
@@ -45,7 +46,7 @@ export default {
     }
   },
   methods: {
-    onClick () {
+    onClick() {
       if (this.clickCallback) {
         this.clickCallback(this.campaign);
       }
@@ -53,4 +54,3 @@ export default {
   }
 };
 </script>
-

@@ -31,7 +31,7 @@ export default {
   //   console.log(this.contact.attributes);
   // },
   methods: {
-    onDelete (contact) {
+    onDelete(contact) {
       if (this.deleteClickCallback) {
         this.deleteClickCallback(contact);
       }

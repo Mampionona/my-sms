@@ -22,12 +22,12 @@ export default {
     showClickCallback: Function
   },
   methods: {
-    deleteList (listId) {
+    deleteList(listId) {
       if (this.deleteClickCallback) {
         this.deleteClickCallback(listId);
       }
     },
-    showList (listId) {
+    showList(listId) {
       if (this.showClickCallback) {
         this.showClickCallback(listId);
       }

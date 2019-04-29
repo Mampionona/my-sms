@@ -1,10 +1,11 @@
-import Axios from "axios";
+import Axios from 'axios';
 import { doAsync, createAsyncMutation } from '@/async-utils';
 
 const SET_TOKEN = 'SET_TOKEN';
 const LOGOUT = 'LOGOUT';
 const FETCH_USER = createAsyncMutation('FETCH_USER');
 const UPDATE_ACCOUNT = createAsyncMutation('UPDATE_ACCOUNT');
+const UNAUTHENTICATED = 'UNAUTHENTICATED';
 
 function loggedInOrRegistered(context, token, resolve) {
   // update state
@@ -12,7 +13,7 @@ function loggedInOrRegistered(context, token, resolve) {
   // store the generated token
   localStorage.setItem('token', token);
   // set authorization
-  window.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   resolve(token);
 }
 
@@ -29,24 +30,27 @@ export default {
     isAdmin: (state, getters) => getters.user !== null && getters.user.id === 1
   },
   mutations: {
-    [ SET_TOKEN ] (state, token) {
+    [SET_TOKEN](state, token) {
       state.token = token;
     },
-    [ LOGOUT ] (state) {
+    [LOGOUT](state) {
       state.user = null;
       state.token = null;
     },
-    [FETCH_USER.PENDING] () {},
-    [FETCH_USER.SUCCESS] (state, payload) {
-      state.user = payload[0];
+    [FETCH_USER.PENDING]() {},
+    [FETCH_USER.SUCCESS](state, payload) {
+      [state.user] = payload;
     },
-    [FETCH_USER.FAILURE] () {},
-    [UPDATE_ACCOUNT.PENDING] () {},
-    [UPDATE_ACCOUNT.SUCCESS] (state, payload) {
+    [FETCH_USER.FAILURE]() {},
+    [UPDATE_ACCOUNT.PENDING]() {},
+    [UPDATE_ACCOUNT.SUCCESS](state, payload) {
       // state.user = payload[0];
       console.log(payload);
     },
-    [UPDATE_ACCOUNT.FAILURE] () {},
+    [UPDATE_ACCOUNT.FAILURE]() {},
+    [UNAUTHENTICATED] (state, payload) {
+
+    }
   },
   actions: {
     authenticate(context, credentials) {
@@ -75,7 +79,7 @@ export default {
     },
     getUser(context) {
       if (!context.getters.isLoggedIn) {
-        return;
+        return false;
       }
 
       return new Promise((resolve, reject) => {
@@ -84,7 +88,9 @@ export default {
           mutationTypes: FETCH_USER
         })
           .then(([user]) => resolve(user))
-          .catch(error => reject(error));
+          .catch(({ response }) => {
+            reject(response);
+          });
       });
     },
     updateAccount(context, user) {

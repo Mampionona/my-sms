@@ -18,11 +18,16 @@
 }
 
 .bg-default {
-  background: url('../images/phone.jpg') fixed no-repeat center;
+  background: {
+    attachment: fixed;
+    image: url('../images/iphones.png');
+    position: center;
+    repeat: no-repeat;
+  }
   position: relative;
 
   &::before {
-    background-color: rgba(0,0,0,.2);
+    background-color: rgba(0,0,0,.75);
     content: '';
     display: block;
     height: 100%;
@@ -30,7 +35,7 @@
     position: absolute;
     top: 0;
     width: 100%;
-  }
+  }  
 }
 
 .table {

@@ -61,7 +61,7 @@
                   <form-group>
                     <i slot="icon" class="ni ni-lock-circle-open"></i>
                     <input slot="input" class="form-control" placeholder="Mot de passe" type="password" v-model="password" autocomplete="new-password">
-                  </form-group>                  
+                  </form-group>
                   <div class="row my-4">
                     <div class="col-12">
                       <div class="custom-control custom-control-alternative custom-checkbox">
@@ -76,9 +76,9 @@
                   <div class="text-center" v-if="isLoading">
                     <spinner></spinner>
                   </div>
-                  
+
                   <alert v-if="hasError" class="mt-5" color="warning" icon="fas fa-exclamation-triangle">{{ errorMessage }}</alert>
-                  
+
                   <div class="text-center">
                     <button type="submit" :disabled="!privacy" class="btn btn-primary mt-4">Créer le compte</button>
                   </div>
@@ -91,15 +91,16 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
+import { removeSpaces } from '@/utils';
 import PageHeader from '@/components/layouts/partials/PageHeader';
 import FormGroup from '@/components/partials/FormGroup';
 import Spinner from '@/components/Spinner';
 import Alert from '@/components/Alert';
-import { mapActions } from 'vuex';
 
 export default {
   components: { PageHeader, FormGroup, Spinner, Alert },
-  data () {
+  data() {
     return {
       isLoading: false,
       hasError: false,
@@ -125,14 +126,14 @@ export default {
       register: 'auth/register',
       getUser: 'auth/getUser'
     }),
-    onSubmit () {
+    onSubmit() {
       this.isLoading = true;
       this.hasError = false;
       const { company, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password } = this;
       let { siren, tva } = this;
       // remove spaces
-      siren = siren.removeSpaces();
-      tva = tva.removeSpaces();
+      siren = removeSpaces(siren);
+      tva = removeSpaces(tva);
 
       this.register({ company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password })
         .then(() => {
@@ -146,5 +147,5 @@ export default {
         });
     }
   }
-}
+};
 </script>

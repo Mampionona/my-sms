@@ -11,8 +11,9 @@
   </div>
 </template>
 <script>
-import Messages from '@/components/Messages';
 import { mapActions, mapGetters } from 'vuex';
+import Messages from '@/components/Messages';
+
 export default {
   components: { Messages },
   computed: {
@@ -25,18 +26,16 @@ export default {
       getCampaigns: 'campaigns/getUserCampaigns'
     }),
     onMessageClick ({ status, id }) {
-      switch (status) {
-        case 'sent':
-          this.$router.push({
-            name: 'answers',
-            params: { messageId: id }
-          })
-          break;
+      if (status === 'sent') {
+        this.$router.push({
+          name: 'answers',
+          params: { messageId: id }
+        });
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getCampaigns();
   }
-}
+};
 </script>

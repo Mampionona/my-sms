@@ -31,12 +31,13 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 import vTable from '@/components/vTable';
 import Plan from '@/components/Plan';
-import { mapActions } from 'vuex';
+
 export default {
   components: { vTable, Plan },
-  data () {
+  data() {
     return {
       numberOfSMS: null,
       plans: [],
@@ -47,36 +48,38 @@ export default {
   },
   methods: {
     ...mapActions({
-      getPlans: 'plans/getPlans'
+      getPlans: 'plans/getPlans',
+      getPaymentUrl: 'payment/getPaymentUrl'
     }),
-    processPayment () {
-      alert('redirection vers la page de paiement');
+    processPayment() {
+      let amount;
+
+      if (!this.selectedPlan[0].planPrice) amount = Math.round((this.selectedPlan[0].smsPrice * this.numberOfSMS) / 10); // convert in cents
+      else amount = this.selectedPlan[0].planPrice * 100; // convert in cents
+
+      this.getPaymentUrl({ amount }).then(res => window.location.replace(res.paymentUrl));
     }
   },
-  mounted () {
-    this.getPlans().then(plans => {
-      this.plans = this.selectedPlan = plans;
+  mounted() {
+    this.getPlans().then((plans) => {
+      this.plans = this.selectedPlan = plans; // eslint-disable-line
     });
   },
   watch: {
-    numberOfSMS (number) {
+    numberOfSMS(number) {
       const LIBERTE = 1;
       const BUSINESS = 2;
       const GRAND_COMPTE = 3;
-      number = parseInt(number);
+      const parsedNumber = parseInt(number, 10);
+
       this.selectedPlan = this.plans.filter(({ id }) => {
-        if (number === 0 || isNaN(number)) {
-          return true;
-        } else if (number < 200000) {
-          return id === LIBERTE;
-        } else if (number >= 200000 && number < 1000000) {
-          return id === BUSINESS;
-        } else {
-          return id === GRAND_COMPTE;
-        }
+        if (parsedNumber === 0 || Number.isNaN(parsedNumber)) return true;
+        if (parsedNumber < 200000) return id === LIBERTE;
+        if (parsedNumber >= 200000 && parsedNumber < 1000000) return id === BUSINESS;
+        return id === GRAND_COMPTE;
       });
     },
-    selectedPlan (plan) {
+    selectedPlan(plan) {
       if (plan.length === 1) {
         if (plan[0].planPrice === 0) {
           this.buttonLabel = 'Acheter mes SMS';
@@ -93,5 +96,5 @@ export default {
       this.displayButton = false;
     }
   }
-}
+};
 </script>

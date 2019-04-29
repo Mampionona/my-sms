@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <page-header></page-header>    
+    <page-header></page-header>
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
           <div class="col-lg-5 col-md-7">
@@ -57,7 +57,7 @@ import { mapActions } from 'vuex';
 
 export default {
   components: { PageHeader, FormGroup, Spinner, Alert },
-  data () {
+  data() {
     return {
       hasError: false,
       errorMessage: '',
@@ -71,7 +71,7 @@ export default {
       authenticate: 'auth/authenticate',
       getUser: 'auth/getUser'
     }),
-    onSubmit () {
+    onSubmit() {
       this.isLoading = true;
       this.hasError = false;
       const { email, password } = this;
@@ -90,5 +90,5 @@ export default {
         });
     }
   }
-}
+};
 </script>

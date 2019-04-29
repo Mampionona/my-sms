@@ -25,27 +25,27 @@
   </div>
 </template>
 <script>
-import SideNav from './partials/dashboard/SideNav.vue';
-import TopNav from './partials/dashboard/TopNav.vue';
+import { mapGetters } from 'vuex';
+import { loadProgressBar } from 'axios-progress-bar';
+import SideNav from './partials/dashboard/SideNav';
+import TopNav from './partials/dashboard/TopNav';
 import Breadcrumb from './partials/dashboard/Breadcrumb';
 import ProfileHeader from '@/components/partials/ProfileHeader';
-import { mapGetters } from 'vuex';
-import { loadProgressBar  } from 'axios-progress-bar';
 
 export default {
   components: { SideNav, TopNav, Breadcrumb, ProfileHeader },
-  mounted () {
+  mounted() {
     loadProgressBar();
   },
   computed: {
     ...mapGetters({
       user: 'auth/user'
     }),
-    metaTitle () {
+    metaTitle() {
       return this.$route.meta.title || '';
     }
   }
-}
+};
 </script>
 <style lang="scss">
 .slide-fade-enter-active {

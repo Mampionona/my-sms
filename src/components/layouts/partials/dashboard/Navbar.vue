@@ -75,13 +75,13 @@
         <div class="collapse" id="administration">
           <ul class="nav nav-sm flex-column">
             <li class="nav-item">
-              <router-link class="nav-link" to="">Utilisateurs</router-link>
+              <router-link class="nav-link" :to="{name: 'users'}">Utilisateurs</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="">Paiements effectués</router-link>
+              <router-link class="nav-link" :to="{name: 'payments'}">Paiements effectués</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="">Plan</router-link>
+              <router-link class="nav-link" :to="{name: 'plans'}">Plans</router-link>
             </li>
           </ul>
         </div>
@@ -91,67 +91,61 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+
 export default {
   computed: {
     ...mapGetters({
       isAdmin: 'auth/isAdmin'
-    }),
+    })
   },
-  data () {
+  data() {
     return {
       baseContacts: ['contacts_list', 'import_file'],
       campagneSMS: ['create_campaign', 'drafts_messages'],
       boiteEnvoi: ['sent_messages', 'scheduled_messages'],
-      administration: []
+      administration: ['users', 'payments', 'plans']
     };
   },
   methods: {
-    dropdownToggleClass (classes) {
+    dropdownToggleClass(classes) {
       return {
         'nav-link': true,
-        'active': classes.includes(this.$route.name)
+        active: classes.includes(this.$route.name)
       };
     }
   },
   mounted () {
-    const vm = this;
-    const collapses = vm.$jQuery('.navbar-nav .collapse');
+    const collapses = this.$jQuery('.navbar-nav .collapse');
     const routes = [
       ...this.baseContacts,
       ...this.campagneSMS,
       ...this.boiteEnvoi,
       ...this.administration
     ];
-    const pathName = vm.$route.name;
+    const pathName = this.$route.name;
     let collapseElement;
 
-    collapses.on('show.bs.collapse', e => {
+    collapses.on('show.bs.collapse', (e) => {
       collapses.each((i, collapse) => {
         if (collapse.id !== e.currentTarget.id) {
-          vm.$jQuery(collapse).collapse('hide');
+          this.$jQuery(collapse).collapse('hide');
         }
       });
     });
 
-    vm.$jQuery('.navbar-nav > .nav-item > .nav-link').on('click', () => {
-      if (!routes.includes(vm.$route.name)) {
-        vm.$jQuery('.navbar-nav .collapse').collapse('hide');
-      }
-    });
-    
-    if (this.baseContacts.includes(pathName)) {
-      collapseElement = '#base-contacts';
-    } else if (this.campagneSMS.includes(pathName)) {
-      collapseElement = '#campagne-sms';
-    } else if (this.boiteEnvoi.includes(pathName)) {
-      collapseElement = '#boite-envoi';
-    } else if (this.administration.includes(pathName)) {
-      collapseElement = '#administration';
-    }
+    const handleClick = e => {
+      const navItem = e.target.closest('.nav-item');
+      if (navItem.children.length === 1) this.$jQuery('.navbar-nav .collapse').collapse('hide');
+    };
 
-    if (collapseElement) {
-      vm.$jQuery(collapseElement).collapse('show');
-    }
+    document.querySelectorAll('.navbar-nav > .nav-item > .nav-link').forEach(link => link.addEventListener('click', handleClick));
+
+    if (this.baseContacts.includes(pathName)) collapseElement = '#base-contacts';
+    else if (this.campagneSMS.includes(pathName)) collapseElement = '#campagne-sms';
+    else if (this.boiteEnvoi.includes(pathName)) collapseElement = '#boite-envoi';
+    else if (this.administration.includes(pathName)) collapseElement = '#administration';
+
+    if (collapseElement) this.$jQuery(collapseElement).collapse('show');
   }
-}
+};
 </script>

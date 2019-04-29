@@ -15,7 +15,7 @@
             </tr>
           </thead>
           <tbody class="list">
-            <List
+            <list
               v-for="list in lists"
               :list="list"
               :key="list.id"
@@ -34,11 +34,10 @@
 <script>
 import vTable from '@/components/vTable';
 import List from '@/components/List';
-import vBtn from '@/components/vBtn';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
-  components: { vTable, List, vBtn },
+  components: { vTable, List },
   mounted () {
     // dispatch get user's lists action
     this.getUserLists();
@@ -56,15 +55,15 @@ export default {
     ...mapMutations({
       updateLists: 'lists/UPDATE_LIST'
     }),
-    onDelete (listId) {
-      if (confirm('Attention ! Les contacts rattachés à cette liste sera aussi supprimés.')) {
+    onDelete(listId) {
+      if (confirm('Attention ! Les contacts rattachés à cette liste seront aussi supprimés.')) {
         this.deleteList(listId).then(() => {
           const newLists = this.lists.filter(({ id }) => id !== listId);
           this.updateLists(newLists);
         });
       }
     },
-    onShow (listId) {
+    onShow(listId) {
       this.$router.push({ name: 'contacts', params: { listId } });
     }
   }

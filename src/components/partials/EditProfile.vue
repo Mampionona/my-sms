@@ -81,19 +81,19 @@
         <div class="pl-lg-4">
           <div class="form-group">
             <label class="form-control-label" for="input-company">Nom de la société</label>
-            <input type="text" id="input-company" class="form-control" v-model="company">            
+            <input type="text" id="input-company" class="form-control" v-model="company">
           </div>
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-siren">SIREN</label>
-                <input type="text" id="input-siren" class="form-control" v-model.trim="siren">            
+                <input type="text" id="input-siren" class="form-control" v-model.trim="siren">
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-tva">TVA</label>
-                <input type="text" id="input-tva" class="form-control" v-model.trim="tva">            
+                <input type="text" id="input-tva" class="form-control" v-model.trim="tva">
               </div>
             </div>
           </div>
@@ -105,7 +105,7 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-password">Nouveau mot de passe</label>
-                <input type="password" autocomplete="new-password" id="input-password" class="form-control" v-model="password">            
+                <input type="password" autocomplete="new-password" id="input-password" class="form-control" v-model="password">
               </div>
             </div>
           </div>
@@ -122,8 +122,9 @@
 </template>
 <script>
 import Alert from '@/components/Alert';
-import _ from 'lodash';
 import { mapActions } from 'vuex';
+import { removeSpaces } from '@/utils';
+
 export default {
   components: { Alert },
   props: {
@@ -132,16 +133,16 @@ export default {
       type: Object
     }
   },
-  mounted () {
-    const user = this.user;
-    for (let column in user) {
-      const property = _.camelCase(column);
-      if (property in this.$data) {
-        this[property] = user[column];
+  mounted() {
+    const { user } = this;
+
+    for (let column in user) { // why not a forEach here ?
+      if (column in this.$data) {
+        this[column] = user[column];
       }
     }
   },
-  data () {
+  data() {
     return {
       isUpdated: false,
       company: '',
@@ -156,28 +157,30 @@ export default {
       telephone: '',
       mobile: '',
       email: '',
-      password: '',
-    }
+      password: ''
+    };
   },
   methods: {
     ...mapActions({
       updateAccount: 'auth/updateAccount'
     }),
-    onSubmit () {
-      let { company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password } = this;
-      siren = siren.toString().removeSpaces();
-      tva = tva.toString().removeSpaces();
+    onSubmit() {
+      const { company, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password } = this;
+      let { siren, tva } = this;
+
+      siren = removeSpaces(siren.toString());
+      tva = removeSpaces(tva.toString());
 
       this.updateAccount({ company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password })
         .then(() => {
           this.isUpdated = true;
         })
-        .catch(error => {
+        .catch((error) => {
           this.isUpdated = false;
           // console.log(error);
           alert(error.data.error);
         });
     }
   }
-}
+};
 </script>

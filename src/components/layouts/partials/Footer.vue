@@ -15,9 +15,9 @@
 <script>
 export default {
   computed: {
-    year () {
+    year() {
       return new Date().getFullYear();
     }
   }
-}
+};
 </script>

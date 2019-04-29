@@ -10,6 +10,7 @@
 </template>
 <script>
 import { MAIL_TO } from '@/utils';
+
 export default {
   props: {
     user: {
@@ -17,9 +18,9 @@ export default {
     }
   },
   computed: {
-    mailTo () {
+    mailTo() {
       return MAIL_TO;
     }
   }
-}
+};
 </script>

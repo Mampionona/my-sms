@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <page-header></page-header>    
+    <page-header></page-header>
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
           <div class="col-lg-5 col-md-7">
@@ -17,5 +17,5 @@ import PageHeader from '@/components/layouts/partials/PageHeader';
 
 export default {
   components: { PageHeader }
-}
+};
 </script>

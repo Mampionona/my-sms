@@ -10,6 +10,7 @@
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 import DefaultLayout from '@/components/layouts/DefaultLayout';
 import { mapGetters, mapActions } from 'vuex';
+import { UNAUTHENTICATED } from '@/utils';
 
 export default {
   components: {
@@ -17,11 +18,16 @@ export default {
     DashboardLayout
   },
   watch: {
-    '$route': 'routeDidChange'
+    $route: 'routeDidChange'
   },
-  mounted () {
+  mounted() {
     this.$nextTick(function () {
-      this.getUser();
+      this.getUser().catch(error => {
+        const { status } = error;
+        if (status === UNAUTHENTICATED) {
+          this.$router.push({ name: 'login' });
+        }
+      });
     });
   },
   computed: {
@@ -34,22 +40,22 @@ export default {
       getUser: 'auth/getUser',
       setLayout: 'layout/setLayout'
     }),
-    setBodyClass () {
-      const body = document.body;
+    setBodyClass() {
+      const { body } = document;
       if (this.$route.meta.layout) {
         body.classList.remove('bg-default');
         return;
       }
       body.classList.add('bg-default');
     },
-    routeDidChange () {
+    routeDidChange() {
       const layout = this.$route.meta.layout || 'default';
       this.setBodyClass();
       this.setLayout(`${layout}-layout`);
       this.$jQuery('.collapse.show.closable').collapse('hide');
     }
   }
-}
+};
 </script>
 <style>
 textarea {

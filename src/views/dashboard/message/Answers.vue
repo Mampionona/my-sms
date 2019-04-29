@@ -24,9 +24,10 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import vTable from '@/components/vTable';
 import Answer from '@/components/Answer';
-import { mapGetters, mapActions } from 'vuex';
+
 export default {
   components: { vTable, Answer },
   computed: {
@@ -34,17 +35,17 @@ export default {
       answers: 'campaigns/answers'
     })
   },
-  created () {
+  created() {
     this.getAnswers(this.$route.params.messageId);
   },
   methods: {
     ...mapActions({
       getAnswers: 'campaigns/campaignAnswers'
     }),
-    onClick (threadId) {
-      const threads = this.threads;
+    onClick(threadId) {
+      const { threads } = this;
       this.threads = threads.filter(thread => thread.id !== threadId);
     }
   }
-}
+};
 </script>
