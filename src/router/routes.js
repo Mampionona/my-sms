@@ -1,4 +1,4 @@
-const dashboard_metas = {
+const dashboardMetas = {
   requiresAuth: true,
   layout: 'dashboard'
 };
@@ -43,7 +43,7 @@ const routes = [
         path: '/',
         name: 'dashboard.index',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           title: 'Tableau de bord',
           breadcrumb: 'Tableau de bord'
         },
@@ -54,9 +54,9 @@ const routes = [
         path: 'lists',
         name: 'contacts_list',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           title: 'Liste des contacts',
-          breadcrumb: 'Liste des contacts',
+          breadcrumb: 'Liste des contacts'
         },
         component: () => import('@/views/dashboard/Lists')
       },
@@ -64,9 +64,9 @@ const routes = [
         path: 'lists/:listId([0-9]+)',
         name: 'contacts',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           title: 'Contacts',
-          breadcrumb: 'Contacts',
+          breadcrumb: 'Contacts'
         },
         component: () => import('@/views/dashboard/Contacts')
       },
@@ -74,9 +74,9 @@ const routes = [
         path: 'import/file',
         name: 'import_file',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           title: 'Importer des contacts',
-          breadcrumb: 'Importer des contacts',
+          breadcrumb: 'Importer des contacts'
         },
         component: () => import('@/views/dashboard/ImportContacts')
       },
@@ -84,9 +84,9 @@ const routes = [
         path: 'message/redaction',
         name: 'create_campaign',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           title: 'Créer une campagne',
-          breadcrumb: 'Créer une campagne',
+          breadcrumb: 'Créer une campagne'
         },
         component: () => import('@/views/dashboard/message/Redaction')
       },
@@ -94,9 +94,9 @@ const routes = [
         path: 'message/list/drafts',
         name: 'drafts_messages',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           title: 'Brouillons',
-          breadcrumb: 'Brouillons',
+          breadcrumb: 'Brouillons'
         },
         component: () => import('@/views/dashboard/message/Drafts')
       },
@@ -104,9 +104,9 @@ const routes = [
         path: 'message/list',
         name: 'sent_messages',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           title: 'Envois effectués',
-          breadcrumb: 'Envois effectués',
+          breadcrumb: 'Envois effectués'
         },
         component: () => import('@/views/dashboard/message/List')
       },
@@ -114,7 +114,7 @@ const routes = [
         path: 'message/list/scheduled',
         name: 'scheduled_messages',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           title: 'Envois planifiés',
           breadcrumb: 'Envois planifiés'
         },
@@ -124,9 +124,9 @@ const routes = [
         path: 'packs',
         name: 'packs',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           title: 'Acheter des SMS',
-          breadcrumb: 'Acheter des SMS',
+          breadcrumb: 'Acheter des SMS'
         },
         component: () => import('@/views/dashboard/Packs')
       },
@@ -134,7 +134,7 @@ const routes = [
         path: 'inbox',
         name: 'inbox',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           title: 'Boîte de réception',
           breadcrumb: 'Boîte de réception'
         },
@@ -144,9 +144,9 @@ const routes = [
         path: 'inbox/:messageId([0-9]+)/answers',
         name: 'answers',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           title: 'Réponses',
-          breadcrumb: 'Réponses',
+          breadcrumb: 'Réponses'
         },
         component: () => import('@/views/dashboard/message/Answers')
       },
@@ -154,7 +154,7 @@ const routes = [
         path: 'profile',
         name: 'profile',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           title: 'Profil',
           breadcrumb: 'Profil'
         },
@@ -164,8 +164,8 @@ const routes = [
         path: 'users',
         name: 'users',
         meta: {
-          ...dashboard_metas,
-          visibility: 'admin_only',          
+          ...dashboardMetas,
+          visibility: 'admin_only',
           title: 'Utilisateurs',
           breadcrumb: 'Utilisateurs'
         },
@@ -175,7 +175,7 @@ const routes = [
         path: 'payments',
         name: 'payments',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           visibility: 'admin_only',
           title: 'Paiements effectués',
           breadcrumb: 'Paiements effectués'
@@ -186,7 +186,7 @@ const routes = [
         path: 'plans',
         name: 'plans',
         meta: {
-          ...dashboard_metas,
+          ...dashboardMetas,
           visibility: 'admin_only',
           title: 'Plans',
           breadcrumb: 'Plans'
