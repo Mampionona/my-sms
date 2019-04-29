@@ -146,7 +146,7 @@ export default {
         });
       }
     },
-    importWorkbook () {
+    importWorkbook() {
       const { customName, filename, contacts } = this;
       const len = contacts.length;
       if (len < COUNT_MIN_LINES || len > COUNT_MAX_LINES) {
@@ -160,7 +160,7 @@ export default {
         .then(data => this.addContactsToAList(data.id, contacts));
       }
     },
-    addContactsToAList (listId, contacts) {
+    addContactsToAList(listId, contacts) {
       this.addContacts({ listId, contacts }).then(() => {
         this.$router.push({
           name: 'contacts',
