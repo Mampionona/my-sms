@@ -6,7 +6,7 @@ import Axios from 'axios';
 Vue.use(Router);
 
 const router = new Router({
-  // mode: 'history',
+  mode: 'history',
   linkExactActiveClass: 'active',
   base: process.env.BASE_URL,
   routes
