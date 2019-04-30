@@ -45,7 +45,8 @@ const routes = [
         meta: {
           ...dashboardMetas,
           title: 'Tableau de bord',
-          breadcrumb: 'Tableau de bord'
+          breadcrumb: 'Tableau de bord',
+          icon: 'ni ni-shop'
         },
         component: () => import('@/views/dashboard/Index')
       },
@@ -56,7 +57,8 @@ const routes = [
         meta: {
           ...dashboardMetas,
           title: 'Liste des contacts',
-          breadcrumb: 'Liste des contacts'
+          breadcrumb: 'Liste des contacts',
+          icon: 'fas fa-address-book'
         },
         component: () => import('@/views/dashboard/Lists')
       },
@@ -66,7 +68,8 @@ const routes = [
         meta: {
           ...dashboardMetas,
           title: 'Contacts',
-          breadcrumb: 'Contacts'
+          breadcrumb: 'Contacts',
+          icon: 'fas fa-address-book'
         },
         component: () => import('@/views/dashboard/Contacts')
       },
@@ -76,7 +79,8 @@ const routes = [
         meta: {
           ...dashboardMetas,
           title: 'Importer des contacts',
-          breadcrumb: 'Importer des contacts'
+          breadcrumb: 'Importer des contacts',
+          icon: 'fas fa-address-book'
         },
         component: () => import('@/views/dashboard/ImportContacts')
       },
@@ -86,7 +90,8 @@ const routes = [
         meta: {
           ...dashboardMetas,
           title: 'Créer une campagne',
-          breadcrumb: 'Créer une campagne'
+          breadcrumb: 'Créer une campagne',
+          icon: 'fa fa-th-large'
         },
         component: () => import('@/views/dashboard/message/Redaction')
       },
@@ -96,7 +101,8 @@ const routes = [
         meta: {
           ...dashboardMetas,
           title: 'Brouillons',
-          breadcrumb: 'Brouillons'
+          breadcrumb: 'Brouillons',
+          icon: 'fa fa-th-large'
         },
         component: () => import('@/views/dashboard/message/Drafts')
       },
@@ -106,7 +112,8 @@ const routes = [
         meta: {
           ...dashboardMetas,
           title: 'Envois effectués',
-          breadcrumb: 'Envois effectués'
+          breadcrumb: 'Envois effectués',
+          icon: 'ni ni-send'
         },
         component: () => import('@/views/dashboard/message/List')
       },
@@ -116,7 +123,8 @@ const routes = [
         meta: {
           ...dashboardMetas,
           title: 'Envois planifiés',
-          breadcrumb: 'Envois planifiés'
+          breadcrumb: 'Envois planifiés',
+          icon: 'ni ni-send'
         },
         component: () => import('@/views/dashboard/message/Scheduled')
       },
@@ -126,7 +134,8 @@ const routes = [
         meta: {
           ...dashboardMetas,
           title: 'Acheter des SMS',
-          breadcrumb: 'Acheter des SMS'
+          breadcrumb: 'Acheter des SMS',
+          icon: 'ni ni-credit-card'
         },
         component: () => import('@/views/dashboard/Packs')
       },
@@ -136,7 +145,8 @@ const routes = [
         meta: {
           ...dashboardMetas,
           title: 'Boîte de réception',
-          breadcrumb: 'Boîte de réception'
+          breadcrumb: 'Boîte de réception',
+          icon: 'fas fa-inbox'
         },
         component: () => import('@/views/dashboard/message/Inbox')
       },
@@ -146,7 +156,8 @@ const routes = [
         meta: {
           ...dashboardMetas,
           title: 'Réponses',
-          breadcrumb: 'Réponses'
+          breadcrumb: 'Réponses',
+          icon: 'fas fa-inbox'
         },
         component: () => import('@/views/dashboard/message/Answers')
       },
@@ -167,7 +178,8 @@ const routes = [
           ...dashboardMetas,
           visibility: 'admin_only',
           title: 'Utilisateurs',
-          breadcrumb: 'Utilisateurs'
+          breadcrumb: 'Utilisateurs',
+          icon: 'fas fa-users-cog'
         },
         component: () => import('@/views/dashboard/Users')
       },
@@ -178,7 +190,8 @@ const routes = [
           ...dashboardMetas,
           visibility: 'admin_only',
           title: 'Paiements effectués',
-          breadcrumb: 'Paiements effectués'
+          breadcrumb: 'Paiements effectués',
+          icon: 'fas fa-users-cog'
         },
         component: () => import('@/views/dashboard/Payments')
       },
@@ -189,7 +202,8 @@ const routes = [
           ...dashboardMetas,
           visibility: 'admin_only',
           title: 'Plans',
-          breadcrumb: 'Plans'
+          breadcrumb: 'Plans',
+          icon: 'fas fa-users-cog'
         },
         component: () => import('@/views/dashboard/Plans')
       }

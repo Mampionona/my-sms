@@ -15,7 +15,7 @@
       </li>
       <li class="nav-item">
         <a :class="dropdownToggleClass(baseContacts)" href="#base-contacts" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="base-contacts">
-          <i class="ni ni-ungroup"></i>
+          <i class="fas fa-address-book"></i>
           <span class="nav-link-text">Base de contacts</span>
         </a>
         <div class="collapse" id="base-contacts" style="">
