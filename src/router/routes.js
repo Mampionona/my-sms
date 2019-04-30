@@ -212,6 +212,17 @@ const routes = [
           icon: 'fas fa-users-cog'
         },
         component: () => import('@/views/dashboard/Plans')
+      },
+      {
+        path: 'stats',
+        name: 'stats',
+        meta: {
+          ...dashboardMetas,
+          title: 'Statistiques',
+          breadcrumb: 'Statistiques',
+          icon: 'fas fa-chart-bar'
+        },
+        component: () => import('@/views/dashboard/Stats')
       }
     ]
   }, {

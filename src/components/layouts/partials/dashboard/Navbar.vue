@@ -67,6 +67,12 @@
           <span class="nav-link-text">Boîte de réception</span>
         </router-link>
       </li>
+      <li class="nav-item">
+        <router-link :to="{ name: 'stats' }" class="nav-link">
+          <i class="fas fa-chart-bar"></i>
+          <span class="nav-link-text">Statistiques</span>
+        </router-link>
+      </li>
       <li v-if="isAdmin" class="nav-item">
         <a :class="dropdownToggleClass(administration)" href="#administration" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="administration">
           <i class="fas fa-users-cog"></i>
