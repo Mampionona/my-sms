@@ -7,6 +7,7 @@
             <th></th>
             <th>P.U</th>
             <th>Abonnement</th>
+            <th></th>
           </thead>
           <tbody class="list">
             <plan
@@ -14,6 +15,7 @@
               :key="plan.id"
               :plan="plan"
               @click.native="showEditForm(plan)"
+              button
             />
           </tbody>
         </v-table>
