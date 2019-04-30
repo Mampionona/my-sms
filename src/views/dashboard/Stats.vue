@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header">
           <h6 class="surtitle">Overview</h6>
-          <h5 class="h3 mb-0">Total sales</h5>
+          <h5 class="h3 mb-0">Messages envoyés</h5>
         </div>
         <div class="card-body">
           <div class="chart">
@@ -41,7 +41,7 @@ export default {
       campaignsStats: 'campaigns/campaignsStats'
     })
   },
-  created () {
+  mounted () {
     this.campaignsStats();
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <canvas id="chart-line" class="chart-canvas"></canvas>
+  <canvas class="chart-canvas"></canvas>
 </template>
 
 <script>
@@ -38,8 +38,8 @@ export default {
   },
   watch: {
     // re-render chart canvas
-    'chartData': function() {
-      const chart = this.$jQuery('#chart-line');
+    chartData () {
+      const chart = this.$jQuery(this.$el);
       if (chart.length) this.init(chart);
     }
   }
