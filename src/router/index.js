@@ -12,6 +12,7 @@ const router = new Router({
   routes
 });
 const ADMIN_ID = 1;
+const isAuthenticated = () => !!localStorage.getItem('token');
 const fetchUser = () => Axios('/users/me/');
 const dashboard = {
   name: 'dashboard.index'
@@ -23,7 +24,7 @@ router.beforeEach((to, from, next) => {
   // route navigation guards
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // if not connected
-    if (!localStorage.getItem('token')) {
+    if (!isAuthenticated()) {
       next({
         name: 'login',
         query: { redirect: to.fullPath }
@@ -36,16 +37,22 @@ router.beforeEach((to, from, next) => {
             else next(dashboard);
           })
           .catch(() => next(dashboard));
+      } else if (to.name === 'payment_result') {
+        if (to.query.paylinetoken) next();
+        else next('/');
       }
+
       else next();
     }
   } else if (to.matched.some(record => record.meta.redirectIfLoggedIn)) {
     // when user is logged in
     // redirect to /dashboard
-    if (localStorage.getItem('token')) next(dashboard);
+    if (isAuthenticated()) next(dashboard);
     // continue navigation
     else next();
-  } else next();
+  }
+  
+  else next();
 });
 
 export default router;
