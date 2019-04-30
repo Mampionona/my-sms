@@ -53,7 +53,7 @@ export default {
     return {
       columns: {
         campaign: ['Message', 'Emetteur', 'Date d’envoi', 'SMS/Destinataires'],
-        message: ['Nom de la campagne', 'Message', 'Emetteur', 'Date d’envoi', 'SMS', 'Rapport', 'Réponses']
+        message: ['Nom de la campagne', 'Message', 'Emetteur', 'Date d’envoi', 'SMS', 'Rapport']
       }
     };
   },
