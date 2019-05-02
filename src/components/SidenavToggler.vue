@@ -34,6 +34,11 @@ export default {
     onWindowResize () {
       if (body.classList.contains('g-sidenav-pinned')) this.isActive = true;
       else this.isActive = false;
+    },
+    closeSidenav () {
+      this.isActive = false;
+      body.classList.remove('g-sidenav-pinned');
+      body.classList.add('g-sidenav-hidden');
     }
   },
   mounted () {
@@ -44,9 +49,7 @@ export default {
 
     document.addEventListener('click', e => {
       if (e.target === body) {
-        this.isActive = false;
-        body.classList.remove('g-sidenav-pinned');
-        body.classList.add('g-sidenav-hidden');
+        this.closeSidenav();
       }
     });
   },
@@ -54,6 +57,13 @@ export default {
     togglerDark: {
       default: false,
       type: Boolean
+    }
+  },
+  watch: {
+    '$route': function() {
+      if (window.innerWidth < 1200) {
+        this.closeSidenav();
+      }
     }
   }
 };
