@@ -2,7 +2,7 @@
   <div class="collapse navbar-collapse" id="sidenav-collapse-main">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <router-link :to="{ name: 'dashboard.index' }" class="nav-link">
+        <router-link :to="{ name: 'dashboard' }" class="nav-link">
           <i class="ni ni-shop"></i>
           <span class="nav-link-text">Tableau de bord</span>
         </router-link>

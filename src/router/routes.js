@@ -47,7 +47,7 @@ const routes = [
     children: [
       {
         path: '/',
-        name: 'dashboard.index',
+        name: 'dashboard',
         meta: {
           ...dashboardMetas,
           title: 'Tableau de bord',

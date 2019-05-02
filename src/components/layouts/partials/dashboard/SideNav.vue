@@ -2,7 +2,7 @@
   <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main" @mouseover="onMouseover" @mouseleave="onMouseleave">
     <vue-custom-scrollbar class="scroll-area" :settings="settings">
       <div class="sidenav-header d-flex align-items-center">
-        <router-link :to="{ name: 'dashboard.index' }" class="navbar-brand">
+        <router-link :to="{ name: 'dashboard' }" class="navbar-brand">
           <img src="@/assets/images/logo.png" class="navbar-brand-img" alt="...">
         </router-link>
         <div class="ml-auto d-none d-xl-block">

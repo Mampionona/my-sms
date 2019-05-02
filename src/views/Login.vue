@@ -81,7 +81,7 @@ export default {
           // fetch user after login success
           this.getUser();
           // redirection
-          this.$router.push(this.$route.query.redirect || { name: 'dashboard.index' });
+          this.$router.push(this.$route.query.redirect || { name: 'dashboard' });
         })
         .catch(({ data }) => {
           this.isLoading = false;

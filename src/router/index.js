@@ -15,7 +15,7 @@ const ADMIN_ID = 1;
 const isAuthenticated = () => !!localStorage.getItem('token');
 const fetchUser = () => Axios('/users/me/');
 const dashboard = {
-  name: 'dashboard.index'
+  name: 'dashboard'
 };
 
 router.beforeEach((to, from, next) => {
