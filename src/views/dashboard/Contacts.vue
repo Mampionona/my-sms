@@ -203,7 +203,7 @@ export default {
     },
     exportCSV() {
       // Export contacts into CSV file
-      arrayToCSV(this.contacts, 'contacts');
+      arrayToCSV(this.contacts, this.list.name);
     }
   }
 };
