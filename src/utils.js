@@ -66,3 +66,16 @@ export function computeRemainingChars(countSMS, len) {
 export function removeSpaces(str) {
   return str.replace(/\s/g, '').trim();
 }
+
+/**
+ * Add or remove one or more classes from element
+ * @param {HTMLElement} element 
+ * @param {String} className 
+ */
+export function toggleClass(element, className) {
+  className = className.split(' ');
+  className.forEach(_className => {
+    if (element.classList.contains(_className)) element.classList.remove(_className);
+    else element.classList.add(_className);
+  });
+}

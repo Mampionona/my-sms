@@ -1,5 +1,8 @@
 <template>
   <ul v-if="user" class="navbar-nav align-items-center ml-md-auto">
+    <li class="nav-item d-xl-none toggler-link">
+      <sidenav-toggler toggler-dark></sidenav-toggler>
+    </li>
     <li class="nav-item">
       <a :href="`mailto:${mailTo}`" class="nav-link"><i class="fas fa-question-circle"></i> Assistance</a>
     </li>
@@ -9,6 +12,7 @@
   </ul>
 </template>
 <script>
+import SidenavToggler from '@/components/SidenavToggler';
 import { MAIL_TO } from '@/utils';
 
 export default {
@@ -17,9 +21,15 @@ export default {
       type: Object
     }
   },
+  components: { SidenavToggler },
   computed: {
     mailTo() {
       return MAIL_TO;
+    }
+  },
+  methods: {
+    toggleSidenav () {
+      document.body.classList.toggle('g-sidenav-pinned');
     }
   }
 };
