@@ -3,8 +3,7 @@
     <div class="col">
       <div class="card">
         <div class="card-header">
-          <h6 class="surtitle">Overview</h6>
-          <h5 class="h3 mb-0">Messages envoyés</h5>
+          <h5 class="h3 mb-0">Statistiques des envois</h5>
         </div>
         <div class="card-body">
           <stats></stats>
