@@ -53,7 +53,7 @@
               <i class="fas fa-download"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="export">
-              <a class="dropdown-item" href="#" @click.prevent>Export CSV</a>
+              <a class="dropdown-item" href="#" @click.prevent="exportCSV">Export CSV</a>
             </div>
           </div>
         </div>
@@ -97,6 +97,7 @@ import Contact from '@/components/Contact';
 import vBtn from '@/components/vBtn';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import store from '@/store';
+import { arrayToCSV } from '@/utils';
 
 export default {
   components: { vTable, Contact, vBtn },
@@ -199,6 +200,10 @@ export default {
             this.allContacts = false;
           }
         });
+    },
+    exportCSV() {
+      // Export contacts into CSV file
+      arrayToCSV(this.contacts, 'contacts');
     }
   }
 };

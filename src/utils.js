@@ -79,3 +79,52 @@ export function toggleClass(element, className) {
     else element.classList.add(_className);
   });
 }
+
+export function arrayToCSV(array, exportName = 'export') {
+  if (array.length === 0) return;
+
+  const data = [];
+  const firstLine = array[0];
+  if ('id' in firstLine) delete firstLine.id;
+  const columns = Object.keys(firstLine);
+  // append columns title
+  data.push(columns);
+  // append all entries
+  array.forEach((row) => {
+    if ('id' in row) delete row.id;
+    data.push(Object.values(row));
+  });
+
+  // Building the CSV from the Data two-dimensional array
+  // Each column is separated by ";" and new line "\n" for next row
+  var csvContent = '';
+  data.forEach(function (infoArray, index) {
+    const dataString = infoArray.join(';');
+    csvContent += index < data.length ? dataString + '\n' : dataString;
+  });
+
+  // The download function takes a CSV string, the filename and mimeType as parameters
+  // Scroll/look down at the bottom of this snippet to see how download is called
+  var download = function (content, fileName, mimeType) {
+    var a = document.createElement('a');
+    mimeType = mimeType || 'application/octet-stream';
+
+    if (navigator.msSaveBlob) { // IE10
+      navigator.msSaveBlob(new Blob([content], {
+        type: mimeType
+      }), fileName);
+    } else if (URL && 'download' in a) { //html5 A[download]
+      a.href = URL.createObjectURL(new Blob([content], {
+        type: mimeType
+      }));
+      a.setAttribute('download', fileName);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } else {
+      location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+    }
+  };
+
+  download(csvContent, `${exportName}.csv`, 'text/csv;encoding:utf-8');
+}
