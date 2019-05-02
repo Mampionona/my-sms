@@ -23,7 +23,8 @@ export default {
     // all campaigns marked as scheduled
     scheduled: (state, getters) => getters.campaigns.filter(() => false),
     answers: state => state.answers,
-    stats: state => state.stats
+    stats: state => state.stats,
+    lastSent: (state, getters) => getters.sent.sort()[0]
   },
 
   mutations: {

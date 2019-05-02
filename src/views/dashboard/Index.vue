@@ -7,7 +7,20 @@
             <div class="card-header">
               <h5 class="h3 mb-0">Dernier envoi</h5>
             </div>
-            <div class="card-body"></div>
+            <div class="card-body text-center">
+              <template v-if="sentMessage">
+                <p class="mb-0 text-center">Envoyé<br>Le {{ sentMessage.sentDate | full }}</p>
+                <p class="mb-0 mt-4">
+                  <router-link class="btn btn-icon btn-info" :to="responseUrl(sentMessage)">
+                    <span class="btn-inner--icon"><i class="fas fa-bars"></i></span>
+                    <span class="btn-inner--text">Réponses</span>
+                  </router-link>
+                </p>
+              </template>
+              <template v-else>
+                <p class="mb-0">Aucun message envoyé</p>
+              </template>
+            </div>
           </div>
         </div>
         <div class="col-lg-3">
@@ -46,7 +59,27 @@
 </template>
 <script>
 import Stats from '@/components/Stats';
+import { mapGetters, mapActions } from 'vuex';
 export default {
-  components: { Stats }
+  components: { Stats },
+  computed: {
+    ...mapGetters({
+      sentMessage: 'campaigns/lastSent'
+    })
+  },
+  methods: {
+    ...mapActions({
+      getCampaigns: 'campaigns/getUserCampaigns'
+    }),
+    responseUrl({ id }) {
+      return {
+        name: 'answers',
+        params: { messageId: id }
+      };
+    }
+  },
+  mounted () {
+    this.getCampaigns();
+  }
 }
 </script>
