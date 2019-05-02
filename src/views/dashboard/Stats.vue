@@ -7,47 +7,15 @@
           <h5 class="h3 mb-0">Messages envoyés</h5>
         </div>
         <div class="card-body">
-          <div class="chart">
-            <line-chart :chart-data="dataCollection" :styles="{height: '100%'}"></line-chart>
-          </div>
+          <stats></stats>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import LineChart from '@/components/LineChart.js';
-import { mapActions, mapGetters } from 'vuex';
+import Stats from '@/components/Stats';
 export default {
-  components: {
-    LineChart
-  },
-  computed: {
-    ...mapGetters({
-      stats: 'campaigns/stats'
-    }),
-    dataCollection () {
-      const labels = ['', ...this.stats.map(stat => stat.date)];
-      const datasets = [{
-        label: 'Messages',
-        data: [0, ...this.stats.map(stat => stat.messages)]
-      }];
-
-      return { labels, datasets };
-    }
-  },
-  data () {
-    return {
-      datacollection: null
-    }
-  },
-  mounted () {
-    this.campaignsStats();
-  },
-  methods: {
-    ...mapActions({
-      campaignsStats: 'campaigns/campaignsStats'
-    })
-  }
-};
+  components: { Stats }
+}
 </script>
