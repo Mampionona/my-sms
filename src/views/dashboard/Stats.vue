@@ -8,7 +8,7 @@
         </div>
         <div class="card-body">
           <div class="chart">
-            <chart :chart-data="dataCollection"></chart>
+            <line-chart :chart-data="dataCollection" :styles="{height: '100%'}"></line-chart>
           </div>
         </div>
       </div>
@@ -16,33 +16,38 @@
   </div>
 </template>
 <script>
-import Chart from '@/components/Chart';
+import LineChart from '@/components/LineChart.js';
 import { mapActions, mapGetters } from 'vuex';
 export default {
-  components: { Chart },
+  components: {
+    LineChart
+  },
   computed: {
     ...mapGetters({
       stats: 'campaigns/stats'
     }),
     dataCollection () {
       const labels = ['', ...this.stats.map(stat => stat.date)];
-      const datasets = [
-        {
-          label: 'Messages',
-          data: [0, ...this.stats.map(stat => stat.messages)]
-        }
-      ];
+      const datasets = [{
+        label: 'Messages',
+        data: [0, ...this.stats.map(stat => stat.messages)]
+      }];
 
       return { labels, datasets };
     }
+  },
+  data () {
+    return {
+      datacollection: null
+    }
+  },
+  mounted () {
+    this.campaignsStats();
   },
   methods: {
     ...mapActions({
       campaignsStats: 'campaigns/campaignsStats'
     })
-  },
-  mounted () {
-    this.campaignsStats();
   }
-}
+};
 </script>
