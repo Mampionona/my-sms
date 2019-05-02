@@ -194,25 +194,20 @@ export default {
           }
         });
     },
-    populateCampainFields () {      
+    populateCampainFields() {
       // Fetch user's campaigns
       this.getUserCampaigns().then(() => {
         if (!!this.drafts.length && 'campaign_id' in this.$route.query) {
-          this.drafts.forEach(draft => {
-            if (draft.id == this.$route.query.campaign_id) {
-              this.senderName = draft.senderName;
-              this.listId = draft.list_id;
-              this.text = draft.text;
-              this.name = draft.name;
+          this.drafts.forEach(({ id, senderName, list_id, text, name }) => {
+            if (id == this.$route.query.campaign_id) {
+              this.senderName = senderName;
+              this.listId = list_id;
+              this.text = text;
+              this.name = name;
             }
           });
         }
       });
-
-      // !isset(query[campaign_id])
-      if (!('campaign_id' in this.$route.query)) {
-        this.senderName = this.listId = this.text = ''; // purpose is unclear
-      }
     }
   }
 };

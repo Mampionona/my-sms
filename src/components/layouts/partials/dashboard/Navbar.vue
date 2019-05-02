@@ -120,14 +120,8 @@ export default {
       };
     }
   },
-  mounted () {
+  mounted() {
     const collapses = this.$jQuery('.navbar-nav .collapse');
-    const routes = [
-      ...this.baseContacts,
-      ...this.campagneSMS,
-      ...this.boiteEnvoi,
-      ...this.administration
-    ];
     const pathName = this.$route.name;
     let collapseElement;
 
@@ -139,7 +133,7 @@ export default {
       });
     });
 
-    const handleClick = e => {
+    const handleClick = (e) => {
       const navItem = e.target.closest('.nav-item');
       if (navItem.children.length === 1) this.$jQuery('.navbar-nav .collapse').collapse('hide');
     };

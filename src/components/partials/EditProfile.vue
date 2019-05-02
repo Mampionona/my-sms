@@ -135,12 +135,9 @@ export default {
   },
   mounted() {
     const { user } = this;
-
-    for (let column in user) { // why not a forEach here ?
-      if (column in this.$data) {
-        this[column] = user[column];
-      }
-    }
+    Object.keys(user).forEach((key) => {
+      if (key in this.$data) this[key] = user[key];
+    });
   },
   data() {
     return {
@@ -177,8 +174,6 @@ export default {
         })
         .catch((error) => {
           this.isUpdated = false;
-          // console.log(error);
-          alert(error.data.error);
         });
     }
   }

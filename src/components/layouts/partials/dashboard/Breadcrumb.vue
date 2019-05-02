@@ -19,7 +19,7 @@
 <script>
 export default {
   computed: {
-    icon () {
+    icon() {
       return this.$route.meta.icon || 'd-none';
     }
   },
