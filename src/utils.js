@@ -15,7 +15,6 @@ export function workbookToArray(file, complete) {
     /* convert from workbook to array of arrays */
     const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
     let arrays = XLSX.utils.sheet_to_json(firstWorksheet, { header: 1 });
-    // console.log(array);
     arrays = arrays.filter(array => array.length > 0);
     if (complete) {
       complete(arrays, file);
