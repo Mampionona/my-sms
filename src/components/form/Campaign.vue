@@ -40,6 +40,7 @@
                   <strong>{{ countSMS }}</strong> SMS - {{ $tc("remainingChars", remainingChars) }} <strong>{{ remainingChars }}</strong>
                 </p>
               </div>
+              <p class="mb-0 mt-3 mention">La mention légale "STOP au 36105" sera automatiquement incluse lors de l'envoi.</p>
               <div class="mt-4">
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" id="save-as-draft" v-model="status">
@@ -220,5 +221,10 @@ export default {
 
 .message {
   font-size: 14px;
+}
+
+.mention {
+  font-size: 14px;
+  line-height: 1.5;
 }
 </style>
