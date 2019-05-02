@@ -1,18 +1,10 @@
 <template>
-  <campaign-form :complete="onComplete" :fail="onFail"></campaign-form>
+  <campaign-form></campaign-form>
 </template>
 <script>
-import CampaignForm from '@/components/form/Campaign.vue';
+import CampaignForm from '@/components/form/Campaign';
 
 export default {
-  components: { CampaignForm },
-  methods: {
-    onComplete(data) {
-      console.log(data);
-    },
-    onFail(error) {
-      console.log(error);
-    }
-  }
+  components: { CampaignForm }
 };
 </script>

@@ -1,5 +1,8 @@
 <template>
   <div class="campaign-form">
+    <div v-if="hasError || created" :class="statusClass" role="alert">
+      {{ statusMessage }}
+    </div>
     <form @submit.prevent="submitCampaign" class="pb-5">
       <div class="row custom-row">
         <div class="col-lg-4">
@@ -108,10 +111,6 @@ export default {
     campaign: {
       type: Object
     },
-    // action: {
-    //   default: 'new',
-    //   type: String
-    // },
     pending: Function,
     complete: Function,
     fail: Function
@@ -126,7 +125,10 @@ export default {
       sendingMode: 'immediate',
       status: false,
       listId: '',
-      name: ''
+      name: '',
+      statusMessage: '',
+      hasError: false,
+      created: false
     };
   },
   mounted() {
@@ -153,7 +155,14 @@ export default {
       lists: 'lists/lists',
       countContacts: 'contacts/count',
       drafts: 'campaigns/drafts'
-    })
+    }),
+    statusClass() {
+      return {
+        alert: true,
+        'alert-danger': this.hasError,
+        'alert-success': this.created
+      };
+    }
   },
   methods: {
     ...mapActions({
@@ -179,16 +188,21 @@ export default {
 
       this.createOrUpdateCampaign({ action, listId, name, text, senderName, sendDate, status, campaignId })
         .then((data) => {
-          this.listId = '';
+          // this.listId = '';
           this.name = '';
           this.text = '';
           this.status = false;
+          this.hasError = false;
+          this.created = true;
+          this.statusMessage = 'Campagne créée';
           if (this.complete) {
             this.complete(data);
           }
         })
         .catch((error) => {
-          alert('object' === typeof error.data ? error.data.error : error.data);
+          this.statusMessage = error.data.error;
+          this.hasError = true;
+          this.created = false;
 
           if (this.fail) {
             this.fail(error);
@@ -199,10 +213,10 @@ export default {
       // Fetch user's campaigns
       this.getUserCampaigns().then(() => {
         if (!!this.drafts.length && 'campaign_id' in this.$route.query) {
-          this.drafts.forEach(({ id, senderName, list_id, text, name }) => {
-            if (id == this.$route.query.campaign_id) {
+          this.drafts.forEach(({ id, senderName, list_id: listId, text, name }) => {
+            if (id === parseInt(this.$route.query.campaign_id, 10)) {
               this.senderName = senderName;
-              this.listId = list_id;
+              this.listId = listId;
               this.text = text;
               this.name = name;
             }
