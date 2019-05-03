@@ -114,6 +114,13 @@ export default {
   mounted() {
     // dispatch an action to get contacts of a list
     this.getContacts(this.$route.params.listId);
+    document.getElementById('all-contacts').addEventListener('change', (e) => {
+      if (e.target.checked) {
+        this.contacts.forEach(contact => this.selectedContacts.push(contact.id));
+        return;
+      }
+      this.selectedContacts = [];
+    });
   },
   computed: {
     ...mapGetters({
@@ -134,15 +141,6 @@ export default {
         'text-success': this.updateSuccess,
         'text-danger': this.updateError
       };
-    }
-  },
-  watch: {
-    allContacts(isChecked) {
-      if (isChecked) {
-        this.contacts.forEach(contact => this.selectedContacts.push(contact.id));
-        return;
-      }
-      this.selectedContacts = [];
     }
   },
   methods: {
