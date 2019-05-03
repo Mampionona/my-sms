@@ -96,10 +96,9 @@ import { removeSpaces } from '@/utils';
 import PageHeader from '@/components/layouts/partials/PageHeader';
 import FormGroup from '@/components/partials/FormGroup';
 import Spinner from '@/components/Spinner';
-import Alert from '@/components/Alert';
 
 export default {
-  components: { PageHeader, FormGroup, Spinner, Alert },
+  components: { PageHeader, FormGroup, Spinner },
   data() {
     return {
       isLoading: false,
