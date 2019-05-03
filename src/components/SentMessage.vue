@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td>{{ message.text }}</td>
+    <td>{{ message.name }}</td>
     <td>{{ message.sentDate | full }}</td>
     <td class="text-right">
       <button class="btn btn-success" @click="onShow"><i class="fas fa-bars"></i></button>

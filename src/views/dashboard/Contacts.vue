@@ -57,52 +57,43 @@
             </div>
           </div>
         </div>
-        <v-table>
-          <thead class="thead-light">
-            <tr>
-              <th>
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="all-contacts" v-model="allContacts">
-                  <label class="custom-control-label" for="all-contacts"></label>
-                </div>
-              </th>
-              <th scope="col">Téléphone</th>
-              <th scope="col">Nom</th>
-              <th scope="col">Prénom</th>
-              <th>Paramètres</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody class="list">
-            <contact v-for="contact in contacts" :contact="contact" :key="contact.id" :delete-click-callback="onDelete">
+        <datatable :columns="columns" :data="contacts">
+          <template slot-scope="{ row }">
+            <contact :contact="row" :key="row.id" :delete-click-callback="onDelete">
               <div slot="checkbox" class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" :id="`contact-${contact.id}`" :value="contact.id" v-model="selectedContacts">
-                <label class="custom-control-label" :for="`contact-${contact.id}`"></label>
+                <input type="checkbox" class="custom-control-input" :id="`contact-${row.id}`" :value="row.id" v-model="selectedContacts">
+                <label class="custom-control-label" :for="`contact-${row.id}`"></label>
               </div>
             </contact>
-            <tr v-if="contacts.length === 0">
-              <td colspan="6">
-                <div class="text-sm text-center">Aucun contact</div>
-              </td>
-            </tr>
-          </tbody>
-        </v-table>
+          </template>
+        </datatable>
+        <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
     </div>
   </div>
 </template>
 <script>
-import vTable from '@/components/vTable';
 import Contact from '@/components/Contact';
 import vBtn from '@/components/vBtn';
+import SelectAll from '@/components/SelectAll';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import store from '@/store';
 import { arrayToCSV } from '@/utils';
 
 export default {
-  components: { vTable, Contact, vBtn },
+  components: { Contact, vBtn, SelectAll },
   data () {
     return {
+      columns: [
+        { label: '', headerComponent: SelectAll },
+        { label: 'Téléphone', field: 'telephone' },
+        { label: 'Nom', field: 'lastname' },
+        { label: 'Prénom', field: 'firstname' },
+        { label: 'Paramètres', field: 'attributes' },
+        { label: '', representedAs: () => '' }
+      ],
+      page: 1,
+      per_page: 10,
       allContacts: false,
       selectedContacts: [],
       name: '',

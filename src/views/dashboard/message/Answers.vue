@@ -5,31 +5,22 @@
     </div>
     <div class="col-lg-8">
       <div class="card">
-        <v-table>
-          <thead class="thead-light">
-            <th>Téléphone</th>
-            <th>Texte</th>
-            <!-- <th>Réçu le</th> -->
-            <th></th>
-          </thead>
-          <tbody class="list">
-            <answer v-for="answer in answers" :key="answer.id" :thread="answer" :click-callback="onClick"></answer>
-            <tr v-if="answers.length === 0">
-              <td colspan="4" class="text-center text-sm">Aucune réponse</td>
-            </tr>
-          </tbody>
-        </v-table>
+        <datatable :columns="columns" :data="answers">
+          <template slot-scope="{ row }">
+            <answer :answer="row" :click-callback="onClick"></answer>
+          </template>
+        </datatable>
+        <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
     </div>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import vTable from '@/components/vTable';
 import Answer from '@/components/Answer';
 
 export default {
-  components: { vTable, Answer },
+  components: { Answer },
   computed: {
     ...mapGetters({
       answers: 'campaigns/answers'
@@ -37,6 +28,16 @@ export default {
   },
   created() {
     this.getAnswers(this.$route.params.messageId);
+  },
+  data() {
+    return {
+      page: 1,
+      per_page: 10,
+      columns: [
+        { label: 'Téléphone', field: 'telephone' },
+        { label: 'Message', field: 'text' }
+      ]
+    };
   },
   methods: {
     ...mapActions({

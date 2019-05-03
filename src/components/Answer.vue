@@ -1,8 +1,8 @@
 <template>
   <tr>
-    <td>{{ thread.telephone }}</td>
-    <td>{{ thread.answer }}</td>
-    <!-- <td>{{ thread.date | full }}</td> -->
+    <td>{{ answer.telephone }}</td>
+    <td>{{ answer.answer }}</td>
+    <!-- <td>{{ answer.date | full }}</td> -->
     <td class="text-right">
       <button class="btn btn-danger" @click.prevent="onClick"><i class="fas fa-trash-alt"></i></button>
     </td>
@@ -12,14 +12,14 @@
 export default {
   props: {
     clickCallback: Function,
-    thread: {
+    answer: {
       required: true,
       type: Object
     }
   },
   methods: {
     onClick() {
-      if (this.clickCallback) this.clickCallback(this.thread.id);
+      if (this.clickCallback) this.clickCallback(this.answer.id);
     }
   }
 };

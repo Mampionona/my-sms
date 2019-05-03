@@ -2,19 +2,12 @@
   <div class="row">
     <div class="col">
       <div class="card">
-        <v-table>
-          <thead class="thead-light">
-            <tr>
-              <th></th>
-              <th>P.U</th>
-              <th>Abonnement</th>
-            </tr>
-          </thead>
-          <tbody class="list">
-            <plan v-for="plan in selectedPlan" :key="plan.id" :plan="plan"></plan>
-          </tbody>
-        </v-table>
-        <hr v-if="selectedPlan.length > 0">
+        <datatable :columns="columns" :data="selectedPlan">
+          <template slot-scope="{ row }">
+            <plan :plan="row"></plan>
+          </template>
+        </datatable>
+        <hr v-if="selectedPlan.length > 0" class="mt-0">
         <div class="card-body">
           <div class="row">
             <div class="col-lg-4">
@@ -32,13 +25,17 @@
 </template>
 <script>
 import { mapActions } from 'vuex';
-import vTable from '@/components/vTable';
 import Plan from '@/components/Plan';
 
 export default {
-  components: { vTable, Plan },
+  components: { Plan },
   data() {
     return {
+      columns: [
+        { label: '', representedAs: () => '' },
+        { label: 'P.U', field: 'smsPrice' },
+        { label: 'Abonnement', field: 'planPrice' }
+      ],
       numberOfSMS: null,
       plans: [],
       selectedPlan: [],
