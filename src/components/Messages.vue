@@ -1,41 +1,35 @@
 <template>
-  <v-table>
-    <thead class="thead-light">
-      <th v-for="(column, index) in __columns" :key="index">{{ column }}</th>
-    </thead>
-    <tbody class="list">
-      <campaign
-        v-for="campaign in messages"
-        :key="campaign.id"
-        :campaign="campaign"
-        :lists="lists"
-        :click-callback="clickCallback"
-        :is-draft="isDraft"
-      />
-      <tr v-if="isEmpty">
-        <td :colspan="colspan" class="text-sm text-center">
-          <slot></slot>
-        </td>
-      </tr>
-    </tbody>
-  </v-table>
+  <div>
+    <datatable :columns="columns" :data="messages">
+      <template slot-scope="{ row }">
+        <campaign
+          :key="row.id"
+          :campaign="row"
+          :lists="lists"
+          :click-callback="clickCallback"
+          :is-draft="isDraft"
+        />
+      </template>
+      <div slot="no-results" class="text-center">Aucun message</div>
+    </datatable>
+    <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
+  </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import vTable from '@/components/vTable';
 import Campaign from '@/components/Campaign';
 
 export default {
-  components: { vTable, Campaign },
+  components: { Campaign },
   computed: {
     ...mapGetters({
       lists: 'lists/lists'
     }),
-    __columns() {
+    columns() {
       if (this.isDraft) {
-        return this.columns.campaign;
+        return this.columnsName.campaign;
       }
-      return this.columns.message;
+      return this.columnsName.message;
     },
     isEmpty() {
       return this.messages.length === 0;
@@ -51,9 +45,23 @@ export default {
   },
   data() {
     return {
-      columns: {
-        campaign: ['Message', 'Emetteur', 'Date d’envoi', 'SMS/Destinataires'],
-        message: ['Nom de la campagne', 'Message', 'Emetteur', 'Date d’envoi', 'SMS', 'Rapport']
+      page: 1,
+      per_page: 10,
+      columnsName: {
+        campaign: [
+          { label: 'Message', field: 'text' },
+          { label: 'Emetteur', field: 'senderName' },
+          { label: 'Date d\'envoi', field: 'sendDate' },
+          { label: 'SMS/Destinataires', representedAs: () => '' }
+        ],
+        message: [
+          { label: 'Nom de la campagne', field: 'name' },
+          { label: 'Message', field: 'text' },
+          { label: 'Emetteur', field: 'senderName' },
+          { label: 'Date d\'envoi', field: 'sentDate' },
+          { label: 'SMS', representedAs: () => '' },
+          { label: 'Rapport', representedAs: () => '' }
+        ]
       }
     };
   },

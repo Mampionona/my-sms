@@ -2,35 +2,26 @@
   <div class="row">
     <div class="col">
       <div class="card">
-        <v-table>
-          <thead class="thead-light">
-            <th class="w-50">Téléphone</th>
-            <th>Envoyé le</th>
-            <th></th>
-          </thead>
-          <tbody class="list">
+        <datatable :columns="columns" :data="sentMessages">
+          <template slot-scope="{ row }">
             <sent-message
-              v-for="message in sentMessages"
-              :key="message.id"
-              :message="message"
+              :message="row"
               :show-click-callback="onShow"
             />
-            <tr v-if="isEmpty">
-              <td colspan="3" class="text-center text-sm">Aucune campagne expédiée</td>
-            </tr>
-          </tbody>
-        </v-table>
+          </template>
+          <div slot="no-results" class="text-center">Aucun message</div>
+        </datatable>
+        <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
     </div>
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import vTable from '@/components/vTable';
 import SentMessage from '@/components/SentMessage';
 
 export default {
-  components: { vTable, SentMessage },
+  components: { SentMessage },
   computed: {
     ...mapGetters({
       sentMessages: 'campaigns/sent'
@@ -41,6 +32,17 @@ export default {
   },
   created() {
     this.getCampaigns();
+  },
+  data() {
+    return {
+      page: 1,
+      per_page: 10,
+      columns: [
+        { label: 'Nom de la campagne', field: 'name' },
+        { label: 'Envoyé le', field: 'sentDate' },
+        { label: '', representedAs: () => '' }
+      ]
+    };
   },
   methods: {
     ...mapActions({

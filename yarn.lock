@@ -5897,6 +5897,11 @@ object-keys@^1.0.11, object-keys@^1.0.12:
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.1.1.tgz#1c47f272df277f3b1daf061677d9c82e2322c60e"
   integrity sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==
 
+object-path@^0.11.4:
+  version "0.11.4"
+  resolved "https://registry.yarnpkg.com/object-path/-/object-path-0.11.4.tgz#370ae752fbf37de3ea70a861c23bba8915691949"
+  integrity sha1-NwrnUvvzfePqcKhhwju6iRVpGUk=
+
 object-visit@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/object-visit/-/object-visit-1.0.1.tgz#f79c4493af0c5377b59fe39d395e41042dd045bb"
@@ -8596,6 +8601,14 @@ vue@^2.5.16, vue@^2.5.17, vue@^2.6.6:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
+
+vuejs-datatable@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/vuejs-datatable/-/vuejs-datatable-1.7.0.tgz#16f6afcfa53addae9bf625f64ffdcf776668357f"
+  integrity sha512-gsK6gVJ11GP4X1/XyomKXpfsunQetL6Un9XNkJ0YQIrbAZAT5F4DnCKNf+kPrxZNOpLb5pW0NctVFbEEiD9hqQ==
+  dependencies:
+    object-path "^0.11.4"
+    vue "^2.5.17"
 
 vuex@^3.0.1:
   version "3.1.0"

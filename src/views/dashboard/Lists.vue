@@ -5,39 +5,40 @@
         <div class="card-header border-0">
           <router-link :to="{ name: 'import_file' }" class="btn btn-primary">Importer des contacts</router-link>
         </div>
-        <v-table>
-          <thead class="thead-light">
-            <tr>
-              <th scope="col">Fichiers</th>
-              <th scope="col">Contacts actifs</th>
-              <th scope="col">Créé le</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody class="list">
+        <datatable :columns="columns" :data="lists">
+          <template slot-scope="{ row }">
             <list
-              v-for="list in lists"
-              :list="list"
-              :key="list.id"
+              :list="row"
+              :key="row.id"
               :delete-click-callback="onDelete"
               :show-click-callback="onShow"
             />
-            <tr v-if="lists.length === 0">
-              <td colspan="4" class="text-center text-sm">Aucun fichier</td>
-            </tr>
-          </tbody>
-        </v-table>
+          </template>
+          <div slot="no-results" class="text-center">Aucun fichier</div>
+        </datatable>
+        <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
     </div>
   </div>
 </template>
 <script>
-import vTable from '@/components/vTable';
 import List from '@/components/List';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
-  components: { vTable, List },
+  components: { List },
+  data () {
+    return {
+      page: 1,
+      per_page: 10,
+      columns: [
+        { label: 'Fichiers', field: 'name' },
+        { label: 'Contacts actifs', field: 'contacts' },
+        { label: 'Créé le', field: 'updateDate' },
+        { label: '', representedAs: (row) => '' }
+      ]
+    };
+  },
   mounted () {
     // dispatch get user's lists action
     this.getUserLists();

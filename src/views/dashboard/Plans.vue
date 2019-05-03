@@ -2,23 +2,13 @@
   <div class="row">
     <div class="col">
       <div class="card">
-        <v-table>
-          <thead class="thead-light">
-            <th></th>
-            <th>P.U</th>
-            <th>Abonnement</th>
-            <th></th>
-          </thead>
-          <tbody class="list">
-            <plan
-              v-for="plan in plans"
-              :key="plan.id"
-              :plan="plan"
-              @click.native="showEditForm(plan)"
-              button
-            />
-          </tbody>
-        </v-table>
+        <datatable :columns="columns" :data="plans">
+          <template slot-scope="{ row }">
+            <plan :plan="row" @click.native="showEditForm(row)" button />
+          </template>
+          <div slot="no-results" class="text-center">Aucun formule trouvé</div>
+        </datatable>
+        <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
       <div v-if="isVisible" class="modal fade" id="edit-plan" tabindex="-1" role="dialog" aria-labelledby="edit-plan-label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -58,12 +48,11 @@
   </div>
 </template>
 <script>
-import vTable from '@/components/vTable';
 import Plan from '@/components/Plan';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  components: { vTable, Plan },
+  components: { Plan },
   computed: {
     ...mapGetters({
       plans: 'plans/plans'
@@ -89,6 +78,14 @@ export default {
   },
   data () {
     return {
+      page: 1,
+      per_page: 10,
+      columns: [
+        { label: '', representedAs: () => '' },
+        { label: 'P.U', field: 'smsPrice' },
+        { label: 'Abonnement', field: 'planPrice' },
+        { label: '', representedAs: () => '' }
+      ],
       plan: null,
       planId: null,
       planName: '',

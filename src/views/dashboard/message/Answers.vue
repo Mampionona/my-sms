@@ -1,46 +1,68 @@
 <template>
   <div class="row">
-    <div class="col-lg-4">
-
+    <div class="col-lg-4 mb-5">
+      <div class="phone">
+        <div v-if="campaign">
+          <div class="message small p-1">
+            <vue-custom-scrollbar class="message-scroll-area" :settings="settings">
+              {{ campaign.text }}
+            </vue-custom-scrollbar>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-lg-8">
       <div class="card">
-        <v-table>
-          <thead class="thead-light">
-            <th>Téléphone</th>
-            <th>Texte</th>
-            <!-- <th>Réçu le</th> -->
-            <th></th>
-          </thead>
-          <tbody class="list">
-            <answer v-for="answer in answers" :key="answer.id" :thread="answer" :click-callback="onClick"></answer>
-            <tr v-if="answers.length === 0">
-              <td colspan="4" class="text-center text-sm">Aucune réponse</td>
-            </tr>
-          </tbody>
-        </v-table>
+        <datatable :columns="columns" :data="answers">
+          <template slot-scope="{ row }">
+            <answer :answer="row" :click-callback="onClick"></answer>
+          </template>
+          <div slot="no-results" class="text-center">Aucune réponse</div>
+        </datatable>
+        <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
     </div>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import vTable from '@/components/vTable';
 import Answer from '@/components/Answer';
+import vueCustomScrollbar from 'vue-custom-scrollbar';
 
 export default {
-  components: { vTable, Answer },
+  components: { Answer, vueCustomScrollbar },
   computed: {
     ...mapGetters({
-      answers: 'campaigns/answers'
+      answers: 'campaigns/answers',
+      campaigns: 'campaigns/sent'
     })
   },
   created() {
     this.getAnswers(this.$route.params.messageId);
+    this.getCampaigns().then((data) => {
+      data.forEach((campaign) => {
+        if (campaign.id === parseInt(this.$route.params.messageId, 10)) this.campaign = campaign;
+      });
+    });
+  },
+  data() {
+    return {
+      settings: {
+        suppressScrollX: true
+      },
+      page: 1,
+      per_page: 10,
+      campaign: null,
+      columns: [
+        { label: 'Téléphone', field: 'telephone' },
+        { label: 'Message', field: 'text' }
+      ]
+    };
   },
   methods: {
     ...mapActions({
-      getAnswers: 'campaigns/campaignAnswers'
+      getAnswers: 'campaigns/campaignAnswers',
+      getCampaigns: 'campaigns/getUserCampaigns'
     }),
     onClick(threadId) {
       const { threads } = this;
@@ -49,3 +71,11 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+.message-scroll-area {
+  height: 100%;
+  margin: auto;
+  position: relative;
+  width: 100%;
+}
+</style>
