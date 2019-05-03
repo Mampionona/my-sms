@@ -47,7 +47,7 @@ export default {
       //
     },
     [GET_CAMPAIGNS_STATS.SUCCESS](state, payload) {
-      state.stats = payload;
+      state.stats = payload.reverse();
     },
     [GET_CAMPAIGNS_STATS.FAILURE]() {
       //
