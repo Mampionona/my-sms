@@ -106,3 +106,14 @@ p:only-child {
     width: 211px;
   }
 }
+
+#panel {
+  .header {
+    background: {
+      image: url('../images/iphones.png');
+      position: center;
+      repeat: no-repeat;
+    }
+    min-height: 300px;
+  }
+}
