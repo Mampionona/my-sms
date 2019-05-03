@@ -26,7 +26,7 @@
             </div>
             <div class="h5 mt-4">
               <i class="ni ni-building mr-2"></i>
-              {{ user.user_role }} - {{ user.company }}
+              {{ user.userRole }} - {{ user.company }}
             </div>
           </div>
         </div>
