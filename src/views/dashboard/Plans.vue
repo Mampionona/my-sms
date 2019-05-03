@@ -6,6 +6,7 @@
           <template slot-scope="{ row }">
             <plan :plan="row" @click.native="showEditForm(row)" button />
           </template>
+          <div slot="no-results" class="text-center">Aucun formule trouvé</div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>

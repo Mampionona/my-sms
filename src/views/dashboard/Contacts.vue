@@ -66,6 +66,7 @@
               </div>
             </contact>
           </template>
+          <div slot="no-results" class="text-center">Aucun contact trouvé</div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>

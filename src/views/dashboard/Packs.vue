@@ -7,7 +7,6 @@
             <plan :plan="row"></plan>
           </template>
         </datatable>
-        <hr v-if="selectedPlan.length > 0" class="mt-0">
         <div class="card-body">
           <div class="row">
             <div class="col-lg-4">

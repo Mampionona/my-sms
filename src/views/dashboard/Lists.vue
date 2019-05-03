@@ -14,6 +14,7 @@
               :show-click-callback="onShow"
             />
           </template>
+          <div slot="no-results" class="text-center">Aucun fichier</div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>

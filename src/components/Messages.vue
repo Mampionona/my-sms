@@ -10,6 +10,7 @@
           :is-draft="isDraft"
         />
       </template>
+      <div slot="no-results" class="text-center">Aucun message</div>
     </datatable>
     <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
   </div>

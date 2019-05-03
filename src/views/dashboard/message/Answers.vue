@@ -9,6 +9,7 @@
           <template slot-scope="{ row }">
             <answer :answer="row" :click-callback="onClick"></answer>
           </template>
+          <div slot="no-results" class="text-center">Aucune réponse</div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
