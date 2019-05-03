@@ -23,6 +23,15 @@ const routes = [
     }
   },
   {
+    path: '/password',
+    name: 'password',
+    component: () => import('@/views/Password'),
+    meta: {
+      title: 'Mot de passe oublié ?',
+      redirectIfLoggedIn: true
+    }
+  },
+  {
     path: '/payment-cancel',
     name: 'payment_cancel',
     meta: {

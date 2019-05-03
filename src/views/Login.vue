@@ -36,7 +36,7 @@
             </div>
             <div class="row mt-3">
               <div class="col-6">
-                <a href="#" class="text-light"><small>Mot de passe oublié ?</small></a>
+                <router-link class="text-light" :to="{name: 'password'}"><small>Mot de passe oublié ?</small></router-link>
               </div>
               <div class="col-6 text-right">
                 <router-link :to="{ name: 'register' }" class="text-light"><small>Créer un compte</small></router-link>

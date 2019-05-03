@@ -5,6 +5,7 @@ const SET_TOKEN = 'SET_TOKEN';
 const LOGOUT = 'LOGOUT';
 const FETCH_USER = createAsyncMutation('FETCH_USER');
 const UPDATE_ACCOUNT = createAsyncMutation('UPDATE_ACCOUNT');
+const GET_LOGIN_LINK_VIA_EMAIL = createAsyncMutation('GET_LOGIN_LINK_VIA_EMAIL');
 const UNAUTHENTICATED = 'UNAUTHENTICATED';
 
 function loggedInOrRegistered(context, token, resolve) {
@@ -49,7 +50,16 @@ export default {
     },
     [UPDATE_ACCOUNT.FAILURE]() {},
     [UNAUTHENTICATED] (state, payload) {
-
+      //
+    },
+    [GET_LOGIN_LINK_VIA_EMAIL.PENDING] () {
+      //
+    },
+    [GET_LOGIN_LINK_VIA_EMAIL.SUCCESS] () {
+      //
+    },
+    [GET_LOGIN_LINK_VIA_EMAIL.FAILURE] () {
+      //
     }
   },
   actions: {
@@ -108,6 +118,12 @@ export default {
     logout(context) {
       localStorage.removeItem('token');
       context.commit(LOGOUT);
+    },
+    getLoginLinkViaEmail(context, email) {
+      return doAsync(context, {
+        url: `/users/login-link/${email}/`,
+        mutationTypes: GET_LOGIN_LINK_VIA_EMAIL
+      });
     }
   }
 };
