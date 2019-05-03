@@ -82,8 +82,8 @@ import store from '@/store';
 import { arrayToCSV } from '@/utils';
 
 export default {
-  components: { Contact, vBtn, SelectAll },
-  data () {
+  components: { Contact, vBtn },
+  data() {
     return {
       columns: [
         { label: '', headerComponent: SelectAll },
@@ -106,7 +106,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     store.dispatch('lists/getUserLists').then(lists => lists.forEach((list) => {
-      if (list.id == to.params.listId) { // precise intent
+      if (list.id === parseInt(to.params.listId, 10)) { // precise intent
         next(vm => vm.setData(list));
       }
     }));

@@ -15,21 +15,21 @@ import 'axios-progress-bar/dist/nprogress.css';
 import '@/assets/styles/argon.scss';
 
 DatatableFactory.useDefaultType(false)
-	.registerTableType('datatable', (tableType) => {
-		tableType.mergeSettings({
-			table: {
-        class: 'table table-hover table-striped dataTable',
-			},
-			pager: {
-				classes: {
+  .registerTableType('datatable', (tableType) => {
+    tableType.mergeSettings({
+      table: {
+        class: 'table table-hover table-striped dataTable'
+      },
+      pager: {
+        classes: {
           li: 'paginate_button page-item',
           a: 'page-link',
-					pager: 'pagination justify-content-center',
-					selected: 'active',
-				}
-			},
-		});
-	});
+          pager: 'pagination justify-content-center',
+          selected: 'active'
+        }
+      }
+    });
+  });
 
 Vue.use(VueTextareaAutosize);
 Vue.use(VueProgress);

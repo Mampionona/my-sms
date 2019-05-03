@@ -15,6 +15,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import User from '@/components/User';
+
 export default {
   components: { User },
   computed: {
@@ -22,7 +23,7 @@ export default {
       users: 'users/users'
     })
   },
-  created () {
+  created() {
     this.getUsers();
   },
   data() {
@@ -42,5 +43,5 @@ export default {
       getUsers: 'users/getAllUsers'
     })
   }
-}
+};
 </script>

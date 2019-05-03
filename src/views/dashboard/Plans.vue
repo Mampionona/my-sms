@@ -57,15 +57,15 @@ export default {
     ...mapGetters({
       plans: 'plans/plans'
     }),
-    errorClasses () {
+    errorClasses() {
       return {
         'mb-0': true,
         'mt-3': true,
         'font-weight-bold': true,
-        'small': true,
+        small: true,
         'text-danger': this.hasError,
         'text-success': this.updated
-      }
+      };
     }
   },
   created() {
@@ -76,7 +76,7 @@ export default {
       this.statusMessage = '';
     });
   },
-  data () {
+  data() {
     return {
       page: 1,
       per_page: 10,
@@ -109,7 +109,8 @@ export default {
 
       this.isVisible = true;
       this.planId = id;
-      this.planName = this.name = name;
+      this.planName = name;
+      this.name = name;
       this.smsPrice = smsPrice;
       this.planPrice = planPrice;
       this.maxVolume = maxVolume;
@@ -123,7 +124,7 @@ export default {
           this.updated = true;
           this.hasError = false;
         })
-        .catch(error => {
+        .catch((error) => {
           this.statusMessage = error.data.error;
           this.hasError = true;
           this.updated = false;
