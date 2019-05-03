@@ -6,7 +6,7 @@
     <td class="budget">{{ list.contacts }}</td>
     <td>{{ list.updateDate | full }}</td>
     <td class="text-right">
-      <button class="btn btn-danger" @click.prevent="deleteList(list.id)"><i class="fas fa-trash-alt"></i></button>
+      <button class="btn btn-danger" @click.prevent="deleteList(list)"><i class="fas fa-trash-alt"></i></button>
       <button class="btn btn-success" @click.prevent="showList(list.id)"><i class="fas fa-bars"></i></button>
     </td>
   </tr>

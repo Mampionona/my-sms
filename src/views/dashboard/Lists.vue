@@ -18,6 +18,20 @@
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
+
+      <div class="modal fade" id="confirm-list-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-list-delete-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <p class="mb-0">Etes-vous sûr de vouloir supprimer le fichier <strong>{{ filename }} ?</strong></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              <button type="button" class="btn btn-primary" @click="deleteFile">Supprimer</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -27,7 +41,7 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
   components: { List },
-  data () {
+  data() {
     return {
       page: 1,
       per_page: 10,
@@ -35,11 +49,13 @@ export default {
         { label: 'Fichiers', field: 'name' },
         { label: 'Contacts actifs', field: 'contacts' },
         { label: 'Créé le', field: 'updateDate' },
-        { label: '', representedAs: (row) => '' }
-      ]
+        { label: '', representedAs: () => '' }
+      ],
+      filename: '',
+      deleteId: null
     };
   },
-  mounted () {
+  mounted() {
     // dispatch get user's lists action
     this.getUserLists();
   },
@@ -56,11 +72,17 @@ export default {
     ...mapMutations({
       updateLists: 'lists/UPDATE_LIST'
     }),
-    onDelete(listId) {
-      if (confirm('Attention ! Les contacts rattachés à cette liste seront aussi supprimés.')) {
-        this.deleteList(listId).then(() => {
-          const newLists = this.lists.filter(({ id }) => id !== listId);
+    onDelete({ id, name }) {
+      this.filename = name;
+      this.deleteId = id;
+      this.$jQuery('#confirm-list-delete').modal('show');
+    },
+    deleteFile() {
+      if (this.deleteId) {
+        this.deleteList(this.deleteId).then(() => {
+          const newLists = this.lists.filter(({ id }) => id !== this.deleteId);
           this.updateLists(newLists);
+          this.$jQuery('#confirm-list-delete').modal('hide');
         });
       }
     },
