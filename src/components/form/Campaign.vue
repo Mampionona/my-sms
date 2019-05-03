@@ -1,5 +1,8 @@
 <template>
   <div class="campaign-form">
+    <div v-if="hasError || created" :class="statusClass" role="alert">
+      {{ statusMessage }}
+    </div>
     <form @submit.prevent="submitCampaign" class="pb-5">
       <div class="row custom-row">
         <div class="col-lg-4">
@@ -40,6 +43,7 @@
                   <strong>{{ countSMS }}</strong> SMS - {{ $tc("remainingChars", remainingChars) }} <strong>{{ remainingChars }}</strong>
                 </p>
               </div>
+              <p class="mb-0 mt-3 mention">La mention légale "STOP au 36105" sera automatiquement incluse lors de l'envoi.</p>
               <div class="mt-4">
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" id="save-as-draft" v-model="status">
@@ -107,10 +111,6 @@ export default {
     campaign: {
       type: Object
     },
-    // action: {
-    //   default: 'new',
-    //   type: String
-    // },
     pending: Function,
     complete: Function,
     fail: Function
@@ -125,7 +125,10 @@ export default {
       sendingMode: 'immediate',
       status: false,
       listId: '',
-      name: ''
+      name: '',
+      statusMessage: '',
+      hasError: false,
+      created: false
     };
   },
   mounted() {
@@ -152,7 +155,14 @@ export default {
       lists: 'lists/lists',
       countContacts: 'contacts/count',
       drafts: 'campaigns/drafts'
-    })
+    }),
+    statusClass() {
+      return {
+        alert: true,
+        'alert-danger': this.hasError,
+        'alert-success': this.created
+      };
+    }
   },
   methods: {
     ...mapActions({
@@ -178,41 +188,41 @@ export default {
 
       this.createOrUpdateCampaign({ action, listId, name, text, senderName, sendDate, status, campaignId })
         .then((data) => {
-          this.listId = '';
+          // this.listId = '';
           this.name = '';
           this.text = '';
           this.status = false;
+          this.hasError = false;
+          this.created = true;
+          this.statusMessage = 'Campagne créée';
           if (this.complete) {
             this.complete(data);
           }
         })
         .catch((error) => {
-          alert('object' === typeof error.data ? error.data.error : error.data);
+          this.statusMessage = error.data.error;
+          this.hasError = true;
+          this.created = false;
 
           if (this.fail) {
             this.fail(error);
           }
         });
     },
-    populateCampainFields () {      
+    populateCampainFields() {
       // Fetch user's campaigns
       this.getUserCampaigns().then(() => {
         if (!!this.drafts.length && 'campaign_id' in this.$route.query) {
-          this.drafts.forEach(draft => {
-            if (draft.id == this.$route.query.campaign_id) {
-              this.senderName = draft.senderName;
-              this.listId = draft.list_id;
-              this.text = draft.text;
-              this.name = draft.name;
+          this.drafts.forEach(({ id, senderName, list_id: listId, text, name }) => {
+            if (id === parseInt(this.$route.query.campaign_id, 10)) {
+              this.senderName = senderName;
+              this.listId = listId;
+              this.text = text;
+              this.name = name;
             }
           });
         }
       });
-
-      // !isset(query[campaign_id])
-      if (!('campaign_id' in this.$route.query)) {
-        this.senderName = this.listId = this.text = ''; // purpose is unclear
-      }
     }
   }
 };
@@ -225,5 +235,10 @@ export default {
 
 .message {
   font-size: 14px;
+}
+
+.mention {
+  font-size: 14px;
+  line-height: 1.5;
 }
 </style>

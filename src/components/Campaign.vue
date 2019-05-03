@@ -14,8 +14,9 @@
       <td>{{ campaign.senderName }}</td>
       <td>{{ campaign.sendDate | full }}</td>
       <td>{{ listName }}</td>
-      <td>rapport</td>
-      <td>reponses</td>
+      <td class="text-right">
+        <button class="btn btn-success"><i class="fas fa-bars"></i></button>
+      </td>
     </template>
   </tr>
 </template>

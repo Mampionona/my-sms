@@ -110,10 +110,8 @@
             </div>
           </div>
         </div>
-        <div v-if="isUpdated" class="pl-lg-4 mb-4">
-          <alert icon="fas fa-user-check" color="success">Profil mis à jour</alert>
-        </div>
-        <div class="pr-2 text-right">
+        <p v-if="isUpdated || hasError" :class="statusClass">{{ updateStatus }}</p>
+        <div class="text-right">
           <button class="btn btn-primary">Mettre à jour</button>
         </div>
       </form>
@@ -121,12 +119,20 @@
   </div>
 </template>
 <script>
-import Alert from '@/components/Alert';
 import { mapActions } from 'vuex';
 import { removeSpaces } from '@/utils';
 
 export default {
-  components: { Alert },
+  computed: {
+    statusClass() {
+      return {
+        'text-danger': this.hasError,
+        'text-success': this.isUpdated,
+        'font-weight-bold': true,
+        'text-sm': true
+      };
+    }
+  },
   props: {
     user: {
       required: true,
@@ -135,16 +141,15 @@ export default {
   },
   mounted() {
     const { user } = this;
-
-    for (let column in user) { // why not a forEach here ?
-      if (column in this.$data) {
-        this[column] = user[column];
-      }
-    }
+    Object.keys(user).forEach((key) => {
+      if (key in this.$data) this[key] = user[key];
+    });
   },
   data() {
     return {
       isUpdated: false,
+      hasError: false,
+      updateStatus: '',
       company: '',
       siren: '',
       tva: '',
@@ -174,11 +179,13 @@ export default {
       this.updateAccount({ company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password })
         .then(() => {
           this.isUpdated = true;
+          this.hasError = false;
+          this.updateStatus = 'Profil mis à jour';
         })
-        .catch((error) => {
+        .catch(({ data }) => {
           this.isUpdated = false;
-          // console.log(error);
-          alert(error.data.error);
+          this.hasError = true;
+          this.updateStatus = data.error;
         });
     }
   }

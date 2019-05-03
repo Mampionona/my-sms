@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
   pluginOptions: {
     i18n: {
@@ -6,5 +8,12 @@ module.exports = {
       localeDir: 'locales',
       enableInSFC: true
     }
+  },
+  configureWebpack: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: 'jquery'
+      })
+    ]
   }
-}
+};

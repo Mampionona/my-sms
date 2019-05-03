@@ -77,7 +77,7 @@
                     <spinner></spinner>
                   </div>
 
-                  <alert v-if="hasError" class="mt-5" color="warning" icon="fas fa-exclamation-triangle">{{ errorMessage }}</alert>
+                  <p v-if="hasError" class="text-danger text-sm">{{ errorMessage }}</p>
 
                   <div class="text-center">
                     <button type="submit" :disabled="!privacy" class="btn btn-primary mt-4">Créer le compte</button>
@@ -96,10 +96,9 @@ import { removeSpaces } from '@/utils';
 import PageHeader from '@/components/layouts/partials/PageHeader';
 import FormGroup from '@/components/partials/FormGroup';
 import Spinner from '@/components/Spinner';
-import Alert from '@/components/Alert';
 
 export default {
-  components: { PageHeader, FormGroup, Spinner, Alert },
+  components: { PageHeader, FormGroup, Spinner },
   data() {
     return {
       isLoading: false,
@@ -129,16 +128,20 @@ export default {
     onSubmit() {
       this.isLoading = true;
       this.hasError = false;
-      const { company, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password } = this;
-      let { siren, tva } = this;
+      const { company, firstname, lastname, userRole, street, city, telephone, mobile, email, password } = this;
+      let { siren, tva, postcode } = this;
+      postcode = parseInt(postcode, 10);
       // remove spaces
       siren = removeSpaces(siren);
       tva = removeSpaces(tva);
 
       this.register({ company, siren, tva, firstname, lastname, userRole, street, city, postcode, telephone, mobile, email, password })
         .then(() => {
+          this.hasError = false;
           // fetch logged in user
-          this.getUser();
+          this.getUser().then(() => this.$router.push({
+            name: 'dashboard'
+          }));
         })
         .catch(({ data }) => {
           this.isLoading = false;

@@ -3,12 +3,14 @@ import { doAsync, createAsyncMutation } from '@/async-utils';
 const CREATE_OR_UPDATE_CAMPAIGN = createAsyncMutation('CREATE_OR_UPDATE_CAMPAIGN');
 const GET_USER_CAMPAIGNS = createAsyncMutation('GET_USER_CAMPAIGNS');
 const GET_CAMPAIGN_ANSWERS = createAsyncMutation('GET_CAMPAIGN_ANSWERS');
+const GET_CAMPAIGNS_STATS = createAsyncMutation('GET_CAMPAIGNS_STATS');
 
 export default {
   namespaced: true,
   state: {
     campaigns: [],
-    answers: []
+    answers: [],
+    stats: []
   },
 
   getters: {
@@ -20,7 +22,9 @@ export default {
     sent: (state, getters) => getters.campaigns.filter(campaign => campaign.status === 'sent'),
     // all campaigns marked as scheduled
     scheduled: (state, getters) => getters.campaigns.filter(() => false),
-    answers: state => state.answers
+    answers: state => state.answers,
+    stats: state => state.stats,
+    lastSent: (state, getters) => getters.sent.sort()[0]
   },
 
   mutations: {
@@ -38,7 +42,16 @@ export default {
     [GET_CAMPAIGN_ANSWERS.SUCCESS](state, payload) {
       state.answers = payload.reverse();
     },
-    [GET_CAMPAIGN_ANSWERS.FAILURE]() {}
+    [GET_CAMPAIGN_ANSWERS.FAILURE]() {},
+    [GET_CAMPAIGNS_STATS.PENDING]() {
+      //
+    },
+    [GET_CAMPAIGNS_STATS.SUCCESS](state, payload) {
+      state.stats = payload.reverse();
+    },
+    [GET_CAMPAIGNS_STATS.FAILURE]() {
+      //
+    }
   },
 
   actions: {
@@ -48,7 +61,6 @@ export default {
         mutationTypes: GET_USER_CAMPAIGNS
       });
     },
-
     createNewCampaign(context, campaign) {
       let url = '/campaigns';
       if (campaign.action === 'update') {
@@ -64,11 +76,16 @@ export default {
         mutationTypes: CREATE_OR_UPDATE_CAMPAIGN
       });
     },
-
     campaignAnswers(context, campaignId) {
       return doAsync(context, {
         url: `/campaigns/${campaignId}/answers/`,
         mutationTypes: GET_CAMPAIGN_ANSWERS
+      });
+    },
+    campaignsStats(context) {
+      return doAsync(context, {
+        url: '/campaigns/stats/',
+        mutationTypes: GET_CAMPAIGNS_STATS
       });
     }
   }

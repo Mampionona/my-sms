@@ -7,7 +7,7 @@
         :class="{'breadcrumb-item': true, 'active': isLast(index)}"
         :aria-current="isLast(index) ? 'page' : ''"
       >
-        <router-link v-if="isFirst(index)" :to="link.path"><i class="fas fa-home"></i></router-link>
+        <router-link v-if="isFirst(index)" :to="link.path"><i :class="icon"></i></router-link>
         <template v-else-if="isLast(index)">{{ link.meta.breadcrumb }}</template>
         <router-link v-else :to="link.path">
           {{ link.meta.breadcrumb }}
@@ -18,6 +18,11 @@
 </template>
 <script>
 export default {
+  computed: {
+    icon() {
+      return this.$route.meta.icon || 'd-none';
+    }
+  },
   methods: {
     isFirst(index) {
       return index === 0;

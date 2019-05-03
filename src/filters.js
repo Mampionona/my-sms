@@ -18,7 +18,7 @@ Vue.filter('limit', (str, len, more = '...') => {
 });
 Vue.filter('fullname', ({ firstname, lastname }) => `${lastname} ${firstname}`);
 
-export function currency (value, symbol = '€', precision = 3) {
+function currency(value, precision = 3, symbol = '€') {
   return Currency(value, {
     formatWithSymbol: true,
     precision,

@@ -2,7 +2,7 @@
   <div class="collapse navbar-collapse" id="sidenav-collapse-main">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <router-link :to="{ name: 'dashboard.index' }" class="nav-link">
+        <router-link :to="{ name: 'dashboard' }" class="nav-link">
           <i class="ni ni-shop"></i>
           <span class="nav-link-text">Tableau de bord</span>
         </router-link>
@@ -15,7 +15,7 @@
       </li>
       <li class="nav-item">
         <a :class="dropdownToggleClass(baseContacts)" href="#base-contacts" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="base-contacts">
-          <i class="ni ni-ungroup"></i>
+          <i class="fas fa-address-book"></i>
           <span class="nav-link-text">Base de contacts</span>
         </a>
         <div class="collapse" id="base-contacts" style="">
@@ -67,6 +67,12 @@
           <span class="nav-link-text">Boîte de réception</span>
         </router-link>
       </li>
+      <li class="nav-item">
+        <router-link :to="{ name: 'stats' }" class="nav-link">
+          <i class="fas fa-chart-bar"></i>
+          <span class="nav-link-text">Statistiques</span>
+        </router-link>
+      </li>
       <li v-if="isAdmin" class="nav-item">
         <a :class="dropdownToggleClass(administration)" href="#administration" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="administration">
           <i class="fas fa-users-cog"></i>
@@ -114,14 +120,8 @@ export default {
       };
     }
   },
-  mounted () {
+  mounted() {
     const collapses = this.$jQuery('.navbar-nav .collapse');
-    const routes = [
-      ...this.baseContacts,
-      ...this.campagneSMS,
-      ...this.boiteEnvoi,
-      ...this.administration
-    ];
     const pathName = this.$route.name;
     let collapseElement;
 
@@ -133,7 +133,7 @@ export default {
       });
     });
 
-    const handleClick = e => {
+    const handleClick = (e) => {
       const navItem = e.target.closest('.nav-item');
       if (navItem.children.length === 1) this.$jQuery('.navbar-nav .collapse').collapse('hide');
     };
