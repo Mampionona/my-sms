@@ -79,12 +79,26 @@ p:only-child {
 .sidenav-header {
   @include media-breakpoint-up(xl) {
     height: 78px;
-  }    
+  }
 }
 
 .dataTable {
   thead {
     background-color: #f6f9fc;
     color: #8898aa;
+  }
+}
+
+.phone {
+  background: url('../images/phone.png') no-repeat center;
+  height: 505px;
+  margin: auto;
+  padding-left: 16px;
+  padding-top: 107px;
+  width: 242px;
+
+  .message {
+    height: 335px;
+    width: 211px;
   }
 }

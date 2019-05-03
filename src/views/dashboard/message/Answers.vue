@@ -1,7 +1,15 @@
 <template>
   <div class="row">
-    <div class="col-lg-4">
-
+    <div class="col-lg-4 mb-5">
+      <div class="phone">
+        <div v-if="campaign">
+          <div class="message small p-1">
+            <vue-custom-scrollbar class="message-scroll-area" :settings="settings">
+              {{ campaign.text }}
+            </vue-custom-scrollbar>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-lg-8">
       <div class="card">
@@ -19,21 +27,32 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Answer from '@/components/Answer';
+import vueCustomScrollbar from 'vue-custom-scrollbar';
 
 export default {
-  components: { Answer },
+  components: { Answer, vueCustomScrollbar },
   computed: {
     ...mapGetters({
-      answers: 'campaigns/answers'
+      answers: 'campaigns/answers',
+      campaigns: 'campaigns/sent'
     })
   },
   created() {
     this.getAnswers(this.$route.params.messageId);
+    this.getCampaigns().then((data) => {
+      data.forEach((campaign) => {
+        if (campaign.id === parseInt(this.$route.params.messageId, 10)) this.campaign = campaign;
+      });
+    });
   },
   data() {
     return {
+      settings: {
+        suppressScrollX: true
+      },
       page: 1,
       per_page: 10,
+      campaign: null,
       columns: [
         { label: 'Téléphone', field: 'telephone' },
         { label: 'Message', field: 'text' }
@@ -42,7 +61,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      getAnswers: 'campaigns/campaignAnswers'
+      getAnswers: 'campaigns/campaignAnswers',
+      getCampaigns: 'campaigns/getUserCampaigns'
     }),
     onClick(threadId) {
       const { threads } = this;
@@ -51,3 +71,11 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+.message-scroll-area {
+  height: 100%;
+  margin: auto;
+  position: relative;
+  width: 100%;
+}
+</style>
