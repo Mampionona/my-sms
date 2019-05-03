@@ -6,7 +6,7 @@ const LOGOUT = 'LOGOUT';
 const FETCH_USER = createAsyncMutation('FETCH_USER');
 const UPDATE_ACCOUNT = createAsyncMutation('UPDATE_ACCOUNT');
 const GET_LOGIN_LINK_VIA_EMAIL = createAsyncMutation('GET_LOGIN_LINK_VIA_EMAIL');
-const UNAUTHENTICATED = 'UNAUTHENTICATED';
+// const UNAUTHENTICATED = 'UNAUTHENTICATED';
 
 function loggedInOrRegistered(context, token, resolve) {
   // update state
@@ -49,16 +49,16 @@ export default {
       console.log(payload);
     },
     [UPDATE_ACCOUNT.FAILURE]() {},
-    [UNAUTHENTICATED] (state, payload) {
+    // [UNAUTHENTICATED] () {
+    //   //
+    // },
+    [GET_LOGIN_LINK_VIA_EMAIL.PENDING]() {
       //
     },
-    [GET_LOGIN_LINK_VIA_EMAIL.PENDING] () {
+    [GET_LOGIN_LINK_VIA_EMAIL.SUCCESS]() {
       //
     },
-    [GET_LOGIN_LINK_VIA_EMAIL.SUCCESS] () {
-      //
-    },
-    [GET_LOGIN_LINK_VIA_EMAIL.FAILURE] () {
+    [GET_LOGIN_LINK_VIA_EMAIL.FAILURE]() {
       //
     }
   },

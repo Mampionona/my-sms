@@ -43,7 +43,7 @@ export default {
       state.answers = payload.reverse();
     },
     [GET_CAMPAIGN_ANSWERS.FAILURE]() {},
-    [GET_CAMPAIGNS_STATS.PENDING] () {
+    [GET_CAMPAIGNS_STATS.PENDING]() {
       //
     },
     [GET_CAMPAIGNS_STATS.SUCCESS](state, payload) {

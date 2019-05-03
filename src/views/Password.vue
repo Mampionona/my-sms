@@ -40,11 +40,10 @@
 import PageHeader from '@/components/layouts/partials/PageHeader';
 import FormGroup from '@/components/partials/FormGroup';
 import Spinner from '@/components/Spinner';
-import Alert from '@/components/Alert';
 import { mapActions } from 'vuex';
 
 export default {
-  components: { PageHeader, FormGroup, Spinner, Alert },
+  components: { PageHeader, FormGroup, Spinner },
   data() {
     return {
       hasError: false,
