@@ -1,11 +1,8 @@
 <template>
   <div class="campaign-form">
-    <div v-if="hasError || created" :class="statusClass" role="alert">
-      {{ statusMessage }}
-    </div>
     <form @submit.prevent="submitCampaign" class="pb-5">
       <div class="row custom-row">
-        <div class="col-lg-4">
+        <div class="col-lg-12">
           <div class="card">
             <div class="card-header"><i class="ni ni-chat-round mr-2"></i> Nom de la campagne</div>
             <div class="card-body">
@@ -27,7 +24,7 @@
           </div>
 
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-12">
           <div class="card">
             <div class="card-header"><i class="fas fa-envelope-open mr-2"></i> Votre message</div>
             <div class="card-body">
@@ -53,7 +50,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-12">
           <div class="card">
             <div class="card-header"><i class="fas fa-arrow-right mr-2"></i> Émetteur du message</div>
             <div class="card-body">
@@ -87,6 +84,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div v-if="hasError || created" :class="statusClass" role="alert">
+        {{ statusMessage }}
       </div>
       <div class="row">
         <div class="col">
@@ -178,6 +178,7 @@ export default {
     statusClass() {
       return {
         alert: true,
+        'mb-5': true,
         'alert-danger': this.hasError,
         'alert-success': this.created
       };
