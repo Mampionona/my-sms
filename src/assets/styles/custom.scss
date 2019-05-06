@@ -113,3 +113,12 @@ p:only-child {
 //     min-height: 300px;
 //   }
 // }
+
+.table {
+  &.vertical-align-middle {
+    tbody th,
+    td {
+      vertical-align: middle;
+    }
+  }
+}
