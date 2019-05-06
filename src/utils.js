@@ -1,5 +1,6 @@
 import XLSX from 'xlsx';
 
+export const BAD_REQUEST = 400;
 export const UNAUTHENTICATED = 401;
 export const COUNT_MAX_LINES = 100000;
 export const COUNT_MIN_LINES = 5;

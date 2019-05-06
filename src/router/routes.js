@@ -14,6 +14,11 @@ const routes = [
     }
   },
   {
+    path: '/login',
+    component: () => import('@/views/AutoConnect'),
+    meta: { redirectIfLoggedIn: true }
+  },
+  {
     path: '/register',
     name: 'register',
     component: () => import('@/views/Register'),

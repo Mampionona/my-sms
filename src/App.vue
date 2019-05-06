@@ -22,7 +22,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.getUser().catch((error) => {
+      if (this.isLoggedIn) this.getUser().catch((error) => {
         const { status } = error;
         if (status === UNAUTHENTICATED) {
           this.$router.push({ name: 'login' });
@@ -32,7 +32,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      layout: 'layout/layout'
+      layout: 'layout/layout',
+      isLoggedIn: 'auth/isLoggedIn'
     })
   },
   methods: {

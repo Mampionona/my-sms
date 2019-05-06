@@ -41,7 +41,6 @@ export default {
       logoutUser: 'auth/logout'
     }),
     logout() {
-      localStorage.removeItem('token');
       this.logoutUser();
       if ('Authorization' in Axios.defaults.headers.common) {
         delete Axios.defaults.headers.common.Authorization;

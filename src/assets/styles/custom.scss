@@ -122,3 +122,19 @@ p:only-child {
     }
   }
 }
+
+.default-layout {
+  .main-content {
+    min-height: calc(100vh - 120px);
+  }
+}
+
+.vue-progress-path {
+  .progress {
+    stroke: #a6b5ba;
+  }
+}
+
+.text-color {
+  color: #a6b5ba;
+}
