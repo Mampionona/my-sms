@@ -24,7 +24,7 @@
           </div>
 
           <div class="form-group mb-5">
-            <label for="custom-name" class="form-control-label">Personnaliser le nom du fichier</label>
+            <label for="custom-name" class="form-control-label">Nommez le nom du fichier</label>
             <input class="form-control" type="text" id="custom-name" v-model="customName">
           </div>
 
@@ -34,7 +34,7 @@
               <li><p>La liste des contacts doit être au format Excel ou CSV</p></li>
               <li><p>Pour un fichier CSV le séparateur doit être le pint-virgule et l'encoding UTF-8</p></li>
               <li><p>Le fichier doit contenir au minimum 1 colonne avec les numéros de portable</p></li>
-              <li><p>Le nombre de lignes du fichier doit être au maximum de 100000 et au minimum de 5.</p></li>
+              <li><p>Le nombre de lignes du fichier doit être au maximum de 100 000 et au minimum de 5.</p></li>
             </ul>
           </div>
           <div class="alert">
@@ -47,8 +47,8 @@
             <ul class="mb-0">
               <li><p>J'ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.</p></li>
               <li><p>Aucun de mes contacts n'a été acquis via des listes de diffusion tierces.</p></li>
-              <li><p>J'inclurai la mention STOP dans toute campagne marketing.</p></li>
-              <li><p>Je n'enverrai avec SMS Partner que des informations légales et légitimes.</p></li>
+              <li><p>J'inclurai la mention STOP au 36105 dans toute campagne marketing.</p></li>
+              <li><p>Je n'enverrai avec MY SMS que des informations légales et légitimes.</p></li>
             </ul>
           </div>
           <div class="text-right">
