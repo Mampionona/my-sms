@@ -91,12 +91,33 @@
       <div class="row">
         <div class="col">
           <div class="text-right pr-3">
-            <button class="btn btn-secondary" type="button">Envoyer un test</button>
+            <button class="btn btn-secondary" type="button" @click="$jQuery('#send-test').modal('show')">Envoyer un test</button>
             <button class="btn btn-primary" type="submit">Terminer</button>
           </div>
         </div>
       </div>
     </form>
+    <div class="modal fade" id="send-test" tabindex="-1" role="dialog" aria-labelledby="send-test-label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="send-test-label">Envoyer un test</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group mb-0">
+                <label for="tel-input-test" class="form-control-label">Entrez un numéro de téléphone</label>
+                <input class="form-control" type="tel" id="tel-input-test" v-model="telephone">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" @click="sendTest">Envoyer</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -125,7 +146,8 @@ export default {
       name: '',
       statusMessage: '',
       hasError: false,
-      created: false
+      created: false,
+      telephone: ''
     };
   },
   mounted() {
@@ -208,6 +230,9 @@ export default {
           });
         }
       });
+    },
+    sendTest() {
+      //
     }
   }
 };
