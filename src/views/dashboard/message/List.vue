@@ -5,7 +5,7 @@
         <div class="card-header">
           <router-link class="btn btn-primary" :to="{ name: 'create_campaign' }">Créer une campagne</router-link>
         </div>
-        <messages :click-callback="onMessageClick" :messages="sent">Aucun envois effectués</messages>
+        <messages @show="onShow" :messages="sent">Aucun envois effectués</messages>
       </div>
     </div>
   </div>
@@ -25,7 +25,7 @@ export default {
     ...mapActions({
       getCampaigns: 'campaigns/getUserCampaigns'
     }),
-    onMessageClick ({ status, id }) {
+    onShow({ status, id }) {
       if (status === 'sent') {
         this.$router.push({
           name: 'answers',

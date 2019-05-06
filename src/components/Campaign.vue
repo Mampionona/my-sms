@@ -1,5 +1,5 @@
 <template>
-  <tr @click="onClick" :style="{cursor: 'pointer'}">
+  <tr @click="$emit('show', campaign)" :style="{cursor: 'pointer'}">
     <template v-if="isDraft">
       <td>
         <span class="text-sm">{{ campaign.text }}</span>
@@ -27,7 +27,6 @@ export default {
       required: true,
       type: Object
     },
-    clickCallback: Function,
     lists: Array,
     isDraft: {
       default: false,
@@ -43,13 +42,6 @@ export default {
         if (list.id === this.campaign.list_id) {
           return list.name;
         }
-      }
-    }
-  },
-  methods: {
-    onClick() {
-      if (this.clickCallback) {
-        this.clickCallback(this.campaign);
       }
     }
   }

@@ -10,8 +10,8 @@
             <list
               :list="row"
               :key="row.id"
-              :delete-click-callback="onDelete"
-              :show-click-callback="onShow"
+              @delete-list="showConfirmModal"
+              @show-list="showList"
             />
           </template>
           <div slot="no-results" class="text-center">Aucun fichier</div>
@@ -72,7 +72,7 @@ export default {
     ...mapMutations({
       updateLists: 'lists/UPDATE_LIST'
     }),
-    onDelete({ id, name }) {
+    showConfirmModal({ id, name }) {
       this.filename = name;
       this.deleteId = id;
       this.$jQuery('#confirm-list-delete').modal('show');
@@ -86,7 +86,7 @@ export default {
         });
       }
     },
-    onShow(listId) {
+    showList(listId) {
       this.$router.push({ name: 'contacts', params: { listId } });
     }
   }

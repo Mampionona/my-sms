@@ -6,7 +6,7 @@
           <template slot-scope="{ row }">
             <sent-message
               :message="row"
-              :show-click-callback="onShow"
+              @show="onShow"
             />
           </template>
           <div slot="no-results" class="text-center">Aucun message</div>

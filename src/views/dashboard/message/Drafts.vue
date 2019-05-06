@@ -5,7 +5,7 @@
         <div class="card-header">
           <router-link class="btn btn-primary" :to="{ name: 'create_campaign' }">Créer une campagne</router-link>
         </div>
-        <messages :click-callback="onClickCallback" :messages="drafts" is-draft>Aucun brouillons</messages>
+        <messages @show="onShow" :messages="drafts" is-draft>Aucun brouillons</messages>
       </div>
     </div>
   </div>
@@ -29,7 +29,7 @@ export default {
     ...mapActions({
       getUserCampaigns: 'campaigns/getUserCampaigns'
     }),
-    onClickCallback({ id }) {
+    onShow({ id }) {
       this.$router.push({
         name: 'create_campaign',
         query: { campaign_id: id }

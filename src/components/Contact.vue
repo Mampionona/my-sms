@@ -10,7 +10,7 @@
     <td>{{ contact.firstname }}</td>
     <td>{{ JSON.stringify(contact.attributes) }}</td>
     <td class="text-right">
-      <v-btn icon="fas fa-trash-alt" color="danger" @click.native="onDelete(contact)"></v-btn>
+      <v-btn icon="fas fa-trash-alt" color="danger" @click.native="$emit('delete-contact', contact)"></v-btn>
     </td>
   </tr>
 </template>
@@ -23,18 +23,6 @@ export default {
     contact: {
       required: true,
       type: Object
-    },
-    deleteClickCallback: Function,
-    editClickCallback: Function
-  },
-  // created () {
-  //   console.log(this.contact.attributes);
-  // },
-  methods: {
-    onDelete(contact) {
-      if (this.deleteClickCallback) {
-        this.deleteClickCallback(contact);
-      }
     }
   }
 };

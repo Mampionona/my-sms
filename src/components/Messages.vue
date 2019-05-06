@@ -6,7 +6,7 @@
           :key="row.id"
           :campaign="row"
           :lists="lists"
-          :click-callback="clickCallback"
+          @show="onShow"
           :is-draft="isDraft"
         />
       </template>
@@ -68,11 +68,13 @@ export default {
   methods: {
     ...mapActions({
       getLists: 'lists/getUserLists'
-    })
+    }),
+    onShow(campaign) {
+      this.$emit('show', campaign);
+    }
   },
   props: {
     messages: Array,
-    clickCallback: Function,
     isDraft: {
       default: false,
       type: Boolean

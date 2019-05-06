@@ -3,7 +3,7 @@
     <td>{{ message.name }}</td>
     <td>{{ message.sentDate | full }}</td>
     <td class="text-right">
-      <button class="btn btn-success" @click="onShow"><i class="fas fa-bars"></i></button>
+      <button class="btn btn-success" @click="$emit('show', message.id)"><i class="fas fa-bars"></i></button>
     </td>
   </tr>
 </template>
@@ -13,12 +13,6 @@ export default {
     message: {
       required: true,
       type: Object
-    },
-    showClickCallback: Function
-  },
-  methods: {
-    onShow() {
-      if (this.showClickCallback) this.showClickCallback(this.message.id);
     }
   }
 };

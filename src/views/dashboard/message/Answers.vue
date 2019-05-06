@@ -15,7 +15,7 @@
       <div class="card">
         <datatable :columns="columns" :data="answers">
           <template slot-scope="{ row }">
-            <answer :answer="row" :click-callback="onClick"></answer>
+            <answer :answer="row" @delete-answer="deleteAnswer"></answer>
           </template>
           <div slot="no-results" class="text-center">Aucune réponse</div>
         </datatable>
@@ -64,7 +64,7 @@ export default {
       getAnswers: 'campaigns/campaignAnswers',
       getCampaigns: 'campaigns/getUserCampaigns'
     }),
-    onClick(threadId) {
+    deleteAnswer(threadId) {
       const { threads } = this;
       this.threads = threads.filter(thread => thread.id !== threadId);
     }

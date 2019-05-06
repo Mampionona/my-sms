@@ -5,7 +5,7 @@
         <div class="card-header">
           <router-link class="btn btn-primary" :to="{ name: 'create_campaign' }">Créer une campagne</router-link>
         </div>
-        <messages :click-callback="onMessageClick" :messages="scheduled" component="message">Aucun envois planifiés</messages>
+        <messages :messages="scheduled" component="message">Aucun envois planifiés</messages>
       </div>
     </div>
   </div>
@@ -24,10 +24,7 @@ export default {
   methods: {
     ...mapActions({
       getUserCampaigns: 'campaigns/getUserCampaigns'
-    }),
-    onMessageClick() {
-      // console.log(message);
-    }
+    })
   },
   mounted() {
     this.getUserCampaigns();

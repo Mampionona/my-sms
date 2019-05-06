@@ -110,10 +110,7 @@ export default {
   props: {
     campaign: {
       type: Object
-    },
-    pending: Function,
-    complete: Function,
-    fail: Function
+    }
   },
   data() {
     return {
@@ -182,31 +179,19 @@ export default {
       sendDate = (sendingMode === 'immediate') ? '' : sendDate;
       status = status ? 'draft' : 'live';
 
-      if (this.pending) {
-        this.pending();
-      }
-
       this.createOrUpdateCampaign({ action, listId, name, text, senderName, sendDate, status, campaignId })
-        .then((data) => {
-          // this.listId = '';
+        .then(() => {
           this.name = '';
           this.text = '';
           this.status = false;
           this.hasError = false;
           this.created = true;
           this.statusMessage = 'Campagne créée';
-          if (this.complete) {
-            this.complete(data);
-          }
         })
         .catch((error) => {
           this.statusMessage = error.data.error;
           this.hasError = true;
           this.created = false;
-
-          if (this.fail) {
-            this.fail(error);
-          }
         });
     },
     populateCampainFields() {
