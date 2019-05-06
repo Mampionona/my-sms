@@ -81,7 +81,7 @@ import { mapActions } from 'vuex';
 
 export default {
   components: { vBtn },
-  data () {
+  data() {
     return {
       publicPath: process.env.BASE_URL,
       certify: false,

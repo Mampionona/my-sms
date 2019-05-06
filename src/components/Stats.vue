@@ -14,7 +14,7 @@ export default {
     ...mapGetters({
       stats: 'campaigns/stats'
     }),
-    dataCollection () {
+    dataCollection() {
       const labels = ['', ...this.stats.map(stat => stat.date)];
       const datasets = [{
         label: 'Messages',
@@ -24,12 +24,12 @@ export default {
       return { labels, datasets };
     }
   },
-  data () {
+  data() {
     return {
       datacollection: null
     }
   },
-  mounted () {
+  mounted() {
     this.campaignsStats();
   },
   methods: {

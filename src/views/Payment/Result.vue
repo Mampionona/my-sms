@@ -21,12 +21,12 @@ import PageHeader from '@/components/layouts/partials/PageHeader';
 import { mapActions } from 'vuex';
 export default {
   components: { PageHeader },
-  data () {
+  data() {
     return {
       paymentStatus: ''
     };
   },
-  mounted () {
+  mounted() {
     this.checkPaymentStatus(this.$route.query.paylinetoken)
       .then(({ paymentStatus }) => {
         if (paymentStatus === 'success') this.paymentStatus = 'success';

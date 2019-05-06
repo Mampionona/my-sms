@@ -28,7 +28,7 @@ export default {
     }
   },
   methods: {
-    toggleSidenav () {
+    toggleSidenav() {
       document.body.classList.toggle('g-sidenav-pinned');
     }
   }

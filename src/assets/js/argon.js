@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(function() {
 
 	// Variable
 
@@ -271,14 +271,14 @@
 
 	// Toggle options
 	$toggle.on({
-		'change': function () {
+		'change': function() {
 			var $this = $(this);
 
 			if ($this.is('[data-add]')) {
 				toggleOptions($this);
 			}
 		},
-		'click': function () {
+		'click': function() {
 			var $this = $(this);
 
 			if ($this.is('[data-update]')) {

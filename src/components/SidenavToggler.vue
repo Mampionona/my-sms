@@ -21,7 +21,7 @@ export default {
       };
     }
   },
-  data () {
+  data() {
     return {
       isActive: false
     };
@@ -31,17 +31,17 @@ export default {
       toggleClass(document.body, 'g-sidenav-pinned g-sidenav-hidden');
       this.isActive = !this.isActive;
     },
-    onWindowResize () {
+    onWindowResize() {
       if (body.classList.contains('g-sidenav-pinned')) this.isActive = true;
       else this.isActive = false;
     },
-    closeSidenav () {
+    closeSidenav() {
       this.isActive = false;
       body.classList.remove('g-sidenav-pinned');
       body.classList.add('g-sidenav-hidden');
     }
   },
-  mounted () {
+  mounted() {
     window.addEventListener('resize', this.onWindowResize);
     if (window.innerWidth > 1200) {
       this.isActive = true;
