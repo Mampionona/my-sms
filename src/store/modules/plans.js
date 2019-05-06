@@ -24,14 +24,14 @@ export default {
     [GET_PLANS.FAILURE]() {
       //
     },
-    [UPDATE_PLAN.PENDING] (state) {
+    [UPDATE_PLAN.PENDING]() {
       //
     },
-    [UPDATE_PLAN.SUCCESS] (state) {
+    [UPDATE_PLAN.SUCCESS]() {
       //
     },
-    [UPDATE_PLAN.FAILURE] (state) {
-
+    [UPDATE_PLAN.FAILURE]() {
+      //
     }
   },
 

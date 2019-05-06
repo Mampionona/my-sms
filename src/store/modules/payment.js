@@ -24,13 +24,13 @@ export default {
     [INIT_PAYMENT.FAILURE]() {
       //
     },
-    [CONFIRM_PAYMENT.PENDING] () {
+    [CONFIRM_PAYMENT.PENDING]() {
       //
     },
-    [CONFIRM_PAYMENT.SUCCESS] () {
+    [CONFIRM_PAYMENT.SUCCESS]() {
       //
     },
-    [CONFIRM_PAYMENT.FAILURE] () {
+    [CONFIRM_PAYMENT.FAILURE]() {
       //
     }
   },

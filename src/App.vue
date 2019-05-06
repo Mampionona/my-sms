@@ -21,8 +21,8 @@ export default {
     $route: 'routeDidChange'
   },
   mounted() {
-    this.$nextTick(function() {
-      this.getUser().catch(error => {
+    this.$nextTick(() => {
+      this.getUser().catch((error) => {
         const { status } = error;
         if (status === UNAUTHENTICATED) {
           this.$router.push({ name: 'login' });

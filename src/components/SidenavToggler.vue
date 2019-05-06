@@ -9,6 +9,7 @@
 </template>
 <script>
 import { toggleClass } from '@/utils';
+
 const { body } = document;
 
 export default {
@@ -47,10 +48,8 @@ export default {
       this.isActive = true;
     }
 
-    document.addEventListener('click', e => {
-      if (e.target === body) {
-        this.closeSidenav();
-      }
+    document.addEventListener('click', (e) => {
+      if (e.target === body) this.closeSidenav();
     });
   },
   props: {
@@ -60,7 +59,7 @@ export default {
     }
   },
   watch: {
-    '$route': function() {
+    $route() {
       if (window.innerWidth < 1200) {
         this.closeSidenav();
       }

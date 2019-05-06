@@ -10,7 +10,7 @@
                 <p class="mb-0">paymentStatus : {{ paymentStatus }}</p>
               </div>
             </div>
-          </div>            
+          </div>
         </div>
       </div>
     </div>
@@ -19,6 +19,7 @@
 <script>
 import PageHeader from '@/components/layouts/partials/PageHeader';
 import { mapActions } from 'vuex';
+
 export default {
   components: { PageHeader },
   data() {
@@ -41,5 +42,5 @@ export default {
       checkPaymentStatus: 'payment/checkPaymentStatus'
     })
   }
-}
+};
 </script>

@@ -4,8 +4,9 @@
   </div>
 </template>
 <script>
-import LineChart from '@/components/LineChart.js';
+import LineChart from '@/components/LineChart';
 import { mapActions, mapGetters } from 'vuex';
+
 export default {
   components: {
     LineChart
@@ -27,7 +28,7 @@ export default {
   data() {
     return {
       datacollection: null
-    }
+    };
   },
   mounted() {
     this.campaignsStats();

@@ -24,34 +24,28 @@ router.beforeEach((to, from, next) => {
   // route navigation guards
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // if not connected
-    if (!isAuthenticated()) {
-      next({
-        name: 'login',
-        query: { redirect: to.fullPath }
-      });
-    } else {
-      if (to.matched.some(record => record.meta.visibility === 'admin_only')) {
-        fetchUser()
-          .then(({ data }) => {
-            if (data[0].id === ADMIN_ID) next();
-            else next(dashboard);
-          })
-          .catch(() => next(dashboard));
-      } else if (to.name === 'payment_result') {
+    if (!isAuthenticated()) next({ name: 'login', query: { redirect: to.fullPath }});
+    else {
+      if (to.matched.some(record => record.meta.visibility === 'admin_only')) fetchUser()
+        .then(({ data }) => {
+          if (data[0].id === ADMIN_ID) next();
+          else next(dashboard);
+        })
+        .catch(() => next(dashboard));
+      else if (to.name === 'payment_result') {
         if (to.query.paylinetoken) next();
         else next('/');
       }
-
       else next();
     }
-  } else if (to.matched.some(record => record.meta.redirectIfLoggedIn)) {
+  }
+  else if (to.matched.some(record => record.meta.redirectIfLoggedIn)) {
     // when user is logged in
     // redirect to /dashboard
     if (isAuthenticated()) next(dashboard);
     // continue navigation
     else next();
   }
-  
   else next();
 });
 

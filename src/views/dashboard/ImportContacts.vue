@@ -76,11 +76,9 @@
 </template>
 <script>
 import { validFileExtensions, workbookToArray, COUNT_MAX_LINES, COUNT_MIN_LINES } from '@/utils';
-import vBtn from '@/components/vBtn';
 import { mapActions } from 'vuex';
 
 export default {
-  components: { vBtn },
   data() {
     return {
       publicPath: process.env.BASE_URL,
@@ -163,7 +161,7 @@ export default {
         this.createNewList({
           name: customName || filename
         })
-        .then(data => this.addContactsToAList(data.id, contacts));
+          .then(data => this.addContactsToAList(data.id, contacts));
       }
     },
     addContactsToAList(listId, contacts) {

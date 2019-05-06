@@ -1,5 +1,6 @@
 import { Line, mixins } from 'vue-chartjs';
-import '@/assets/js/argon.js';
+import '@/assets/js/argon';
+
 const { reactiveProp } = mixins;
 
 export default {

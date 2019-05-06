@@ -16,9 +16,7 @@ export function workbookToArray(file, complete) {
     const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
     let arrays = XLSX.utils.sheet_to_json(firstWorksheet, { header: 1 });
     arrays = arrays.filter(array => array.length > 0);
-    if (complete) {
-      complete(arrays, file);
-    }
+    if (complete) complete(arrays, file);
   };
   reader.readAsArrayBuffer(file);
 }
@@ -68,12 +66,11 @@ export function removeSpaces(str) {
 
 /**
  * Add or remove one or more classes from element
- * @param {HTMLElement} element 
- * @param {String} className 
+ * @param {HTMLElement} element
+ * @param {String} className
  */
 export function toggleClass(element, className) {
-  className = className.split(' ');
-  className.forEach(_className => {
+  className.split(' ').forEach((_className) => {
     if (element.classList.contains(_className)) element.classList.remove(_className);
     else element.classList.add(_className);
   });
@@ -96,23 +93,19 @@ export function arrayToCSV(array, exportName = 'export') {
 
   // Building the CSV from the Data two-dimensional array
   // Each column is separated by ";" and new line "\n" for next row
-  var csvContent = '';
-  data.forEach(function (infoArray, index) {
+  let csvContent = '';
+  data.forEach((infoArray, index) => {
     const dataString = infoArray.join(';');
-    csvContent += index < data.length ? dataString + '\n' : dataString;
+    csvContent += (index < data.length) ? `${dataString}\n` : dataString;
   });
 
   // The download function takes a CSV string, the filename and mimeType as parameters
   // Scroll/look down at the bottom of this snippet to see how download is called
-  var download = function (content, fileName, mimeType) {
-    var a = document.createElement('a');
-    mimeType = mimeType || 'application/octet-stream';
+  const download = (content, fileName, mimeType = 'application/octet-stream') => {
+    const a = document.createElement('a');
 
-    if (navigator.msSaveBlob) { // IE10
-      navigator.msSaveBlob(new Blob([content], {
-        type: mimeType
-      }), fileName);
-    } else if (URL && 'download' in a) { //html5 A[download]
+    if (navigator.msSaveBlob) navigator.msSaveBlob(new Blob([content], { type: mimeType }), fileName);
+    else if (URL && 'download' in a) {
       a.href = URL.createObjectURL(new Blob([content], {
         type: mimeType
       }));
@@ -120,9 +113,8 @@ export function arrayToCSV(array, exportName = 'export') {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    } else {
-      location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
     }
+    else window.location.href = `data:application/octet-stream,${encodeURIComponent(content)}`;
   };
 
   download(csvContent, `${exportName}.csv`, 'text/csv;encoding:utf-8');

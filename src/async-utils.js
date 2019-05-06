@@ -12,15 +12,16 @@ export function doAsync(context, { url, method = 'get', mutationTypes, data = {}
   context.commit(mutationTypes.PENDING);
 
   return new Promise((resolve, reject) => {
-    Axios({ 
-      url, 
-      data, 
-      method, 
+    Axios({
+      url,
+      data,
+      method,
       responseType: 'text'
     })
-      .then(({ data }) => {
-        context.commit(mutationTypes.SUCCESS, data);
-        resolve(data);
+      .then((response) => {
+        const responseData = response.data;
+        context.commit(mutationTypes.SUCCESS, responseData);
+        resolve(responseData);
       })
       .catch(({ response }) => {
         context.commit(mutationTypes.FAILURE, response);

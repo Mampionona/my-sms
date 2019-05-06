@@ -60,6 +60,7 @@
 <script>
 import Stats from '@/components/Stats';
 import { mapGetters, mapActions } from 'vuex';
+
 export default {
   components: { Stats },
   computed: {
@@ -81,5 +82,5 @@ export default {
   mounted() {
     this.getCampaigns();
   }
-}
+};
 </script>
