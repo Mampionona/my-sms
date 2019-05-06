@@ -34,7 +34,7 @@
               <li><p>La liste des contacts doit être au format Excel ou CSV</p></li>
               <li><p>Pour un fichier CSV le séparateur doit être le pint-virgule et l'encoding UTF-8</p></li>
               <li><p>Le fichier doit contenir au minimum 1 colonne avec les numéros de portable</p></li>
-              <li><p>Le nombre de lignes du fichier doit être au maximum de 100 000 et au minimum de 5.</p></li>
+              <li><p>Le nombre de lignes du fichier doit être au maximum de {{ countMaxLines | formatNumber }} et au minimum de {{ countMinLines | formatNumber }}.</p></li>
             </ul>
           </div>
           <div class="alert">
@@ -76,6 +76,7 @@
 </template>
 <script>
 import { validFileExtensions, workbookToArray, COUNT_MAX_LINES, COUNT_MIN_LINES } from '@/utils';
+import { formatNumber } from '@/filters';
 import { mapActions } from 'vuex';
 
 export default {
@@ -87,7 +88,9 @@ export default {
       contacts: [],
       selectedFile: false,
       errorMessage: '',
-      customName: ''
+      customName: '',
+      countMaxLines: COUNT_MAX_LINES,
+      countMinLines: COUNT_MIN_LINES
     };
   },
   mounted() {
@@ -121,7 +124,7 @@ export default {
           const columns = contacts.shift();
 
           if (countLines > COUNT_MAX_LINES || countLines < COUNT_MIN_LINES) {
-            this.errorMessage = `Le nombre de lignes du fichier doit être au maximum de ${COUNT_MAX_LINES} et au minimum de ${COUNT_MIN_LINES}.`;
+            this.errorMessage = `Le nombre de lignes du fichier doit être au maximum de ${formatNumber(COUNT_MAX_LINES)} et au minimum de ${formatNumber(COUNT_MIN_LINES)}.`;
             return;
           }
 
