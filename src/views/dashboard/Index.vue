@@ -2,14 +2,14 @@
   <div class="row">
     <div class="col">
       <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-4">
           <div class="card">
             <div class="card-header">
               <h5 class="h3 mb-0">Dernier envoi</h5>
             </div>
             <div class="card-body text-center">
               <template v-if="sentMessage">
-                <p class="mb-0 text-center">Envoyé<br>Le {{ sentMessage.sentDate | full }}</p>
+                <pie-chart :chart-data="collection"></pie-chart>
                 <p class="mb-0 mt-4">
                   <router-link class="btn btn-icon btn-info" :to="responseUrl(sentMessage)">
                     <span class="btn-inner--icon"><i class="fas fa-bars"></i></span>
@@ -23,7 +23,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
           <div class="card">
             <div class="card-header">
               <h5 class="h3 mb-0">Prochaine campagne</h5>
@@ -37,7 +37,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
           <div class="card">
             <div class="card-header">
               <h5 class="h3 mb-0">Statistiques des envois</h5>
@@ -59,14 +59,24 @@
 </template>
 <script>
 import Stats from '@/components/Stats';
+import PieChart from '@/components/PieChart';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  components: { Stats },
+  components: { Stats, PieChart },
   computed: {
     ...mapGetters({
       sentMessage: 'campaigns/lastSent'
-    })
+    }),
+    collection() {
+      const labels = ['messages', 'net_err', 'waiting', 'npai', 'expired', 'received'];
+      const data = [];
+      labels.forEach(label => data.push(this.sentMessage[label]));
+      return {
+        labels: ['Messages', 'Erreur réseau', 'En attente', 'NPAI', 'Expiré', 'Délivré'],
+        datasets: [{ data }]
+      };
+    }
   },
   methods: {
     ...mapActions({
