@@ -35,7 +35,8 @@ export default {
     // get user's campaign
     [GET_USER_CAMPAIGNS.PENDING]() {},
     [GET_USER_CAMPAIGNS.SUCCESS](state, payload) {
-      state.campaigns = payload.reverse();
+      // state.campaigns = payload.reverse();
+      state.campaigns = payload;
     },
     [GET_USER_CAMPAIGNS.FAILURE]() {},
     [GET_CAMPAIGN_ANSWERS.PENDING]() {},

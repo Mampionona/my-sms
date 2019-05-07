@@ -69,12 +69,27 @@ export default {
       sentMessage: 'campaigns/lastSent'
     }),
     collection() {
-      const labels = ['messages', 'net_err', 'waiting', 'npai', 'expired', 'received'];
+      const items = [
+        { label: 'Messages', field: 'messages', color: '#2ca02c' },
+        { label: 'Erreur réseau', field: 'net_err', color: '#fe7f0e' },
+        { label: 'En attente', field: 'waiting', color: '#2ca02c' },
+        { label: 'NPAI', field: 'npai', color: '#4b4d5c' },
+        { label: 'Expiré', field: 'expired', color: '#fea730' },
+        { label: 'Délivré', field: 'received', color: '#1f77b4' }
+      ];
+      const labels = [];
       const data = [];
-      labels.forEach(label => data.push(this.sentMessage[label]));
+      const backgroundColor = [];
+      items.forEach(({ label, field, color }) => {
+        labels.push(label);
+        data.push(this.sentMessage[field]);
+        backgroundColor.push(color);
+      });
       return {
-        labels: ['Messages', 'Erreur réseau', 'En attente', 'NPAI', 'Expiré', 'Délivré'],
-        datasets: [{ data }]
+        labels,
+        datasets: [
+          { data, backgroundColor }
+        ]
       };
     }
   },

@@ -22,12 +22,12 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      if (this.isLoggedIn) this.getUser().catch((error) => {
-        const { status } = error;
-        if (status === UNAUTHENTICATED) {
-          this.$router.push({ name: 'login' });
-        }
-      });
+      if (this.isLoggedIn) {
+        this.getUser().catch((error) => {
+          const { status } = error;
+          if (status === UNAUTHENTICATED) this.$router.push({ name: 'login' });
+        });
+      }
     });
   },
   computed: {
