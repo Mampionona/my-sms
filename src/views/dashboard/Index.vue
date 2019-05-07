@@ -11,7 +11,7 @@
               <template v-if="sentMessage">
                 <pie-chart :chart-data="collection"></pie-chart>
                 <p class="mb-0 mt-4">
-                  <router-link class="btn btn-icon btn-info" :to="responseUrl(sentMessage)">
+                  <router-link class="btn btn-icon btn-primary" :to="responseUrl(sentMessage)">
                     <span class="btn-inner--icon"><i class="fas fa-bars"></i></span>
                     <span class="btn-inner--text">Réponses</span>
                   </router-link>
@@ -30,7 +30,7 @@
             </div>
             <div class="card-body">
               <div class="text-right mt-4">
-                <router-link class="btn btn-icon btn-info" :to="{name: 'create_campaign'}">
+                <router-link class="btn btn-icon btn-primary" :to="{name: 'create_campaign'}">
                   <span class="btn-inner--icon"><i class="fas fa-envelope-open"></i></span>
                 </router-link>
               </div>
@@ -45,7 +45,7 @@
             <div class="card-body">
               <stats></stats>
               <div class="text-right mt-4">
-                <router-link class="btn btn-icon btn-info" :to="{name: 'stats'}">
+                <router-link class="btn btn-icon btn-primary" :to="{name: 'stats'}">
                   <span class="btn-inner--icon"><i class="fas fa-chart-bar"></i></span>
                     <span class="btn-inner--text">Voir les statistiques</span>
                 </router-link>

@@ -20,6 +20,7 @@ export default {
       const datasets = [{
         label: 'Messages',
         data: [0, ...this.stats.map(stat => stat.messages)],
+        borderColor: '#b7b7b7',
         backgroundColor: 'transparent'
       }];
 
