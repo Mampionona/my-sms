@@ -2,7 +2,16 @@
   <div class="row">
     <div class="col">
       <div class="card">
-        <datatable :columns="columns" :data="users" class="vertical-align-middle">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <input type="text" class="form-control" v-model="filter" placeholder="Filtrer par e-mail">
+              </div>
+            </div>
+          </div>
+        </div>
+        <datatable :columns="columns" :data="users" :filter-by="filter" class="vertical-align-middle">
           <template slot-scope="{ row }">
             <user :user="row" @edit="editUser"></user>
           </template>
@@ -53,16 +62,17 @@ export default {
     }),
     columns() {
       const columns = [
-        { label: 'Nom', field: 'lastname' },
-        { label: 'Prénom', field: 'firstname' },
-        { label: 'Rôle', field: 'userRole' },
-        { label: 'Crédits', field: 'credits' }
+        { label: 'Nom', field: 'lastname', filterable: false },
+        { label: 'Prénom', field: 'firstname', filterable: false },
+        { label: 'E-mail', field: 'email' },
+        { label: 'Rôle', field: 'userRole', filterable: false },
+        { label: 'Crédits', field: 'credits', filterable: false }
       ];
       if (!this.isAdmin) return columns;
       // add edit button
       return [
         ...columns,
-        { label: '', representedAs: () => '' }
+        { label: '', representedAs: () => '', filterable: false }
       ];
     }
   },
@@ -72,6 +82,7 @@ export default {
   },
   data() {
     return {
+      filter: '',
       error: false,
       success: '',
       page: 1,

@@ -2,6 +2,7 @@
   <tr>
     <td>{{ user.lastname }}</td>
     <td>{{ user.firstname }}</td>
+    <td>{{ user.email }}</td>
     <td>{{ user.userRole }}</td>
     <td>{{ user.credits | formatCurrency }}</td>
     <td class="text-right" v-if="isAdmin">
