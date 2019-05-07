@@ -1,20 +1,8 @@
+$primary: #292a2f;
 
-/*!
-
-=========================================================
-* Argon Dashboard PRO - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2018 Creative Tim (https://www.creative-tim.com)
-
-* Coded by www.creative-tim.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
+$theme-colors: (
+  primary: $primary
+);
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
@@ -70,4 +58,7 @@
 @import 'custom/components';
 @import 'custom/utilities';
 @import 'custom/vendors';
+
+@import '~vue-progress-path/dist/vue-progress-path.css';
+@import '~axios-progress-bar/dist/nprogress.css';
 @import 'custom';

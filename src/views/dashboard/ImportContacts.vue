@@ -28,7 +28,7 @@
             <input class="form-control" type="text" id="custom-name" v-model="customName">
           </div>
 
-          <div class="alert alert-info" role="alert">
+          <div class="alert alert-secondary" role="alert">
             <ul class="pl-2 mb-0">
               <li><p>La première ligne du fichier doit être le nom des colonnes.</p></li>
               <li><p>La liste des contacts doit être au format Excel ou CSV</p></li>

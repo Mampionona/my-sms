@@ -7,12 +7,8 @@ import VueBreadcrumbs from 'vue-breadcrumbs';
 import DatatableFactory from 'vuejs-datatable/dist/vuejs-datatable.esm';
 import App from './App';
 import i18n from './i18n';
-import './bootstrap';
-import './filters';
-// styles
-import 'vue-progress-path/dist/vue-progress-path.css';
-import 'axios-progress-bar/dist/nprogress.css';
-import '@/assets/styles/argon.scss';
+import '@/bootstrap';
+import '@/assets/styles/app.scss';
 
 DatatableFactory.useDefaultType(false)
   .registerTableType('datatable', (tableType) => {
