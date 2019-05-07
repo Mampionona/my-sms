@@ -62,7 +62,7 @@ export function computeRemainingChars(countSMS, len) {
  * @return { String }
  */
 export function removeSpaces(str) {
-  return str.replace(/\s/g, '').trim();
+  return str.toString().replace(/\s/g, '').trim();
 }
 
 /**
