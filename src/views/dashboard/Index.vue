@@ -1,6 +1,17 @@
 <template>
   <div class="row">
     <div class="col">
+      <div class="row mb-5">
+        <div class="col-lg-4">
+          <link-with-icon :to="{ name: 'packs' }" icon="ni ni-credit-card">Acheter un pack</link-with-icon>
+        </div>
+        <div class="col-lg-4">
+          <link-with-icon color :to="{ name: 'import_file' }" icon="fas fa-address-book">Importer des contacts</link-with-icon>
+        </div>
+        <div class="col-lg-4">
+          <link-with-icon :to="{ name: 'create_campaign' }" icon="fa fa-th-large">Créer une campagne</link-with-icon>
+        </div>
+      </div>
       <div class="row">
         <div class="col-lg-4">
           <div class="card">
@@ -60,10 +71,11 @@
 <script>
 import Stats from '@/components/Stats';
 import PieChart from '@/components/PieChart';
+import LinkWithIcon from '@/components/LinkWithIcon';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  components: { Stats, PieChart },
+  components: { Stats, PieChart, LinkWithIcon },
   computed: {
     ...mapGetters({
       sentMessage: 'campaigns/lastSent'
