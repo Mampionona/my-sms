@@ -22,7 +22,7 @@
               <span class="btn-inner--icon"><i class="fas fa-pencil-alt"></i></span>
               <span class="btn-inner--text">Composer un SMS</span>
             </button>
-            <p class="text-center mt-3">Seul les numéros valides, non STOP-SMS et actifs seront envoyés.</p>
+            <p class="text-center mt-3">Seul les numéros valides et non STOP-SMS seront envoyés.</p>
           </div>
         </div>
       </div>
@@ -43,9 +43,8 @@
               Filtres
             </button>
             <div class="dropdown-menu" aria-labelledby="filtres">
-              <a class="dropdown-item" href="#" @click.prevent>Aucun filtre</a>
-              <a class="dropdown-item" href="#" @click.prevent>Voir les STOP SMS</a>
-              <a class="dropdown-item" href="#" @click.prevent>Voir les formats invalides</a>
+              <a class="dropdown-item" href="#" @click.prevent="items = contacts">Aucun filtre</a>
+              <a class="dropdown-item" href="#" @click.prevent="items = stops">Voir les STOP SMS</a>
             </div>
           </div>
           <div class="dropdown">
@@ -57,7 +56,7 @@
             </div>
           </div>
         </div>
-        <datatable :columns="columns" :data="contacts">
+        <datatable :columns="columns" :data="items">
           <template slot-scope="{ row }">
             <contact :contact="row" :key="row.id" @delete-contact="confirmDelete">
               <div slot="checkbox" class="custom-control custom-checkbox">
@@ -109,6 +108,7 @@ export default {
       page: 1,
       per_page: 10,
       allContacts: false,
+      items: [],
       selectedContacts: [],
       name: '',
       list: null,
@@ -128,7 +128,9 @@ export default {
   },
   mounted() {
     // dispatch an action to get contacts of a list
-    this.getContacts(this.$route.params.listId);
+    this.getContacts(this.$route.params.listId).then(() => {
+      this.items = this.contacts;
+    });
     document.getElementById('all-contacts').addEventListener('change', (e) => {
       if (e.target.checked) {
         this.contacts.forEach(contact => this.selectedContacts.push(contact.id));
@@ -140,7 +142,8 @@ export default {
   computed: {
     ...mapGetters({
       contacts: 'contacts/contacts',
-      countContacts: 'contacts/count'
+      countContacts: 'contacts/count',
+      stops: 'contacts/stops'
     }),
     composeUrl() {
       return {

@@ -32,7 +32,7 @@
             <ul class="mb-0">
               <li><p>La première ligne du fichier doit être le nom des colonnes.</p></li>
               <li><p>La liste des contacts doit être au format Excel ou CSV</p></li>
-              <li><p>Pour un fichier CSV le séparateur doit être le pint-virgule et l'encoding UTF-8</p></li>
+              <li><p>Pour un fichier CSV le séparateur doit être le point-virgule et l'encoding UTF-8</p></li>
               <li><p>Le fichier doit contenir au minimum 1 colonne avec les numéros de portable</p></li>
               <li><p>Le nombre de lignes du fichier doit être au maximum de {{ countMaxLines | formatNumber }} et au minimum de {{ countMinLines | formatNumber }}.</p></li>
             </ul>
@@ -56,8 +56,8 @@
             <ul class="mb-0">
               <li><p>J'ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.</p></li>
               <li><p>Aucun de mes contacts n'a été acquis via des listes de diffusion tierces.</p></li>
-              <li><p>J'inclurai la mention STOP au 36105 dans toute campagne marketing.</p></li>
-              <li><p>Je n'enverrai avec MY SMS que des informations légales et légitimes.</p></li>
+              <li><p>J'inclurai la mention <strong>STOP au 36105</strong> dans toute campagne marketing.</p></li>
+              <li><p>Je n'enverrai avec My SMS que des informations légales et légitimes.</p></li>
             </ul>
           </div>
           <alert v-if="hasError" color="danger" icon="fas fa-exclamation-triangle" class="mb-5">

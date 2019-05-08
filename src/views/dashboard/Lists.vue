@@ -45,6 +45,7 @@ export default {
       columns: [
         { label: 'Fichiers', field: 'name' },
         { label: 'Contacts actifs', field: 'contacts' },
+        { label: 'STOP', field: '' },
         { label: 'Créé le', field: 'updateDate' },
         { label: '', representedAs: () => '' }
       ],

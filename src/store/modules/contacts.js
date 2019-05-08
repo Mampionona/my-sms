@@ -17,7 +17,8 @@ export default {
   getters: {
     listId: state => state.listId,
     contacts: state => state.contactsOfList,
-    count: state => state.contactsOfList.length
+    count: state => state.contactsOfList.length,
+    stops: (state, getters) => getters.contacts.filter(contact => contact.stop === 1)
   },
 
   mutations: {
