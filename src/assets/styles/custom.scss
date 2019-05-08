@@ -175,3 +175,16 @@ strong {
     margin-left: $navbar-vertical-open-width;
   }
 }
+
+body:not(.sidenav-open) {
+  .navbar-brand,
+  .navbar-heading {
+    display: none;
+  }
+
+  .navbar-nav {
+    .collapse.show {
+      display: none;
+    }
+  }
+}
