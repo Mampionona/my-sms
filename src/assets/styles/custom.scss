@@ -146,3 +146,32 @@ p:only-child {
 strong {
   font-weight: 600;
 }
+
+// Sidenav
+.navbar-vertical .navbar-nav .nav-link[data-toggle="collapse"]:after {
+  display: none;
+}
+
+.sidenav {
+  .nav-link-text {
+    display: none;
+  }
+}
+
+.sidenav-open {
+  .navbar-vertical .navbar-nav .nav-link[data-toggle="collapse"]:after {
+    display: inline-block;
+  }
+
+  .sidenav {
+    max-width: $navbar-vertical-open-width;
+
+    .nav-link-text {
+      display: inline;
+    }
+  }
+
+  .navbar-vertical.navbar-expand-xs.fixed-left + .main-content {
+    margin-left: $navbar-vertical-open-width;
+  }
+}

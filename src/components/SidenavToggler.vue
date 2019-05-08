@@ -29,40 +29,14 @@ export default {
   },
   methods: {
     toggleSidenav() {
-      toggleClass(document.body, 'g-sidenav-pinned g-sidenav-hidden');
       this.isActive = !this.isActive;
-    },
-    onWindowResize() {
-      if (body.classList.contains('g-sidenav-pinned')) this.isActive = true;
-      else this.isActive = false;
-    },
-    closeSidenav() {
-      this.isActive = false;
-      body.classList.remove('g-sidenav-pinned');
-      body.classList.add('g-sidenav-hidden');
+      toggleClass(body, 'sidenav-open');
     }
-  },
-  mounted() {
-    window.addEventListener('resize', this.onWindowResize);
-    if (window.innerWidth > 1200) {
-      this.isActive = true;
-    }
-
-    document.addEventListener('click', (e) => {
-      if (e.target === body) this.closeSidenav();
-    });
   },
   props: {
     togglerDark: {
       default: false,
       type: Boolean
-    }
-  },
-  watch: {
-    $route() {
-      if (window.innerWidth < 1200) {
-        this.closeSidenav();
-      }
     }
   }
 };

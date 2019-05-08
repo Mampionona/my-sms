@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Currency from 'currency.js';
 import humanTime from 'humantime';
 
-const currency = (value, precision = 3, symbol = '€') => Currency(value, { formatWithSymbol: true, precision, pattern: '# !', symbol }).format();
+export const currency = (value, precision = 3, symbol = '€') => Currency(value, { formatWithSymbol: true, precision, pattern: '# !', symbol }).format();
 export const formatNumber = number => number.toLocaleString('fr-FR');
 
 // Date

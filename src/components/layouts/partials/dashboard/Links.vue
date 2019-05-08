@@ -37,9 +37,6 @@ export default {
     }
   },
   methods: {
-    toggleSidenav() {
-      document.body.classList.toggle('g-sidenav-pinned');
-    },
     getPlan() {
       return this.plans.filter(({ id }) => id === this.user.planId);
     }

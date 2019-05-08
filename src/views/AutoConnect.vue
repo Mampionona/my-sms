@@ -56,7 +56,6 @@ export default {
 
       Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
       this.isLoading = true;
-      
       this.getUser()
         .then(() => {
           this.setToken(token);
@@ -69,7 +68,9 @@ export default {
           if ('Authorization' in Axios.defaults.headers.common) delete Axios.defaults.headers.common.Authorization;
           if (status === BAD_REQUEST) this.hasError = true;
         })
-        .finally(() => this.isLoading = false);
+        .finally(() => {
+          this.isLoading = false;
+        });
     }
   }
 };
