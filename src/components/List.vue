@@ -4,7 +4,7 @@
       <span class="name mb-0 text-sm">{{ list.name }}</span>
     </th>
     <td>{{ list.contacts }}</td>
-    <td>0</td>
+    <td>{{ list.stops || 0 }}</td>
     <td>{{ list.updateDate | full }}</td>
     <td class="text-right">
       <button class="btn btn-danger" @click.prevent="$emit('delete-list', list)"><i class="fas fa-trash-alt"></i></button>
