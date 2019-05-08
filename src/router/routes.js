@@ -37,14 +37,6 @@ const routes = [
     }
   },
   {
-    path: '/payment-cancel',
-    name: 'payment_cancel',
-    meta: {
-      requiresAuth: true
-    },
-    component: () => import('@/views/Payment/Cancel')
-  },
-  {
     path: '/payment-result',
     name: 'payment_result',
     meta: {
