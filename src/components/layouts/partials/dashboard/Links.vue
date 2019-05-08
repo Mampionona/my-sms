@@ -30,11 +30,9 @@ export default {
     numberOfSMS() {
       const plan = this.getPlan();
       const { credits } = this.user;
-      let smsPrice;
-      let numberOfSMS;
-      if (!plan.length || !credits) return '0';
-      smsPrice = plan[0].smsPrice / 1000;
-      numberOfSMS = Math.floor(credits / smsPrice);
+      if (!plan.length || !credits) return 0;
+      const smsPrice = plan[0].smsPrice / 1000;
+      const numberOfSMS = Math.floor(credits / smsPrice);
       return numberOfSMS;
     }
   },
