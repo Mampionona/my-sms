@@ -4,7 +4,7 @@
       <sidenav-toggler toggler-dark></sidenav-toggler>
     </li>
     <li class="nav-item">
-      <a :href="`mailto:${mailTo}`" class="nav-link"><i class="fas fa-question-circle"></i> Assistance</a>
+      <a :href="`mailto:${mailTo}`" class="nav-link"><i class="fas fa-question-circle"></i> Assistance par email</a>
     </li>
     <li v-if="user !== null && user.credits" class="nav-link d-inline-flex align-items-center">
       Crédits <span class="ml-2 badge badge-secondary">{{ user.credits | formatNumber }} SMS</span>
