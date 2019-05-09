@@ -67,7 +67,7 @@
                       <div class="custom-control custom-control-alternative custom-checkbox">
                         <input class="custom-control-input" id="customCheckRegister" type="checkbox" v-model="privacy">
                         <label class="custom-control-label" for="customCheckRegister">
-                          <span class="text-muted">J'accèpte la politique <a href="#!">de Confidentialité</a></span>
+                          <span class="text-muted">J'accèpte la politique <a href="https://my-sms.pro/conditions-generales">de Confidentialité</a></span>
                         </label>
                       </div>
                     </div>
