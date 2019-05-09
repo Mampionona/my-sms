@@ -1,0 +1,41 @@
+<template>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <router-link class="btn btn-primary" :to="{ name: 'create_campaign' }">Créer une campagne</router-link>
+        </div>
+        <messages @show="onShow" :messages="sent">Aucun envois effectués</messages>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import { mapActions, mapGetters } from 'vuex';
+import Messages from '@/components/Messages';
+
+export default {
+  components: { Messages },
+  computed: {
+    ...mapGetters({
+      sent: 'campaigns/sent'
+    })
+  },
+  methods: {
+    ...mapActions({
+      getCampaigns: 'campaigns/getUserCampaigns'
+    }),
+    onShow({ status, id }) {
+      if (status === 'sent') {
+        this.$router.push({
+          name: 'answers',
+          params: { messageId: id }
+        });
+      }
+    }
+  },
+  mounted() {
+    this.getCampaigns();
+  }
+};
+</script>

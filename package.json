@@ -5,39 +5,48 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "axios-progress-bar": "^1.2.0",
+    "bootstrap": "^4.3.1",
+    "chart.js": "^2.8.0",
     "core-js": "^2.6.5",
+    "currency.js": "^1.2.1",
+    "humantime": "^1.1.0",
+    "jquery": "^3.3.1",
     "moment": "^2.24.0",
+    "popper.js": "^1.15.0",
     "vue": "^2.6.6",
-    "vue-router": "^3.0.1"
+    "vue-breadcrumbs": "^1.2.0",
+    "vue-chartjs": "^3.4.2",
+    "vue-custom-scrollbar": "^1.0.0",
+    "vue-i18n": "^8.10.0",
+    "vue-progress-path": "^0.0.2",
+    "vue-router": "^3.0.1",
+    "vue-search-select": "^2.8.3",
+    "vue-textarea-autosize": "^1.0.4",
+    "vue2-datepicker": "^2.11.0",
+    "vuejs-datatable": "^1.7.0",
+    "vuex": "^3.0.1",
+    "xlsx": "^0.14.2"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.1",
+    "@kazupon/vue-i18n-loader": "^0.3.0",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-service": "^3.5.0",
+    "@vue/eslint-config-airbnb": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
+    "vue-cli-plugin-i18n": "^0.6.0",
     "vue-template-compiler": "^2.5.21"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
   },
   "postcss": {
     "plugins": {

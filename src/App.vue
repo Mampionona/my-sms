@@ -1,20 +1,69 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <component :is="layout">
+      <router-view/>
+    </component>
   </div>
 </template>
 
+<script>
+import DashboardLayout from '@/components/layouts/DashboardLayout';
+import DefaultLayout from '@/components/layouts/DefaultLayout';
+import { mapGetters, mapActions } from 'vuex';
+import { UNAUTHENTICATED } from '@/utils';
+
+export default {
+  components: {
+    DefaultLayout,
+    DashboardLayout
+  },
+  watch: {
+    $route: 'routeDidChange'
+  },
+  mounted() {
+    this.$nextTick(() => {
+      if (this.isLoggedIn) {
+        this.getUser().catch((error) => {
+          const { status } = error;
+          if (status === UNAUTHENTICATED) this.$router.push({ name: 'login' });
+        });
+      }
+    });
+  },
+  computed: {
+    ...mapGetters({
+      layout: 'layout/layout',
+      isLoggedIn: 'auth/isLoggedIn'
+    })
+  },
+  methods: {
+    ...mapActions({
+      getUser: 'auth/getUser',
+      setLayout: 'layout/setLayout'
+    }),
+    setBodyClass() {
+      const { body } = document;
+      if (this.$route.meta.layout) {
+        body.classList.remove('bg-default');
+        return;
+      }
+      body.classList.add('bg-default');
+    },
+    routeDidChange() {
+      const layout = this.$route.meta.layout || 'default';
+      this.setBodyClass();
+      this.setLayout(`${layout}-layout`);
+      this.$jQuery('.collapse.show.closable').collapse('hide');
+    }
+  }
+};
+</script>
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+textarea {
+  resize: none;
+}
+
+.form-control-plaintext {
+  outline: 0;
 }
 </style>
