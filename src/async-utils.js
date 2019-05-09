@@ -9,14 +9,13 @@ export const createAsyncMutation = type => ({
 });
 
 export function doAsync(context, { url, method, mutationTypes, data = {}, sort = true }) {
-  method = method || 'get';
   context.commit(mutationTypes.PENDING);
 
   return new Promise((resolve, reject) => {
     Axios({
       url,
       data,
-      method,
+      method: method || 'get',
       responseType: 'text'
     })
       .then((response) => {

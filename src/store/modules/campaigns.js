@@ -25,8 +25,8 @@ export default {
     // all campaigns marked as scheduled
     scheduled: (state, getters) => getters.campaigns.filter(({ sendDate, status }) => {
       const now = dateUTC(new Date());
-      sendDate = dateUTC(sendDate);
-      return status === 'live' && (sendDate - now) > 0;
+      const _sendDate = dateUTC(sendDate);
+      return status === 'live' && (_sendDate - now) > 0;
     }),
     answers: state => state.answers,
     stats: state => state.stats,
