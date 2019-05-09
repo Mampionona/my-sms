@@ -113,7 +113,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" @click="sendTest">Envoyer</button>
+            <button type="button" class="btn btn-secondary" @click="sendTest">Envoyer</button>
           </div>
         </div>
       </div>

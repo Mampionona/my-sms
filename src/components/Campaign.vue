@@ -15,7 +15,7 @@
       <td>{{ campaign.sendDate | full }}</td>
       <td>{{ listName }}</td>
       <td class="text-right">
-        <button class="btn btn-success"><i class="fas fa-bars"></i></button>
+        <button class="btn btn-secondary"><i class="fas fa-bars"></i></button>
       </td>
     </template>
   </tr>

@@ -8,7 +8,7 @@
     <td>{{ list.updateDate | full }}</td>
     <td class="text-right">
       <button class="btn btn-danger" @click.prevent="$emit('delete-list', list)"><i class="fas fa-trash-alt"></i></button>
-      <button class="btn btn-success" @click.prevent="$emit('show-list', list.id)"><i class="fas fa-bars"></i></button>
+      <button class="btn btn-secondary" @click.prevent="$emit('show-list', list.id)"><i class="fas fa-bars"></i></button>
     </td>
   </tr>
 </template>
