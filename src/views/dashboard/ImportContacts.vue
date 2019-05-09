@@ -70,6 +70,18 @@
           </div>
         </div>
       </div>
+      <div class="modal fade" id="import-error-modal" tabindex="-1" role="dialog" aria-labelledby="import-error-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              {{ modalBody }}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -97,7 +109,8 @@ export default {
       customName: '',
       countMaxLines: COUNT_MAX_LINES,
       countMinLines: COUNT_MIN_LINES,
-      errors: []
+      errors: [],
+      modalBody: ''
     };
   },
   mounted() {
@@ -176,12 +189,17 @@ export default {
         });
     },
     addContactsToAList(listId, contacts) {
-      this.addContacts({ listId, contacts }).then(() => {
-        this.$router.push({
-          name: 'contacts',
-          params: { listId }
+      this.addContacts({ listId, contacts })
+        .then(() => {
+          this.$router.push({
+            name: 'contacts',
+            params: { listId }
+          });
+        })
+        .catch(({ data }) => {
+          this.modalBody = data.error;
+          this.$jQuery('#import-error-modal').modal('show');
         });
-      });
     },
     dismissFile() {
       this.selectedFile = false;

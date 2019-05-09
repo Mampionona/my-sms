@@ -40,7 +40,7 @@ export default {
       state.newListId = payload.id;
     },
     [CREATE_NEW_LIST.FAILURE](state, payload) {
-      state.error = payload.data;
+      state.error = payload;
     },
     // Delete a list
     [DELETE_LIST.PENDING]() {},

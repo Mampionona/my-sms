@@ -21,7 +21,7 @@ export function doAsync(context, { url, method, mutationTypes, data = {}, sort =
       .then((response) => {
         const responseData = response.data;
         let sortedData = responseData;
-        if (sort) {
+        if (sort && Array.isArray(responseData)) {
           sortedData = responseData.sort((a, b) => {
             if ('id' in a) return b.id - a.id;
             return 0;
