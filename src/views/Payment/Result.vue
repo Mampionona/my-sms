@@ -1,17 +1,9 @@
 <template>
   <div class="payment-result">
-    <page-header></page-header>
-    <div class="container mt--8 pb-5">
-      <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-7">
-          <div class="card bg-secondary border-0 mb-0">
-            <div class="card-body px-lg-5 py-lg-5">
-              <div class="text-center">
-                <p class="mb-0">paymentStatus : {{ paymentStatus }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="card">
+      <div class="card-body">
+        <p v-if="fail" class="card-text mb-0">Le paiement a échoué. Vous pouvez essayer une nouvelle fois ou nous <a :href="`mailto:${mailTo}`">contacter directement.</a></p>
+        <p v-if="success">success</p>
       </div>
     </div>
   </div>
@@ -19,13 +11,23 @@
 <script>
 import PageHeader from '@/components/layouts/partials/PageHeader';
 import { mapActions } from 'vuex';
+import { MAIL_TO } from '@/utils';
 
 export default {
   components: { PageHeader },
+  computed: {
+    mailTo() {
+      return MAIL_TO;
+    },
+    fail() {
+      return this.paymentStatus === 'failure';
+    },
+    success() {
+      return this.paymentStatus === 'success';
+    }
+  },
   data() {
-    return {
-      paymentStatus: ''
-    };
+    return { paymentStatus: '' };
   },
   mounted() {
     this.checkPaymentStatus(this.$route.query.paylinetoken)

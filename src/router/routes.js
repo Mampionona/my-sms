@@ -40,7 +40,10 @@ const routes = [
     path: '/payment-result',
     name: 'payment_result',
     meta: {
-      requiresAuth: true
+      ...dashboardMetas,
+      icon: 'ni ni-credit-card',
+      breadcrumb: 'Résultat du paiement',
+      title: 'Résultat du paiement'
     },
     component: () => import('@/views/Payment/Result')
   },
