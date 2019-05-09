@@ -9,12 +9,10 @@
   </div>
 </template>
 <script>
-import PageHeader from '@/components/layouts/partials/PageHeader';
 import { mapActions } from 'vuex';
 import { MAIL_TO } from '@/utils';
 
 export default {
-  components: { PageHeader },
   computed: {
     mailTo() {
       return MAIL_TO;
