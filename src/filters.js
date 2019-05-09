@@ -3,7 +3,10 @@ import Currency from 'currency.js';
 import humanTime from 'humantime';
 
 export const currency = (value, precision = 3, symbol = '€') => Currency(value, { formatWithSymbol: true, precision, pattern: '# !', symbol }).format();
-export const formatNumber = number => number.toLocaleString('fr-FR');
+export const formatNumber = number => {
+  if (number) return number.toLocaleString('fr-FR');
+  return 0;
+};
 
 // Date
 Vue.filter('full', date => new Date(date).toLocaleString('fr-FR'));

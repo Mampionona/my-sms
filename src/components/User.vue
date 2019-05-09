@@ -4,7 +4,7 @@
     <td>{{ user.firstname }}</td>
     <td>{{ user.email }}</td>
     <td>{{ user.userRole }}</td>
-    <td>{{ user.credits | formatCurrency }}</td>
+    <td>{{ user.credits | formatNumber }} SMS</td>
     <td class="text-right" v-if="isAdmin">
       <button class="btn btn-secondary" @click="$emit('edit', user)"><i class="fas fa-pencil-alt"></i></button>
     </td>
