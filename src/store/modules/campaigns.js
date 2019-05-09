@@ -1,11 +1,10 @@
 import { doAsync, createAsyncMutation } from '@/async-utils';
+import { dateUTC } from '@/utils';
 
 const CREATE_OR_UPDATE_CAMPAIGN = createAsyncMutation('CREATE_OR_UPDATE_CAMPAIGN');
 const GET_USER_CAMPAIGNS = createAsyncMutation('GET_USER_CAMPAIGNS');
 const GET_CAMPAIGN_ANSWERS = createAsyncMutation('GET_CAMPAIGN_ANSWERS');
 const GET_CAMPAIGNS_STATS = createAsyncMutation('GET_CAMPAIGNS_STATS');
-
-const dateUTC = date => Date.parse(date);
 
 export default {
   namespaced: true,
@@ -14,7 +13,6 @@ export default {
     answers: [],
     stats: []
   },
-
   getters: {
     // all campaigns
     campaigns: state => state.campaigns,
@@ -30,9 +28,17 @@ export default {
     }),
     answers: state => state.answers,
     stats: state => state.stats,
-    lastSent: (state, getters) => getters.sent.sort()[0]
+    lastSentMessage: (state, getters) => getters.sent.sort((a, b) => {
+      const sentDateA = dateUTC(a.sentDate);
+      const sentDateB = dateUTC(b.sentDate);
+      return sentDateB - sentDateA;
+    })[0],
+    nextScheduledMessage: (state, getters) => getters.scheduled.sort((a, b) => {
+      const sentDateA = dateUTC(a.sendDate);
+      const sentDateB = dateUTC(b.sendDate);
+      return sentDateA - sentDateB;
+    })[0]
   },
-
   mutations: {
     // create or update campaign
     [CREATE_OR_UPDATE_CAMPAIGN.PENDING]() {},
@@ -59,7 +65,6 @@ export default {
       //
     }
   },
-
   actions: {
     getUserCampaigns(context) {
       return doAsync(context, {

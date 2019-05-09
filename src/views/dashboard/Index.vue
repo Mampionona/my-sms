@@ -19,10 +19,10 @@
               <h5 class="h3 mb-0">Dernier envoi</h5>
             </div>
             <div class="card-body text-center">
-              <template v-if="sentMessage">
+              <template v-if="lastSentMessage">
                 <pie-chart :chart-data="collection"></pie-chart>
                 <p class="mb-0 mt-4">
-                  <router-link class="btn btn-icon btn-primary" :to="responseUrl(sentMessage)">
+                  <router-link class="btn btn-icon btn-primary" :to="responseUrl(lastSentMessage)">
                     <span class="btn-inner--icon"><i class="fas fa-bars"></i></span>
                     <span class="btn-inner--text">Réponses</span>
                   </router-link>
@@ -39,12 +39,11 @@
             <div class="card-header">
               <h5 class="h3 mb-0">Prochaine campagne</h5>
             </div>
-            <div class="card-body">
-              <div class="text-right mt-4">
-                <router-link class="btn btn-icon btn-primary" :to="{name: 'create_campaign'}">
-                  <span class="btn-inner--icon"><i class="fas fa-envelope-open"></i></span>
-                </router-link>
+            <div class="card-body text-center">
+              <div v-if="nextScheduledMessage">
+                <p class="mb-0">La prochaine campagne sera envoyée le {{ nextScheduledMessage.sendDate | full }}</p>
               </div>
+              <p v-else class="mb-0">Vous n'avez aucun envoi programmé.</p>
             </div>
           </div>
         </div>
@@ -78,7 +77,8 @@ export default {
   components: { Stats, PieChart, LinkWithIcon },
   computed: {
     ...mapGetters({
-      sentMessage: 'campaigns/lastSent'
+      lastSentMessage: 'campaigns/lastSentMessage',
+      nextScheduledMessage: 'campaigns/nextScheduledMessage'
     }),
     collection() {
       const items = [
@@ -94,7 +94,7 @@ export default {
       const backgroundColor = [];
       items.forEach(({ label, field, color }) => {
         labels.push(label);
-        data.push(this.sentMessage[field]);
+        data.push(this.lastSentMessage[field]);
         backgroundColor.push(color);
       });
       return {
