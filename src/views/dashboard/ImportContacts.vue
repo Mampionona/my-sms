@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-lg-8">
+    <div class="col">
       <div class="card">
         <div class="card-body">
           <div class="dropzone p-5 mb-4" @drop.stop.prevent="handleFiles($event)" @dragenter.stop.prevent @dragover.stop.prevent>
@@ -24,17 +24,26 @@
           </div>
 
           <div class="form-group mb-5">
-            <label for="custom-name" class="form-control-label">Personnaliser le nom du fichier</label>
+            <label for="custom-name" class="form-control-label">Nommez le nom du fichier</label>
             <input class="form-control" type="text" id="custom-name" v-model="customName">
           </div>
 
-          <div class="alert alert-info" role="alert">
-            <ul class="pl-2 mb-0">
+          <div class="alert alert-secondary" role="alert">
+            <ul class="mb-0">
               <li><p>La première ligne du fichier doit être le nom des colonnes.</p></li>
               <li><p>La liste des contacts doit être au format Excel ou CSV</p></li>
-              <li><p>Pour un fichier CSV le séparateur doit être le pint-virgule et l'encoding UTF-8</p></li>
+              <li><p>Pour un fichier CSV le séparateur doit être le point-virgule et l'encoding UTF-8</p></li>
               <li><p>Le fichier doit contenir au minimum 1 colonne avec les numéros de portable</p></li>
-              <li><p>Le nombre de lignes du fichier doit être au maximum de 100000 et au minimum de 5.</p></li>
+              <li><p>Le nombre de lignes du fichier doit être au maximum de {{ countMaxLines | formatNumber }} et au minimum de {{ countMinLines | formatNumber }}.</p></li>
+            </ul>
+          </div>
+          <div class="alert" role="alert">
+            <p><strong>Nos exemples</strong></p>
+            <ul class="mb-0">
+              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_exemple_simple.csv`" class="exemple-csv">CSV</a></p></li>
+              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_exemple_variable.csv`" class="exemple-csv">CSV</a></p></li>
+              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_xls_exemple_simple.xls`" class="exemple-csv">XLS</a></p></li>
+              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_xls_exemple_variable.xls`" class="exemple-csv">XLS</a></p></li>
             </ul>
           </div>
           <div class="alert">
@@ -47,38 +56,36 @@
             <ul class="mb-0">
               <li><p>J'ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.</p></li>
               <li><p>Aucun de mes contacts n'a été acquis via des listes de diffusion tierces.</p></li>
-              <li><p>J'inclurai la mention STOP dans toute campagne marketing.</p></li>
-              <li><p>Je n'enverrai avec SMS Partner que des informations légales et légitimes.</p></li>
+              <li><p>J'inclurai la mention <strong>STOP au 36105</strong> dans toute campagne marketing.</p></li>
+              <li><p>Je n'enverrai avec My SMS que des informations légales et légitimes.</p></li>
             </ul>
           </div>
+          <alert v-if="hasError" color="danger" icon="fas fa-exclamation-triangle" class="mb-5">
+            <ul class="mb-0 px-3">
+              <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+            </ul>
+          </alert>
           <div class="text-right">
             <button class="btn-primary btn" @click.prevent="importWorkbook">Télécharger le fichier</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-lg-4">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="h3 mb-0">Nos exemples</h5>
-        </div>
-        <div class="card-body">
-          <ul>
-            <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_exemple_simple.csv`" class="exemple-csv">CSV</a></p></li>
-            <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_exemple_variable.csv`" class="exemple-csv">CSV</a></p></li>
-            <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_xls_exemple_simple.xls`" class="exemple-csv">XLS</a></p></li>
-            <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_xls_exemple_variable.xls`" class="exemple-csv">XLS</a></p></li>
-          </ul>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script>
+import Alert from '@/components/Alert';
 import { validFileExtensions, workbookToArray, COUNT_MAX_LINES, COUNT_MIN_LINES } from '@/utils';
+import { formatNumber } from '@/filters';
 import { mapActions } from 'vuex';
 
 export default {
+  components: { Alert },
+  computed: {
+    hasError() {
+      return Object.keys(this.errors).length > 0;
+    }
+  },
   data() {
     return {
       publicPath: process.env.BASE_URL,
@@ -87,7 +94,10 @@ export default {
       contacts: [],
       selectedFile: false,
       errorMessage: '',
-      customName: ''
+      customName: '',
+      countMaxLines: COUNT_MAX_LINES,
+      countMinLines: COUNT_MIN_LINES,
+      errors: []
     };
   },
   mounted() {
@@ -121,7 +131,7 @@ export default {
           const columns = contacts.shift();
 
           if (countLines > COUNT_MAX_LINES || countLines < COUNT_MIN_LINES) {
-            this.errorMessage = `Le nombre de lignes du fichier doit être au maximum de ${COUNT_MAX_LINES} et au minimum de ${COUNT_MIN_LINES}.`;
+            this.errorMessage = `Le nombre de lignes du fichier doit être au maximum de ${formatNumber(COUNT_MAX_LINES)} et au minimum de ${formatNumber(COUNT_MIN_LINES)}.`;
             return;
           }
 
@@ -151,18 +161,19 @@ export default {
       }
     },
     importWorkbook() {
-      const { customName, filename, contacts } = this;
+      const { customName, filename, contacts, certify } = this;
       const len = contacts.length;
-      if (len < COUNT_MIN_LINES || len > COUNT_MAX_LINES) {
-        return;
-      }
-      // create a new list
-      if (this.certify) {
-        this.createNewList({
-          name: customName || filename
-        })
-          .then(data => this.addContactsToAList(data.id, contacts));
-      }
+
+      this.errors = [];
+      if (len === 0) this.errors.push('Aucun fichier sélectionné');
+      if (!certify) this.errors.push('Vous devez accepter les politiques de téléchargement du fichier');
+      if (this.hasError) return;
+
+      this.createNewList({ name: customName || filename })
+        .then(({ id }) => this.addContactsToAList(id, contacts))
+        .finally(() => {
+          this.errors = [];
+        });
     },
     addContactsToAList(listId, contacts) {
       this.addContacts({ listId, contacts }).then(() => {

@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import Vue from 'vue';
 import { UNAUTHENTICATED } from './utils';
+import '@/filters';
 // Bootstrap JS
 require('bootstrap');
 

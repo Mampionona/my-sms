@@ -1,10 +1,12 @@
 import XLSX from 'xlsx';
 
+export const BAD_REQUEST = 400;
 export const UNAUTHENTICATED = 401;
 export const COUNT_MAX_LINES = 100000;
 export const COUNT_MIN_LINES = 5;
 export const validFileExtensions = ['.xls', '.xlsx', '.csv'];
-export const MAIL_TO = 'julien@my-sms.pro';
+export const MAIL_TO = 'help@my-sms.pro';
+export const TELEPHONE = '0899020720';
 
 export function workbookToArray(file, complete) {
   const reader = new FileReader();
@@ -61,7 +63,7 @@ export function computeRemainingChars(countSMS, len) {
  * @return { String }
  */
 export function removeSpaces(str) {
-  return str.replace(/\s/g, '').trim();
+  return str.toString().replace(/\s/g, '').trim();
 }
 
 /**

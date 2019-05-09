@@ -2,9 +2,6 @@
   <div class="row">
     <div class="col">
       <div class="card">
-        <div class="card-header border-0">
-          <router-link :to="{ name: 'import_file' }" class="btn btn-primary">Importer des contacts</router-link>
-        </div>
         <datatable :columns="columns" :data="lists">
           <template slot-scope="{ row }">
             <list
@@ -48,6 +45,7 @@ export default {
       columns: [
         { label: 'Fichiers', field: 'name' },
         { label: 'Contacts actifs', field: 'contacts' },
+        { label: 'STOP', field: '' },
         { label: 'Créé le', field: 'updateDate' },
         { label: '', representedAs: () => '' }
       ],

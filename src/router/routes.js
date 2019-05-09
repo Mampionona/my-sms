@@ -14,6 +14,11 @@ const routes = [
     }
   },
   {
+    path: '/login',
+    component: () => import('@/views/AutoConnect'),
+    meta: { redirectIfLoggedIn: true }
+  },
+  {
     path: '/register',
     name: 'register',
     component: () => import('@/views/Register'),
@@ -30,14 +35,6 @@ const routes = [
       title: 'Mot de passe oublié ?',
       redirectIfLoggedIn: true
     }
-  },
-  {
-    path: '/payment-cancel',
-    name: 'payment_cancel',
-    meta: {
-      requiresAuth: true
-    },
-    component: () => import('@/views/Payment/Cancel')
   },
   {
     path: '/payment-result',
@@ -149,7 +146,7 @@ const routes = [
         meta: {
           ...dashboardMetas,
           title: 'Acheter des SMS',
-          breadcrumb: 'Acheter des SMS',
+          breadcrumb: 'Sélectionner votre pack de sms',
           icon: 'ni ni-credit-card'
         },
         component: () => import('@/views/dashboard/Packs')

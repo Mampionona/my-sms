@@ -2,9 +2,9 @@
   <div class="row">
     <div class="col">
       <div class="card">
-        <datatable :columns="columns" :data="plans">
+        <datatable :columns="columns" :data="plans" class="vertical-align-middle">
           <template slot-scope="{ row }">
-            <plan :plan="row" @click.native="showEditForm(row)" button />
+            <plan :plan="row" @click.native="showEditForm(row)" edit-button />
           </template>
           <div slot="no-results" class="text-center">Aucun formule trouvé</div>
         </datatable>

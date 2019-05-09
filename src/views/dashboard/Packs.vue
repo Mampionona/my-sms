@@ -2,9 +2,9 @@
   <div class="row">
     <div class="col">
       <div class="card">
-        <datatable :columns="columns" :data="selectedPlan">
+        <datatable :columns="columns" :data="selectedPlan" class="vertical-align-middle">
           <template slot-scope="{ row }">
-            <plan :plan="row"></plan>
+            <plan :plan="row" subscribe-button @subscribe="subscribe"></plan>
           </template>
         </datatable>
         <div class="card-body">
@@ -33,7 +33,8 @@ export default {
       columns: [
         { label: '', representedAs: () => '' },
         { label: 'P.U', field: 'smsPrice' },
-        { label: 'Abonnement', field: 'planPrice' }
+        { label: 'Abonnement', field: 'planPrice' },
+        { label: '', representedAs: () => '' }
       ],
       numberOfSMS: null,
       plans: [],
@@ -48,10 +49,13 @@ export default {
       getPaymentUrl: 'payment/getPaymentUrl'
     }),
     processPayment() {
+      this.subscribe(this.selectedPlan[0]);
+    },
+    subscribe(plan) {
       let amount;
 
-      if (!this.selectedPlan[0].planPrice) amount = Math.round((this.selectedPlan[0].smsPrice * this.numberOfSMS) / 10); // convert in cents
-      else amount = this.selectedPlan[0].planPrice * 100; // convert in cents
+      if (!plan.planPrice) amount = Math.round((plan.smsPrice * this.numberOfSMS) / 10); // convert in cents
+      else amount = plan.planPrice * 100; // convert in cents
 
       this.getPaymentUrl({ amount }).then(res => window.location.replace(res.paymentUrl));
     }

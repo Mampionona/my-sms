@@ -3,8 +3,9 @@
     <th>{{ plan.name }}</th>
     <td>{{ (plan.smsPrice / 1000) | formatCurrency }}</td>
     <td>{{ plan.planPrice | formatCurrency(2) }}</td>
-    <td v-if="button" class="text-right">
-      <button class="btn btn-secondary"><i class="fas fa-pencil-alt"></i></button>
+    <td class="text-right">
+      <button v-if="editButton" class="btn btn-secondary"><i class="fas fa-pencil-alt"></i></button>
+      <button v-if="subscribeButton && plan.planPrice > 0" class="btn btn-secondary" @click="$emit('subscribe', plan)">Je m'abonne</button>
     </td>
   </tr>
 </template>
@@ -15,7 +16,11 @@ export default {
       required: true,
       type: Object
     },
-    button: {
+    editButton: {
+      default: false,
+      type: Boolean
+    },
+    subscribeButton: {
       default: false,
       type: Boolean
     }

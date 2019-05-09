@@ -1,17 +1,12 @@
 <template>
   <div class="row">
     <div class="col-xl-4 order-xl-2">
-      <div v-if="user.credits" class="card bg-gradient-info border-0">
+      <div v-if="user.credits" class="card border-0">
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <h5 class="card-title text-uppercase text-muted mb-0 text-white">Credits</h5>
-              <span class="h2 font-weight-bold mb-0 text-white">{{ user.credits | formatCurrency }}</span>
-            </div>
-            <div class="col-auto">
-              <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
-                <i class="ni ni-credit-card"></i>
-              </div>
+              <h5 class="card-title text-uppercase text-muted mb-0">Credits</h5>
+              <span class="h2 font-weight-bold mb-0">{{ user.credits | formatNumber }} SMS</span>
             </div>
           </div>
         </div>

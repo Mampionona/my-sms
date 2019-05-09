@@ -331,9 +331,9 @@
     @include transition($transition-base);
 
     @include media-breakpoint-up(xl) {
-        &:hover {
-            max-width: $navbar-vertical-open-width;
-        }
+        // &:hover {
+        //     max-width: $navbar-vertical-open-width;
+        // }
 
         .sidenav-toggler {
             padding: 1.5rem;
@@ -343,7 +343,7 @@
     .navbar-brand,
     .navbar-heading {
         padding: 1.5rem;
-        display: none;
+        // display: none;
     }
 }
 

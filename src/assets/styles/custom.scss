@@ -113,3 +113,70 @@ p:only-child {
 //     min-height: 300px;
 //   }
 // }
+
+.table {
+  &.vertical-align-middle {
+    tbody th,
+    td {
+      vertical-align: middle;
+    }
+  }
+}
+
+.default-layout {
+  .main-content {
+    min-height: calc(100vh - 120px);
+  }
+}
+
+.vue-progress-path {
+  .progress {
+    stroke: #a6b5ba;
+  }
+}
+
+.text-color {
+  color: #a6b5ba;
+}
+
+.modal-content {
+  overflow: hidden;
+}
+
+strong {
+  font-weight: 600;
+}
+
+// Sidenav
+.sidenav-close {
+  .nav-link-text {
+    display: none;
+  }
+
+  .sidenav {
+    .navbar-brand,
+    .navbar-heading {
+      display: none;
+    }
+  }
+
+  .navbar-vertical .navbar-nav .nav-link[data-toggle="collapse"]:after {
+    display: none;
+  }
+
+  .navbar-nav {
+    .collapse.show {
+      display: none;
+    }
+  }
+}
+
+.sidenav-open {
+  .sidenav {
+    max-width: $navbar-vertical-open-width;
+  }
+
+  .navbar-vertical.navbar-expand-xs.fixed-left + .main-content {
+    margin-left: $navbar-vertical-open-width;
+  }
+}

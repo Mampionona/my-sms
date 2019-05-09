@@ -1,11 +1,8 @@
 <template>
   <div class="campaign-form">
-    <div v-if="hasError || created" :class="statusClass" role="alert">
-      {{ statusMessage }}
-    </div>
     <form @submit.prevent="submitCampaign" class="pb-5">
       <div class="row custom-row">
-        <div class="col-lg-4">
+        <div class="col-lg-12">
           <div class="card">
             <div class="card-header"><i class="ni ni-chat-round mr-2"></i> Nom de la campagne</div>
             <div class="card-body">
@@ -27,7 +24,7 @@
           </div>
 
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-12">
           <div class="card">
             <div class="card-header"><i class="fas fa-envelope-open mr-2"></i> Votre message</div>
             <div class="card-body">
@@ -53,7 +50,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-12">
           <div class="card">
             <div class="card-header"><i class="fas fa-arrow-right mr-2"></i> Émetteur du message</div>
             <div class="card-body">
@@ -88,15 +85,39 @@
           </div>
         </div>
       </div>
+      <div v-if="hasError || created" :class="statusClass" role="alert">
+        {{ statusMessage }}
+      </div>
       <div class="row">
         <div class="col">
           <div class="text-right pr-3">
-            <button class="btn btn-secondary" type="button">Envoyer un test</button>
+            <button class="btn btn-secondary" type="button" @click="$jQuery('#send-test').modal('show')">Envoyer un test</button>
             <button class="btn btn-primary" type="submit">Terminer</button>
           </div>
         </div>
       </div>
     </form>
+    <div class="modal fade" id="send-test" tabindex="-1" role="dialog" aria-labelledby="send-test-label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="send-test-label">Envoyer un test</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group mb-0">
+                <label for="tel-input-test" class="form-control-label">Entrez un numéro de téléphone</label>
+                <input class="form-control" type="tel" id="tel-input-test" v-model="telephone">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="sendTest">Envoyer</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -125,7 +146,8 @@ export default {
       name: '',
       statusMessage: '',
       hasError: false,
-      created: false
+      created: false,
+      telephone: ''
     };
   },
   mounted() {
@@ -156,6 +178,7 @@ export default {
     statusClass() {
       return {
         alert: true,
+        'mb-5': true,
         'alert-danger': this.hasError,
         'alert-success': this.created
       };
@@ -208,6 +231,9 @@ export default {
           });
         }
       });
+    },
+    sendTest() {
+      //
     }
   }
 };

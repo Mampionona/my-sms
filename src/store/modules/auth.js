@@ -88,19 +88,13 @@ export default {
       });
     },
     getUser(context) {
-      if (!context.getters.isLoggedIn) {
-        return false;
-      }
-
       return new Promise((resolve, reject) => {
         doAsync(context, {
           url: '/users/me',
           mutationTypes: FETCH_USER
         })
           .then(([user]) => resolve(user))
-          .catch(({ response }) => {
-            reject(response);
-          });
+          .catch(error => reject(error));
       });
     },
     updateAccount(context, user) {

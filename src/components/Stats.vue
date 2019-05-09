@@ -19,7 +19,9 @@ export default {
       const labels = ['', ...this.stats.map(stat => stat.date)];
       const datasets = [{
         label: 'Messages',
-        data: [0, ...this.stats.map(stat => stat.messages)]
+        data: [0, ...this.stats.map(stat => stat.messages)],
+        borderColor: '#b7b7b7',
+        backgroundColor: 'transparent'
       }];
 
       return { labels, datasets };

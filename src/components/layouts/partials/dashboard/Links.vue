@@ -4,19 +4,23 @@
       <sidenav-toggler toggler-dark></sidenav-toggler>
     </li>
     <li class="nav-item">
-      <a :href="`mailto:${mailTo}`" class="nav-link"><i class="fas fa-question-circle"></i> Assistance</a>
+      <a :href="`tel:${telephone}`" class="nav-link"><i class="fas fa-phone fa-flip-horizontal"></i> {{ telephone }}</a>
     </li>
-    <li v-if="user.credits" class="nav-link d-inline-flex align-items-center">
-      Crédits <span class="ml-2 badge badge-danger">{{ user.credits | formatCurrency(2) }}</span>
+    <li class="nav-item">
+      <a :href="`mailto:${mailTo}`" class="nav-link"><i class="fas fa-question-circle"></i> Assistance par email</a>
+    </li>
+    <li v-if="user !== null && user.credits" class="nav-link d-inline-flex align-items-center">
+      Crédits <span class="ml-2 badge badge-secondary">{{ user.credits | formatNumber }} SMS</span>
     </li>
   </ul>
 </template>
 <script>
 import SidenavToggler from '@/components/SidenavToggler';
-import { MAIL_TO } from '@/utils';
+import { MAIL_TO, TELEPHONE } from '@/utils';
 
 export default {
   props: {
+    plans: Array,
     user: {
       type: Object
     }
@@ -25,11 +29,9 @@ export default {
   computed: {
     mailTo() {
       return MAIL_TO;
-    }
-  },
-  methods: {
-    toggleSidenav() {
-      document.body.classList.toggle('g-sidenav-pinned');
+    },
+    telephone() {
+      return TELEPHONE;
     }
   }
 };
