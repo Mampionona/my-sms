@@ -37,17 +37,6 @@ const routes = [
     }
   },
   {
-    path: '/payment-result',
-    name: 'payment_result',
-    meta: {
-      ...dashboardMetas,
-      icon: 'ni ni-credit-card',
-      breadcrumb: 'Résultat du paiement',
-      title: 'Résultat du paiement'
-    },
-    component: () => import('@/views/Payment/Result')
-  },
-  {
     path: '/dashboard',
     component: () => import('@/views/Dashboard'),
     meta: {
@@ -232,6 +221,17 @@ const routes = [
           icon: 'fas fa-chart-bar'
         },
         component: () => import('@/views/dashboard/Stats')
+      },
+      {
+        path: 'payment-result',
+        name: 'payment_result',
+        meta: {
+          ...dashboardMetas,
+          icon: 'ni ni-credit-card',
+          breadcrumb: 'Résultat du paiement',
+          title: 'Résultat du paiement'
+        },
+        component: () => import('@/views/Payment/Result')
       }
     ]
   }, {

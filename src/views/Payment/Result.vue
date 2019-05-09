@@ -2,8 +2,32 @@
   <div class="payment-result">
     <div class="card">
       <div class="card-body">
-        <p v-if="fail" class="card-text mb-0">Le paiement a échoué. Vous pouvez essayer une nouvelle fois ou nous <a :href="`mailto:${mailTo}`">contacter directement.</a></p>
-        <p v-if="success">success</p>
+        <p v-if="fail" class="card-text mb-0">Le paiement a échoué.<br>Vous pouvez essayer une nouvelle fois ou nous <a :href="`mailto:${mailTo}`">contacter directement.</a></p>
+        <div v-if="success">
+          <div v-if="isLiberty">
+            <p><strong>Créditez votre compte par virement bancaire:</strong></p>
+            <ol>
+              <li><p>Effectuez un virement du montant du nombre de crédit souhaité.</p></li>
+              <li><p>Précisez l'email associé à votre compte en référence de virement.</p></li>
+            </ol>
+            <p><strong>Nos coordonnées bancaires:</strong></p>
+            <address>
+              <p>
+                <strong>IBAN:</strong> FR76 1009 6180 7100 0297 6320 178<br>
+                <strong>BIC:</strong> CMCIFRPP
+              </p>
+              <p>
+                <strong>DOMICILIATION</strong><br>
+                CIC Aix Les Milles
+              </p>
+              <p>
+                <strong>TITULAIRE DU COMPTE</strong><br>
+                S.A.S DELTACOMM - 7 AVENUE ANDRE ROUSSIN - PONANT LITTORAL - 13016 MARSEILLE
+              </p>
+            </address>
+          </div>
+          <p v-else class="mb-0">Paiement effectué avec succès</p>
+        </div>
       </div>
     </div>
   </div>
@@ -22,6 +46,9 @@ export default {
     },
     success() {
       return this.paymentStatus === 'success';
+    },
+    isLiberty() {
+      return localStorage.getItem('planId') === '1';
     }
   },
   data() {
@@ -34,8 +61,7 @@ export default {
         else if (paymentStatus === 'failure') this.paymentStatus = 'failure';
         else if (paymentStatus === 'pending') this.paymentStatus = 'pending';
         else this.paymentStatus = 'server error';
-      })
-      .catch(error => console.log(error));
+      });
   },
   methods: {
     ...mapActions({

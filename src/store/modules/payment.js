@@ -9,12 +9,14 @@ export default {
 
   state: {
     paymentUrl: null,
-    payments: []
+    payments: [],
+    paymentStatus: null
   },
 
   getters: {
     paymentUrl: state => state.paymentUrl,
-    payments: state => state.payments
+    payments: state => state.payments,
+    paymentStatus: state => state.paymentStatus
   },
 
   mutations: {
@@ -30,8 +32,8 @@ export default {
     [CONFIRM_PAYMENT.PENDING]() {
       //
     },
-    [CONFIRM_PAYMENT.SUCCESS]() {
-      //
+    [CONFIRM_PAYMENT.SUCCESS](state, payload) {
+      state.paymentStatus = payload;
     },
     [CONFIRM_PAYMENT.FAILURE]() {
       //

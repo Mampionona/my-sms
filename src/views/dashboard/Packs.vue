@@ -57,7 +57,11 @@ export default {
       if (!plan.planPrice) amount = Math.round((plan.smsPrice * this.numberOfSMS) / 10); // convert in cents
       else amount = plan.planPrice * 100; // convert in cents
 
-      this.getPaymentUrl({ amount }).then(res => window.location.replace(res.paymentUrl));
+      this.getPaymentUrl({ amount }).then((res) => {
+        console.log(plan.id);
+        localStorage.setItem('planId', plan.id);
+        window.location.replace(res.paymentUrl);
+      });
     }
   },
   mounted() {
