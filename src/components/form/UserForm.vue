@@ -144,11 +144,12 @@ export default {
 
       if (!this.update) return data;
       const { id } = this.user;
+
       return {
         ...data,
         userId: id,
-        credits,
-        planId
+        credits: parseInt(credits, 10),
+        planId: parseInt(planId, 10)
       };
     }
   },
