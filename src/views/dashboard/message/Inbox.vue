@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col">
       <div class="card">
-        <datatable :columns="columns" :data="sentMessages">
+        <datatable :columns="columns" :data="sentMessages" class="vertical-align-middle">
           <template slot-scope="{ row }">
             <sent-message
               :message="row"

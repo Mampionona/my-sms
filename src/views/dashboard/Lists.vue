@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col">
       <div class="card">
-        <datatable :columns="columns" :data="lists">
+        <datatable :columns="columns" :data="lists" class="vertical-align-middle">
           <template slot-scope="{ row }">
             <list
               :list="row"
