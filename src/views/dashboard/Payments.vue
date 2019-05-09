@@ -26,9 +26,7 @@ export default {
   },
   data() {
     return {
-      columns: columns.map((label) => {
-        return { label };
-      }),
+      columns: columns.map(label => ({ label })),
       page: 1,
       per_page: 10
     };
