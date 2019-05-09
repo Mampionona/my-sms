@@ -32,10 +32,10 @@ router.beforeEach((to, from, next) => {
           else next(dashboard);
         })
         .catch(() => next(dashboard));
-      else if (to.name === 'payment_result')
+      else if (to.name === 'payment_result') {
         if (to.query.paylinetoken) next();
         else next('/');
-      else next();
+      } else next();
   }
   else if (to.matched.some(record => record.meta.redirectIfLoggedIn)) {
     // when user is logged in

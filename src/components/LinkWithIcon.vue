@@ -28,7 +28,7 @@ export default {
 </script>
 <style lang="scss">
 $or: #b2a979;
-$gris: #d2e3ee;
+$blanc: #fff;
 
 .link-with-icon {
   border: 0;
@@ -38,7 +38,7 @@ $gris: #d2e3ee;
   &,
   &:hover {
     background-color: $or;
-    color: $gris;
+    color: $blanc;
 
     .link-icon {
       background-color: darken($or, 5%);
@@ -53,15 +53,6 @@ $gris: #d2e3ee;
 
   .link-text {
     width: calc(100% - 90px);
-  }
-
-  &.gris {
-    background-color: $gris;
-    color: $or;
-
-    .link-icon {
-      background-color: darken($gris, 5%);
-    }
   }
 }
 </style>

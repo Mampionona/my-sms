@@ -6,7 +6,7 @@
           <link-with-icon :to="{ name: 'packs' }" icon="ni ni-credit-card">Acheter un pack</link-with-icon>
         </div>
         <div class="col-lg-4 mt-4 mt-lg-0">
-          <link-with-icon color :to="{ name: 'import_file' }" icon="fas fa-address-book">Importer des contacts</link-with-icon>
+          <link-with-icon :to="{ name: 'import_file' }" icon="fas fa-address-book">Importer des contacts</link-with-icon>
         </div>
         <div class="col-lg-4 mt-4 mt-lg-0">
           <link-with-icon :to="{ name: 'create_campaign' }" icon="fa fa-th-large">Créer une campagne</link-with-icon>
