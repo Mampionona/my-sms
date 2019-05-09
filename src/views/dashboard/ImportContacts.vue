@@ -22,7 +22,6 @@
               <p v-if="errorMessage" class="text-danger mb-0 mt-4 font-weight-bold error-message">{{ errorMessage }}</p>
             </div>
           </div>
-
           <div class="form-group">
             <label for="import-where" class="form-control-label">Importer les contacts</label>
             <select id="import-where" class="form-control" v-model="destination">
@@ -30,7 +29,6 @@
               <option value="list">dans une liste déjà existante</option>
             </select>
           </div>
-
           <div v-if="destination === 'list'" class="form-group">
             <label class="form-control-label">Sélectionner un fichier</label>
             <model-list-select
@@ -41,12 +39,11 @@
               placeholder="Sélectionner un fichier"
             ></model-list-select>
           </div>
-          <div v-else class="form-group mb-5">
+          <div v-else class="form-group">
             <label for="custom-name" class="form-control-label">Nommez le nom du fichier</label>
             <input class="form-control" type="text" id="custom-name" v-model="customName">
           </div>
-
-          <div class="alert alert-secondary" role="alert">
+          <div class="alert alert-secondary mt-5" role="alert">
             <ul class="mb-0">
               <li><p>La première ligne du fichier doit être le nom des colonnes.</p></li>
               <li><p>La liste des contacts doit être au format Excel ou CSV</p></li>
