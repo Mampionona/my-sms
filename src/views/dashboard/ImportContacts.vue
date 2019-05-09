@@ -23,7 +23,25 @@
             </div>
           </div>
 
-          <div class="form-group mb-5">
+          <div class="form-group">
+            <label for="import-where" class="form-control-label">Importer les contacts</label>
+            <select id="import-where" class="form-control" v-model="destination">
+              <option value="new">dans une nouvelle liste</option>
+              <option value="list">dans une liste déjà existante</option>
+            </select>
+          </div>
+
+          <div v-if="destination === 'list'" class="form-group">
+            <label class="form-control-label">Sélectionner un fichier</label>
+            <model-list-select
+              :list="lists"
+              option-value="id"
+              option-text="name"
+              v-model="listId"
+              placeholder="Sélectionner un fichier"
+            ></model-list-select>
+          </div>
+          <div v-else class="form-group mb-5">
             <label for="custom-name" class="form-control-label">Nommez le nom du fichier</label>
             <input class="form-control" type="text" id="custom-name" v-model="customName">
           </div>
@@ -87,13 +105,15 @@
 </template>
 <script>
 import Alert from '@/components/Alert';
+import { ModelListSelect } from 'vue-search-select';
 import { validFileExtensions, workbookToArray, COUNT_MAX_LINES, COUNT_MIN_LINES } from '@/utils';
 import { formatNumber } from '@/filters';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  components: { Alert },
+  components: { Alert, ModelListSelect },
   computed: {
+    ...mapGetters({ lists: 'lists/lists' }),
     hasError() {
       return Object.keys(this.errors).length > 0;
     }
@@ -110,16 +130,20 @@ export default {
       countMaxLines: COUNT_MAX_LINES,
       countMinLines: COUNT_MIN_LINES,
       errors: [],
-      modalBody: ''
+      modalBody: '',
+      listId: null,
+      destination: 'new'
     };
   },
   mounted() {
+    this.getLists();
     this.$refs.csv.addEventListener('change', this.handleFiles, false);
   },
   methods: {
     ...mapActions({
       addContacts: 'contacts/addContacts',
-      createNewList: 'lists/createNewList'
+      createNewList: 'lists/createNewList',
+      getLists: 'lists/getUserLists'
     }),
     handleFiles(event) {
       const { files } = event.type === 'drop' ? event.dataTransfer : event.target;
@@ -178,15 +202,18 @@ export default {
       const len = contacts.length;
 
       this.errors = [];
-      if (len === 0) this.errors.push('Aucun fichier sélectionné');
+      if (len === 0 && this.destination === 'new') this.errors.push('Aucun fichier sélectionné');
+      if (this.destination === 'list' && !this.listId) this.errors.push('Vous devez choisir une liste déjà existante');
       if (!certify) this.errors.push('Vous devez accepter les politiques de téléchargement du fichier');
       if (this.hasError) return;
-
-      this.createNewList({ name: customName || filename })
-        .then(({ id }) => this.addContactsToAList(id, contacts))
-        .finally(() => {
-          this.errors = [];
-        });
+      if (this.destination === 'new') {
+        this.createNewList({ name: customName || filename })
+          .then(({ id }) => this.addContactsToAList(id, contacts))
+          .finally(() => {
+            this.errors = [];
+          });
+      }
+      else this.addContactsToAList(this.listId, contacts);
     },
     addContactsToAList(listId, contacts) {
       this.addContacts({ listId, contacts })
