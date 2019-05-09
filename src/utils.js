@@ -6,6 +6,7 @@ export const COUNT_MAX_LINES = 100000;
 export const COUNT_MIN_LINES = 5;
 export const validFileExtensions = ['.xls', '.xlsx', '.csv'];
 export const MAIL_TO = 'help@my-sms.pro';
+export const TELEPHONE = '0899020720';
 
 export function workbookToArray(file, complete) {
   const reader = new FileReader();

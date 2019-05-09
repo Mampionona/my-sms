@@ -4,6 +4,9 @@
       <sidenav-toggler toggler-dark></sidenav-toggler>
     </li>
     <li class="nav-item">
+      <a :href="`tel:${telephone}`" class="nav-link"><i class="fas fa-phone fa-flip-horizontal"></i> {{ telephone }}</a>
+    </li>
+    <li class="nav-item">
       <a :href="`mailto:${mailTo}`" class="nav-link"><i class="fas fa-question-circle"></i> Assistance par email</a>
     </li>
     <li v-if="user !== null && user.credits" class="nav-link d-inline-flex align-items-center">
@@ -13,7 +16,7 @@
 </template>
 <script>
 import SidenavToggler from '@/components/SidenavToggler';
-import { MAIL_TO } from '@/utils';
+import { MAIL_TO, TELEPHONE } from '@/utils';
 
 export default {
   props: {
@@ -26,6 +29,9 @@ export default {
   computed: {
     mailTo() {
       return MAIL_TO;
+    },
+    telephone() {
+      return TELEPHONE;
     }
   }
 };
