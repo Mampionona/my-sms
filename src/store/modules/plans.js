@@ -39,7 +39,8 @@ export default {
     getPlans(context) {
       return doAsync(context, {
         url: '/plans',
-        mutationTypes: GET_PLANS
+        mutationTypes: GET_PLANS,
+        sort: false
       });
     },
     updatePlan(context, plan) {

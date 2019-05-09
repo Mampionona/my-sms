@@ -8,7 +8,8 @@ export const createAsyncMutation = type => ({
   FAILURE: `${type}_FAILURE`
 });
 
-export function doAsync(context, { url, method = 'get', mutationTypes, data = {} }) {
+export function doAsync(context, { url, method, mutationTypes, data = {}, sort = true }) {
+  method = method || 'get';
   context.commit(mutationTypes.PENDING);
 
   return new Promise((resolve, reject) => {
@@ -20,8 +21,15 @@ export function doAsync(context, { url, method = 'get', mutationTypes, data = {}
     })
       .then((response) => {
         const responseData = response.data;
-        context.commit(mutationTypes.SUCCESS, responseData);
-        resolve(responseData);
+        let sortedData = responseData;
+        if (sort) {
+          sortedData = responseData.sort((a, b) => {
+            if ('id' in a) return b.id - a.id;
+            return 0;
+          });
+        }
+        context.commit(mutationTypes.SUCCESS, sortedData);
+        resolve(sortedData);
       })
       .catch(({ response }) => {
         context.commit(mutationTypes.FAILURE, response);

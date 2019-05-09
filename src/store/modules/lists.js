@@ -23,7 +23,7 @@ export default {
   mutations: {
     [GET_LISTS.PENDING]() {},
     [GET_LISTS.SUCCESS](state, payload) {
-      state.lists = payload.reverse();
+      state.lists = payload;
     },
     [GET_LISTS.FAILURE](state, payload) {
       state.error = payload.data;

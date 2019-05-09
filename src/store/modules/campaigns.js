@@ -5,6 +5,8 @@ const GET_USER_CAMPAIGNS = createAsyncMutation('GET_USER_CAMPAIGNS');
 const GET_CAMPAIGN_ANSWERS = createAsyncMutation('GET_CAMPAIGN_ANSWERS');
 const GET_CAMPAIGNS_STATS = createAsyncMutation('GET_CAMPAIGNS_STATS');
 
+const dateUTC = date => Date.parse(date);
+
 export default {
   namespaced: true,
   state: {
@@ -21,7 +23,11 @@ export default {
     // all campaigns marked as sent
     sent: (state, getters) => getters.campaigns.filter(campaign => campaign.status === 'sent'),
     // all campaigns marked as scheduled
-    scheduled: (state, getters) => getters.campaigns.filter(() => false),
+    scheduled: (state, getters) => getters.campaigns.filter(({ sendDate, status }) => {
+      const now = dateUTC(new Date());
+      sendDate = dateUTC(sendDate);
+      return status === 'live' && (sendDate - now) > 0;
+    }),
     answers: state => state.answers,
     stats: state => state.stats,
     lastSent: (state, getters) => getters.sent.sort()[0]
@@ -35,20 +41,19 @@ export default {
     // get user's campaign
     [GET_USER_CAMPAIGNS.PENDING]() {},
     [GET_USER_CAMPAIGNS.SUCCESS](state, payload) {
-      // state.campaigns = payload.reverse();
       state.campaigns = payload;
     },
     [GET_USER_CAMPAIGNS.FAILURE]() {},
     [GET_CAMPAIGN_ANSWERS.PENDING]() {},
     [GET_CAMPAIGN_ANSWERS.SUCCESS](state, payload) {
-      state.answers = payload.reverse();
+      state.answers = payload;
     },
     [GET_CAMPAIGN_ANSWERS.FAILURE]() {},
     [GET_CAMPAIGNS_STATS.PENDING]() {
       //
     },
     [GET_CAMPAIGNS_STATS.SUCCESS](state, payload) {
-      state.stats = payload.reverse();
+      state.stats = payload;
     },
     [GET_CAMPAIGNS_STATS.FAILURE]() {
       //
@@ -86,7 +91,8 @@ export default {
     campaignsStats(context) {
       return doAsync(context, {
         url: '/campaigns/stats/',
-        mutationTypes: GET_CAMPAIGNS_STATS
+        mutationTypes: GET_CAMPAIGNS_STATS,
+        sort: false
       });
     }
   }
