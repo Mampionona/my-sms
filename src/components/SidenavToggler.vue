@@ -24,14 +24,17 @@ export default {
   },
   data() {
     return {
-      isActive: false
+      isActive: true
     };
   },
   methods: {
     toggleSidenav() {
       this.isActive = !this.isActive;
-      toggleClass(body, 'sidenav-open');
+      toggleClass(body, 'sidenav-open sidenav-close');
     }
+  },
+  mounted() {
+    body.classList.add('sidenav-open');
   },
   props: {
     togglerDark: {
