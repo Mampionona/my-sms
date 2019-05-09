@@ -7,7 +7,7 @@
       <a :href="`mailto:${mailTo}`" class="nav-link"><i class="fas fa-question-circle"></i> Assistance</a>
     </li>
     <li v-if="user !== null && user.credits" class="nav-link d-inline-flex align-items-center">
-      Crédits <span class="ml-2 badge badge-secondary">{{ user.credits }} SMS</span>
+      Crédits <span class="ml-2 badge badge-secondary">{{ user.credits | formatNumber }} SMS</span>
     </li>
   </ul>
 </template>

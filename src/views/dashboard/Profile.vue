@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col">
               <h5 class="card-title text-uppercase text-muted mb-0 text-white">Credits</h5>
-              <span class="h2 font-weight-bold mb-0 text-white">{{ user.credits }} SMS</span>
+              <span class="h2 font-weight-bold mb-0 text-white">{{ user.credits | formatNumber }} SMS</span>
             </div>
             <div class="col-auto">
               <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
