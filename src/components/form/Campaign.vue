@@ -92,7 +92,7 @@
         <div class="col">
           <div class="text-right pr-3">
             <button class="btn btn-secondary" type="button" @click="$jQuery('#send-test').modal('show')">Envoyer un test</button>
-            <button class="btn btn-primary" type="submit">Terminer</button>
+            <button class="btn btn-primary" type="submit">{{ submitButtonLabel }}</button>
           </div>
         </div>
       </div>
@@ -182,6 +182,9 @@ export default {
         'alert-danger': this.hasError,
         'alert-success': this.created
       };
+    },
+    submitButtonLabel() {
+      return this.sendingMode === 'immediate' ? 'Envoyer' : 'Programmer l\'envoi';
     }
   },
   methods: {
