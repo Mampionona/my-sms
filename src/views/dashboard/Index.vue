@@ -29,7 +29,7 @@
                 </p>
               </template>
               <template v-else>
-                <p class="mb-0">Aucun message envoyé</p>
+                <p class="mb-0">Vous n'avez aucun envoi effectué</p>
               </template>
             </div>
           </div>
