@@ -85,18 +85,9 @@
           </div>
         </div>
       </div>
-      <div class="modal fade" id="import-error-modal" tabindex="-1" role="dialog" aria-labelledby="import-error-modal-label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              {{ modalBody }}
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <modal id="import-error-modal" cancel-button cancel-button-label="Fermer">
+        <p class="mb-0">{{ modalBody }}</p>
+      </modal>
     </div>
   </div>
 </template>
@@ -106,9 +97,10 @@ import { ModelListSelect } from 'vue-search-select';
 import { validFileExtensions, workbookToArray, COUNT_MAX_LINES, COUNT_MIN_LINES } from '@/utils';
 import { formatNumber } from '@/filters';
 import { mapActions, mapGetters } from 'vuex';
+import Modal from '@/components/Modal';
 
 export default {
-  components: { Alert, ModelListSelect },
+  components: { Alert, ModelListSelect, Modal },
   computed: {
     ...mapGetters({ lists: 'lists/lists' }),
     hasError() {

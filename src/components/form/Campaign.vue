@@ -96,40 +96,27 @@
         </div>
       </div>
     </form>
-    <div class="modal fade" id="send-test" tabindex="-1" role="dialog" aria-labelledby="send-test-label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="send-test-label">Envoyer un test</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-                <label for="tel-input-test" class="form-control-label">Entrez un numéro de téléphone</label>
-                <input class="form-control" type="tel" id="tel-input-test" v-model="telephone">
-            </div>
-            <div class="form-group">
-              <label for="" class="form-control-label">Définir des variables</label>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="sendTest">Envoyer</button>
-          </div>
-        </div>
+    <modal id="send-test" title="Envoyer un test" accept-button accept-button-color="secondary" accept-button-label="Envoyer" @accept="sendTest">
+      <div class="form-group">
+        <label for="tel-input-test" class="form-control-label">Entrez un numéro de téléphone</label>
+        <input class="form-control" type="tel" id="tel-input-test" v-model="telephone">
       </div>
-    </div>
+      <div class="form-group">
+        <label for="" class="form-control-label">Définir des variables</label>
+      </div>
+      <p class="mb-0 text-danger">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis earum, sed libero expedita.</p>
+    </modal>
   </div>
 </template>
 <script>
 import { ModelListSelect } from 'vue-search-select';
 import DatePicker from 'vue2-datepicker';
+import Modal from '@/components/Modal';
 import { computeNumberOfSMS, computeRemainingChars, MESSAGE } from '@/utils';
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  components: { ModelListSelect, DatePicker },
+  components: { ModelListSelect, DatePicker, Modal },
   props: {
     campaign: {
       type: Object

@@ -15,29 +15,26 @@
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
-
-      <div class="modal fade" id="confirm-list-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-list-delete-label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <p class="mb-0">Etes-vous sûr de vouloir supprimer le fichier <strong>{{ filename }} ?</strong></p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-              <button type="button" class="btn btn-primary" @click="deleteFile">Supprimer</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <modal
+        id="confirm-list-delete"
+        @accept="deleteFile"
+        accept-button
+        accept-button-label="Supprimer"
+        cancel-button
+        cancel-button-label="Non"
+      >
+        <p class="mb-0">Etes-vous sûr de vouloir supprimer le fichier <strong>{{ filename }} ?</strong></p>
+      </modal>
     </div>
   </div>
 </template>
 <script>
 import List from '@/components/List';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
+import Modal from '@/components/Modal';
 
 export default {
-  components: { List },
+  components: { List, Modal },
   data() {
     return {
       page: 1,

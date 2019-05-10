@@ -68,19 +68,16 @@
           <div slot="no-results" class="text-center">Aucun contact trouvé</div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
-        <div class="modal fade" id="confirm-contact-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-contact-delete-label" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-body">
-                <p class="mb-0">Voulez-vous effacer le numéro <strong>{{ telephone }} ?</strong></p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-primary" @click="deleteContact">Supprimer</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <modal
+          id="confirm-contact-delete"
+          accept-button
+          accept-button-label="Supprimer"
+          cancel-button
+          cancel-button-label="Non"
+          @accept="deleteContact"
+        >
+          <p class="mb-0">Voulez-vous effacer le numéro <strong>{{ telephone }} ?</strong></p>
+        </modal>
       </div>
     </div>
   </div>
@@ -92,9 +89,10 @@ import SelectAll from '@/components/SelectAll';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import store from '@/store';
 import { arrayToCSV } from '@/utils';
+import Modal from '@/components/Modal';
 
 export default {
-  components: { Contact, vBtn },
+  components: { Contact, vBtn, Modal },
   data() {
     return {
       columns: [

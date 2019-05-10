@@ -10,49 +10,35 @@
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
-      <div v-if="isVisible" class="modal fade" id="edit-plan" tabindex="-1" role="dialog" aria-labelledby="edit-plan-label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="edit-plan-label">Formule {{ planName }}</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="input-nom" class="form-control-label">Nom du formule</label>
-                <input class="form-control" type="text" v-model="name" id="input-nom">
-              </div>
-              <div class="form-group">
-                <label for="input-sms-unitaire" class="form-control-label">Prix des SMS unitaire</label>
-                <input class="form-control" type="number" v-model="smsPrice" id="input-sms-unitaire">
-              </div>
-              <div class="form-group">
-                <label for="input-plan" class="form-control-label">Abonnement</label>
-                <input class="form-control" type="number" v-model="planPrice" id="input-plan">
-              </div>
-              <div class="form-group mb-0">
-                <label for="input-max-volume" class="form-control-label">Volume max.</label>
-                <input class="form-control" type="number" v-model="maxVolume" id="input-max-volume">
-              </div>
-              <p v-if="hasError || updated" :class="errorClasses">{{ statusMessage }}</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" @click.prevent="update">Mettre à jour</button>
-            </div>
-          </div>
+      <modal v-if="isVisible" id="edit-plan" :title="`Formule ${planName}`" accept-button @accept="update" accept-button-label="Mettre à jour">
+        <div class="form-group">
+          <label for="input-nom" class="form-control-label">Nom du formule</label>
+          <input class="form-control" type="text" v-model="name" id="input-nom">
         </div>
-      </div>
+        <div class="form-group">
+          <label for="input-sms-unitaire" class="form-control-label">Prix des SMS unitaire</label>
+          <input class="form-control" type="number" v-model="smsPrice" id="input-sms-unitaire">
+        </div>
+        <div class="form-group">
+          <label for="input-plan" class="form-control-label">Abonnement</label>
+          <input class="form-control" type="number" v-model="planPrice" id="input-plan">
+        </div>
+        <div class="form-group mb-0">
+          <label for="input-max-volume" class="form-control-label">Volume max.</label>
+          <input class="form-control" type="number" v-model="maxVolume" id="input-max-volume">
+        </div>
+        <p v-if="hasError || updated" :class="errorClasses">{{ statusMessage }}</p>
+      </modal>
     </div>
   </div>
 </template>
 <script>
 import Plan from '@/components/Plan';
 import { mapGetters, mapActions } from 'vuex';
+import Modal from '@/components/Modal';
 
 export default {
-  components: { Plan },
+  components: { Plan, Modal },
   computed: {
     ...mapGetters({
       plans: 'plans/plans'
