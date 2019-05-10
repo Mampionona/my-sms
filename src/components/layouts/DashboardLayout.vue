@@ -69,7 +69,11 @@ export default {
   }
 
   .peg {
-    box-shadow: none !important;
+    display: none !important;
+  }
+
+  .spinner-icon {
+    display: none;
   }
 }
 </style>
