@@ -34,12 +34,28 @@ export default {
     }
   },
   mounted() {
-    body.classList.add('sidenav-open');
+    if (window.innerWidth < 1200) {
+      body.classList.add('sidenav-close');
+      this.isActive = false;
+    }
+    else body.classList.add('sidenav-open');
+    document.addEventListener('click', (e) => {
+      if (e.target.tagName === 'BODY') {
+        this.isActive = false;
+        toggleClass(body, 'sidenav-open sidenav-close');
+      }
+    });
   },
   props: {
     togglerDark: {
       default: false,
       type: Boolean
+    }
+  },
+  watch: {
+    $route() {
+      body.classList.remove('sidenav-open');
+      body.classList.add('sidenav-close');
     }
   }
 };

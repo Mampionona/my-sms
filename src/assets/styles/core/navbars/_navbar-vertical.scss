@@ -419,7 +419,7 @@
 
 @include media-breakpoint-down(lg) {
     .sidenav {
-        transform: translateX(-$navbar-vertical-width);
+        // transform: translateX(-$navbar-vertical-width);
 
         &.fixed-left + .main-content {
             margin-left: 0 !important;
