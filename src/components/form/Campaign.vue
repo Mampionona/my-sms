@@ -1,6 +1,6 @@
 <template>
   <div class="campaign-form">
-    <form @submit.prevent="submitCampaign" class="pb-5">
+    <form @submit.prevent="createCampaign" class="pb-5">
       <div class="row custom-row">
         <div class="col-lg-12">
           <div class="card">
@@ -107,9 +107,12 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="form-group mb-0">
+            <div class="form-group">
                 <label for="tel-input-test" class="form-control-label">Entrez un numéro de téléphone</label>
                 <input class="form-control" type="tel" id="tel-input-test" v-model="telephone">
+            </div>
+            <div class="form-group">
+              <label for="" class="form-control-label">Définir des variables</label>
             </div>
           </div>
           <div class="modal-footer">
@@ -192,20 +195,14 @@ export default {
       getUserLists: 'lists/getUserLists',
       createOrUpdateCampaign: 'campaigns/createNewCampaign',
       getContactsOfList: 'contacts/getContactsOfList',
-      getUserCampaigns: 'campaigns/getUserCampaigns'
+      getUserCampaigns: 'campaigns/getUserCampaigns',
+      sendTestMessage: 'campaigns/sendTestMessage'
     }),
     dateChange(currentValue) {
       this.sendDate = currentValue.toISOString();
     },
-    submitCampaign() {
-      const { listId, name, text, senderName, sendingMode } = this;
-      const action = 'campaign_id' in this.$route.query ? 'update' : 'new';
-      const campaignId = 'campaign_id' in this.$route.query ? this.$route.query.campaign_id : null;
-      let { sendDate, status } = this;
-      sendDate = (sendingMode === 'immediate') ? '' : sendDate;
-      status = status ? 'draft' : 'live';
-
-      this.createOrUpdateCampaign({ action, listId, name, text, senderName, sendDate, status, campaignId })
+    createCampaign() {
+      this.saveCampaign()
         .then(() => {
           this.name = '';
           this.text = '';
@@ -219,6 +216,16 @@ export default {
           this.hasError = true;
           this.created = false;
         });
+    },
+    saveCampaign() {
+      const { listId, name, text, senderName, sendingMode } = this;
+      let { sendDate, status } = this;
+      const action = 'campaign_id' in this.$route.query ? 'update' : 'new';
+      const campaignId = this.$route.query.campaign_id || null;
+      sendDate = (sendingMode === 'immediate') ? '' : sendDate;
+      status = status ? 'draft' : 'live';
+      // return a promise
+      return this.createOrUpdateCampaign({ action, listId, name, text, senderName, sendDate, status, campaignId });
     },
     populateCampainFields() {
       // Fetch user's campaigns
@@ -236,7 +243,16 @@ export default {
       });
     },
     sendTest() {
-      //
+      this.saveCampaign()
+        .then((data) => {
+          console.log(data);
+          const { campaignId } = data;
+          const { telephone, senderName, attributes } = this;
+          this.sendTestMessage({ campaignId, telephone, senderName, attributes })
+            .then(() => console.log('test sent'))
+            .catch(error => console.log(error));
+        })
+        .catch(error => console.log(error));
     }
   }
 };

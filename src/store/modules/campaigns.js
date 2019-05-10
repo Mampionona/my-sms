@@ -5,6 +5,7 @@ const CREATE_OR_UPDATE_CAMPAIGN = createAsyncMutation('CREATE_OR_UPDATE_CAMPAIGN
 const GET_USER_CAMPAIGNS = createAsyncMutation('GET_USER_CAMPAIGNS');
 const GET_CAMPAIGN_ANSWERS = createAsyncMutation('GET_CAMPAIGN_ANSWERS');
 const GET_CAMPAIGNS_STATS = createAsyncMutation('GET_CAMPAIGNS_STATS');
+const SEND_TEST_MESSAGE = createAsyncMutation('SEND_TEST_MESSAGE');
 
 export default {
   namespaced: true,
@@ -63,6 +64,15 @@ export default {
     },
     [GET_CAMPAIGNS_STATS.FAILURE]() {
       //
+    },
+    [SEND_TEST_MESSAGE.PENDING]() {
+      //
+    },
+    [SEND_TEST_MESSAGE.SUCCESS]() {
+      //
+    },
+    [SEND_TEST_MESSAGE.FAILURE]() {
+      //
     }
   },
   actions: {
@@ -98,6 +108,14 @@ export default {
         url: '/campaigns/stats/',
         mutationTypes: GET_CAMPAIGNS_STATS,
         sort: false
+      });
+    },
+    sendTestMessage(context, message) {
+      const { campaignId } = message;
+      return doAsync(context, {
+        url: `/campains/${campaignId}/test/`,
+        data: message,
+        mutationTypes: SEND_TEST_MESSAGE
       });
     }
   }
