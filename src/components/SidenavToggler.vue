@@ -54,6 +54,7 @@ export default {
   },
   watch: {
     $route() {
+      if (window.innerWidth > 1200) return;
       body.classList.remove('sidenav-open');
       body.classList.add('sidenav-close');
     }
