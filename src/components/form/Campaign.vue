@@ -77,7 +77,6 @@
                 :not-before="new Date()"
                 :first-day-of-week="1"
                 type="datetime"
-                class="mt-4"
                 @input="dateChange"
                 :disabled-days="date => date.getDay() === 0"
               ></date-picker>
