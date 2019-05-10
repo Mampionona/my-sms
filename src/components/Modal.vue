@@ -23,8 +23,6 @@
 export default {
   computed: {
     acceptButtonClass() {
-      // const color = `btn-${this.acceptButtonColor}`;
-      // return { btn: true, [color]: true };
       return ['btn', `btn-${this.acceptButtonColor}`];
     }
   },

@@ -111,9 +111,8 @@ export default {
       });
     },
     sendTestMessage(context, message) {
-      const { campaignId } = message;
       return doAsync(context, {
-        url: `/campains/${campaignId}/test/`,
+        url: `/campains/test/`,
         data: message,
         mutationTypes: SEND_TEST_MESSAGE
       });

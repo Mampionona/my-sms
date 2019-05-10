@@ -101,10 +101,10 @@
         <label for="tel-input-test" class="form-control-label">Entrez un numéro de téléphone</label>
         <input class="form-control" type="tel" id="tel-input-test" v-model="telephone">
       </div>
-      <div class="form-group">
+      <div class="form-group mb-0">
         <label for="" class="form-control-label">Définir des variables</label>
       </div>
-      <p class="mb-0 text-danger">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis earum, sed libero expedita.</p>
+      <p v-if="testFail || testSuccess" :class="testStatusClass">{{ testStatusMessage }}</p>
     </modal>
   </div>
 </template>
@@ -136,7 +136,10 @@ export default {
       statusMessage: '',
       hasError: false,
       created: false,
-      telephone: ''
+      telephone: '',
+      testStatusMessage: '',
+      testFail: false,
+      testSuccess: false
     };
   },
   mounted() {
@@ -171,6 +174,14 @@ export default {
         'alert-danger': this.hasError,
         'alert-success': this.created
       };
+    },
+    testStatusClass() {
+      return {
+        'mb-0': true,
+        'mt-4': true,
+        'text-danger': this.testFail,
+        'text-primary': this.testSuccess
+      }
     },
     submitButtonLabel() {
       return this.sendingMode === 'immediate' ? 'Envoyer' : 'Programmer l\'envoi';
@@ -229,16 +240,18 @@ export default {
       });
     },
     sendTest() {
-      this.saveCampaign()
-        .then((data) => {
-          console.log(data);
-          const { campaignId } = data;
-          const { telephone, senderName, attributes } = this;
-          this.sendTestMessage({ campaignId, telephone, senderName, attributes })
-            .then(() => console.log('test sent'))
-            .catch(error => console.log(error));
+      const { telephone, senderName, attributes } = this;
+      this.sendTestMessage({ telephone, senderName, attributes })
+        .then(() => {
+          this.testSuccess = true;
+          this.testFail = false;
+          this.testStatusMessage = 'Test envoyé !';
         })
-        .catch(error => console.log(error));
+        .catch(({ data }) => {
+          this.testSuccess = false;
+          this.testFail = true;
+          this.testStatusMessage = data.error;
+        });
     }
   }
 };
