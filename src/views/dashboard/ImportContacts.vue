@@ -55,10 +55,10 @@
           <div class="alert" role="alert">
             <p><strong>Nos exemples</strong></p>
             <ul class="mb-0">
-              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_exemple_simple.csv`" class="exemple-csv">CSV</a></p></li>
-              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_exemple_variable.csv`" class="exemple-csv">CSV</a></p></li>
-              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_xls_exemple_simple.xls`" class="exemple-csv">XLS</a></p></li>
-              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_xls_exemple_variable.xls`" class="exemple-csv">XLS</a></p></li>
+              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/contact-simple.csv`" class="exemple-csv">CSV</a></p></li>
+              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/contact-variable.csv`" class="exemple-csv">CSV</a></p></li>
+              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/contact-simple.xls`" class="exemple-csv">XLS</a></p></li>
+              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/contact-variable.xls`" class="exemple-csv">XLS</a></p></li>
             </ul>
           </div>
           <div class="alert">
