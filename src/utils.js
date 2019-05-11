@@ -2,8 +2,8 @@ import XLSX from 'xlsx';
 
 export const BAD_REQUEST = 400;
 export const UNAUTHENTICATED = 401;
-export const COUNT_MAX_LINES = 100000;
-export const COUNT_MIN_LINES = 5;
+export const COUNT_MAX_LINES = 1000000;
+export const COUNT_MIN_LINES = 1;
 export const validFileExtensions = ['.xls', '.xlsx', '.csv'];
 export const MAIL_TO = 'help@my-sms.pro';
 export const TELEPHONE = '0899020720';
@@ -13,7 +13,7 @@ export function workbookToArray(file, complete) {
   const reader = new FileReader();
   reader.onload = (e) => {
     const data = new Uint8Array(e.target.result);
-    const workbook = XLSX.read(data, { type: 'array' });
+    const workbook = XLSX.read(data, { type: 'array', raw: true });
 
     /* convert from workbook to array of arrays */
     const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];

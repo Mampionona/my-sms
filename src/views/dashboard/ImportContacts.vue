@@ -152,7 +152,6 @@ export default {
 
         workbookToArray(f, (contacts) => {
           const countLines = contacts.length;
-          // this.filename = '';
           this.contacts = [];
           const columns = contacts.shift();
 
@@ -166,17 +165,11 @@ export default {
             return;
           }
 
-          const telephonePosition = columns.indexOf('telephone');
-
           this.contacts = contacts.map((contact) => {
             const contactObject = {};
             columns.forEach((column, index) => {
-              contactObject[column] = contact[index];
-              // prepend phone number with + if not
-              if (telephonePosition !== -1 && index === telephonePosition) {
-                const telephone = contact[telephonePosition].toString();
-                if (!telephone.match(/^\+/)) contactObject[column] = `+${telephone}`;
-              }
+              if (column === 'telephone') contactObject[column] = String(contact[index], 10);
+              else contactObject[column] = contact[index];
             });
 
             return contactObject;
