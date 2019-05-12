@@ -19,7 +19,8 @@
                 v-model="listId"
                 placeholder="Sélectionner un fichier"
               ></model-list-select>
-              <p v-if="countContacts > 0 && listId" class="small mt-4">{{ $tc('redaction.countContacts', countContacts) }}</p>
+
+              <p v-if="contactsOfList > 0 && listId" class="small mt-4">{{ $tc('redaction.countContacts', contactsOfList) }}</p>
             </div>
           </div>
 
@@ -156,15 +157,11 @@ export default {
       this.countSMS = computeNumberOfSMS(newText);
       this.remainingChars = computeRemainingChars(this.countSMS, newText.length);
     },
-    listId(newListId) {
-      this.getContactsOfList(newListId);
-    },
     $route: 'populateCampainFields'
   },
   computed: {
     ...mapGetters({
       lists: 'lists/lists',
-      countContacts: 'contacts/count',
       drafts: 'campaigns/drafts'
     }),
     statusClass() {
@@ -181,17 +178,21 @@ export default {
         'mt-4': true,
         'text-danger': this.testFail,
         'text-primary': this.testSuccess
-      }
+      };
     },
     submitButtonLabel() {
-      return this.sendingMode === 'immediate' ? 'Envoyer' : 'Programmer l\'envoi';
+      return this.sendingMode === 'immediate' ? 'Envoyer' : 'Programmer l’envoi';
+    },
+    contactsOfList() {
+      const match = this.lists.find(list => this.listId === list.id);
+      if (!match) return 0;
+      return match.contacts;
     }
   },
   methods: {
     ...mapActions({
       getUserLists: 'lists/getUserLists',
       createOrUpdateCampaign: 'campaigns/createNewCampaign',
-      getContactsOfList: 'contacts/getContactsOfList',
       getUserCampaigns: 'campaigns/getUserCampaigns',
       sendTestMessage: 'campaigns/sendTestMessage'
     }),
