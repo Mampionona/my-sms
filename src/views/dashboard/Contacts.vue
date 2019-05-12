@@ -157,6 +157,7 @@ export default {
   methods: {
     ...mapActions({
       getContacts: 'contacts/getContactsOfList',
+      getAllContacts: 'contacts/getAllContacts',
       update: 'lists/updateListName',
       remove: 'contacts/removeContact'
     }),
@@ -164,7 +165,7 @@ export default {
       updateContacts: 'contacts/UPDATE_CONTACTS'
     }),
     getData(params, setRowData) {
-      this.getContacts({ id: this.$route.params.listId, page: params.page_number }).then((contacts) => {
+      this.getContacts({ listId: this.$route.params.listId, page: params.page_number }).then((contacts) => {
         setRowData(contacts, this.countContacts);
       });
     },
@@ -218,7 +219,7 @@ export default {
     },
     exportCSV() {
       // Export contacts into CSV file
-      arrayToCSV(this.contacts, this.list.name);
+      this.getAllContacts(this.$route.params.listId).then(contacts => arrayToCSV(contacts, this.list.name));
     }
   }
 };

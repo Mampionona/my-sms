@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import { doAsync, createAsyncMutation } from '@/async-utils';
 
 const LIST_ID = 'LIST_ID';
@@ -44,16 +45,20 @@ export default {
   },
 
   actions: {
-    getContactsOfList(context, { id, page }) {
-      context.commit(LIST_ID, id);
+    getContactsOfList(context, { listId, page }) {
+      context.commit(LIST_ID, listId);
       return new Promise((resolve, reject) => {
         doAsync(context, {
-          url: `/contacts/lists/${id}/${page - 1}`, // -1 cause 0 based in api
+          url: `/contacts/lists/${listId}/${page - 1}`, // -1 cause 0 based in api
           mutationTypes: GET_CONTACTS
         })
           .then(data => resolve(data))
           .catch(error => reject(error));
       });
+    },
+    getAllContacts(context, listId) {
+      return Axios.get(`/contacts/lists/${listId}/`)
+        .then(({ data }) => data);
     },
     removeContact(context, { contactId, listId }) {
       return doAsync(context, {
