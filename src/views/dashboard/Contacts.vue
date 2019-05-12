@@ -56,7 +56,7 @@
             </div>
           </div>
         </div>
-        <datatable :columns="columns" :data="items">
+        <datatable :columns="columns" :data="getData">
           <template slot-scope="{ row }">
             <contact :contact="row" :key="row.id" @delete-contact="confirmDelete">
               <div slot="checkbox" class="custom-control custom-checkbox">
@@ -106,10 +106,10 @@ export default {
       page: 1,
       per_page: 10,
       allContacts: false,
-      items: [],
       selectedContacts: [],
       name: '',
       list: null,
+      countContacts: 0,
       updateSuccess: false,
       updateError: false,
       updateTextStatus: '',
@@ -125,10 +125,6 @@ export default {
     }));
   },
   mounted() {
-    // dispatch an action to get contacts of a list
-    this.getContacts(this.$route.params.listId).then(() => {
-      this.items = this.contacts;
-    });
     document.getElementById('all-contacts').addEventListener('change', (e) => {
       if (e.target.checked) {
         this.contacts.forEach(contact => this.selectedContacts.push(contact.id));
@@ -140,7 +136,6 @@ export default {
   computed: {
     ...mapGetters({
       contacts: 'contacts/contacts',
-      countContacts: 'contacts/count',
       stops: 'contacts/stops'
     }),
     composeUrl() {
@@ -168,9 +163,15 @@ export default {
     ...mapMutations({
       updateContacts: 'contacts/UPDATE_CONTACTS'
     }),
+    getData(params, setRowData) {
+      this.getContacts({ id: this.$route.params.listId, page: params.page_number }).then((contacts) => {
+        setRowData(contacts, this.countContacts);
+      });
+    },
     setData(list) {
       this.list = list;
       this.name = list.name;
+      this.countContacts = list.contacts;
     },
     updateListName() {
       const { name } = this;

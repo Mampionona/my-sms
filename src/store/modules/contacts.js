@@ -9,15 +9,11 @@ const UPDATE_CONTACTS = 'UPDATE_CONTACTS';
 export default {
   namespaced: true,
   state: {
-    listId: null,
-    contactsOfList: [],
-    count: 0
+    listId: null
   },
 
   getters: {
     listId: state => state.listId,
-    contacts: state => state.contactsOfList,
-    count: state => state.contactsOfList.length,
     stops: (state, getters) => getters.contacts.filter(contact => contact.stop === 1)
   },
 
@@ -46,11 +42,11 @@ export default {
   },
 
   actions: {
-    getContactsOfList(context, id) {
+    getContactsOfList(context, { id, page }) {
       context.commit(LIST_ID, id);
       return new Promise((resolve, reject) => {
         doAsync(context, {
-          url: `/contacts/lists/${id}`,
+          url: `/contacts/lists/${id}/${page - 1}`, // -1 cause 0 based in api
           mutationTypes: GET_CONTACTS
         })
           .then(data => resolve(data))
