@@ -211,9 +211,7 @@ export default {
             // update contacts array
             this.updateContacts(this.contacts.filter(contact => contact.id !== id));
             // uncheck select all
-            if (this.contacts.length === 0) {
-              this.allContacts = false;
-            }
+            if (this.contacts.length === 0) this.allContacts = false;
             resolve();
           });
       });

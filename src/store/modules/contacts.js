@@ -9,11 +9,13 @@ const UPDATE_CONTACTS = 'UPDATE_CONTACTS';
 export default {
   namespaced: true,
   state: {
-    listId: null
+    listId: null,
+    contactsOfList: []
   },
 
   getters: {
     listId: state => state.listId,
+    contacts: state => state.contactsOfList,
     stops: (state, getters) => getters.contacts.filter(contact => contact.stop === 1)
   },
 
