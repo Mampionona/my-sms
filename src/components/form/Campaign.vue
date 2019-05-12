@@ -241,8 +241,8 @@ export default {
       });
     },
     sendTest() {
-      const { telephone, senderName, attributes } = this;
-      this.sendTestMessage({ telephone, senderName, attributes })
+      const { text, telephone, senderName, attributes } = this;
+      this.sendTestMessage({ text, telephone, senderName, attributes })
         .then(() => {
           this.testSuccess = true;
           this.testFail = false;
