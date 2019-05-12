@@ -6,7 +6,7 @@ export const COUNT_MAX_LINES = 1000000;
 export const COUNT_MIN_LINES = 1;
 export const validFileExtensions = ['.xls', '.xlsx', '.csv'];
 export const MAIL_TO = 'help@my-sms.pro';
-export const TELEPHONE = '0899020720';
+export const TELEPHONE = '08 99 02 07 20';
 export const dateUTC = date => Date.parse(date);
 
 export function workbookToArray(file, complete) {
@@ -25,7 +25,7 @@ export function workbookToArray(file, complete) {
 }
 
 export const MESSAGE = {
-  firstMaxLength: 147,
+  firstMaxLength: 146, // 160 - STOP msg length
   subsequentsMaxLength: 153
 };
 
@@ -69,8 +69,8 @@ export function removeSpaces(str) {
 
 /**
  * Add or remove one or more classes from element
- * @param {HTMLElement} element
- * @param {String} className
+ * @param { HTMLElement } element
+ * @param { String } className
  */
 export function toggleClass(element, className) {
   className.split(' ').forEach((_className) => {
