@@ -10,7 +10,7 @@ export const currency = (value, precision = 3, _currency = 'EUR') => value.toLoc
 }).replace(/\s/g, ' ');
 
 export const formatNumber = (number) => {
-  if (number) return number.toLocaleString(locale);
+  if (number) return number.toLocaleString(locale).replace(/\s/g, ' ');
   return 0;
 };
 
