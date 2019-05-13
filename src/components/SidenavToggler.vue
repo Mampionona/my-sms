@@ -42,7 +42,8 @@ export default {
     document.addEventListener('click', (e) => {
       if (e.target.tagName === 'BODY') {
         this.isActive = false;
-        toggleClass(body, 'sidenav-open sidenav-close');
+        body.classList.remove('sidenav-open');
+        body.classList.add('sidenav-close');
       }
     });
   },
