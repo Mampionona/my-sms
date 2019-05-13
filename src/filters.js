@@ -3,9 +3,9 @@ import humanTime from 'humantime';
 
 const locale = 'fr-FR';
 
-export const currency = (value, precision = 3, currency = 'EUR') => value.toLocaleString(locale, {
+export const currency = (value, precision = 3, _currency = 'EUR') => value.toLocaleString(locale, {
   style: 'currency',
-  currency,
+  currency: _currency,
   minimumFractionDigits: precision
 }).replace(/\s/g, ' ');
 

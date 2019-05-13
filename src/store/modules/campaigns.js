@@ -112,7 +112,7 @@ export default {
     },
     sendTestMessage(context, message) {
       return doAsync(context, {
-        url: `/campains/test/`,
+        url: '/campains/test/',
         data: message,
         mutationTypes: SEND_TEST_MESSAGE
       });
