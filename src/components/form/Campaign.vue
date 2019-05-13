@@ -101,8 +101,16 @@
         <label for="tel-input-test" class="form-control-label">Entrez un numéro de téléphone</label>
         <input class="form-control" type="tel" id="tel-input-test" v-model="telephone">
       </div>
-      <div class="form-group mb-0">
+      <div v-if="Object.keys(attributes).length > 0" class="form-group mb-0">
         <label for="" class="form-control-label">Définir des variables</label>
+        <input
+          type="text"
+          class="form-control mb-2"
+          v-for="(attribute, index) in Object.keys(attributes)"
+          :key="index"
+          :placeholder="attribute"
+          v-model="attributes[attribute]"
+        />
       </div>
       <p v-if="testFail || testSuccess" :class="testStatusClass">{{ testStatusMessage }}</p>
     </modal>
@@ -139,7 +147,8 @@ export default {
       telephone: '',
       testStatusMessage: '',
       testFail: false,
-      testSuccess: false
+      testSuccess: false,
+      attributes: {}
     };
   },
   mounted() {
@@ -158,6 +167,14 @@ export default {
     },
     listId(newListId) {
       this.getContactsOfList(newListId);
+      this.lists.forEach(({ id, attributes }) => {
+        if (id === newListId) {
+          attributes.forEach((attribute) => {
+            this.attributes[attribute] = '';
+          });
+        }
+        if (attributes.length === 0) this.attributes = {};
+      });
     },
     $route: 'populateCampainFields'
   },
@@ -181,7 +198,7 @@ export default {
         'mt-4': true,
         'text-danger': this.testFail,
         'text-primary': this.testSuccess
-      }
+      };
     },
     submitButtonLabel() {
       return this.sendingMode === 'immediate' ? 'Envoyer' : 'Programmer l\'envoi';
@@ -240,8 +257,8 @@ export default {
       });
     },
     sendTest() {
-      const { telephone, senderName, attributes } = this;
-      this.sendTestMessage({ telephone, senderName, attributes })
+      const { telephone, text, senderName, attributes } = this;
+      this.sendTestMessage({ telephone, text, senderName, attributes })
         .then(() => {
           this.testSuccess = true;
           this.testFail = false;
