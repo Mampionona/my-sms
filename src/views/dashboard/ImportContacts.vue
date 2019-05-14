@@ -150,33 +150,38 @@ export default {
           return;
         }
 
-        workbookToArray(f, (contacts) => {
-          const countLines = contacts.length;
-          this.contacts = [];
-          const columns = contacts.shift();
+        // workbookToArray(f, (contacts) => {
+        //   // console.log(contacts.length);
+        //   const countLines = contacts.length;
+        //   this.contacts = [];
+        //   const columns = contacts.shift();
 
-          if (countLines > COUNT_MAX_LINES || countLines < COUNT_MIN_LINES) {
-            this.errorMessage = `Le nombre de lignes du fichier doit être au maximum de ${formatNumber(COUNT_MAX_LINES)} et au minimum de ${formatNumber(COUNT_MIN_LINES)}.`;
-            return;
-          }
+        //   if (countLines > COUNT_MAX_LINES || countLines < COUNT_MIN_LINES) {
+        //     this.errorMessage = `Le nombre de lignes du fichier doit être au maximum de ${formatNumber(COUNT_MAX_LINES)} et au minimum de ${formatNumber(COUNT_MIN_LINES)}.`;
+        //     return;
+        //   }
 
-          if (!columns.includes('telephone')) {
-            this.errorMessage = 'Le fichier Excel doit avoir au moins une colonne nommée "telephone"';
-            return;
-          }
+        //   if (!columns.includes('telephone')) {
+        //     this.errorMessage = 'Le fichier Excel doit avoir au moins une colonne nommée "telephone"';
+        //     return;
+        //   }
 
-          this.contacts = contacts.map((contact) => {
-            const contactObject = {};
-            columns.forEach((column, index) => {
-              if (column === 'telephone') contactObject[column] = String(contact[index], 10);
-              else contactObject[column] = contact[index];
-            });
+        //   this.contacts = contacts.map((contact) => {
+        //     const contactObject = {};
+        //     columns.forEach((column, index) => {
+        //       if (column === 'telephone') contactObject[column] = String(contact[index], 10);
+        //       else contactObject[column] = contact[index];
+        //     });
 
-            return contactObject;
-          });
+        //     return contactObject;
+        //   });
 
-          this.errorMessage = '';
-        });
+        //   this.errorMessage = '';
+        // });
+
+        workbookToArray(f)
+          .then(data => console.log(data))
+          .catch(error => console.log(error));
       }
     },
     importWorkbook() {
