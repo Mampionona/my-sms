@@ -56,7 +56,7 @@
             </div>
           </div>
         </div>
-        <datatable :columns="columns" :data="items">
+        <datatable :columns="columns" :data="getData">
           <template slot-scope="{ row }">
             <contact :contact="row" :key="row.id" @delete-contact="confirmDelete">
               <div slot="checkbox" class="custom-control custom-checkbox">
@@ -106,10 +106,10 @@ export default {
       page: 1,
       per_page: 10,
       allContacts: false,
-      items: [],
       selectedContacts: [],
       name: '',
       list: null,
+      countContacts: 0,
       updateSuccess: false,
       updateError: false,
       updateTextStatus: '',
@@ -125,10 +125,6 @@ export default {
     }));
   },
   mounted() {
-    // dispatch an action to get contacts of a list
-    this.getContacts(this.$route.params.listId).then(() => {
-      this.items = this.contacts;
-    });
     document.getElementById('all-contacts').addEventListener('change', (e) => {
       if (e.target.checked) {
         this.contacts.forEach(contact => this.selectedContacts.push(contact.id));
@@ -140,7 +136,6 @@ export default {
   computed: {
     ...mapGetters({
       contacts: 'contacts/contacts',
-      countContacts: 'contacts/count',
       stops: 'contacts/stops'
     }),
     composeUrl() {
@@ -162,15 +157,22 @@ export default {
   methods: {
     ...mapActions({
       getContacts: 'contacts/getContactsOfList',
+      getAllContacts: 'contacts/getAllContacts',
       update: 'lists/updateListName',
       remove: 'contacts/removeContact'
     }),
     ...mapMutations({
       updateContacts: 'contacts/UPDATE_CONTACTS'
     }),
+    getData(params, setRowData) {
+      this.getContacts({ listId: this.$route.params.listId, page: params.page_number }).then((contacts) => {
+        setRowData(contacts, this.countContacts);
+      });
+    },
     setData(list) {
       this.list = list;
       this.name = list.name;
+      this.countContacts = list.contacts;
     },
     updateListName() {
       const { name } = this;
@@ -210,16 +212,14 @@ export default {
             // update contacts array
             this.updateContacts(this.contacts.filter(contact => contact.id !== id));
             // uncheck select all
-            if (this.contacts.length === 0) {
-              this.allContacts = false;
-            }
+            if (this.contacts.length === 0) this.allContacts = false;
             resolve();
           });
       });
     },
     exportCSV() {
       // Export contacts into CSV file
-      arrayToCSV(this.contacts, this.list.name);
+      this.getAllContacts(this.$route.params.listId).then(contacts => arrayToCSV(contacts, this.list.name));
     }
   }
 };

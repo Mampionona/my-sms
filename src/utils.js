@@ -2,18 +2,18 @@ import XLSX from 'xlsx';
 
 export const BAD_REQUEST = 400;
 export const UNAUTHENTICATED = 401;
-export const COUNT_MAX_LINES = 100000;
-export const COUNT_MIN_LINES = 5;
+export const COUNT_MAX_LINES = 1000000;
+export const COUNT_MIN_LINES = 1;
 export const validFileExtensions = ['.xls', '.xlsx', '.csv'];
 export const MAIL_TO = 'help@my-sms.pro';
-export const TELEPHONE = '0899020720';
+export const TELEPHONE = '08 99 02 07 20';
 export const dateUTC = date => Date.parse(date);
 
 export function workbookToArray(file, complete) {
   const reader = new FileReader();
   reader.onload = (e) => {
     const data = new Uint8Array(e.target.result);
-    const workbook = XLSX.read(data, { type: 'array' });
+    const workbook = XLSX.read(data, { type: 'array', raw: true });
 
     /* convert from workbook to array of arrays */
     const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -25,7 +25,7 @@ export function workbookToArray(file, complete) {
 }
 
 export const MESSAGE = {
-  firstMaxLength: 147,
+  firstMaxLength: 146, // 160 - STOP msg length
   subsequentsMaxLength: 153
 };
 
@@ -69,8 +69,8 @@ export function removeSpaces(str) {
 
 /**
  * Add or remove one or more classes from element
- * @param {HTMLElement} element
- * @param {String} className
+ * @param { HTMLElement } element
+ * @param { String } className
  */
 export function toggleClass(element, className) {
   className.split(' ').forEach((_className) => {

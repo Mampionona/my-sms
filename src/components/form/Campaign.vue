@@ -19,7 +19,8 @@
                 v-model="listId"
                 placeholder="Sélectionner un fichier"
               ></model-list-select>
-              <p v-if="countContacts > 0 && listId" class="small mt-4">{{ $tc('redaction.countContacts', countContacts) }}</p>
+
+              <p v-if="contactsOfList > 0 && listId" class="small mt-4">{{ $tc('redaction.countContacts', contactsOfList) }}</p>
             </div>
           </div>
 
@@ -181,7 +182,6 @@ export default {
   computed: {
     ...mapGetters({
       lists: 'lists/lists',
-      countContacts: 'contacts/count',
       drafts: 'campaigns/drafts'
     }),
     statusClass() {
@@ -201,14 +201,18 @@ export default {
       };
     },
     submitButtonLabel() {
-      return this.sendingMode === 'immediate' ? 'Envoyer' : 'Programmer l\'envoi';
+      return this.sendingMode === 'immediate' ? 'Envoyer' : 'Programmer l’envoi';
+    },
+    contactsOfList() {
+      const match = this.lists.find(list => this.listId === list.id);
+      if (!match) return 0;
+      return match.contacts;
     }
   },
   methods: {
     ...mapActions({
       getUserLists: 'lists/getUserLists',
       createOrUpdateCampaign: 'campaigns/createNewCampaign',
-      getContactsOfList: 'contacts/getContactsOfList',
       getUserCampaigns: 'campaigns/getUserCampaigns',
       sendTestMessage: 'campaigns/sendTestMessage'
     }),
@@ -257,8 +261,8 @@ export default {
       });
     },
     sendTest() {
-      const { telephone, text, senderName, attributes } = this;
-      this.sendTestMessage({ telephone, text, senderName, attributes })
+      const { text, telephone, senderName, attributes } = this;
+      this.sendTestMessage({ text, telephone, senderName, attributes })
         .then(() => {
           this.testSuccess = true;
           this.testFail = false;

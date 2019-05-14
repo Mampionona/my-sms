@@ -55,10 +55,10 @@
           <div class="alert" role="alert">
             <p><strong>Nos exemples</strong></p>
             <ul class="mb-0">
-              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_exemple_simple.csv`" class="exemple-csv">CSV</a></p></li>
-              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_exemple_variable.csv`" class="exemple-csv">CSV</a></p></li>
-              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/Fichier_xls_exemple_simple.xls`" class="exemple-csv">XLS</a></p></li>
-              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/Fichier_xls_exemple_variable.xls`" class="exemple-csv">XLS</a></p></li>
+              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/contact-simple.csv`" class="exemple-csv">CSV</a></p></li>
+              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/contact-variable.csv`" class="exemple-csv">CSV</a></p></li>
+              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/contact-simple.xls`" class="exemple-csv">XLS</a></p></li>
+              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/contact-variable.xls`" class="exemple-csv">XLS</a></p></li>
             </ul>
           </div>
           <div class="alert">
@@ -71,7 +71,7 @@
             <ul class="mb-0">
               <li><p>J'ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.</p></li>
               <li><p>Aucun de mes contacts n'a été acquis via des listes de diffusion tierces.</p></li>
-              <li><p>J'inclurai la mention <strong>STOP au 36105</strong> dans toute campagne marketing.</p></li>
+              <!-- <li><p>J'inclurai la mention <strong>STOP au 36105</strong> dans toute campagne marketing.</p></li> -->
               <li><p>Je n'enverrai avec My SMS que des informations légales et légitimes.</p></li>
             </ul>
           </div>
@@ -152,7 +152,6 @@ export default {
 
         workbookToArray(f, (contacts) => {
           const countLines = contacts.length;
-          // this.filename = '';
           this.contacts = [];
           const columns = contacts.shift();
 
@@ -166,17 +165,11 @@ export default {
             return;
           }
 
-          const telephonePosition = columns.indexOf('telephone');
-
           this.contacts = contacts.map((contact) => {
             const contactObject = {};
             columns.forEach((column, index) => {
-              contactObject[column] = contact[index];
-              // prepend phone number with + if not
-              if (telephonePosition !== -1 && index === telephonePosition) {
-                const telephone = contact[telephonePosition].toString();
-                if (!telephone.match(/^\+/)) contactObject[column] = `+${telephone}`;
-              }
+              if (column === 'telephone') contactObject[column] = String(contact[index], 10);
+              else contactObject[column] = contact[index];
             });
 
             return contactObject;

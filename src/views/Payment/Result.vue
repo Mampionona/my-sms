@@ -4,7 +4,7 @@
       <div class="card-body">
         <p v-if="fail" class="card-text mb-0">Le paiement a échoué.<br>Vous pouvez essayer une nouvelle fois ou nous <a :href="`mailto:${mailTo}`">contacter directement.</a></p>
         <div v-if="success">
-          <div v-if="isLiberty">
+          <div v-if="!isLiberty">
             <p><strong>Créditez votre compte par virement bancaire:</strong></p>
             <ol>
               <li><p>Effectuez un virement du montant du nombre de crédit souhaité.</p></li>
