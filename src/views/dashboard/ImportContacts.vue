@@ -3,7 +3,7 @@
     <div class="col">
       <div class="card">
         <div class="card-body">
-          <div class="dropzone p-5 mb-4" @drop.stop.prevent="handleFiles($event)" @dragenter.stop.prevent @dragover.stop.prevent>
+          <div class="dropzone p-5 mb-4 position-relative" @drop.stop.prevent="handleFiles($event)" @dragenter.stop.prevent @dragover.stop.prevent>
             <div class="text-center">
               <div>Glisser et déposer votre fichier</div>
               <div class="my-2 small">- Ou -</div>
@@ -19,9 +19,24 @@
               <p class="mt-4 mb-0 text-sm" v-if="selectedFile">
                 <strong>Fichier sélectionné :</strong> {{ filename }} <a href="#" @click.prevent="dismissFile"><i class="fas fa-trash-alt"></i></a>
               </p>
-              <p v-if="errorMessage" class="text-danger mb-0 mt-4 font-weight-bold error-message">{{ errorMessage }}</p>
+            </div>
+            <div v-if="isParsing" class="loader position-absolute h-100 w-100 d-flex justify-content-center align-items-center flex-column">
+              <!-- <loading-progress
+                indeterminate
+                hide-background
+                size="56"
+                rotate
+                fillDuration="2"
+                rotationDuration="1"
+              /> -->
+              <div class="text-primary">Lecture du fichier CSV/Excel en cours...</div>
             </div>
           </div>
+          <alert v-if="errorMessage.length > 0" class="mb-4" color="danger" icon="fas fa-exclamation-triangle">
+            <ul class="pl-0 mb-0 pl-4 error-message">
+              <li v-for="(message, index) in errorMessage" :key="index">{{ message }}</li>
+            </ul>
+          </alert>
           <div class="form-group">
             <label for="import-where" class="form-control-label">Importer les contacts</label>
             <select id="import-where" class="form-control" v-model="destination">
@@ -95,7 +110,6 @@
 import Alert from '@/components/Alert';
 import { ModelListSelect } from 'vue-search-select';
 import { validFileExtensions, workbookToArray, COUNT_MAX_LINES, COUNT_MIN_LINES } from '@/utils';
-import { formatNumber } from '@/filters';
 import { mapActions, mapGetters } from 'vuex';
 import Modal from '@/components/Modal';
 
@@ -114,14 +128,15 @@ export default {
       filename: '',
       contacts: [],
       selectedFile: false,
-      errorMessage: '',
+      errorMessage: [],
       customName: '',
       countMaxLines: COUNT_MAX_LINES,
       countMinLines: COUNT_MIN_LINES,
       errors: [],
       modalBody: '',
       listId: null,
-      destination: 'new'
+      destination: 'new',
+      isParsing: false
     };
   },
   mounted() {
@@ -139,49 +154,30 @@ export default {
       this.prepareImport(files);
     },
     prepareImport(files) {
+      this.contacts = [];
       if (files.length > 0) {
-        const f = files[0];
-        this.filename = f.name;
+        const file = files[0];
+        this.filename = file.name;
         // get file extension
-        const fileExtension = f.name.substring(f.name.lastIndexOf('.'));
+        const fileExtension = file.name.substring(file.name.lastIndexOf('.'));
 
         if (!validFileExtensions.includes(fileExtension.toLowerCase())) {
-          this.errorMessage = 'Les contacts doivent être enregistrés au format .xls, .xlsx ou .csv.';
+          this.errorMessage.push('Les contacts doivent être enregistrés au format .xls, .xlsx ou .csv.');
           return;
         }
 
-        // workbookToArray(f, (contacts) => {
-        //   // console.log(contacts.length);
-        //   const countLines = contacts.length;
-        //   this.contacts = [];
-        //   const columns = contacts.shift();
+        this.isParsing = true;
 
-        //   if (countLines > COUNT_MAX_LINES || countLines < COUNT_MIN_LINES) {
-        //     this.errorMessage = `Le nombre de lignes du fichier doit être au maximum de ${formatNumber(COUNT_MAX_LINES)} et au minimum de ${formatNumber(COUNT_MIN_LINES)}.`;
-        //     return;
-        //   }
-
-        //   if (!columns.includes('telephone')) {
-        //     this.errorMessage = 'Le fichier Excel doit avoir au moins une colonne nommée "telephone"';
-        //     return;
-        //   }
-
-        //   this.contacts = contacts.map((contact) => {
-        //     const contactObject = {};
-        //     columns.forEach((column, index) => {
-        //       if (column === 'telephone') contactObject[column] = String(contact[index], 10);
-        //       else contactObject[column] = contact[index];
-        //     });
-
-        //     return contactObject;
-        //   });
-
-        //   this.errorMessage = '';
-        // });
-
-        workbookToArray(f)
-          .then(data => console.log(data))
-          .catch(error => console.log(error));
+        workbookToArray(file)
+          .then((contacts) => {
+            this.contacts = contacts;
+            this.errorMessage = [];
+            this.isParsing = false;
+          })
+          .catch((error) => {
+            this.errorMessage = error;
+            this.isParsing = false;
+          });
       }
     },
     importWorkbook() {
@@ -219,7 +215,7 @@ export default {
       this.selectedFile = false;
       this.contacts = [];
       this.filename = '';
-      this.errorMessage = '';
+      this.errorMessage = [];
       this.$refs.csv.value = '';
     }
   },
@@ -241,5 +237,11 @@ export default {
 
 .error-message {
   font-size: 0.875rem;
+}
+
+.loader {
+  background-color: rgba(255,255,255, .8);
+  left: 0;
+  top: 0;
 }
 </style>

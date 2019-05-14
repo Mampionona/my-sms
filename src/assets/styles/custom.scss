@@ -103,17 +103,6 @@ p:only-child {
   }
 }
 
-// #panel {
-//   .header {
-//     background: {
-//       image: url('../images/iphones.png');
-//       position: center;
-//       repeat: no-repeat;
-//     }
-//     min-height: 300px;
-//   }
-// }
-
 .table {
   &.vertical-align-middle {
     tbody th,
@@ -126,12 +115,6 @@ p:only-child {
 .default-layout {
   .main-content {
     min-height: calc(100vh - 120px);
-  }
-}
-
-.vue-progress-path {
-  .progress {
-    stroke: #a6b5ba;
   }
 }
 
@@ -208,5 +191,15 @@ strong {
     .custom-control-label::before {
       box-shadow: 0 1px 3px rgba(50, 50, 93, 0.6), 0 1px 0 rgba(0, 0, 0, 0.05);
     }
+  }
+}
+
+.vue-progress-path {
+  path {
+    stroke-width: 4 !important;
+  }
+
+  .progress {
+    stroke: $primary !important;
   }
 }

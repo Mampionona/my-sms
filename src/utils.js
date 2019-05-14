@@ -1,5 +1,4 @@
-// import XLSX from 'xlsx';
-const Worker = require("worker-loader?name=hash.worker.js!./worker");
+import Worker from 'worker-loader?name=hash.worker.js!./worker';
 
 export const BAD_REQUEST = 400;
 export const UNAUTHENTICATED = 401;
@@ -9,21 +8,6 @@ export const validFileExtensions = ['.xls', '.xlsx', '.csv'];
 export const MAIL_TO = 'help@my-sms.pro';
 export const TELEPHONE = '08 99 02 07 20';
 export const dateUTC = date => Date.parse(date);
-
-// export function workbookToArray(file, complete) {
-//   const reader = new FileReader();
-//   reader.onload = (e) => {
-//     const data = new Uint8Array(e.target.result);
-//     const workbook = XLSX.read(data, { type: 'array', raw: true });
-
-//     /* convert from workbook to array of arrays */
-//     const firstWorksheet = workbook.Sheets[workbook.SheetNames[0]];
-//     let arrays = XLSX.utils.sheet_to_json(firstWorksheet, { header: 1 });
-//     arrays = arrays.filter(array => array.length > 0);
-//     if (complete) complete(arrays, file);
-//   };
-//   reader.readAsArrayBuffer(file);
-// }
 
 export function workbookToArray(file) {
   const worker = new Worker();
