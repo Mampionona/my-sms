@@ -199,3 +199,14 @@ strong {
     }
   }
 }
+
+.login,
+.register {
+  .custom-control-alternative {
+    .custom-control-input:active ~ .custom-control-label::before,
+    .custom-control-input:focus ~ .custom-control-label::before,
+    .custom-control-label::before {
+      box-shadow: 0 1px 3px rgba(50, 50, 93, 0.6), 0 1px 0 rgba(0, 0, 0, 0.05);
+    }
+  }
+}
