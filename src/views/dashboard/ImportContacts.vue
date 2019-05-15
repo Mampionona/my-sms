@@ -246,8 +246,7 @@ export default {
       const len = $contacts.length;
       let counter = 0;
       $contacts.forEach((contacts) => {
-        setTimeout(() => {
-          this.addContacts({ listId, contacts, onUploadProgress: this.onUploadProgress })
+        this.addContacts({ listId, contacts, onUploadProgress: this.onUploadProgress })
           .then(() => {
             counter++;
             if (counter === len) {
@@ -266,7 +265,6 @@ export default {
               }
             }
           });
-        }, 5000);
       });
     },
     onUploadProgress({ lengthComputable, loaded, total }) {
