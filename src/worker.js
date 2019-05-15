@@ -19,8 +19,6 @@ onmessage = function (e) {
     rows = rows.filter(row => row.length > 0);
     const countLines = rows.length;
     const titles = rows.shift();
-    // console.log(rows[0]);
-    // const titles = rows[0].shift();
 
     if (!titles.includes('telephone')) errors.push('Le fichier Excel/CSV doit avoir au moins une colonne nommée "telephone"');
     if (countLines > COUNT_MAX_LINES || countLines < COUNT_MIN_LINES) errors.push(
@@ -48,7 +46,7 @@ onmessage = function (e) {
       });
     });
 
-    postMessage({ errors, contacts });
+    postMessage({ errors, contacts, count: countLines - 1 });
   };
   reader.readAsArrayBuffer(file);
 };

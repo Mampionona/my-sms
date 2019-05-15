@@ -14,12 +14,12 @@ export function workbookToArray(file) {
   worker.postMessage(file);
   return new Promise((resolve, reject) => {
     worker.addEventListener('message', ({ data }) => {
-      const { errors, contacts } = data;
+      const { errors, contacts, count } = data;
       if (errors.length) {
         reject(errors);
         return;
       }
-      resolve(contacts);
+      resolve({ contacts, count });
     });
   });
 }

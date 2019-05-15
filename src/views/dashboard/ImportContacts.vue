@@ -3,18 +3,40 @@
     <div class="col">
       <div class="card">
         <div class="card-body">
-          <div class="mb-4 position-relative" @drop.stop.prevent="handleFiles($event)" @dragenter.stop.prevent @dragover.stop.prevent>
-            <div class="rounded bg-squared py-5 px-2 text-center px-lg-5">
-              <p>Glisser et déposer votre fichier</p>
-              <p>Ou</p>
-              <div>
-                <label class="btn btn-icon btn-primary">
-                  <span class="btn-inner--icon">
-                    <i class="fas fa-download"></i>
-                  </span>
-                  <span class="btn-inner--text d-none d-sm-inline">Sélectionner votre fichier</span>
-                  <input type="file" hidden ref="csv">
-                </label>
+          <div class="mb-4 position-relative">
+            <div class="dropzone dropzone-multiple dz-clickable" data-toggle="dropzone" @drop.stop.prevent="handleFiles($event)" @dragenter.stop.prevent @dragover.stop.prevent>  
+              <ul v-if="isParsed" class="dz-preview dz-preview-multiple list-group list-group-lg list-group-flush">
+                <li class="list-group-item px-0 dz-processing">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <div class="avatar">
+                        <i class="fas fa-file-csv"></i>
+                      </div>
+                    </div>
+                    <div class="col-auto ml--3">
+                      <h4 class="mb-1">{{ filename }}</h4>
+                      <p class="small text-muted mb-0" data-dz-size=""><strong>{{ lines | formatNumber }}</strong> lignes</p>
+                    </div>
+                    <div class="col-auto ml-3">
+                      <a href="#" @click.prevent="dismissFile">
+                        <i class="fas fa-trash-alt"></i>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="dz-default dz-message">
+                <div>Glisser et déposer votre fichier</div>
+                <div class="my-2">Ou</div>
+                <div>
+                  <label class="btn btn-icon btn-primary">
+                    <span class="btn-inner--icon">
+                      <i class="fas fa-download"></i>
+                    </span>
+                    <span class="btn-inner--text d-none d-sm-inline">Sélectionner votre fichier</span>
+                    <input type="file" hidden ref="csv">
+                  </label>
+                </div>
               </div>
             </div>
             <div v-if="isParsing" class="loader position-absolute top-0 left-0 h-100 w-100 d-flex justify-content-center align-items-center flex-column">
@@ -27,15 +49,6 @@
                 rotationDuration="1"
               />
               <div class="text-primary">Lecture du fichier CSV/Excel en cours...</div>
-            </div>
-            <div v-if="isParsed" class="rounded bg-squared position-absolute top-0 left-0 h-100 w-100 text-center d-flex align-items-center justify-content-center flex-column">
-              <p class="mb-0"><i class="fas fa-file-csv mr-2"></i><span class="font-weight-500">Nom du fichier :</span> {{ filename }}</p>
-              <p class="mb-4"><i class="fas fa-list mr-2"></i><span class="font-weight-500">Nombre de lignes :</span> {{ 1000000 | formatNumber }}</p>
-              <div>
-                <button class="btn btn-icon btn-secondary" @click="dismissFile">
-                  <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
-                </button>
-              </div>
             </div>
           </div>
           <alert v-if="errorMessage.length > 0" class="mb-4" color="danger" icon="fas fa-exclamation-triangle">
@@ -143,7 +156,8 @@ export default {
       listId: null,
       destination: 'new',
       isParsing: false,
-      isParsed: false
+      isParsed: false,
+      lines: 0
     };
   },
   mounted() {
@@ -177,7 +191,8 @@ export default {
         this.isParsed = false;
 
         workbookToArray(file)
-          .then((contacts) => {
+          .then(({ contacts, count }) => {
+            this.lines = count;
             this.contacts = Object.freeze(contacts);
             this.errorMessage = [];
             this.isParsing = false;
@@ -252,5 +267,6 @@ export default {
 
 .loader {
   background-color: rgba(255,255,255, .9);
+  z-index: 999;
 }
 </style>
