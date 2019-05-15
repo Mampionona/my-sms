@@ -122,6 +122,19 @@
       <modal id="import-error-modal" cancel-button cancel-button-label="Fermer">
         <p class="mb-0">{{ modalBody }}</p>
       </modal>
+      <modal id="import-progress" data-backdrop="static" data-keyboard="false">
+        <p class="mb-5">Importation des contacts en cours.<br>Ne fermez pas votre navigateur.</p>
+        <div class="progress progress-xs mb-0">
+          <div
+            class="progress-bar bg-dark"
+            role="progressbar"
+            aria-valuenow="72"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            style="width: 72%;"
+          ></div>
+        </div>
+      </modal>
     </div>
   </div>
 </template>
@@ -214,6 +227,8 @@ export default {
       if (this.destination === 'list' && !this.listId) this.errors.push('Vous devez choisir une liste déjà existante');
       if (!certify) this.errors.push('Vous devez accepter les politiques de téléchargement du fichier');
       if (this.hasError) return;
+      
+      this.$jQuery('#import-progress').modal('show');
       if (this.destination === 'new') {
         this.createNewList({ name: customName || filename })
           .then(({ id }) => this.addContactsToAList(id, contacts))
@@ -223,18 +238,28 @@ export default {
       }
       else this.addContactsToAList(this.listId, contacts);
     },
-    addContactsToAList(listId, contacts) {
-      this.addContacts({ listId, contacts })
-        .then(() => {
-          this.$router.push({
-            name: 'contacts',
-            params: { listId }
+    addContactsToAList(listId, $contacts) {
+      const len = $contacts.length;
+      let counter = 0;
+      $contacts.forEach((contacts) => {
+        this.addContacts({ listId, contacts, onUploadProgress: this.onUploadProgress })
+          .then(() => {
+            counter++;
+            if (counter === len) this.$router.push({ name: 'contacts', params: { listId } });
+          })
+          .catch(({ status, data }) => {
+            if (String(status).charAt(0) === '4') {
+              this.$jQuery('#import-progress').modal('hide');
+              this.modalBody = data.error;
+              this.$jQuery('#import-error-modal').modal('show');
+            }
           });
-        })
-        .catch(({ data }) => {
-          this.modalBody = data.error;
-          this.$jQuery('#import-error-modal').modal('show');
-        });
+      });
+    },
+    onUploadProgress({ lengthComputable, loaded, total }) {
+      if (!lengthComputable) return;
+      const percent = (loaded / total) * 100;
+      console.log(percent);
     },
     dismissFile() {
       this.selectedFile = false;

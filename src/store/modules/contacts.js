@@ -67,12 +67,14 @@ export default {
         mutationTypes: REMOVE_CONTACT_FROM_A_LIST
       });
     },
-    addContacts(context, { listId, contacts }) {
+    addContacts(context, { listId, contacts, onUploadProgress }) {
       return doAsync(context, {
         url: `/contacts/lists/${listId}/`,
         method: 'post',
         mutationTypes: ADD_CONTACTS,
-        data: { listId, contacts }
+        data: { listId, contacts },
+        shouldRetry: true,
+        onUploadProgress
       });
     }
   }
