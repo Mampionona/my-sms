@@ -26,7 +26,7 @@
               </p>
             </address>
           </div>
-          <p v-else class="mb-0">Paiement effectué avec succès</p>
+          <p v-else class="mb-0">Paiement effectué avec succès<br>Votre compte a été crédité</p>
         </div>
       </div>
     </div>
