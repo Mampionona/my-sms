@@ -128,10 +128,10 @@
           <div
             class="progress-bar bg-dark"
             role="progressbar"
-            aria-valuenow="72"
+            :aria-valuenow="progressPercent"
             aria-valuemin="0"
             aria-valuemax="100"
-            style="width: 72%;"
+            :style="progressBarWidth"
           ></div>
         </div>
       </modal>
@@ -151,6 +151,9 @@ export default {
     ...mapGetters({ lists: 'lists/lists' }),
     hasError() {
       return Object.keys(this.errors).length > 0;
+    },
+    progressBarWidth() {
+      return { width: `${this.progressPercent}%` };
     }
   },
   data() {
@@ -170,7 +173,8 @@ export default {
       destination: 'new',
       isParsing: false,
       isParsed: false,
-      lines: 0
+      lines: 0,
+      progressPercent: 0
     };
   },
   mounted() {
@@ -245,9 +249,13 @@ export default {
         this.addContacts({ listId, contacts, onUploadProgress: this.onUploadProgress })
           .then(() => {
             counter++;
-            if (counter === len) this.$router.push({ name: 'contacts', params: { listId } });
+            if (counter === len) {
+              this.$jQuery('#import-progress').modal('hide');
+              this.$router.push({ name: 'contacts', params: { listId } });
+            }
           })
           .catch(({ status, data }) => {
+            // Only for 4xx error
             if (String(status).charAt(0) === '4') {
               this.$jQuery('#import-progress').modal('hide');
               this.modalBody = data.error;
@@ -258,8 +266,7 @@ export default {
     },
     onUploadProgress({ lengthComputable, loaded, total }) {
       if (!lengthComputable) return;
-      const percent = (loaded / total) * 100;
-      console.log(percent);
+      this.progressPercent = (loaded / total) * 100;
     },
     dismissFile() {
       this.selectedFile = false;
