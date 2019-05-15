@@ -2,9 +2,9 @@ import Axios from 'axios';
 
 const retryAxios = require('retry-axios');
 const raxConfig = {
-  retry: 10,
-  retryDelay: 1000,
-  httpMethodsToRetry: ['POST'],
+  retry: 3,
+  retryDelay: 100,
+  // httpMethodsToRetry: ['POST', 'OPTIONS'],
   onRetryAttempt: (err) => {
     const cfg = retryAxios.getConfig(err);
     console.log(`Retry attempt #${cfg.currentRetryAttempt}`);
@@ -22,7 +22,8 @@ export function doAsync(context, { url, method, mutationTypes, data = {}, sort =
   let options = {
     url,
     data,
-    method: method || 'get'
+    method: method || 'get',
+    responseType: 'text'
   };
 
   if (onUploadProgress) {

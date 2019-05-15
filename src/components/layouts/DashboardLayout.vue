@@ -26,7 +26,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { loadProgressBar } from 'axios-progress-bar';
+// import { loadProgressBar } from 'axios-progress-bar';
 import SideNav from './partials/dashboard/SideNav';
 import TopNav from './partials/dashboard/TopNav';
 import Breadcrumb from './partials/dashboard/Breadcrumb';
@@ -34,9 +34,9 @@ import ProfileHeader from '@/components/partials/ProfileHeader';
 
 export default {
   components: { SideNav, TopNav, Breadcrumb, ProfileHeader },
-  mounted() {
-    loadProgressBar();
-  },
+  // mounted() {
+  //   loadProgressBar();
+  // },
   computed: {
     ...mapGetters({
       user: 'auth/user'
@@ -62,18 +62,18 @@ export default {
   opacity: 0;
 }
 
-#nprogress {
-  .bar {
-    background: #f5365c !important;
-    z-index: 9999 !important;
-  }
+// #nprogress {
+//   .bar {
+//     background: #f5365c !important;
+//     z-index: 9999 !important;
+//   }
 
-  .peg {
-    display: none !important;
-  }
+//   .peg {
+//     display: none !important;
+//   }
 
-  .spinner-icon {
-    display: none;
-  }
-}
+//   .spinner-icon {
+//     display: none;
+//   }
+// }
 </style>

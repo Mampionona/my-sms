@@ -246,7 +246,8 @@ export default {
       const len = $contacts.length;
       let counter = 0;
       $contacts.forEach((contacts) => {
-        this.addContacts({ listId, contacts, onUploadProgress: this.onUploadProgress })
+        setTimeout(() => {
+          this.addContacts({ listId, contacts, onUploadProgress: this.onUploadProgress })
           .then(() => {
             counter++;
             if (counter === len) {
@@ -254,14 +255,18 @@ export default {
               this.$router.push({ name: 'contacts', params: { listId } });
             }
           })
-          .catch(({ status, data }) => {
-            // Only for 4xx error
-            if (String(status).charAt(0) === '4') {
-              this.$jQuery('#import-progress').modal('hide');
-              this.modalBody = data.error;
-              this.$jQuery('#import-error-modal').modal('show');
+          .catch((error) => {
+            if (error) {
+              const { status, data } = error;
+              // Only for 4xx error
+              if (String(status).charAt(0) === '4') {
+                this.$jQuery('#import-progress').modal('hide');
+                this.modalBody = data.error;
+                this.$jQuery('#import-error-modal').modal('show');
+              }
             }
           });
+        }, 5000);
       });
     },
     onUploadProgress({ lengthComputable, loaded, total }) {
