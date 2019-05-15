@@ -54,9 +54,8 @@
   height: initial;
 }
 
-.dropzone {
+.bg-squared {
   background-image: url('../images/squared-metal.png');
-  border-radius: 0.375rem;
 }
 
 p:only-child {
@@ -196,7 +195,7 @@ strong {
 
 .vue-progress-path {
   path {
-    stroke-width: 4 !important;
+    stroke-width: 3 !important;
   }
 
   .progress {

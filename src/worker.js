@@ -31,20 +31,13 @@ onmessage = function (e) {
 
     rows = rows.reduce((resultArray, item, index) => {
       const chunkIndex = Math.floor(index / perChunk);
-
-      if (!resultArray[chunkIndex]) {
-        // start a new chunk
-        resultArray[chunkIndex] = [];
-      }
-
+      // start a new chunk
+      if (!resultArray[chunkIndex]) resultArray[chunkIndex] = [];
       resultArray[chunkIndex].push(item);
-
       return resultArray;
     }, []);
 
-    
-
-    rows = rows.map((row) => {
+    const contacts = rows.map((row) => {
       return row.map((_row) => {
         const contactObject = {};
         titles.forEach((title, index) => {
@@ -55,21 +48,7 @@ onmessage = function (e) {
       });
     });
 
-    // console.log(rows);
-
-    // Transform array to object
-    // const contacts = rows.map((row) => {
-    //   const contactObject = {};
-    //   titles.forEach((title, index) => {
-    //     if (title === 'telephone') contactObject[title] = String(row[index]);
-    //     else contactObject[title] = row[index];
-    //   });
-    //   return contactObject;
-    // });
-
-    // postMessage({ errors, contacts });
-
-    console.log(rows);
+    postMessage({ errors, contacts });
   };
   reader.readAsArrayBuffer(file);
 };
