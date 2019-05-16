@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-body">
           <div class="mb-4 position-relative">
-            <div class="dropzone dropzone-multiple dz-clickable" data-toggle="dropzone" @drop.stop.prevent="handleFiles($event)" @dragenter.stop.prevent @dragover.stop.prevent>  
+            <div class="dropzone dropzone-multiple dz-clickable" data-toggle="dropzone" @drop.stop.prevent="handleFiles($event)" @dragenter.stop.prevent @dragover.stop.prevent>
               <ul v-if="isParsed" class="dz-preview dz-preview-multiple list-group list-group-lg list-group-flush">
                 <li class="list-group-item px-0 dz-processing">
                   <div class="row align-items-center">
@@ -231,7 +231,6 @@ export default {
       if (this.destination === 'list' && !this.listId) this.errors.push('Vous devez choisir une liste déjà existante');
       if (!certify) this.errors.push('Vous devez accepter les politiques de téléchargement du fichier');
       if (this.hasError) return;
-      
       this.$jQuery('#import-progress').modal('show');
       if (this.destination === 'new') {
         this.createNewList({ name: customName || filename })
@@ -242,40 +241,14 @@ export default {
       }
       else this.addContactsToAList(this.listId, contacts);
     },
-    // addContactsToAList(listId, $contacts) {
-    //   const len = $contacts.length;
-    //   let counter = 0;
-    //   $contacts.forEach((contacts) => {
-    //     this.addContacts({ listId, contacts, onUploadProgress: this.onUploadProgress })
-    //       .then(() => {
-    //         counter++;
-    //         if (counter === len) {
-    //           this.$jQuery('#import-progress').modal('hide');
-    //           this.$router.push({ name: 'contacts', params: { listId } });
-    //         }
-    //       })
-    //       .catch((error) => {
-    //         if (error) {
-    //           const { status, data } = error;
-    //           // Only for 4xx error
-    //           if (String(status).charAt(0) === '4') {
-    //             this.$jQuery('#import-progress').modal('hide');
-    //             this.modalBody = data.error;
-    //             this.$jQuery('#import-error-modal').modal('show');
-    //           }
-    //         }
-    //       });
-    //   });
-    // },
     addContactsToAList(listId, $contacts) {
       const len = $contacts.length;
       let counter = 0;
-      const foo = (counter) => {
-        // code
-        this.addContacts({ listId, contacts: $contacts[counter], onUploadProgress: this.onUploadProgress })
+      const saveContacts = (_counter) => {
+        this.addContacts({ listId, contacts: $contacts[_counter], onUploadProgress: this.onUploadProgress })
           .then(() => {
             counter++;
-            if (counter < len) foo(counter);
+            if (counter < len) saveContacts(counter);
             if (counter === len) {
               this.$jQuery('#import-progress').modal('hide');
               this.$router.push({ name: 'contacts', params: { listId } });
@@ -292,10 +265,9 @@ export default {
               }
             }
           });
-        // counter++;
       };
 
-      foo(counter);
+      saveContacts(counter);
     },
     onUploadProgress({ lengthComputable, loaded, total }) {
       if (!lengthComputable) return;
