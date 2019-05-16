@@ -1,5 +1,6 @@
 import XLSX from 'xlsx';
 import { formatNumber } from './filters';
+
 const COUNT_MAX_LINES = 1000000;
 const COUNT_MIN_LINES = 5;
 
@@ -7,9 +8,9 @@ onmessage = function (e) {
   const file = e.data;
   const reader = new FileReader();
 
-  reader.onload = (e) => {
+  reader.onload = (loadEvent) => {
     const errors = [];
-    const data = new Uint8Array(e.target.result);
+    const data = new Uint8Array(loadEvent.target.result);
     const workbook = XLSX.read(data, { type: 'array', raw: true });
 
     // Convert from workbook to array of arrays
@@ -21,9 +22,12 @@ onmessage = function (e) {
     const titles = rows.shift();
 
     if (!titles.includes('telephone')) errors.push('Le fichier Excel/CSV doit avoir au moins une colonne nommée "telephone"');
-    if (countLines > COUNT_MAX_LINES || countLines < COUNT_MIN_LINES) errors.push(
-      `Le nombre de lignes du fichier doit être au maximum de ${formatNumber(COUNT_MAX_LINES)} et au minimum de ${formatNumber(COUNT_MIN_LINES)}.`
-    );
+
+    if (countLines > COUNT_MAX_LINES || countLines < COUNT_MIN_LINES) {
+      errors.push(
+        `Le nombre de lignes du fichier doit être au maximum de ${formatNumber(COUNT_MAX_LINES)} et au minimum de ${formatNumber(COUNT_MIN_LINES)}.`
+      );
+    }
 
     const perChunk = 10000;
 
@@ -35,18 +39,18 @@ onmessage = function (e) {
       return resultArray;
     }, []);
 
-    const contacts = rows.map((row) => {
-      return row.map((_row) => {
-        const contactObject = {};
-        titles.forEach((title, index) => {
-          if (title === 'telephone') contactObject[title] = String(_row[index]);
-          else contactObject[title] = _row[index];
-        });
-        return contactObject;
+    const contacts = rows.map(row => row.map((_row) => {
+      const contactObject = {};
+      titles.forEach((title, index) => {
+        if (title === 'telephone') contactObject[title] = String(_row[index]);
+        else contactObject[title] = _row[index];
       });
-    });
+
+      return contactObject;
+    }));
 
     postMessage({ errors, contacts, count: countLines - 1 });
   };
+
   reader.readAsArrayBuffer(file);
 };

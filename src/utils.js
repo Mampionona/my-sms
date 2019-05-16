@@ -1,4 +1,4 @@
-import Worker from 'worker-loader?name=hash.worker.js!./worker';
+import Worker from './csv.worker';
 
 export const BAD_REQUEST = 400;
 export const UNAUTHENTICATED = 401;
