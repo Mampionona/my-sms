@@ -202,3 +202,11 @@ strong {
     stroke: $primary !important;
   }
 }
+
+.modal {
+  z-index: 1051;
+}
+
+.modal-backdrop {
+  z-index: 1050;
+}
