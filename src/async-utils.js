@@ -2,9 +2,9 @@ import Axios from 'axios';
 
 const retryAxios = require('retry-axios');
 const raxConfig = {
-  retry: 3,
+  retry: 20,
   retryDelay: 100,
-  // httpMethodsToRetry: ['POST', 'OPTIONS'],
+  httpMethodsToRetry: ['POST', 'OPTIONS', 'DELETE'],
   onRetryAttempt: (err) => {
     const cfg = retryAxios.getConfig(err);
     console.log(`Retry attempt #${cfg.currentRetryAttempt}`);
