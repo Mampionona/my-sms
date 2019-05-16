@@ -19,10 +19,10 @@
           </div>
         </div>
       </div>
-      <div v-else class="card p-4">
-          <p><strong>Vous disposez d'un compte {{ user.planName }}. Créditez votre compte par virement bancaire&nbsp;:</strong></p>
 
+      <div v-else class="card p-4">
           <div v-if="user.planId === 2">
+            <p>Vous disposez d'un abonnement {{ user.planName }}.<br>Créditez le volume SMS dont vous avez besoin par virement bancaire&nbsp;:</p>
             <ol>
                 <li>Evaluer le montant du virement (ex: <strong>0,034 X</strong> le nombre de crédits souhaité).</li>
                 <li>Effectuez le virement du montant du nombre de crédits souhaité.</li>
@@ -31,6 +31,7 @@
           </div>
 
           <div v-else>
+            <p>Vous disposez d'un abonnement {{ user.planName }}.<br>Créditez le volume SMS dont vous avez besoin par virement bancaire&nbsp;:</p>
             <ol>
               <li>Evaluer le montant du virement (ex: <strong>0,033 X</strong> le nombre de crédits souhaité).</li>
               <li>Effectuez le virement du montant du nombre de crédits souhaité.</li>
