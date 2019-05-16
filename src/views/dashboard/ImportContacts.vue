@@ -242,13 +242,40 @@ export default {
       }
       else this.addContactsToAList(this.listId, contacts);
     },
+    // addContactsToAList(listId, $contacts) {
+    //   const len = $contacts.length;
+    //   let counter = 0;
+    //   $contacts.forEach((contacts) => {
+    //     this.addContacts({ listId, contacts, onUploadProgress: this.onUploadProgress })
+    //       .then(() => {
+    //         counter++;
+    //         if (counter === len) {
+    //           this.$jQuery('#import-progress').modal('hide');
+    //           this.$router.push({ name: 'contacts', params: { listId } });
+    //         }
+    //       })
+    //       .catch((error) => {
+    //         if (error) {
+    //           const { status, data } = error;
+    //           // Only for 4xx error
+    //           if (String(status).charAt(0) === '4') {
+    //             this.$jQuery('#import-progress').modal('hide');
+    //             this.modalBody = data.error;
+    //             this.$jQuery('#import-error-modal').modal('show');
+    //           }
+    //         }
+    //       });
+    //   });
+    // },
     addContactsToAList(listId, $contacts) {
       const len = $contacts.length;
       let counter = 0;
-      $contacts.forEach((contacts) => {
-        this.addContacts({ listId, contacts, onUploadProgress: this.onUploadProgress })
+      const foo = (counter) => {
+        // code
+        this.addContacts({ listId, contacts: $contacts[counter], onUploadProgress: this.onUploadProgress })
           .then(() => {
             counter++;
+            if (counter < len) foo(counter);
             if (counter === len) {
               this.$jQuery('#import-progress').modal('hide');
               this.$router.push({ name: 'contacts', params: { listId } });
@@ -265,7 +292,10 @@ export default {
               }
             }
           });
-      });
+        // counter++;
+      };
+
+      foo(counter);
     },
     onUploadProgress({ lengthComputable, loaded, total }) {
       if (!lengthComputable) return;
