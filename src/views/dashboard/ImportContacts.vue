@@ -124,15 +124,19 @@
       </modal>
       <modal id="import-progress" data-backdrop="static" data-keyboard="false">
         <p class="mb-5">Importation des contacts en cours.<br>Ne fermez pas votre navigateur.</p>
-        <div class="progress progress-xs mb-0">
-          <div
-            class="progress-bar bg-dark"
-            role="progressbar"
-            :aria-valuenow="progressPercent"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            :style="progressBarWidth"
-          ></div>
+        <div class="row justify-content-center">
+          <div class="col-6">
+            <div class="progress progress-xs">
+              <div
+                class="progress-bar bg-dark"
+                role="progressbar"
+                :aria-valuenow="progressPercent"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                :style="progressBarWidth"
+              ></div>
+            </div>
+          </div>
         </div>
       </modal>
     </div>
