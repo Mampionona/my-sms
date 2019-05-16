@@ -1,6 +1,7 @@
 import Axios from 'axios';
 
 const retryAxios = require('retry-axios');
+
 const raxConfig = {
   retry: 10,
   retryDelay: 100,
