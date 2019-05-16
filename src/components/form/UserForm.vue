@@ -2,73 +2,73 @@
   <form role="form" @submit.prevent="onSubmit">
     <form-group>
       <i slot="icon" class="ni ni-building"></i>
-      <input slot="input" class="form-control" placeholder="Société" type="text" v-model="company">
+      <input slot="input" class="form-control" :placeholder="`${$t('Société')}`" type="text" v-model="company">
     </form-group>
     <form-group>
       <i slot="icon" class="fas fa-building"></i>
-      <input slot="input" class="form-control" placeholder="SIREN" type="text" v-model.trim="siren">
+      <input slot="input" class="form-control" :placeholder="`${$t('SIREN')}`" type="text" v-model.trim="siren">
     </form-group>
     <form-group>
       <i slot="icon" class="fas fa-money-check-alt"></i>
-      <input slot="input" class="form-control" placeholder="TVA" type="text" v-model.trim="tva">
+      <input slot="input" class="form-control" :placeholder="`${$t('TVA')}`" type="text" v-model.trim="tva">
     </form-group>
     <form-group>
       <i slot="icon" class="ni ni-circle-08"></i>
-      <input slot="input" class="form-control" placeholder="Prénom" type="text" v-model="firstname">
+      <input slot="input" class="form-control" :placeholder="`${$t('Prénom')}`" type="text" v-model="firstname">
     </form-group>
     <form-group>
       <i slot="icon" class="ni ni-circle-08"></i>
-      <input slot="input" class="form-control" placeholder="Nom" type="text" v-model="lastname">
+      <input slot="input" class="form-control" :placeholder="`${$t('Nom')}`" type="text" v-model="lastname">
     </form-group>
     <form-group>
       <i slot="icon" class="ni ni-badge"></i>
-      <input slot="input" class="form-control" placeholder="Role" type="text" v-model="userRole">
+      <input slot="input" class="form-control" :placeholder="`${$t('Role')}`" type="text" v-model="userRole">
     </form-group>
     <form-group>
       <i slot="icon" class="ni ni-pin-3"></i>
-      <input slot="input" class="form-control" placeholder="Rue" type="text" v-model="street">
+      <input slot="input" class="form-control" :placeholder="`${$t('Rue')}`" type="text" v-model="street">
     </form-group>
     <form-group>
       <i slot="icon" class="ni ni-square-pin"></i>
-      <input slot="input" class="form-control" placeholder="Ville" type="text" v-model="city">
+      <input slot="input" class="form-control" :placeholder="`${$t('Ville')}`" type="text" v-model="city">
     </form-group>
     <form-group>
       <i slot="icon" class="fas fa-map-pin"></i>
-      <input slot="input" class="form-control" placeholder="Code postal" type="number" v-model="postcode">
+      <input slot="input" class="form-control" :placeholder="`${$t('Code postal')}`" type="number" v-model="postcode">
     </form-group>
     <form-group>
       <i slot="icon" class="fa fa-phone fa-flip-horizontal"></i>
-      <input slot="input" class="form-control" placeholder="Téléphone" type="text" v-model="telephone">
+      <input slot="input" class="form-control" :placeholder="`${$t('Téléphone')}`" type="text" v-model="telephone">
     </form-group>
     <form-group>
       <i slot="icon" class="fas fa-mobile-alt"></i>
-      <input slot="input" class="form-control" placeholder="Mobile" type="text" v-model="mobile">
+      <input slot="input" class="form-control" :placeholder="`${$t('Mobile')}`" type="text" v-model="mobile">
     </form-group>
     <form-group>
       <i slot="icon" class="ni ni-email-83"></i>
-      <input slot="input" class="form-control" placeholder="E-mail" type="email" v-model="email">
+      <input slot="input" class="form-control" :placeholder="`${$t('E-mail')}`" type="email" v-model="email">
     </form-group>
     <form-group>
       <i slot="icon" class="ni ni-lock-circle-open"></i>
-      <input slot="input" class="form-control" placeholder="Mot de passe" type="password" v-model="password" autocomplete="new-password">
+      <input slot="input" class="form-control" :placeholder="`${$t('Mot de passe')}`" type="password" v-model="password" autocomplete="new-password">
     </form-group>
     <form-group>
       <i slot="icon" class="ni ni-lock-circle-open"></i>
-      <input slot="input" class="form-control" placeholder="Crédits" v-model="credits" type="number">
+      <input slot="input" class="form-control" :placeholder="`${$t('Crédits')}`" v-model="credits" type="number">
     </form-group>
     <div class="form-group">
-      <label class="form-control-label" for="plan">Formule</label>
+      <label class="form-control-label" for="plan">{{ $t('Formule') }}</label>
       <select class="form-control" id="plan" v-model="planId">
-        <option :value="null">Choisir</option>
+        <option :value="null">{{ $t('Choisir') }}</option>
         <option v-for="(plan, index) in plans" :key="index" :value="plan.id">{{ plan.name }}</option>
       </select>
     </div>
     <div class="text-center" v-if="updateAnyUserLoading">
       <spinner></spinner>
     </div>
-    <p :class="statusClass">{{ statusMessage }}</p>
+    <p :class="statusClass">{{ $t(statusMessage) }}</p>
     <div class="text-center">
-      <button type="submit" class="btn btn-primary mt-4">{{ buttonLabel }}</button>
+      <button type="submit" class="btn btn-primary mt-4">{{ $t(buttonLabel) }}</button>
     </div>
   </form>
 </template>

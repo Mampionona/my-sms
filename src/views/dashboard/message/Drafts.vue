@@ -3,9 +3,9 @@
     <div class="col">
       <div class="card">
         <div class="card-header">
-          <router-link class="btn btn-primary" :to="{ name: 'create_campaign' }">Créer une campagne</router-link>
+          <router-link class="btn btn-primary" :to="{ name: 'create_campaign' }">{{ $t('Créer une campagne') }}</router-link>
         </div>
-        <messages @show="onShow" :messages="drafts" is-draft>Aucun brouillons</messages>
+        <messages @show="onShow" :messages="drafts" is-draft>{{ $t('Aucun brouillons') }}</messages>
       </div>
     </div>
   </div>

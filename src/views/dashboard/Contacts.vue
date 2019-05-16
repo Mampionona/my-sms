@@ -5,24 +5,26 @@
         <div class="p-3">
           <form @submit.prevent="updateListName">
             <div class="input-group">
-              <input type="text" class="form-control" aria-label="Recipient's username" v-model="name" placeholder="Nom du fichier">
+              <input type="text" class="form-control" aria-label="Recipient's username" v-model="name" :placeholder="`${$t('Nom du fichier')}`">
               <div class="input-group-append">
                 <v-btn icon="fas fa-check" color="success" type="submit"></v-btn>
               </div>
             </div>
-            <p v-if="updateTextStatus" :class="updateTextClass">{{ updateTextStatus }}</p>
+            <p v-if="updateTextStatus" :class="updateTextClass">{{ $t(updateTextStatus) }}</p>
           </form>
           <div v-if="countContacts" class="d-flex align-items-center justify-content-center mt-3">
             <span class="badge badge-default mr-1">{{ countContacts }}</span>
             <small>{{ $tc('numberOfLines', countContacts) }}</small>
           </div>
-          <p v-if="list" class="text-center mt-2">Créé le {{ list.updateDate | full }}</p>
+          <i18n tag="p" v-if="list" class="text-center mt-2" path="Créé le">
+            {{ list.updateDate | full }}
+          </i18n>
           <div class="compose">
             <button class="btn btn-icon btn-primary btn-block" type="button" @click="$router.push(composeUrl)">
               <span class="btn-inner--icon"><i class="fas fa-pencil-alt"></i></span>
-              <span class="btn-inner--text">Composer un SMS</span>
+              <span class="btn-inner--text">{{ $t('Composer un SMS') }}</span>
             </button>
-            <p class="text-center mt-3">Seul les numéros valides et non STOP-SMS seront envoyés.</p>
+            <p class="text-center mt-3">{{ $t('Seul les numéros valides et non STOP-SMS seront envoyés.') }}</p>
           </div>
         </div>
       </div>
@@ -32,19 +34,19 @@
         <div class="p-3">
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="actions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Actions
+              {{ $t('Actions') }}
             </button>
             <div class="dropdown-menu" aria-labelledby="actions">
-              <a class="dropdown-item" href="#" @click.prevent="deleteContacts">Supprimer</a>
+              <a class="dropdown-item" href="#" @click.prevent="deleteContacts">{{ $t('Supprimer') }}</a>
             </div>
           </div>
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="filtres" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Filtres
+              {{ $t('Filtres') }}
             </button>
             <div class="dropdown-menu" aria-labelledby="filtres">
-              <a class="dropdown-item" href="#" @click.prevent="items = contacts">Aucun filtre</a>
-              <a class="dropdown-item" href="#" @click.prevent="items = stops">Voir les STOP SMS</a>
+              <a class="dropdown-item" href="#" @click.prevent="items = contacts">{{ $t('Aucun filtre') }}</a>
+              <a class="dropdown-item" href="#" @click.prevent="items = stops">{{ $t('Voir les STOP SMS') }}</a>
             </div>
           </div>
           <div class="dropdown">
@@ -52,7 +54,7 @@
               <i class="fas fa-download"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="export">
-              <a class="dropdown-item" href="#" @click.prevent="exportCSV">Export CSV</a>
+              <a class="dropdown-item" href="#" @click.prevent="exportCSV">{{ $t('Export CSV') }}</a>
             </div>
           </div>
         </div>
@@ -65,18 +67,20 @@
               </div>
             </contact>
           </template>
-          <div slot="no-results" class="text-center">Aucun contact trouvé</div>
+          <div slot="no-results" class="text-center">{{ $t('Aucun contact trouvé') }}</div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
         <modal
           id="confirm-contact-delete"
           accept-button
-          accept-button-label="Supprimer"
+          :accept-button-label="`${$t('Supprimer')}`"
           cancel-button
-          cancel-button-label="Non"
+          :cancel-button-label="`${$t('Non')}`"
           @accept="deleteContact"
         >
-          <p class="mb-0">Voulez-vous effacer le numéro <strong>{{ telephone }} ?</strong></p>
+          <i18n class="mb-0" path="Voulez-vous effacer le numéro" tag="p">
+            <strong>{{ telephone }}</strong>
+          </i18n>
         </modal>
       </div>
     </div>

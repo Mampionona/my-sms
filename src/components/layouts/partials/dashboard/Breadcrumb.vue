@@ -8,9 +8,9 @@
         :aria-current="isLast(index) ? 'page' : ''"
       >
         <router-link v-if="isFirst(index)" :to="link.path"><i :class="icon"></i></router-link>
-        <template v-else-if="isLast(index)">{{ pageTitle(link.meta.breadcrumb) }}</template>
+        <template v-else-if="isLast(index)">{{ $t(pageTitle(link.meta.breadcrumb)) }}</template>
         <router-link v-else :to="link.path">
-          {{ link.meta.breadcrumb }}
+          {{ $t(link.meta.breadcrumb) }}
         </router-link>
       </li>
     </ol>

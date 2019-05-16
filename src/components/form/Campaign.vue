@@ -4,20 +4,20 @@
       <div class="row custom-row">
         <div class="col-lg-12">
           <div class="card">
-            <div class="card-header"><i class="ni ni-chat-round mr-2"></i> Nom de la campagne</div>
+            <div class="card-header"><i class="ni ni-chat-round mr-2"></i> {{ $t('Nom de la campagne') }}</div>
             <div class="card-body">
-              <input type="text" class="form-control" v-model="name" placeholder="Nom de la campagne">
+              <input type="text" class="form-control" v-model="name" :placeholder="`${$t('Nom de la campagne')}`">
             </div>
           </div>
           <div class="card">
-            <div class="card-header"><i class="fas fa-users mr-2"></i> Destinataires</div>
+            <div class="card-header"><i class="fas fa-users mr-2"></i> {{ $t('Destinataires') }}</div>
             <div class="card-body">
               <model-list-select
                 :list="lists"
                 option-value="id"
                 option-text="name"
                 v-model="listId"
-                placeholder="Sélectionner un fichier"
+                :placeholder="`${$t('Sélectionner un fichier')}`"
               ></model-list-select>
 
               <p v-if="contactsOfList > 0 && listId" class="small mt-4">{{ $tc('redaction.countContacts', contactsOfList) }}</p>
@@ -27,25 +27,24 @@
         </div>
         <div class="col-lg-12">
           <div class="card">
-            <div class="card-header"><i class="fas fa-envelope-open mr-2"></i> Votre message</div>
+            <div class="card-header"><i class="fas fa-envelope-open mr-2"></i> {{ $t('Votre message') }}</div>
             <div class="card-body">
               <div class="pt-2 px-2 border">
                 <textarea-autosize
-                  placeholder="Votre message..."
+                  :placeholder="`${$t('Votre message...')}`"
                   v-model="text"
-                  :min-height="150"
-                  :max-height="220"
+                  :min-height="100"
                   class="form-control-plaintext message pt-0"
                 ></textarea-autosize>
                 <p class="small text-right mb-1">
                   <strong>{{ countSMS }}</strong> SMS - {{ $tc("remainingChars", remainingChars) }} <strong>{{ remainingChars }}</strong>
                 </p>
               </div>
-              <p class="mb-0 mt-3 mention">La mention légale "STOP au 36105" sera automatiquement incluse lors de l'envoi.</p>
+              <p class="mb-0 mt-3 mention">{{ $t('La mention légale "STOP au 36105" sera automatiquement incluse lors de l\'envoi.') }}</p>
               <div class="mt-4">
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" id="save-as-draft" v-model="status">
-                  <label class="custom-control-label" for="save-as-draft">Enregistrer en tant que brouillon</label>
+                  <label class="custom-control-label" for="save-as-draft">{{ $t('Enregistrer en tant que brouillon') }}</label>
                 </div>
               </div>
             </div>
@@ -53,21 +52,21 @@
         </div>
         <div class="col-lg-12">
           <div class="card">
-            <div class="card-header"><i class="fas fa-arrow-right mr-2"></i> Émetteur du message</div>
+            <div class="card-header"><i class="fas fa-arrow-right mr-2"></i> {{ $t('Émetteur du message') }}</div>
             <div class="card-body">
-              <input type="text" class="form-control" v-model="senderName" placeholder="Nom de l'émetteur">
+              <input type="text" class="form-control" v-model="senderName" :placeholder="`${$t('Nom de l\'émetteur')}`">
             </div>
           </div>
           <div class="card">
-            <div class="card-header"><i class="fas fa-calendar-alt mr-2"></i> Date d'envoi</div>
+            <div class="card-header"><i class="fas fa-calendar-alt mr-2"></i> {{ $t('Date d\'envoi') }}</div>
             <div class="card-body">
               <div class="custom-control custom-radio custom-control-inline">
                 <input v-model="sendingMode" value="immediate" type="radio" id="envoi-immediat" name="envoi" class="custom-control-input">
-                <label class="custom-control-label" for="envoi-immediat">Envoi immédiat</label>
+                <label class="custom-control-label" for="envoi-immediat">{{ $t('Envoi immédiat') }}</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
                 <input v-model="sendingMode" value="delayed" type="radio" id="envoi-differe" name="envoi" class="custom-control-input">
-                <label class="custom-control-label" for="envoi-differe">Envoi différé</label>
+                <label class="custom-control-label" for="envoi-differe">{{ $t('Envoi différé') }}</label>
               </div>
               <date-picker
                 v-if="sendingMode === 'delayed'"
@@ -86,24 +85,24 @@
         </div>
       </div>
       <div v-if="hasError || created" :class="statusClass" role="alert">
-        {{ statusMessage }}
+        {{ $t(statusMessage) }}
       </div>
       <div class="row">
         <div class="col">
           <div class="text-right pr-3">
-            <button class="btn btn-secondary" type="button" @click="$jQuery('#send-test').modal('show')">Envoyer un test</button>
-            <button class="btn btn-primary" type="submit">{{ submitButtonLabel }}</button>
+            <button class="btn btn-secondary" type="button" @click="$jQuery('#send-test').modal('show')">{{ $t('Envoyer un test') }}</button>
+            <button class="btn btn-primary" type="submit">{{ $t(submitButtonLabel) }}</button>
           </div>
         </div>
       </div>
     </form>
-    <modal id="send-test" title="Envoyer un test" accept-button accept-button-color="secondary" accept-button-label="Envoyer" @accept="sendTest">
+    <modal id="send-test" title="Envoyer un test" accept-button accept-button-color="secondary" :accept-button-label="`${$t('Envoyer')}`" @accept="sendTest">
       <div class="form-group">
-        <label for="tel-input-test" class="form-control-label">Entrez un numéro de téléphone</label>
+        <label for="tel-input-test" class="form-control-label">{{ $t('Entrez un numéro de téléphone') }}</label>
         <input class="form-control" type="tel" id="tel-input-test" v-model="telephone">
       </div>
       <div v-if="Object.keys(attributes).length > 0" class="form-group mb-0">
-        <label for="" class="form-control-label">Définir des variables</label>
+        <label for="" class="form-control-label">{{ $t('Définir des variables') }}</label>
         <input
           type="text"
           class="form-control mb-2"
@@ -113,7 +112,7 @@
           v-model="attributes[attribute]"
         />
       </div>
-      <p v-if="testFail || testSuccess" :class="testStatusClass">{{ testStatusMessage }}</p>
+      <p v-if="testFail || testSuccess" :class="testStatusClass">{{ $t(testStatusMessage) }}</p>
     </modal>
   </div>
 </template>

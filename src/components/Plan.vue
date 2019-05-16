@@ -5,7 +5,7 @@
     <td>{{ plan.planPrice | formatCurrency(2) }}</td>
     <td class="text-right">
       <button v-if="editButton" class="btn btn-secondary"><i class="fas fa-pencil-alt"></i></button>
-      <button v-if="subscribeButton && plan.planPrice > 0" class="btn btn-secondary" @click="$emit('subscribe', plan)">Je m'abonne</button>
+      <button v-if="subscribeButton && plan.planPrice > 0" class="btn btn-secondary" @click="$emit('subscribe', plan)">{{ $t('Je m\'abonne') }}</button>
     </td>
   </tr>
 </template>

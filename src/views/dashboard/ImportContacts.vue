@@ -26,14 +26,14 @@
                 </li>
               </ul>
               <div class="dz-default dz-message">
-                <div>Glisser et déposer votre fichier</div>
-                <div class="my-2">Ou</div>
+                <div>{{ $t('Glisser et déposer votre fichier') }}</div>
+                <div class="my-2">{{ $t('Ou') }}</div>
                 <div>
                   <label class="btn btn-icon btn-primary">
                     <span class="btn-inner--icon">
                       <i class="fas fa-download"></i>
                     </span>
-                    <span class="btn-inner--text d-none d-sm-inline">Sélectionner votre fichier</span>
+                    <span class="btn-inner--text d-none d-sm-inline">{{ $t('Sélectionner votre fichier') }}</span>
                     <input type="file" hidden ref="csv">
                   </label>
                 </div>
@@ -48,23 +48,23 @@
                 fillDuration="2"
                 rotationDuration="1"
               />
-              <div class="text-primary">Lecture du fichier CSV/Excel en cours...</div>
+              <div class="text-primary">{{ $t('Lecture du fichier CSV/Excel en cours...') }}</div>
             </div>
           </div>
           <alert v-if="errorMessage.length > 0" class="mb-4" color="danger" icon="fas fa-exclamation-triangle">
             <ul class="pl-0 mb-0 pl-4 error-message">
-              <li v-for="(message, index) in errorMessage" :key="index">{{ message }}</li>
+              <li v-for="(message, index) in errorMessage" :key="index">{{ $t(message) }}</li>
             </ul>
           </alert>
           <div class="form-group">
-            <label for="import-where" class="form-control-label">Importer les contacts</label>
+            <label for="import-where" class="form-control-label">{{ $t('Importer les contacts') }}</label>
             <select id="import-where" class="form-control" v-model="destination">
-              <option value="new">dans une nouvelle liste</option>
-              <option value="list">dans une liste déjà existante</option>
+              <option value="new">{{ $t('dans une nouvelle liste') }}</option>
+              <option value="list">{{ $t('dans une liste déjà existante') }}</option>
             </select>
           </div>
           <div v-if="destination === 'list'" class="form-group">
-            <label class="form-control-label">Sélectionner un fichier</label>
+            <label class="form-control-label">{{ $t('Sélectionner un fichier') }}</label>
             <model-list-select
               :list="lists"
               option-value="id"
@@ -74,25 +74,45 @@
             ></model-list-select>
           </div>
           <div v-else class="form-group">
-            <label for="custom-name" class="form-control-label">Nommez le nom du fichier</label>
+            <label for="custom-name" class="form-control-label">{{ $t('Nommez le nom du fichier') }}</label>
             <input class="form-control" type="text" id="custom-name" v-model="customName">
           </div>
           <div class="alert alert-secondary mt-5" role="alert">
             <ul class="mb-0">
-              <li><p>La première ligne du fichier doit être le nom des colonnes.</p></li>
-              <li><p>La liste des contacts doit être au format Excel ou CSV</p></li>
-              <li><p>Pour un fichier CSV le séparateur doit être le point-virgule et l'encoding UTF-8</p></li>
-              <li><p>Le fichier doit contenir au minimum 1 colonne avec les numéros de portable</p></li>
-              <li><p>Le nombre de lignes du fichier doit être au maximum de {{ countMaxLines | formatNumber }} et au minimum de {{ countMinLines | formatNumber }}.</p></li>
+              <li><p>{{ $t('La première ligne du fichier doit être le nom des colonnes.') }}</p></li>
+              <li><p>{{ $t('La liste des contacts doit être au format Excel ou CSV') }}</p></li>
+              <li><p>{{ $t('Pour un fichier CSV le séparateur doit être le point-virgule et l\'encoding UTF-8') }}</p></li>
+              <li><p>{{ $t('Le fichier doit contenir au minimum 1 colonne avec les numéros de portable') }}</p></li>
+              <li>
+                <p>
+                  {{ $t('Le nombre de lignes du fichier doit être au maximum de...', [formatNumber(countMaxLines), formatNumber(countMinLines)]) }}
+                </p>
+              </li>
             </ul>
           </div>
           <div class="alert" role="alert">
             <p><strong>Nos exemples</strong></p>
             <ul class="mb-0">
-              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/contact-simple.csv`" class="exemple-csv">CSV</a></p></li>
-              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/contact-variable.csv`" class="exemple-csv">CSV</a></p></li>
-              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/contact-simple.xls`" class="exemple-csv">XLS</a></p></li>
-              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/contact-variable.xls`" class="exemple-csv">XLS</a></p></li>
+              <li>
+                <i18n tag="p" path="Téléchargez un exemple de fichier simple CSV">
+                  <a :href="`${publicPath}exemples/contact-simple.csv`" class="exemple-csv">CSV</a>
+                </i18n>
+              </li>
+              <li>
+                <i18n tag="p" path="Téléchargez un exemple de fichier avec variables CSV">
+                  <a :href="`${publicPath}exemples/contact-variable.csv`" class="exemple-csv">CSV</a>
+                </i18n>
+              </li>
+              <li>
+                <i18n tag="p" path="Téléchargez un exemple de fichier simple XLS">
+                  <a :href="`${publicPath}exemples/contact-simple.xls`" class="exemple-csv">XLS</a>
+                </i18n>
+              </li>
+              <li>
+                <i18n tag="p" path="Téléchargez un exemple de fichier avec variables XLS">
+                  <a :href="`${publicPath}exemples/contact-variable.xls`" class="exemple-csv">XLS</a>
+                </i18n>
+              </li>
             </ul>
           </div>
           <div class="alert">
@@ -103,10 +123,10 @@
               </p>
             </div>
             <ul class="mb-0">
-              <li><p>J'ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.</p></li>
-              <li><p>Aucun de mes contacts n'a été acquis via des listes de diffusion tierces.</p></li>
-              <!-- <li><p>J'inclurai la mention <strong>STOP au 36105</strong> dans toute campagne marketing.</p></li> -->
-              <li><p>Je n'enverrai avec My SMS que des informations légales et légitimes.</p></li>
+              <li><p>{{ $t('J\'ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.') }}</p></li>
+              <li><p>{{ $t('Aucun de mes contacts n\'a été acquis via des listes de diffusion tierces.') }}</p></li>
+              <!-- <li><p>J\'inclurai la mention <strong>STOP au 36105</strong> dans toute campagne marketing.</p></li> -->
+              <li><p>{{ $t('Je n\'enverrai avec My SMS que des informations légales et légitimes.') }}</p></li>
             </ul>
           </div>
           <alert v-if="hasError" color="danger" icon="fas fa-exclamation-triangle" class="mb-5">
@@ -115,15 +135,15 @@
             </ul>
           </alert>
           <div class="text-right">
-            <button class="btn-primary btn" @click.prevent="importWorkbook">Télécharger le fichier</button>
+            <button class="btn-primary btn" @click.prevent="importWorkbook">{{ $t('Télécharger le fichier') }}</button>
           </div>
         </div>
       </div>
       <modal id="import-error-modal" cancel-button cancel-button-label="Fermer">
-        <p class="mb-0">{{ modalBody }}</p>
+        <p class="mb-0">{{ $t(modalBody) }}</p>
       </modal>
       <modal id="import-progress" data-backdrop="static" data-keyboard="false">
-        <p class="mb-5">Importation des contacts en cours.<br>Ne fermez pas votre navigateur.</p>
+        <p class="mb-5">{{ $t('Importation des contacts en cours.') }}<br>{{ $t('Ne fermez pas votre navigateur.') }}</p>
         <div class="row justify-content-center">
           <div class="col-6">
             <div class="progress progress-xs">
@@ -148,6 +168,7 @@ import { ModelListSelect } from 'vue-search-select';
 import { validFileExtensions, workbookToArray, COUNT_MAX_LINES, COUNT_MIN_LINES } from '@/utils';
 import { mapActions, mapGetters } from 'vuex';
 import Modal from '@/components/Modal';
+import { formatNumber } from '@/filters';
 
 export default {
   components: { Alert, ModelListSelect, Modal },
@@ -186,6 +207,9 @@ export default {
     this.$refs.csv.addEventListener('change', this.handleFiles, false);
   },
   methods: {
+    formatNumber(number) {
+      return formatNumber(number);
+    },
     ...mapActions({
       addContacts: 'contacts/addContacts',
       createNewList: 'lists/createNewList',

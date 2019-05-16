@@ -1,11 +1,7 @@
 <template>
   <tr>
-    <td>
-      <slot name="checkbox"></slot>
-    </td>
-    <th scope="row">
-      <span class="text-sm">{{ contact.telephone }}</span>
-    </th>
+    <td><slot name="checkbox"></slot></td>
+    <th scope="row"><span class="text-sm">{{ contact.telephone }}</span></th>
     <td>{{ contact.lastname }}</td>
     <td>{{ contact.firstname }}</td>
     <td>{{ JSON.stringify(contact.attributes) }}</td>

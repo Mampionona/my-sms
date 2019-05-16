@@ -6,28 +6,28 @@
           <template slot-scope="{ row }">
             <plan :plan="row" @click.native="showEditForm(row)" edit-button />
           </template>
-          <div slot="no-results" class="text-center">Aucun formule trouvé</div>
+          <div slot="no-results" class="text-center">{{ $t('Aucun formule trouvé') }}</div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
-      <modal v-if="isVisible" id="edit-plan" :title="`Formule ${planName}`" accept-button @accept="update" accept-button-label="Mettre à jour">
+      <modal v-if="isVisible" id="edit-plan" :title="`Formule ${planName}`" accept-button @accept="update" :accept-button-label="`${$t('Mettre à jour')}`">
         <div class="form-group">
-          <label for="input-nom" class="form-control-label">Nom du formule</label>
+          <label for="input-nom" class="form-control-label">{{ $t('Nom du formule') }}</label>
           <input class="form-control" type="text" v-model="name" id="input-nom">
         </div>
         <div class="form-group">
-          <label for="input-sms-unitaire" class="form-control-label">Prix des SMS unitaire</label>
+          <label for="input-sms-unitaire" class="form-control-label">{{ $t('Prix des SMS unitaire') }}</label>
           <input class="form-control" type="number" v-model="smsPrice" id="input-sms-unitaire">
         </div>
         <div class="form-group">
-          <label for="input-plan" class="form-control-label">Abonnement</label>
+          <label for="input-plan" class="form-control-label">{{ $t('Abonnement') }}</label>
           <input class="form-control" type="number" v-model="planPrice" id="input-plan">
         </div>
         <div class="form-group mb-0">
-          <label for="input-max-volume" class="form-control-label">Volume max.</label>
+          <label for="input-max-volume" class="form-control-label">{{ $t('Volume max.') }}</label>
           <input class="form-control" type="number" v-model="maxVolume" id="input-max-volume">
         </div>
-        <p v-if="hasError || updated" :class="errorClasses">{{ statusMessage }}</p>
+        <p v-if="hasError || updated" :class="errorClasses">{{ $t(statusMessage) }}</p>
       </modal>
     </div>
   </div>

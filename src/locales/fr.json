@@ -5,5 +5,13 @@
   },
   "numberOfLines": "ligne | lignes",
   "J'accèpte la politique": "J'accèpte la politique {0}",
-  "copyright": "{0} My SMS"
+  "copyright": "{0} My SMS",
+  "Etes-vous sûr de vouloir supprimer le fichier": "Etes-vous sûr de vouloir supprimer le fichier {0} ?",
+  "Créé le": "Créé le {0}",
+  "Voulez-vous effacer le numéro": "Voulez-vous effacer le numéro {0} ?",
+  "Le nombre de lignes du fichier doit être au maximum de...": "Le nombre de lignes du fichier doit être au maximum de {0} et au minimum de {1}.",
+  "Téléchargez un exemple de fichier simple CSV": "Téléchargez un exemple de fichier simple {0}",
+  "Téléchargez un exemple de fichier avec variables CSV": "Téléchargez un exemple de fichier avec variables {0}",
+  "Téléchargez un exemple de fichier simple XLS": "Téléchargez un exemple de fichier simple {0}",
+  "Téléchargez un exemple de fichier avec variables XLS": "Téléchargez un exemple de fichier avec variables {0}"
 }
