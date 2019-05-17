@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { doAsync, createAsyncMutation } from '@/async-utils';
+import { doAsync, reFetchData, createAsyncMutation } from '@/async-utils';
 
 const SET_TOKEN = 'SET_TOKEN';
 const LOGOUT = 'LOGOUT';
@@ -100,12 +100,15 @@ export default {
     updateAccount(context, user) {
       return new Promise((resolve, reject) => {
         doAsync(context, {
-          url: '/users/me',
+          url: '/users/me/',
           method: 'patch',
           data: user,
           mutationTypes: UPDATE_ACCOUNT
         })
-          .then(data => resolve(data))
+          .then((data) => {
+            reFetchData({ context, url: '/users/me/', mutation: FETCH_USER.SUCCESS });
+            resolve(data);
+          })
           .catch(error => reject(error));
       });
     },

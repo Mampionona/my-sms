@@ -1,4 +1,4 @@
-import { doAsync, createAsyncMutation } from '@/async-utils';
+import { doAsync, reFetchData, createAsyncMutation } from '@/async-utils';
 
 const GET_LISTS = createAsyncMutation('GET_LISTS');
 const UPDATE_NAME = createAsyncMutation('UPDATE_NAME');
@@ -59,12 +59,18 @@ export default {
       });
     },
     updateListName(context, { id, name }) {
-      return doAsync(context, {
+      const promise = doAsync(context, {
         url: `/lists/${id}/`,
         method: 'patch',
         data: { name },
         mutationTypes: UPDATE_NAME
       });
+      promise.then(() => reFetchData({
+        context,
+        url: '/lists/',
+        mutation: GET_LISTS.SUCCESS
+      }));
+      return promise;
     },
     createNewList(context, { name }) {
       return doAsync(context, {

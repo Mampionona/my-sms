@@ -1,4 +1,4 @@
-import Worker from 'worker-loader?name=hash.worker.js!./worker';
+import Worker from 'worker-loader?name=hash.worker.js!./worker'; // eslint-disable-line
 
 export const BAD_REQUEST = 400;
 export const UNAUTHENTICATED = 401;
