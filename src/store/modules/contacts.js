@@ -74,14 +74,13 @@ export default {
       }));
       return promise;
     },
-    addContacts(context, { listId, contacts, onUploadProgress }) {
+    addContacts(context, { listId, contacts }) {
       return doAsync(context, {
         url: `/contacts/lists/${listId}/`,
         method: 'post',
         mutationTypes: ADD_CONTACTS,
         data: { listId, contacts },
-        shouldRetry: true,
-        onUploadProgress
+        shouldRetry: true
       });
     }
   }

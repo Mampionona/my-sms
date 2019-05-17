@@ -259,6 +259,7 @@ export default {
       if (this.destination === 'list' && !this.listId) this.errors.push('Vous devez choisir une liste déjà existante');
       if (!certify) this.errors.push('Vous devez accepter les politiques de téléchargement du fichier');
       if (this.hasError) return;
+
       this.$jQuery('#import-progress').modal('show');
       if (this.destination === 'new') {
         this.createNewList({ name: customName || filename })
@@ -272,8 +273,9 @@ export default {
     addContactsToAList(listId, $contacts) {
       const len = $contacts.length;
       let counter = 0;
+
       const saveContacts = (_counter) => {
-        this.addContacts({ listId, contacts: $contacts[_counter], onUploadProgress: this.onUploadProgress })
+        this.addContacts({ listId, contacts: $contacts[_counter] })
           .then(() => {
             counter++;
             if (counter < len) saveContacts(counter);
@@ -281,6 +283,8 @@ export default {
               this.$jQuery('#import-progress').modal('hide');
               this.$router.push({ name: 'contacts', params: { listId } });
             }
+
+            this.progressPercent = (counter / len) * 100;
           })
           .catch((error) => {
             if (error) {
@@ -296,10 +300,6 @@ export default {
       };
 
       saveContacts(counter);
-    },
-    onUploadProgress({ lengthComputable, loaded, total }) {
-      if (!lengthComputable) return;
-      this.progressPercent = (loaded / total) * 100;
     },
     dismissFile() {
       this.selectedFile = false;
