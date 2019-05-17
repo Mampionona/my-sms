@@ -72,7 +72,8 @@ export default {
         url: `/contacts/lists/${listId}/`,
         method: 'post',
         mutationTypes: ADD_CONTACTS,
-        data: { listId, contacts }
+        data: { listId, contacts },
+        shouldRetry: true
       });
     }
   }

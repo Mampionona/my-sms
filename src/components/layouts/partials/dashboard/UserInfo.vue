@@ -12,12 +12,12 @@
       <div class="dropdown-menu dropdown-menu-right">
         <router-link :to="{ name: 'profile' }" class="dropdown-item">
           <i class="ni ni-single-02"></i>
-          <span>Mon compte</span>
+          <span>{{ $t('Mon compte') }}</span>
         </router-link>
         <div class="dropdown-divider"></div>
         <a href="#!" class="dropdown-item" @click.prevent="logout">
           <i class="ni ni-user-run"></i>
-          <span>Déconnexion</span>
+          <span>{{ $t('Déconnexion') }}</span>
         </a>
       </div>
     </li>

@@ -19,25 +19,25 @@ export default {
       const labels = ['', ...this.stats.map(stat => stat.date)];
       const datasets = [
         {
-          label: 'Envoyés',
+          label: this.$t('Envoyés'),
           data: [0, ...this.stats.map(stat => stat.messages)],
           borderColor: '#b7b7b7',
           backgroundColor: 'transparent'
         },
         {
-          label: 'Reçus',
+          label: this.$t('Reçus'),
           data: [0, ...this.stats.map(stat => stat.received)],
           borderColor: 'green',
           backgroundColor: 'transparent'
         },
         {
-          label: 'Erreurs',
+          label: this.$t('Erreurs'),
           data: [0, ...this.stats.map(stat => stat.errored)],
           borderColor: 'yellow',
           backgroundColor: 'transparent'
         },
         {
-          label: 'STOPs',
+          label: this.$t('STOPs'),
           data: [0, ...this.stats.map(stat => stat.stopped)],
           borderColor: 'red',
           backgroundColor: 'transparent'
@@ -47,18 +47,11 @@ export default {
       return { labels, datasets };
     }
   },
-  data() {
-    return {
-      datacollection: null
-    };
-  },
   mounted() {
     this.campaignsStats();
   },
   methods: {
-    ...mapActions({
-      campaignsStats: 'campaigns/campaignsStats'
-    })
+    ...mapActions({ campaignsStats: 'campaigns/campaignsStats' })
   }
 };
 </script>

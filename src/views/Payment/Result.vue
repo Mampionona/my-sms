@@ -5,12 +5,23 @@
         <p v-if="fail" class="card-text mb-0">Le paiement a échoué.<br>Vous pouvez essayer une nouvelle fois ou nous <a :href="`mailto:${mailTo}`">contacter directement.</a></p>
         <div v-if="success">
           <div v-if="!isLiberty">
-            <p><strong>Créditez votre compte par virement bancaire:</strong></p>
+            <p><strong>Créditez votre compte par virement bancaire&nbsp;:</strong></p>
+
+            <p><strong>BUSINESS</strong></p>
             <ol>
-              <li><p>Effectuez un virement du montant du nombre de crédit souhaité.</p></li>
-              <li><p>Précisez l'email associé à votre compte en référence de virement.</p></li>
+                <li>Evaluer le montant du virement (ex: <strong>0,034 X</strong> le nombre de crédits souhaité).</li>
+                <li>Effectuez le virement du montant du nombre de crédits souhaité.</li>
+                <li>Précisez l’email associé à votre compte en référence de virement.</li>
             </ol>
-            <p><strong>Nos coordonnées bancaires:</strong></p>
+
+            <p><strong>GRAND COMPTE</strong></p>
+            <ol>
+                <li>Evaluer le montant du virement (ex: <strong>0,033 X</strong> le nombre de crédits souhaité).</li>
+                <li>Effectuez le virement du montant du nombre de crédits souhaité.</li>
+                <li>Précisez l’email associé à votre compte en référence de virement.</li>
+            </ol>
+
+            <p><strong>Nos coordonnées bancaires&nbsp;:</strong></p>
             <address>
               <p>
                 <strong>IBAN:</strong> FR76 1009 6180 7100 0297 6320 178<br>

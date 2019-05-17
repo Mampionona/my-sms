@@ -6,7 +6,7 @@
           <template slot-scope="{ row }">
             <payment :data="row"></payment>
           </template>
-          <div slot="no-results" class="text-center">Aucun paiement effectué</div>
+          <div slot="no-results" class="text-center">{{ $t('Aucun paiement effectué') }}</div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
@@ -17,7 +17,7 @@
 import Payment from '@/components/Payment';
 import { mapGetters, mapActions } from 'vuex';
 
-const columns = ['Nom', 'Prénom', 'Société', 'E-mail', 'Montant', 'Date'];
+const columns = ['Nom', 'Prénom', 'Société', 'E-mail', 'Montant', 'Date'].map(name => this.$t(name));
 
 export default {
   components: { Payment },

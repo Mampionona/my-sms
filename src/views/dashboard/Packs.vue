@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col">
-      <div class="card">
+      <div v-if="user.planId === 1" class="card">
         <datatable :columns="columns" :data="selectedPlan" class="vertical-align-middle">
           <template slot-scope="{ row }">
             <plan :plan="row" subscribe-button @subscribe="subscribe"></plan>
@@ -19,11 +19,48 @@
           </div>
         </div>
       </div>
+
+      <div v-else class="card p-4">
+          <div v-if="user.planId === 2">
+            <p>Vous disposez d'un abonnement {{ user.planName }}.<br>Créditez le volume SMS dont vous avez besoin par virement bancaire&nbsp;:</p>
+            <ol>
+                <li>Evaluer le montant du virement (ex: <strong>0,034 X</strong> le nombre de crédits souhaité).</li>
+                <li>Effectuez le virement du montant du nombre de crédits souhaité.</li>
+                <li>Précisez l’email associé à votre compte en référence de virement.</li>
+            </ol>
+          </div>
+
+          <div v-else>
+            <p>Vous disposez d'un abonnement {{ user.planName }}.<br>Créditez le volume SMS dont vous avez besoin par virement bancaire&nbsp;:</p>
+            <ol>
+              <li>Evaluer le montant du virement (ex: <strong>0,033 X</strong> le nombre de crédits souhaité).</li>
+              <li>Effectuez le virement du montant du nombre de crédits souhaité.</li>
+              <li>Précisez l’email associé à votre compte en référence de virement.</li>
+            </ol>
+          </div>
+
+          <p><strong>Nos coordonnées bancaires&nbsp;:</strong></p>
+
+          <address>
+            <p>
+              <strong>IBAN:</strong> FR76 1009 6180 7100 0297 6320 178<br>
+              <strong>BIC:</strong> CMCIFRPP
+            </p>
+            <p>
+              <strong>DOMICILIATION</strong><br>
+              CIC Aix Les Milles
+            </p>
+            <p>
+              <strong>TITULAIRE DU COMPTE</strong><br>
+              S.A.S DELTACOMM - 7 AVENUE ANDRE ROUSSIN - PONANT LITTORAL - 13016 MARSEILLE
+            </p>
+          </address>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import Plan from '@/components/Plan';
 
 export default {
@@ -43,6 +80,11 @@ export default {
       displayButton: false
     };
   },
+  computed: {
+    ...mapGetters({
+      user: 'auth/user'
+    })
+  },
   methods: {
     ...mapActions({
       getPlans: 'plans/getPlans',
@@ -58,7 +100,6 @@ export default {
       else amount = plan.planPrice * 100; // convert in cents
 
       this.getPaymentUrl({ amount }).then((res) => {
-        console.log(plan.id);
         localStorage.setItem('planId', plan.id);
         window.location.replace(res.paymentUrl);
       });

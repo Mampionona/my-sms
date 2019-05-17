@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-lg-4">
               <div class="form-group">
-                <input type="text" class="form-control" v-model="filter" placeholder="Filtrer par e-mail">
+                <input type="text" class="form-control" v-model="filter" :placeholder="`${$t('Filtrer par e-mail')}`">
               </div>
             </div>
           </div>

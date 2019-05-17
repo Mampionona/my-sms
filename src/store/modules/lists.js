@@ -78,7 +78,8 @@ export default {
       return doAsync(context, {
         url: `/lists/${listId}/`,
         method: 'delete',
-        mutationTypes: DELETE_LIST
+        mutationTypes: DELETE_LIST,
+        shouldRetry: true
       });
     }
   }

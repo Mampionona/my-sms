@@ -17,7 +17,7 @@
           <template slot-scope="{ row }">
             <answer :answer="row" @delete-answer="deleteAnswer"></answer>
           </template>
-          <div slot="no-results" class="text-center">Aucune réponse</div>
+          <div slot="no-results" class="text-center">{{ $t('Aucune réponse') }}</div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
@@ -47,9 +47,7 @@ export default {
   },
   data() {
     return {
-      settings: {
-        suppressScrollX: true
-      },
+      settings: { suppressScrollX: true },
       page: 1,
       per_page: 10,
       campaign: null,

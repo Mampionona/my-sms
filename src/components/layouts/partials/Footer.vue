@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col">
           <div class="copyright text-muted">
-            &copy; {{ year }} My SMS
+            &copy; {{ $t('copyright', [year]) }}
           </div>
         </div>
       </div>

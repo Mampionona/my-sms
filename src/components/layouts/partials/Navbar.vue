@@ -18,12 +18,12 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <router-link :to="{name: 'login'}" class="nav-link">
-          <span class="nav-link-inner--text">Connexion</span>
+          <span class="nav-link-inner--text">{{ $t('Connexion') }}</span>
         </router-link>
       </li>
       <li class="nav-item">
         <router-link :to="{name: 'register'}" class="nav-link">
-          <span class="nav-link-inner--text">Inscription</span>
+          <span class="nav-link-inner--text">{{ $t('Inscription') }}</span>
         </router-link>
       </li>
     </ul>

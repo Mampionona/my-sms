@@ -1,23 +1,42 @@
 import Axios from 'axios';
 
-// system explained in details here
-// https://medium.com/@lachlanmiller_52885/reducing-vuex-boilerplate-for-ajax-calls-1cd4a74cef26
+const retryAxios = require('retry-axios');
+
+const raxConfig = {
+  retry: 10,
+  retryDelay: 100,
+  httpMethodsToRetry: ['POST', 'OPTIONS', 'DELETE'],
+  onRetryAttempt: (err) => {
+    const cfg = retryAxios.getConfig(err);
+    console.log(`Retry attempt #${cfg.currentRetryAttempt}`);
+  }
+};
+
 export const createAsyncMutation = type => ({
   PENDING: `${type}_PENDING`,
   SUCCESS: `${type}_SUCCESS`,
   FAILURE: `${type}_FAILURE`
 });
 
-export function doAsync(context, { url, method, mutationTypes, data = {}, sort = true }) {
+export function doAsync(context, { url, method, mutationTypes, data = {}, sort = true, shouldRetry = false, onUploadProgress = null }) {
   context.commit(mutationTypes.PENDING);
+  let options = {
+    url,
+    data,
+    method: method || 'get',
+    responseType: 'text'
+  };
+
+  if (onUploadProgress) {
+    options = { ...options, onUploadProgress };
+  }
 
   return new Promise((resolve, reject) => {
-    Axios({
-      url,
-      data,
-      method: method || 'get',
-      responseType: 'text'
-    })
+    if (shouldRetry) {
+      retryAxios.attach();
+      options = { ...options, raxConfig };
+    }
+    Axios(options)
       .then((response) => {
         const responseData = response.data;
         let sortedData = responseData;

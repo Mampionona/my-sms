@@ -3,34 +3,68 @@
     <div class="col">
       <div class="card">
         <div class="card-body">
-          <div class="dropzone p-5 mb-4" @drop.stop.prevent="handleFiles($event)" @dragenter.stop.prevent @dragover.stop.prevent>
-            <div class="text-center">
-              <div>Glisser et déposer votre fichier</div>
-              <div class="my-2 small">- Ou -</div>
-              <div>
-                <label class="btn btn-icon btn-primary">
-                  <span class="btn-inner--icon">
-                    <i class="fas fa-download"></i>
-                  </span>
-                  <span class="btn-inner--text">Sélectionner votre fichier</span>
-                  <input type="file" hidden ref="csv">
-                </label>
+          <div class="mb-4 position-relative">
+            <div class="dropzone dropzone-multiple dz-clickable" data-toggle="dropzone" @drop.stop.prevent="handleFiles($event)" @dragenter.stop.prevent @dragover.stop.prevent>
+              <ul v-if="isParsed" class="dz-preview dz-preview-multiple list-group list-group-lg list-group-flush">
+                <li class="list-group-item px-0 dz-processing">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <div class="avatar">
+                        <i class="fas fa-file-csv"></i>
+                      </div>
+                    </div>
+                    <div class="col-auto ml--3">
+                      <h4 class="mb-1">{{ filename }}</h4>
+                      <p class="small text-muted mb-0" data-dz-size=""><strong>{{ lines | formatNumber }}</strong> lignes</p>
+                    </div>
+                    <div class="col-auto ml-3">
+                      <a href="#" @click.prevent="dismissFile">
+                        <i class="fas fa-trash-alt"></i>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="dz-default dz-message">
+                <div>{{ $t('Glisser et déposer votre fichier') }}</div>
+                <div class="my-2">{{ $t('Ou') }}</div>
+                <div>
+                  <label class="btn btn-icon btn-primary">
+                    <span class="btn-inner--icon">
+                      <i class="fas fa-download"></i>
+                    </span>
+                    <span class="btn-inner--text d-none d-sm-inline">{{ $t('Sélectionner votre fichier') }}</span>
+                    <input type="file" hidden ref="csv">
+                  </label>
+                </div>
               </div>
-              <p class="mt-4 mb-0 text-sm" v-if="selectedFile">
-                <strong>Fichier sélectionné :</strong> {{ filename }} <a href="#" @click.prevent="dismissFile"><i class="fas fa-trash-alt"></i></a>
-              </p>
-              <p v-if="errorMessage" class="text-danger mb-0 mt-4 font-weight-bold error-message">{{ errorMessage }}</p>
+            </div>
+            <div v-if="isParsing" class="loader position-absolute top-0 left-0 h-100 w-100 d-flex justify-content-center align-items-center flex-column">
+              <loading-progress
+                indeterminate
+                hide-background
+                size="32"
+                rotate
+                fillDuration="2"
+                rotationDuration="1"
+              />
+              <div class="text-primary">{{ $t('Lecture du fichier CSV/Excel en cours...') }}</div>
             </div>
           </div>
+          <alert v-if="errorMessage.length > 0" class="mb-4" color="danger" icon="fas fa-exclamation-triangle">
+            <ul class="pl-0 mb-0 pl-4 error-message">
+              <li v-for="(message, index) in errorMessage" :key="index">{{ $t(message) }}</li>
+            </ul>
+          </alert>
           <div class="form-group">
-            <label for="import-where" class="form-control-label">Importer les contacts</label>
+            <label for="import-where" class="form-control-label">{{ $t('Importer les contacts') }}</label>
             <select id="import-where" class="form-control" v-model="destination">
-              <option value="new">dans une nouvelle liste</option>
-              <option value="list">dans une liste déjà existante</option>
+              <option value="new">{{ $t('dans une nouvelle liste') }}</option>
+              <option value="list">{{ $t('dans une liste déjà existante') }}</option>
             </select>
           </div>
           <div v-if="destination === 'list'" class="form-group">
-            <label class="form-control-label">Sélectionner un fichier</label>
+            <label class="form-control-label">{{ $t('Sélectionner un fichier') }}</label>
             <model-list-select
               :list="lists"
               option-value="id"
@@ -40,25 +74,45 @@
             ></model-list-select>
           </div>
           <div v-else class="form-group">
-            <label for="custom-name" class="form-control-label">Nommez le nom du fichier</label>
+            <label for="custom-name" class="form-control-label">{{ $t('Nommez le nom du fichier') }}</label>
             <input class="form-control" type="text" id="custom-name" v-model="customName">
           </div>
           <div class="alert alert-secondary mt-5" role="alert">
             <ul class="mb-0">
-              <li><p>La première ligne du fichier doit être le nom des colonnes.</p></li>
-              <li><p>La liste des contacts doit être au format Excel ou CSV</p></li>
-              <li><p>Pour un fichier CSV le séparateur doit être le point-virgule et l'encoding UTF-8</p></li>
-              <li><p>Le fichier doit contenir au minimum 1 colonne avec les numéros de portable</p></li>
-              <li><p>Le nombre de lignes du fichier doit être au maximum de {{ countMaxLines | formatNumber }} et au minimum de {{ countMinLines | formatNumber }}.</p></li>
+              <li><p>{{ $t('La première ligne du fichier doit être le nom des colonnes.') }}</p></li>
+              <li><p>{{ $t('La liste des contacts doit être au format Excel ou CSV') }}</p></li>
+              <li><p>{{ $t('Pour un fichier CSV le séparateur doit être le point-virgule et l\'encoding UTF-8') }}</p></li>
+              <li><p>{{ $t('Le fichier doit contenir au minimum 1 colonne avec les numéros de portable') }}</p></li>
+              <li>
+                <p>
+                  {{ $t('Le nombre de lignes du fichier doit être au maximum de...', [formatNumber(countMaxLines), formatNumber(countMinLines)]) }}
+                </p>
+              </li>
             </ul>
           </div>
           <div class="alert" role="alert">
             <p><strong>Nos exemples</strong></p>
             <ul class="mb-0">
-              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/contact-simple.csv`" class="exemple-csv">CSV</a></p></li>
-              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/contact-variable.csv`" class="exemple-csv">CSV</a></p></li>
-              <li><p>Téléchargez un exemple de fichier simple <a :href="`${publicPath}exemples/contact-simple.xls`" class="exemple-csv">XLS</a></p></li>
-              <li><p>Téléchargez un exemple de fichier avec variables <a :href="`${publicPath}exemples/contact-variable.xls`" class="exemple-csv">XLS</a></p></li>
+              <li>
+                <i18n tag="p" path="Téléchargez un exemple de fichier simple CSV">
+                  <a :href="`${publicPath}exemples/contact-simple.csv`" class="exemple-csv">CSV</a>
+                </i18n>
+              </li>
+              <li>
+                <i18n tag="p" path="Téléchargez un exemple de fichier avec variables CSV">
+                  <a :href="`${publicPath}exemples/contact-variable.csv`" class="exemple-csv">CSV</a>
+                </i18n>
+              </li>
+              <li>
+                <i18n tag="p" path="Téléchargez un exemple de fichier simple XLS">
+                  <a :href="`${publicPath}exemples/contact-simple.xls`" class="exemple-csv">XLS</a>
+                </i18n>
+              </li>
+              <li>
+                <i18n tag="p" path="Téléchargez un exemple de fichier avec variables XLS">
+                  <a :href="`${publicPath}exemples/contact-variable.xls`" class="exemple-csv">XLS</a>
+                </i18n>
+              </li>
             </ul>
           </div>
           <div class="alert">
@@ -69,10 +123,10 @@
               </p>
             </div>
             <ul class="mb-0">
-              <li><p>J'ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.</p></li>
-              <li><p>Aucun de mes contacts n'a été acquis via des listes de diffusion tierces.</p></li>
-              <!-- <li><p>J'inclurai la mention <strong>STOP au 36105</strong> dans toute campagne marketing.</p></li> -->
-              <li><p>Je n'enverrai avec My SMS que des informations légales et légitimes.</p></li>
+              <li><p>{{ $t('J\'ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.') }}</p></li>
+              <li><p>{{ $t('Aucun de mes contacts n\'a été acquis via des listes de diffusion tierces.') }}</p></li>
+              <!-- <li><p>J\'inclurai la mention <strong>STOP au 36105</strong> dans toute campagne marketing.</p></li> -->
+              <li><p>{{ $t('Je n\'enverrai avec My SMS que des informations légales et légitimes.') }}</p></li>
             </ul>
           </div>
           <alert v-if="hasError" color="danger" icon="fas fa-exclamation-triangle" class="mb-5">
@@ -81,12 +135,29 @@
             </ul>
           </alert>
           <div class="text-right">
-            <button class="btn-primary btn" @click.prevent="importWorkbook">Télécharger le fichier</button>
+            <button class="btn-primary btn" @click.prevent="importWorkbook">{{ $t('Télécharger le fichier') }}</button>
           </div>
         </div>
       </div>
       <modal id="import-error-modal" cancel-button cancel-button-label="Fermer">
-        <p class="mb-0">{{ modalBody }}</p>
+        <p class="mb-0">{{ $t(modalBody) }}</p>
+      </modal>
+      <modal id="import-progress" data-backdrop="static" data-keyboard="false">
+        <p class="mb-5">{{ $t('Importation des contacts en cours.') }}<br>{{ $t('Ne fermez pas votre navigateur.') }}</p>
+        <div class="row justify-content-center">
+          <div class="col-6">
+            <div class="progress progress-xs">
+              <div
+                class="progress-bar bg-dark"
+                role="progressbar"
+                :aria-valuenow="progressPercent"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                :style="progressBarWidth"
+              ></div>
+            </div>
+          </div>
+        </div>
       </modal>
     </div>
   </div>
@@ -95,9 +166,9 @@
 import Alert from '@/components/Alert';
 import { ModelListSelect } from 'vue-search-select';
 import { validFileExtensions, workbookToArray, COUNT_MAX_LINES, COUNT_MIN_LINES } from '@/utils';
-import { formatNumber } from '@/filters';
 import { mapActions, mapGetters } from 'vuex';
 import Modal from '@/components/Modal';
+import { formatNumber } from '@/filters';
 
 export default {
   components: { Alert, ModelListSelect, Modal },
@@ -105,6 +176,9 @@ export default {
     ...mapGetters({ lists: 'lists/lists' }),
     hasError() {
       return Object.keys(this.errors).length > 0;
+    },
+    progressBarWidth() {
+      return { width: `${this.progressPercent}%` };
     }
   },
   data() {
@@ -114,14 +188,18 @@ export default {
       filename: '',
       contacts: [],
       selectedFile: false,
-      errorMessage: '',
+      errorMessage: [],
       customName: '',
       countMaxLines: COUNT_MAX_LINES,
       countMinLines: COUNT_MIN_LINES,
       errors: [],
       modalBody: '',
       listId: null,
-      destination: 'new'
+      destination: 'new',
+      isParsing: false,
+      isParsed: false,
+      lines: 0,
+      progressPercent: 0
     };
   },
   mounted() {
@@ -129,6 +207,9 @@ export default {
     this.$refs.csv.addEventListener('change', this.handleFiles, false);
   },
   methods: {
+    formatNumber(number) {
+      return formatNumber(number);
+    },
     ...mapActions({
       addContacts: 'contacts/addContacts',
       createNewList: 'lists/createNewList',
@@ -139,44 +220,34 @@ export default {
       this.prepareImport(files);
     },
     prepareImport(files) {
+      this.contacts = [];
       if (files.length > 0) {
-        const f = files[0];
-        this.filename = f.name;
+        const file = files[0];
+        this.filename = file.name;
         // get file extension
-        const fileExtension = f.name.substring(f.name.lastIndexOf('.'));
+        const fileExtension = file.name.substring(file.name.lastIndexOf('.'));
 
         if (!validFileExtensions.includes(fileExtension.toLowerCase())) {
-          this.errorMessage = 'Les contacts doivent être enregistrés au format .xls, .xlsx ou .csv.';
+          this.errorMessage.push('Les contacts doivent être enregistrés au format .xls, .xlsx ou .csv.');
           return;
         }
 
-        workbookToArray(f, (contacts) => {
-          const countLines = contacts.length;
-          this.contacts = [];
-          const columns = contacts.shift();
+        this.isParsing = true;
+        this.isParsed = false;
 
-          if (countLines > COUNT_MAX_LINES || countLines < COUNT_MIN_LINES) {
-            this.errorMessage = `Le nombre de lignes du fichier doit être au maximum de ${formatNumber(COUNT_MAX_LINES)} et au minimum de ${formatNumber(COUNT_MIN_LINES)}.`;
-            return;
-          }
-
-          if (!columns.includes('telephone')) {
-            this.errorMessage = 'Le fichier Excel doit avoir au moins une colonne nommée "telephone"';
-            return;
-          }
-
-          this.contacts = contacts.map((contact) => {
-            const contactObject = {};
-            columns.forEach((column, index) => {
-              if (column === 'telephone') contactObject[column] = String(contact[index], 10);
-              else contactObject[column] = contact[index];
-            });
-
-            return contactObject;
+        workbookToArray(file)
+          .then(({ contacts, count }) => {
+            this.lines = count;
+            this.contacts = Object.freeze(contacts);
+            this.errorMessage = [];
+            this.isParsing = false;
+            this.isParsed = true;
+          })
+          .catch((error) => {
+            this.errorMessage = error;
+            this.isParsing = false;
+            this.isParsed = false;
           });
-
-          this.errorMessage = '';
-        });
       }
     },
     importWorkbook() {
@@ -188,6 +259,8 @@ export default {
       if (this.destination === 'list' && !this.listId) this.errors.push('Vous devez choisir une liste déjà existante');
       if (!certify) this.errors.push('Vous devez accepter les politiques de téléchargement du fichier');
       if (this.hasError) return;
+
+      this.$jQuery('#import-progress').modal('show');
       if (this.destination === 'new') {
         this.createNewList({ name: customName || filename })
           .then(({ id }) => this.addContactsToAList(id, contacts))
@@ -197,25 +270,44 @@ export default {
       }
       else this.addContactsToAList(this.listId, contacts);
     },
-    addContactsToAList(listId, contacts) {
-      this.addContacts({ listId, contacts })
-        .then(() => {
-          this.$router.push({
-            name: 'contacts',
-            params: { listId }
+    addContactsToAList(listId, $contacts) {
+      const len = $contacts.length;
+      let counter = 0;
+
+      const saveContacts = (_counter) => {
+        this.addContacts({ listId, contacts: $contacts[_counter] })
+          .then(() => {
+            counter++;
+            if (counter < len) saveContacts(counter);
+            if (counter === len) {
+              this.$jQuery('#import-progress').modal('hide');
+              this.$router.push({ name: 'contacts', params: { listId } });
+            }
+
+            this.progressPercent = (counter / len) * 100;
+          })
+          .catch((error) => {
+            if (error) {
+              const { status, data } = error;
+              // Only for 4xx error
+              if (String(status).charAt(0) === '4') {
+                this.$jQuery('#import-progress').modal('hide');
+                this.modalBody = data.error;
+                this.$jQuery('#import-error-modal').modal('show');
+              }
+            }
           });
-        })
-        .catch(({ data }) => {
-          this.modalBody = data.error;
-          this.$jQuery('#import-error-modal').modal('show');
-        });
+      };
+
+      saveContacts(counter);
     },
     dismissFile() {
       this.selectedFile = false;
       this.contacts = [];
       this.filename = '';
-      this.errorMessage = '';
+      this.errorMessage = [];
       this.$refs.csv.value = '';
+      this.isParsed = false;
     }
   },
   watch: {
@@ -236,5 +328,10 @@ export default {
 
 .error-message {
   font-size: 0.875rem;
+}
+
+.loader {
+  background-color: rgba(255,255,255, .9);
+  z-index: 999;
 }
 </style>

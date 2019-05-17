@@ -7,14 +7,14 @@
             <div class="card bg-secondary border-0 mb-0">
               <div class="card-body px-lg-5 py-lg-5">
                 <div class="text-center text-muted mb-4">
-                  <h1>Réinitialisez votre mot de passe</h1>
+                  <h1>{{ $t('Réinitialisez votre mot de passe') }}</h1>
                 </div>
                 <div v-if="sent" class="text-center font-weight-bold">
                   <p class="mb-4 text-sm">
-                    Nous avons envoyé des instructions pour vous aider à modifier votre mot de passe à l'adresse e-mail<br>
+                    {{ $t('Nous avons envoyé des instructions pour vous aider à modifier votre mot de passe à l\'adresse e-mail') }}<br>
                     <strong class="font-weight-bold">{{ email }}.</strong>
                   </p>
-                  <router-link class="btn btn-primary" :to="{name: 'login'}">Continuer</router-link>
+                  <router-link class="btn btn-primary" :to="{name: 'login'}">{{ $t('Continuer') }}</router-link>
                 </div>
                 <form v-else role="form" @submit.prevent="onSubmit">
                   <form-group class="mb-3">
@@ -24,9 +24,9 @@
                   <div class="text-center" v-if="isLoading">
                     <spinner></spinner>
                   </div>
-                  <p v-if="hasError" class="text-sm text-danger">{{ errorMessage }}</p>
+                  <p v-if="hasError" class="text-sm text-danger">{{ $t(errorMessage) }}</p>
                   <div class="text-center">
-                    <button type="submit" class="btn btn-primary my-4">Réinitialiser le mot de passe</button>
+                    <button type="submit" class="btn btn-primary my-4">{{ $t('Réinitialiser le mot de passe') }}</button>
                   </div>
                 </form>
               </div>

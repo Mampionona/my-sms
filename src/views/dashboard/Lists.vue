@@ -11,7 +11,7 @@
               @show-list="showList"
             />
           </template>
-          <div slot="no-results" class="text-center">Aucun fichier</div>
+          <div slot="no-results" class="text-center">{{ $t('Aucun fichier') }}</div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
@@ -23,7 +23,9 @@
         cancel-button
         cancel-button-label="Non"
       >
-        <p class="mb-0">Etes-vous sûr de vouloir supprimer le fichier <strong>{{ filename }} ?</strong></p>
+        <i18n path="Etes-vous sûr de vouloir supprimer le fichier" class="mb-0" tag="p">
+          <strong>{{ filename }}</strong>
+        </i18n>
       </modal>
     </div>
   </div>
