@@ -4,4 +4,4 @@ import '@/filters';
 require('bootstrap');
 
 // Add jQuery into vue instance
-Vue.prototype.$jQuery = $;
+Vue.prototype.$jQuery = require('jquery');

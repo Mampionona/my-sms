@@ -5,6 +5,7 @@ const LIST_ID = 'LIST_ID';
 const GET_CONTACTS = createAsyncMutation('GET_CONTACTS');
 const ADD_CONTACTS = createAsyncMutation('ADD_CONTACTS');
 const REMOVE_CONTACT_FROM_A_LIST = createAsyncMutation('REMOVE_CONTACT_FROM_A_LIST');
+const GET_LISTS = createAsyncMutation('GET_LISTS');
 const UPDATE_CONTACTS = 'UPDATE_CONTACTS';
 
 export default {
@@ -69,7 +70,7 @@ export default {
       promise.then(() => reFetchData({
         context,
         url: '/lists/',
-        mutation: 'GET_LISTS_SUCCESS'
+        mutationTypes: GET_LISTS
       }));
       return promise;
     },

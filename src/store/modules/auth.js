@@ -106,7 +106,7 @@ export default {
           mutationTypes: UPDATE_ACCOUNT
         })
           .then((data) => {
-            reFetchData({ context, url: '/users/me/', mutation: FETCH_USER.SUCCESS });
+            reFetchData({ context, url: '/users/me/', mutationTypes: FETCH_USER });
             resolve(data);
           })
           .catch(error => reject(error));

@@ -68,7 +68,7 @@ export default {
       promise.then(() => reFetchData({
         context,
         url: '/lists/',
-        mutation: GET_LISTS.SUCCESS
+        mutationTypes: GET_LISTS
       }));
       return promise;
     },

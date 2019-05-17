@@ -10,9 +10,6 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "axios-cache-adapter": "^2.3.0",
-    "axios-cache-plugin": "^0.1.0",
-    "axios-extensions": "^3.0.5",
     "axios-progress-bar": "^1.2.0",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.3.1",

@@ -54,7 +54,7 @@ export default {
       promise.then(() => reFetchData({
         context,
         url: '/plans/',
-        mutation: GET_PLANS.SUCCESS
+        mutationTypes: GET_PLANS
       }));
       return promise;
     }
