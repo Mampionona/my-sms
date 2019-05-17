@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col">
-      <div v-if="user.planId === 1" class="card">
+      <div v-if="!user.planId || user.planId === 1" class="card">
         <datatable :columns="columns" :data="selectedPlan" class="vertical-align-middle">
           <template slot-scope="{ row }">
             <plan :plan="row" subscribe-button @subscribe="subscribe"></plan>
