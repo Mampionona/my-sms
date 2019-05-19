@@ -166,7 +166,6 @@ export default {
       this.remainingChars = computeRemainingChars(this.countSMS, newText.length);
     },
     listId(newListId) {
-      this.getContactsOfList(newListId);
       this.lists.forEach(({ id, attributes }) => {
         if (id === newListId) {
           attributes.forEach((attribute) => {
