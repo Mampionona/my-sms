@@ -68,7 +68,11 @@ export default {
   mounted() {
     this.checkPaymentStatus(this.$route.query.paylinetoken)
       .then(({ paymentStatus }) => {
-        if (paymentStatus === 'success') this.paymentStatus = 'success';
+        if (paymentStatus === 'success') {
+          this.paymentStatus = 'success';
+          setTimeout(() => this.getUser(), 2000);
+        }
+
         else if (paymentStatus === 'failure') this.paymentStatus = 'failure';
         else if (paymentStatus === 'pending') this.paymentStatus = 'pending';
         else this.paymentStatus = 'server error';
@@ -76,7 +80,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      checkPaymentStatus: 'payment/checkPaymentStatus'
+      checkPaymentStatus: 'payment/checkPaymentStatus',
+      getUser: 'auth/getUser'
     })
   }
 };
