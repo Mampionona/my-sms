@@ -7,10 +7,7 @@ const raxConfig = {
   retry: 10,
   retryDelay: 100,
   httpMethodsToRetry: ['POST', 'OPTIONS', 'DELETE'],
-  onRetryAttempt: (err) => {
-    const cfg = retryAxios.getConfig(err);
-    console.log(`Retry attempt #${cfg.currentRetryAttempt}`);
-  }
+  onRetryAttempt: err => retryAxios.getConfig(err)
 };
 
 export const createAsyncMutation = type => ({
