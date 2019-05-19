@@ -29,6 +29,12 @@
           <div class="card">
             <div class="card-header"><i class="fas fa-envelope-open mr-2"></i> {{ $t('Votre message') }}</div>
             <div class="card-body">
+              <p>
+                Pour utiliser les variables contenues dans votre liste, entourez celles-ci par des "%".
+                <br>
+                "<strong>Bonjour %firstname%</strong>" devient ainsi "Bonjour Charles" pour le message envoyé au contact dont la colonne firstname vaut "Charles".
+              </p>
+
               <div class="pt-2 px-2 border">
                 <textarea-autosize
                   :placeholder="`${$t('Votre message...')}`"
@@ -40,7 +46,9 @@
                   <strong>{{ countSMS }}</strong> SMS - {{ $tc("remainingChars", remainingChars) }} <strong>{{ remainingChars }}</strong>
                 </p>
               </div>
-              <p class="mb-0 mt-3 mention">{{ $t('La mention légale "STOP au 36105" sera automatiquement incluse lors de l\'envoi.') }}</p>
+
+              <p class="mb-0 mt-3 mention">{{ $t('La mention légale "STOP au 36105" sera automatiquement incluse lors de l’envoi.') }}</p>
+
               <div class="mt-4">
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" id="save-as-draft" v-model="status">
@@ -58,7 +66,7 @@
             </div>
           </div>
           <div class="card">
-            <div class="card-header"><i class="fas fa-calendar-alt mr-2"></i> {{ $t('Date d\'envoi') }}</div>
+            <div class="card-header"><i class="fas fa-calendar-alt mr-2"></i> {{ $t('Date d’envoi') }}</div>
             <div class="card-body">
               <div class="custom-control custom-radio custom-control-inline">
                 <input v-model="sendingMode" value="immediate" type="radio" id="envoi-immediat" name="envoi" class="custom-control-input">
@@ -73,7 +81,7 @@
                 v-model="sendDate"
                 lang="fr"
                 format="YYYY-MM-DD H:mm"
-                :time-picker-options="{ start: '08:00', step: '00:05', end: '18:00' }"
+                :time-picker-options="{ start: '08:00', step: '00:05', end: '20:00' }"
                 :not-before="new Date()"
                 :first-day-of-week="1"
                 type="datetime"
@@ -166,7 +174,6 @@ export default {
       this.remainingChars = computeRemainingChars(this.countSMS, newText.length);
     },
     listId(newListId) {
-      this.getContactsOfList(newListId);
       this.lists.forEach(({ id, attributes }) => {
         if (id === newListId) {
           attributes.forEach((attribute) => {
