@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { UNAUTHENTICATED } from './utils';
 
 const retryAxios = require('retry-axios');
 
@@ -14,6 +15,14 @@ export const createAsyncMutation = type => ({
   SUCCESS: `${type}_SUCCESS`,
   FAILURE: `${type}_FAILURE`
 });
+
+// Global axios defaults
+Axios.defaults.baseURL = 'https://api.my-sms.pro';
+
+const token = localStorage.getItem('token');
+if (token) {
+  Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+}
 
 export function doAsync(context, { url, method, mutationTypes, data = {}, sort = true, shouldRetry = false, onUploadProgress = null }) {
   context.commit(mutationTypes.PENDING);
@@ -52,3 +61,19 @@ export function doAsync(context, { url, method, mutationTypes, data = {}, sort =
       });
   });
 }
+
+// Add a response interceptor
+Axios.interceptors.response.use((response) => { // eslint-disable-line
+  // Do something with response data
+  return response;
+}, (error) => {
+  // Do something with response error
+  if (error.response.status === UNAUTHENTICATED) {
+    localStorage.removeItem('token');
+    if ('Authorization' in Axios.defaults.headers.common) {
+      delete Axios.defaults.headers.common.Authorization;
+    }
+  }
+
+  return Promise.reject(error);
+});

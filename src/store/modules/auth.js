@@ -6,7 +6,6 @@ const LOGOUT = 'LOGOUT';
 const FETCH_USER = createAsyncMutation('FETCH_USER');
 const UPDATE_ACCOUNT = createAsyncMutation('UPDATE_ACCOUNT');
 const GET_LOGIN_LINK_VIA_EMAIL = createAsyncMutation('GET_LOGIN_LINK_VIA_EMAIL');
-// const UNAUTHENTICATED = 'UNAUTHENTICATED';
 
 function loggedInOrRegistered(context, token, resolve) {
   // update state
@@ -44,23 +43,11 @@ export default {
     },
     [FETCH_USER.FAILURE]() {},
     [UPDATE_ACCOUNT.PENDING]() {},
-    [UPDATE_ACCOUNT.SUCCESS](state, payload) {
-      // state.user = payload[0];
-      console.log(payload);
-    },
+    [UPDATE_ACCOUNT.SUCCESS]() {},
     [UPDATE_ACCOUNT.FAILURE]() {},
-    // [UNAUTHENTICATED] () {
-    //   //
-    // },
-    [GET_LOGIN_LINK_VIA_EMAIL.PENDING]() {
-      //
-    },
-    [GET_LOGIN_LINK_VIA_EMAIL.SUCCESS]() {
-      //
-    },
-    [GET_LOGIN_LINK_VIA_EMAIL.FAILURE]() {
-      //
-    }
+    [GET_LOGIN_LINK_VIA_EMAIL.PENDING]() {},
+    [GET_LOGIN_LINK_VIA_EMAIL.SUCCESS]() {},
+    [GET_LOGIN_LINK_VIA_EMAIL.FAILURE]() {}
   },
   actions: {
     authenticate(context, credentials) {
@@ -88,25 +75,17 @@ export default {
       });
     },
     getUser(context) {
-      return new Promise((resolve, reject) => {
-        doAsync(context, {
-          url: '/users/me',
-          mutationTypes: FETCH_USER
-        })
-          .then(([user]) => resolve(user))
-          .catch(error => reject(error));
+      return doAsync(context, {
+        url: '/users/me',
+        mutationTypes: FETCH_USER
       });
     },
     updateAccount(context, user) {
-      return new Promise((resolve, reject) => {
-        doAsync(context, {
-          url: '/users/me',
-          method: 'patch',
-          data: user,
-          mutationTypes: UPDATE_ACCOUNT
-        })
-          .then(data => resolve(data))
-          .catch(error => reject(error));
+      return doAsync(context, {
+        url: '/users/me',
+        method: 'patch',
+        data: user,
+        mutationTypes: UPDATE_ACCOUNT
       });
     },
     logout(context) {
