@@ -4,7 +4,7 @@ import { formatNumber } from './filters';
 const COUNT_MAX_LINES = 1000000;
 const COUNT_MIN_LINES = 5;
 
-onmessage = function (e) {
+onmessage = (e) => {
   const file = e.data;
   const reader = new FileReader();
 
