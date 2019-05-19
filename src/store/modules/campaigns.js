@@ -1,4 +1,4 @@
-import { doAsync, reFetchData, createAsyncMutation } from '@/async-utils';
+import { doAsync, createAsyncMutation } from '@/async-utils';
 import { dateUTC } from '@/utils';
 
 const CREATE_OR_UPDATE_CAMPAIGN = createAsyncMutation('CREATE_OR_UPDATE_CAMPAIGN');
@@ -90,21 +90,12 @@ export default {
       const method = campaign.action === 'new' ? 'post' : 'patch';
       delete campaign.action;
       delete campaign.campaignId;
-      const promise = doAsync(context, {
+      return doAsync(context, {
         url,
         data: campaign,
         method,
         mutationTypes: CREATE_OR_UPDATE_CAMPAIGN
       });
-      if (method === 'patch') {
-        promise.then(() => reFetchData({
-          context,
-          url: '/campaigns',
-          mutation: GET_USER_CAMPAIGNS.SUCCESS
-        }));
-      }
-
-      return promise;
     },
     campaignAnswers(context, campaignId) {
       return doAsync(context, {
