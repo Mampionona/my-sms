@@ -27,11 +27,10 @@ export function doAsync(context, { url, method, mutationTypes, data = {}, sort =
   context.commit(mutationTypes.PENDING);
   let sessionId = localStorage.getItem('sessionId');
   if (!sessionId) sessionId = generateSessionId();
-  url = `${url}?sessionId=${sessionId}`;
 
   let options = {
-    url,
     data,
+    url: `${url}?sessionId=${sessionId}`,
     method: method || 'get',
     responseType: 'text'
   };
