@@ -1,4 +1,4 @@
-import { doAsync, reFetchData, createAsyncMutation } from '@/async-utils';
+import { doAsync, createAsyncMutation } from '@/async-utils';
 
 const GET_PLANS = createAsyncMutation('GET_PLANS');
 const UPDATE_PLAN = createAsyncMutation('UPDATE_PLAN');
@@ -45,18 +45,12 @@ export default {
     },
     updatePlan(context, plan) {
       const { planId } = plan;
-      const promise = doAsync(context, {
+      return doAsync(context, {
         url: `/plans/${planId}`,
         method: 'patch',
         data: plan,
         mutationTypes: UPDATE_PLAN
       });
-      promise.then(() => reFetchData({
-        context,
-        url: '/plans/',
-        mutationTypes: GET_PLANS
-      }));
-      return promise;
     }
   }
 };

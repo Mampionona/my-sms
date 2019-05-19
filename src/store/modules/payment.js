@@ -1,9 +1,8 @@
-import { doAsync, reFetchData, createAsyncMutation } from '@/async-utils';
+import { doAsync, createAsyncMutation } from '@/async-utils';
 
 const INIT_PAYMENT = createAsyncMutation('INIT_PAYMENT');
 const CONFIRM_PAYMENT = createAsyncMutation('CONFIRM_PAYMENT');
 const GET_PAYMENTS_LIST = createAsyncMutation('GET_PAYMENTS_LIST');
-const FETCH_USER = createAsyncMutation('FETCH_USER');
 
 export default {
   namespaced: true,
@@ -60,12 +59,10 @@ export default {
       });
     },
     checkPaymentStatus(context, token) {
-      const promise = doAsync(context, {
+      return doAsync(context, {
         url: `/payments/result/${token}`,
         mutationTypes: CONFIRM_PAYMENT
       });
-      promise.then(() => reFetchData({ context, url: '/users/me/', mutationTypes: FETCH_USER }));
-      return promise;
     },
     getPaymentsLists(context) {
       return doAsync(context, {

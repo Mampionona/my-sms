@@ -1,11 +1,10 @@
 import Axios from 'axios';
-import { doAsync, reFetchData, createAsyncMutation } from '@/async-utils';
+import { doAsync, createAsyncMutation } from '@/async-utils';
 
 const LIST_ID = 'LIST_ID';
 const GET_CONTACTS = createAsyncMutation('GET_CONTACTS');
 const ADD_CONTACTS = createAsyncMutation('ADD_CONTACTS');
 const REMOVE_CONTACT_FROM_A_LIST = createAsyncMutation('REMOVE_CONTACT_FROM_A_LIST');
-const GET_LISTS = createAsyncMutation('GET_LISTS');
 const UPDATE_CONTACTS = 'UPDATE_CONTACTS';
 
 export default {
@@ -62,17 +61,11 @@ export default {
         .then(({ data }) => data);
     },
     removeContact(context, { contactId, listId }) {
-      const promise = doAsync(context, {
+      return doAsync(context, {
         url: `/contacts/${contactId}/lists/${listId}/`,
         method: 'delete',
         mutationTypes: REMOVE_CONTACT_FROM_A_LIST
       });
-      promise.then(() => reFetchData({
-        context,
-        url: '/lists/',
-        mutationTypes: GET_LISTS
-      }));
-      return promise;
     },
     addContacts(context, { listId, contacts }) {
       return doAsync(context, {

@@ -16,32 +16,32 @@ export const createAsyncMutation = type => ({
   FAILURE: `${type}_FAILURE`
 });
 
+// Global axios defaults
 Axios.defaults.baseURL = 'https://api.my-sms.pro';
-const token = localStorage.getItem('token');
-if (token) Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
-const generateSessionId = () => localStorage.setItem('sessionId', new Date().getTime());
-const clearSessionId = () => localStorage.removeItem('sessionId');
+const token = localStorage.getItem('token');
+if (token) {
+  Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+}
 
 export function doAsync(context, { url, method, mutationTypes, data = {}, sort = true, shouldRetry = false, onUploadProgress = null }) {
   context.commit(mutationTypes.PENDING);
-  let sessionId = localStorage.getItem('sessionId');
-  if (!sessionId) sessionId = generateSessionId();
-
   let options = {
+    url,
     data,
-    url: `${url}?sessionId=${sessionId}`,
     method: method || 'get',
     responseType: 'text'
   };
 
-  if (onUploadProgress) options = { ...options, onUploadProgress };
-  if (shouldRetry) {
-    retryAxios.attach();
-    options = { ...options, raxConfig };
+  if (onUploadProgress) {
+    options = { ...options, onUploadProgress };
   }
 
   return new Promise((resolve, reject) => {
+    if (shouldRetry) {
+      retryAxios.attach();
+      options = { ...options, raxConfig };
+    }
     Axios(options)
       .then((response) => {
         const responseData = response.data;
@@ -62,11 +62,7 @@ export function doAsync(context, { url, method, mutationTypes, data = {}, sort =
   });
 }
 
-export function reFetchData({ context, url, mutationTypes }) {
-  generateSessionId();
-  doAsync(context, { url, mutationTypes });
-}
-
+// Add a response interceptor
 Axios.interceptors.response.use((response) => { // eslint-disable-line
   // Do something with response data
   return response;
@@ -74,7 +70,9 @@ Axios.interceptors.response.use((response) => { // eslint-disable-line
   // Do something with response error
   if (error.response.status === UNAUTHENTICATED) {
     localStorage.removeItem('token');
-    if ('Authorization' in Axios.defaults.headers.common) delete Axios.defaults.headers.common.Authorization;
+    if ('Authorization' in Axios.defaults.headers.common) {
+      delete Axios.defaults.headers.common.Authorization;
+    }
   }
 
   return Promise.reject(error);
