@@ -100,7 +100,7 @@ export default {
         promise.then(() => reFetchData({
           context,
           url: '/campaigns',
-          mutationTypes: GET_USER_CAMPAIGNS
+          mutation: GET_USER_CAMPAIGNS.SUCCESS
         }));
       }
 

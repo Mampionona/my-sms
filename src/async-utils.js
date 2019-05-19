@@ -20,15 +20,8 @@ Axios.defaults.baseURL = 'https://api.my-sms.pro';
 const token = localStorage.getItem('token');
 if (token) Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
-const generateSessionId = () => localStorage.setItem('sessionId', new Date().getTime());
-const clearSessionId = () => localStorage.removeItem('sessionId');
-
 export function doAsync(context, { url, method, mutationTypes, data = {}, sort = true, shouldRetry = false, onUploadProgress = null }) {
   context.commit(mutationTypes.PENDING);
-  let sessionId = localStorage.getItem('sessionId');
-  if (!sessionId) sessionId = generateSessionId();
-  url = `${url}?sessionId=${sessionId}`;
-
   let options = {
     url,
     data,
@@ -63,9 +56,8 @@ export function doAsync(context, { url, method, mutationTypes, data = {}, sort =
   });
 }
 
-export function reFetchData({ context, url, mutationTypes }) {
-  generateSessionId();
-  doAsync(context, { url, mutationTypes });
+export function reFetchData({ context, url, mutation }) {
+  //
 }
 
 Axios.interceptors.response.use((response) => { // eslint-disable-line
