@@ -2,6 +2,8 @@ import { doAsync, createAsyncMutation } from '@/async-utils';
 
 const GET_ALL_USERS = createAsyncMutation('GET_ALL_USERS');
 const UPDATE_ANY_USER = createAsyncMutation('UPDATE_ANY_USER');
+const DELETE_USER = createAsyncMutation('DELETE_USER');
+const UPDATE_USER = 'UPDATE_USER';
 
 export default {
   namespaced: true,
@@ -27,6 +29,12 @@ export default {
     },
     [UPDATE_ANY_USER.FAILURE](state) {
       state.updateAnyUserLoading = false;
+    },
+    [DELETE_USER.PENDING]() {},
+    [DELETE_USER.SUCCESS]() {},
+    [DELETE_USER.FAILURE]() {},
+    [UPDATE_USER](state, userId) {
+      state.users = state.users.filter(user => user.id !== userId);
     }
   },
   actions: {
@@ -44,6 +52,14 @@ export default {
         method: 'patch',
         mutationTypes: UPDATE_ANY_USER
       });
+    },
+    deleteUser(context, userId) {
+      return doAsync(context, {
+        url: `/users/${userId}/`,
+        method: 'delete',
+        mutationTypes: DELETE_USER
+      })
+        .then(() => context.commit('UPDATE_USER', userId));
     }
   }
 };

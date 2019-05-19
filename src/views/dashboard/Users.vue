@@ -13,7 +13,7 @@
         </div>
         <datatable :columns="columns" :data="users" :filter-by="filter" class="vertical-align-middle">
           <template slot-scope="{ row }">
-            <user :user="row" @edit="editUser"></user>
+            <user :user="row" @edit="editUser" @showDeleteUserModal="showDeleteUserModal"></user>
           </template>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
@@ -36,6 +36,17 @@
             </div>
           </div>
         </custom-scrollbar>
+      </modal>
+
+      <modal
+        id="confirm-user-delete"
+        @accept="confirmDeleteUser"
+        accept-button
+        accept-button-label="Supprimer"
+        cancel-button
+        cancel-button-label="Non"
+      >
+        Etes-vous certain de vouloir supprimer l'utilisateur ?
       </modal>
     </div>
   </div>
@@ -83,6 +94,7 @@ export default {
       page: 1,
       per_page: 10,
       user: null,
+      userToDelete: null,
       settings: {
         suppressScrollX: true,
         swipeEasing: true
@@ -92,6 +104,7 @@ export default {
   methods: {
     ...mapActions({
       getUsers: 'users/getAllUsers',
+      deleteUser: 'users/deleteUser',
       getPlans: 'plans/getPlans',
       updateAnyUser: 'users/updateAnyUser'
     }),
@@ -100,6 +113,13 @@ export default {
       this.success = '';
       this.error = null;
       this.$jQuery('#edit-user').modal('show');
+    },
+    showDeleteUserModal(user) {
+      this.userToDelete = user;
+      this.$jQuery('#confirm-user-delete').modal('show');
+    },
+    confirmDeleteUser() {
+      this.deleteUser(this.userToDelete.id).then(() => this.$jQuery('#confirm-user-delete').modal('hide'));
     },
     onSubmit(user) {
       if (this.isAdmin) {
