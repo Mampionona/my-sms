@@ -13,5 +13,18 @@
   "Téléchargez un exemple de fichier simple CSV": "Téléchargez un exemple de fichier simple {0}",
   "Téléchargez un exemple de fichier avec variables CSV": "Téléchargez un exemple de fichier avec variables {0}",
   "Téléchargez un exemple de fichier simple XLS": "Téléchargez un exemple de fichier simple {0}",
-  "Téléchargez un exemple de fichier avec variables XLS": "Téléchargez un exemple de fichier avec variables {0}"
+  "Téléchargez un exemple de fichier avec variables XLS": "Téléchargez un exemple de fichier avec variables {0}",
+  "Missing company param": "Le nom de la société est manquant",
+  "Missing siren param": "Le SIREN est manquant",
+  "Missing tva param": "Le numéro de TVA est manquant",
+  "Missing firstname param": "Le prénom est manquant",
+  "Missing lastname param": "Le nom est manquant",
+  "Missing userRole param": "Le poste occupé dans la société manquant",
+  "Missing street param": "La rue est manquante",
+  "Missing city param": "La ville est manquante",
+  "Missing postcode param": "Le code postal est manquant",
+  "Missing telephone param": "Le numéro de téléphone est manquant",
+  "Missing mobile param": "Le numéro de mobile est manquant",
+  "Missing email param": "L'adresse email est manquante",
+  "Missing password param": "Le mot de passe est manquant"
 }
