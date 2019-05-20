@@ -6,6 +6,21 @@
           <template slot-scope="{ row }">
             <plan :plan="row" subscribe-button @subscribe="subscribe"></plan>
           </template>
+          <div slot="no-results" class="text-center">
+            <template v-if="isFetching">
+              <loading-progress
+                indeterminate
+                hide-background
+                size="28"
+                rotate
+                fillDuration="2"
+                rotationDuration="1"
+              />
+            </template>
+            <template v-else>
+              {{ $t('Aucun formule trouvé') }}
+            </template>
+          </div>
         </datatable>
         <div class="card-body">
           <div class="row">
@@ -90,7 +105,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: 'auth/user'
+      user: 'auth/user',
+      isFetching: 'plans/isFetching'
     })
   },
   methods: {

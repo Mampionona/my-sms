@@ -17,7 +17,21 @@
           <template slot-scope="{ row }">
             <answer :answer="row" @delete-answer="deleteAnswer"></answer>
           </template>
-          <div slot="no-results" class="text-center">{{ $t('Aucune réponse') }}</div>
+          <div slot="no-results" class="text-center">
+            <template v-if="isFetching">
+              <loading-progress
+                indeterminate
+                hide-background
+                size="28"
+                rotate
+                fillDuration="2"
+                rotationDuration="1"
+              />
+            </template>
+            <template v-else>
+              {{ $t('Aucune réponse') }}
+            </template>
+          </div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
@@ -34,7 +48,8 @@ export default {
   computed: {
     ...mapGetters({
       answers: 'campaigns/answers',
-      campaigns: 'campaigns/sent'
+      campaigns: 'campaigns/sent',
+      isFetching: 'campaigns/isFetching'
     })
   },
   created() {

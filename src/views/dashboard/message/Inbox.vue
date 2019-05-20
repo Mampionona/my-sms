@@ -9,7 +9,21 @@
               @show="onShow"
             />
           </template>
-          <div slot="no-results" class="text-center">{{ $t('Aucun message') }}</div>
+          <div slot="no-results" class="text-center">
+            <template v-if="isFetching">
+              <loading-progress
+                indeterminate
+                hide-background
+                size="28"
+                rotate
+                fillDuration="2"
+                rotationDuration="1"
+              />
+            </template>
+            <template v-else>
+              {{ $t('Aucun message') }}
+            </template>
+          </div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
@@ -24,7 +38,8 @@ export default {
   components: { SentMessage },
   computed: {
     ...mapGetters({
-      sentMessages: 'campaigns/sent'
+      sentMessages: 'campaigns/sent',
+      isFetching: 'campaigns/isFetching'
     }),
     isEmpty() {
       return this.sentMessages.length === 0;

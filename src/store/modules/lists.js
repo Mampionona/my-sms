@@ -12,21 +12,27 @@ export default {
   state: {
     lists: [],
     newListId: null,
-    error: ''
+    error: '',
+    isFetching: false
   },
 
   getters: {
     lists: state => state.lists,
-    error: state => state.error
+    error: state => state.error,
+    isFetching: state => state.isFetching
   },
 
   mutations: {
-    [GET_LISTS.PENDING]() {},
+    [GET_LISTS.PENDING](state) {
+      state.isFetching = true;
+    },
     [GET_LISTS.SUCCESS](state, payload) {
       state.lists = payload;
+      state.isFetching = false;
     },
     [GET_LISTS.FAILURE](state, payload) {
       state.error = payload ? payload.data : null;
+      state.isFetching = false;
     },
     // update list name
     [UPDATE_NAME.PENDING]() {},

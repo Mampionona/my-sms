@@ -10,13 +10,15 @@ export default {
   state: {
     paymentUrl: null,
     payments: [],
-    paymentStatus: null
+    paymentStatus: null,
+    isFetching: false
   },
 
   getters: {
     paymentUrl: state => state.paymentUrl,
     payments: state => state.payments,
-    paymentStatus: state => state.paymentStatus
+    paymentStatus: state => state.paymentStatus,
+    isFetching: state => state.isFetching
   },
 
   mutations: {
@@ -38,14 +40,15 @@ export default {
     [CONFIRM_PAYMENT.FAILURE]() {
       //
     },
-    [GET_PAYMENTS_LIST.PENDING]() {
-      //
+    [GET_PAYMENTS_LIST.PENDING](state) {
+      state.isFetching = true;
     },
     [GET_PAYMENTS_LIST.SUCCESS](state, payload) {
+      state.isFetching = false;
       state.payments = payload;
     },
-    [GET_PAYMENTS_LIST.FAILURE]() {
-      //
+    [GET_PAYMENTS_LIST.FAILURE](state) {
+      state.isFetching = false;
     }
   },
 

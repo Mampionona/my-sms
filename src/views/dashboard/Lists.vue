@@ -11,7 +11,21 @@
               @show-list="showList"
             />
           </template>
-          <div slot="no-results" class="text-center">{{ $t('Aucun fichier') }}</div>
+          <div slot="no-results" class="text-center">
+            <template v-if="isFetching">
+              <loading-progress
+                indeterminate
+                hide-background
+                size="28"
+                rotate
+                fillDuration="2"
+                rotationDuration="1"
+              />
+            </template>
+            <template v-else>
+              {{ $t('Aucun fichier') }}
+            </template>
+          </div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
@@ -71,7 +85,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      lists: 'lists/lists'
+      lists: 'lists/lists',
+      isFetching: 'lists/isFetching'
     })
   },
   methods: {

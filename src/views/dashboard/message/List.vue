@@ -5,7 +5,7 @@
         <div class="card-header">
           <router-link class="btn btn-primary" :to="{ name: 'create_campaign' }">{{ $t('Créer une campagne') }}</router-link>
         </div>
-        <messages @show="onShow" :messages="sent">{{ $t('Aucun envois effectués') }}</messages>
+        <messages :is-fetching="isFetching" @show="onShow" :messages="sent">{{ $t('Aucun envois effectués') }}</messages>
       </div>
     </div>
   </div>
@@ -17,7 +17,10 @@ import Messages from '@/components/Messages';
 export default {
   components: { Messages },
   computed: {
-    ...mapGetters({ sent: 'campaigns/sent' })
+    ...mapGetters({
+      sent: 'campaigns/sent',
+      isFetching: 'campaigns/isFetching'
+    })
   },
   methods: {
     ...mapActions({

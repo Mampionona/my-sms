@@ -12,7 +12,8 @@ export default {
   state: {
     campaigns: [],
     answers: [],
-    stats: []
+    stats: [],
+    isFetching: false
   },
   getters: {
     // all campaigns
@@ -38,7 +39,8 @@ export default {
       const sentDateA = dateUTC(a.sendDate);
       const sentDateB = dateUTC(b.sendDate);
       return sentDateA - sentDateB;
-    })[0]
+    })[0],
+    isFetching: state => state.isFetching
   },
   mutations: {
     // create or update campaign
@@ -46,16 +48,26 @@ export default {
     [CREATE_OR_UPDATE_CAMPAIGN.SUCCESS]() {},
     [CREATE_OR_UPDATE_CAMPAIGN.FAILURE]() {},
     // get user's campaign
-    [GET_USER_CAMPAIGNS.PENDING]() {},
+    [GET_USER_CAMPAIGNS.PENDING](state) {
+      state.isFetching = true;
+    },
     [GET_USER_CAMPAIGNS.SUCCESS](state, payload) {
       state.campaigns = payload;
+      state.isFetching = false;
     },
-    [GET_USER_CAMPAIGNS.FAILURE]() {},
-    [GET_CAMPAIGN_ANSWERS.PENDING]() {},
+    [GET_USER_CAMPAIGNS.FAILURE](state) {
+      state.isFetching = false;
+    },
+    [GET_CAMPAIGN_ANSWERS.PENDING](state) {
+      state.isFetching = true;
+    },
     [GET_CAMPAIGN_ANSWERS.SUCCESS](state, payload) {
       state.answers = payload;
+      state.isFetching = false;
     },
-    [GET_CAMPAIGN_ANSWERS.FAILURE]() {},
+    [GET_CAMPAIGN_ANSWERS.FAILURE](state) {
+      state.isFetching = false;
+    },
     [GET_CAMPAIGNS_STATS.PENDING]() {
       //
     },

@@ -5,7 +5,7 @@
         <div class="card-header">
           <router-link class="btn btn-primary" :to="{ name: 'create_campaign' }">{{ $t('Créer une campagne') }}</router-link>
         </div>
-        <messages @show="onShow" :messages="drafts" is-draft>{{ $t('Aucun brouillons') }}</messages>
+        <messages :is-fetching="isFetching" @show="onShow" :messages="drafts" is-draft>{{ $t('Aucun brouillons') }}</messages>
       </div>
     </div>
   </div>
@@ -22,7 +22,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      drafts: 'campaigns/drafts'
+      drafts: 'campaigns/drafts',
+      isFetching: 'campaigns/isFetching'
     })
   },
   methods: {

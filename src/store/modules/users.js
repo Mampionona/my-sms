@@ -9,18 +9,25 @@ export default {
   namespaced: true,
   state: {
     users: [],
-    updateAnyUserLoading: false
+    updateAnyUserLoading: false,
+    isFetching: false
   },
   getters: {
     users: state => state.users,
-    updateAnyUserLoading: state => state.updateAnyUserLoading
+    updateAnyUserLoading: state => state.updateAnyUserLoading,
+    isFetching: state => state.isFetching
   },
   mutations: {
     [GET_ALL_USERS.SUCCESS](state, payload) {
       state.users = payload;
+      state.isFetching = false;
     },
-    [GET_ALL_USERS.PENDING]() { },
-    [GET_ALL_USERS.FAILURE]() { },
+    [GET_ALL_USERS.PENDING](state) {
+      state.isFetching = true;
+    },
+    [GET_ALL_USERS.FAILURE](state) {
+      state.isFetching = false;
+    },
     [UPDATE_ANY_USER.PENDING](state) {
       state.updateAnyUserLoading = true;
     },

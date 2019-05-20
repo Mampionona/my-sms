@@ -7,22 +7,25 @@ export default {
   namespaced: true,
 
   state: {
-    plans: []
+    plans: [],
+    isFetching: false
   },
 
   getters: {
-    plans: state => state.plans
+    plans: state => state.plans,
+    isFetching: state => state.isFetching
   },
 
   mutations: {
-    [GET_PLANS.PENDING]() {
-      //
+    [GET_PLANS.PENDING](state) {
+      state.isFetching = true;
     },
     [GET_PLANS.SUCCESS](state, payload) {
       state.plans = payload;
+      state.isFetching = false;
     },
-    [GET_PLANS.FAILURE]() {
-      //
+    [GET_PLANS.FAILURE](state) {
+      state.isFetching = false;
     },
     [UPDATE_PLAN.PENDING]() {
       //
