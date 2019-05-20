@@ -30,9 +30,6 @@ export default {
       return this.sentMessages.length === 0;
     }
   },
-  created() {
-    this.getCampaigns();
-  },
   data() {
     return {
       page: 1,
@@ -54,6 +51,9 @@ export default {
         params: { messageId }
       });
     }
+  },
+  mounted() {
+    this.getCampaigns().catch(() => this.$eventBus.$emit('fetch-data-error'));
   }
 };
 </script>

@@ -3,6 +3,7 @@
     <component :is="layout">
       <router-view/>
     </component>
+    <fetch-data-error></fetch-data-error>
   </div>
 </template>
 
@@ -11,11 +12,13 @@ import DashboardLayout from '@/components/layouts/DashboardLayout';
 import DefaultLayout from '@/components/layouts/DefaultLayout';
 import { mapGetters, mapActions } from 'vuex';
 import { UNAUTHENTICATED } from '@/utils';
+import FetchDataError from '@/components/FetchDataError';
 
 export default {
   components: {
     DefaultLayout,
-    DashboardLayout
+    DashboardLayout,
+    FetchDataError
   },
   watch: {
     $route: 'routeDidChange'

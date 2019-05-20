@@ -121,13 +121,6 @@ export default {
       deleteId: null
     };
   },
-  beforeRouteEnter(to, from, next) {
-    store.dispatch('lists/getUserLists').then(lists => lists.forEach((list) => {
-      if (list.id === parseInt(to.params.listId, 10)) { // precise intent
-        next(vm => vm.setData(list));
-      }
-    }));
-  },
   mounted() {
     document.getElementById('all-contacts').addEventListener('change', (e) => {
       if (e.target.checked) {
@@ -136,6 +129,15 @@ export default {
       }
       this.selectedContacts = [];
     });
+
+    this.getLists().then(lists => lists.forEach((list) => {
+      const { id, name, contacts } = list;
+      if (id === parseInt(this.$route.params.listId, 10)) {
+        this.list = list;
+        this.name = name;
+        this.countContacts = contacts;
+      }
+    }));
   },
   computed: {
     ...mapGetters({
@@ -163,7 +165,8 @@ export default {
       getContacts: 'contacts/getContactsOfList',
       getAllContacts: 'contacts/getAllContacts',
       update: 'lists/updateListName',
-      remove: 'contacts/removeContact'
+      remove: 'contacts/removeContact',
+      getLists: 'lists/getUserLists'
     }),
     ...mapMutations({
       updateContacts: 'contacts/UPDATE_CONTACTS'
@@ -171,12 +174,8 @@ export default {
     getData(params, setRowData) {
       this.getContacts({ listId: this.$route.params.listId, page: params.page_number }).then((contacts) => {
         setRowData(contacts, this.countContacts);
-      });
-    },
-    setData(list) {
-      this.list = list;
-      this.name = list.name;
-      this.countContacts = list.contacts;
+      })
+        .catch(error => this.$eventBus.$emit('fetch-data-error', error));
     },
     updateListName() {
       const { name } = this;

@@ -23,7 +23,7 @@ export default {
     ...mapActions({ getUserCampaigns: 'campaigns/getUserCampaigns' })
   },
   mounted() {
-    this.getUserCampaigns();
+    this.getUserCampaigns().catch(() => this.$eventBus.$emit('fetch-data-error'));
   }
 };
 </script>

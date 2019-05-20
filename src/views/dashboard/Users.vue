@@ -83,7 +83,7 @@ export default {
     }
   },
   mounted() {
-    this.getUsers();
+    this.getUsers().catch(() => this.$eventBus.$emit('fetch-data-error'));
     if (this.isAdmin) this.getPlans();
   },
   data() {

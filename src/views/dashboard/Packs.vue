@@ -81,9 +81,12 @@ export default {
     };
   },
   mounted() {
-    this.getPlans().then((plans) => {
-      this.plans = this.selectedPlan = plans; // eslint-disable-line
-    });
+    this.getPlans()
+      .then((plans) => {
+        this.plans = plans;
+        this.selectedPlan = plans;
+      })
+      .catch(() => this.$eventBus.$emit('fetch-data-error'));
   },
   computed: {
     ...mapGetters({

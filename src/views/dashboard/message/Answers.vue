@@ -38,12 +38,14 @@ export default {
     })
   },
   created() {
-    this.getAnswers(this.$route.params.messageId);
-    this.getCampaigns().then((data) => {
-      data.forEach((campaign) => {
-        if (campaign.id === parseInt(this.$route.params.messageId, 10)) this.campaign = campaign;
-      });
-    });
+    this.getAnswers(this.$route.params.messageId).catch(error => this.$eventBus.$emit('fetch-data-error', error));
+    this.getCampaigns()
+      .then((data) => {
+        data.forEach((campaign) => {
+          if (campaign.id === parseInt(this.$route.params.messageId, 10)) this.campaign = campaign;
+        });
+      })
+      .catch(() => this.$eventBus.$emit('fetch-data-error'));
   },
   data() {
     return {

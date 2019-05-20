@@ -54,7 +54,7 @@ export default {
   },
   mounted() {
     // dispatch get user's lists action
-    this.getUserLists();
+    this.getUserLists().catch(() => this.$eventBus.$emit('fetch-data-error'));
   },
   computed: {
     ...mapGetters({

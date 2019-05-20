@@ -18,7 +18,7 @@ import Messages from '@/components/Messages';
 export default {
   components: { Messages },
   mounted() {
-    this.getUserCampaigns();
+    this.getUserCampaigns().catch(() => this.$eventBus.$emit('fetch-data-error'));
   },
   computed: {
     ...mapGetters({

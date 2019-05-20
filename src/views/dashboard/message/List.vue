@@ -28,7 +28,7 @@ export default {
     }
   },
   mounted() {
-    this.getCampaigns();
+    this.getCampaigns().catch(() => this.$eventBus.$emit('fetch-data-error'));
   }
 };
 </script>
