@@ -24,6 +24,7 @@ export default {
     this.$nextTick(() => {
       if (this.isLoggedIn) {
         this.getUser().catch((error) => {
+          if (!error) return;
           const { status } = error;
           if (status === UNAUTHENTICATED) this.$router.push({ name: 'login' });
         });

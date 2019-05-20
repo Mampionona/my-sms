@@ -26,13 +26,13 @@ export default {
       state.lists = payload;
     },
     [GET_LISTS.FAILURE](state, payload) {
-      state.error = payload.data;
+      state.error = payload ? payload.data : null;
     },
     // update list name
     [UPDATE_NAME.PENDING]() {},
     [UPDATE_NAME.SUCCESS]() {},
     [UPDATE_NAME.FAILURE](state, payload) {
-      state.error = payload.data;
+      state.error = payload ? payload.data : null;
     },
     // create a new list
     [CREATE_NEW_LIST.PENDING]() {},
