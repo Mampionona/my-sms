@@ -16,15 +16,22 @@
   "Téléchargez un exemple de fichier avec variables XLS": "Téléchargez un exemple de fichier avec variables {0}",
   "Missing company param": "Le nom de la société est manquant",
   "Missing siren param": "Le SIREN est manquant",
+  "siren must be 9 chars": "Le SIREN ne peut dépasser 9 caractères",
   "Missing tva param": "Le numéro de TVA est manquant",
+  "tva must be 13 chars": "Le numéro de TVA doit être de 13 caractères",
   "Missing firstname param": "Le prénom est manquant",
   "Missing lastname param": "Le nom est manquant",
   "Missing userRole param": "Le poste occupé dans la société manquant",
   "Missing street param": "La rue est manquante",
   "Missing city param": "La ville est manquante",
   "Missing postcode param": "Le code postal est manquant",
+  "postCode must be 5 chars": "Le code postal doit faire 5 caractères",
   "Missing telephone param": "Le numéro de téléphone est manquant",
+  "telephone looks like it’s not properly formatted": "Il semble que le numéro de téléphone n'est pas correctement formaté",
+  "mobile looks like it’s not properly formatted": "Il semble que le numéro de téléphone portable n'est pas correctement formaté",
+  "email must be an email string": "Il semble y avoir un problème avec cette adresse email",
   "Missing mobile param": "Le numéro de mobile est manquant",
   "Missing email param": "L'adresse email est manquante",
-  "Missing password param": "Le mot de passe est manquant"
+  "Missing password param": "Le mot de passe est manquant",
+  "password must be comprised between 8 and 50 chars": "Le mot de passe doit être compris entre 5 et 50 caractères"
 }
