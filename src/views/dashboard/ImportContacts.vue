@@ -143,7 +143,7 @@
         <p class="mb-0">{{ $t(modalBody) }}</p>
       </modal>
       <modal id="import-progress" data-backdrop="static" data-keyboard="false">
-        <p class="mb-5">{{ $t('Importation des contacts en cours.') }}<br>{{ $t('Ne fermez pas votre navigateur.') }}</p>
+        <p class="mb-5 text-center">{{ $t('Importation des contacts en cours.') }}<br>{{ $t('Ne fermez pas votre navigateur.') }}</p>
         <div class="row justify-content-center">
           <div class="col-6">
             <div class="progress progress-xs">
