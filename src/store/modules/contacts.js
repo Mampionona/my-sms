@@ -11,13 +11,15 @@ export default {
   namespaced: true,
   state: {
     listId: null,
-    contactsOfList: []
+    contactsOfList: [],
+    isFetching: false
   },
 
   getters: {
     listId: state => state.listId,
     contacts: state => state.contactsOfList,
-    stops: (state, getters) => getters.contacts.filter(contact => contact.stop === 1)
+    stops: (state, getters) => getters.contacts.filter(contact => contact.stop === 1),
+    isFetching: state => state.isFetching
   },
 
   mutations: {
@@ -26,11 +28,16 @@ export default {
       state.listId = id;
     },
     // get contacts
-    [GET_CONTACTS.PENDING]() {},
+    [GET_CONTACTS.PENDING](state) {
+      state.isFetching = true;
+    },
     [GET_CONTACTS.SUCCESS](state, payload) {
       state.contactsOfList = payload;
+      state.isFetching = false;
     },
-    [GET_CONTACTS.FAILURE]() {},
+    [GET_CONTACTS.FAILURE](state) {
+      state.isFetching = false;
+    },
     // add contact to a list
     [ADD_CONTACTS.PENDING]() {},
     [ADD_CONTACTS.SUCCESS]() {},

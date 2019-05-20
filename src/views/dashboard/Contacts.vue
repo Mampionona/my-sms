@@ -67,7 +67,21 @@
               </div>
             </contact>
           </template>
-          <div slot="no-results" class="text-center">{{ $t('Aucun contact trouvé') }}</div>
+          <div slot="no-results" class="text-center">
+            <template v-if="isFetching">
+              <loading-progress
+                indeterminate
+                hide-background
+                size="28"
+                rotate
+                fillDuration="2"
+                rotationDuration="1"
+              />
+            </template>
+            <template v-else>
+              {{ $t('Aucun contact trouvé') }}
+            </template>
+          </div>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
         <modal
@@ -141,7 +155,8 @@ export default {
   computed: {
     ...mapGetters({
       contacts: 'contacts/contacts',
-      stops: 'contacts/stops'
+      stops: 'contacts/stops',
+      isFetching: 'contacts/isFetching'
     }),
     composeUrl() {
       return {
