@@ -51,7 +51,7 @@
 
               <div class="mt-4">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="save-as-draft" v-model="status">
+                  <input type="checkbox" class="custom-control-input" id="save-as-draft" v-model="isDraft">
                   <label class="custom-control-label" for="save-as-draft">{{ $t('Enregistrer en tant que brouillon') }}</label>
                 </div>
               </div>
@@ -146,7 +146,7 @@ export default {
       remainingChars: MESSAGE.firstMaxLength,
       countSMS: 1,
       sendingMode: 'immediate',
-      status: false,
+      isDraft: false,
       listId: '',
       name: '',
       statusMessage: '',
@@ -207,6 +207,7 @@ export default {
       };
     },
     submitButtonLabel() {
+      if (this.isDraft) return 'Sauvegarder le brouillon';
       return this.sendingMode === 'immediate' ? 'Envoyer' : 'Programmer l’envoi';
     },
     contactsOfList() {
@@ -230,7 +231,7 @@ export default {
         .then(() => {
           this.name = '';
           this.text = '';
-          this.status = false;
+          this.isDraft = false;
           this.hasError = false;
           this.created = true;
           this.statusMessage = 'Campagne créée';
@@ -243,12 +244,12 @@ export default {
     },
     saveCampaign() {
       const { listId, name, text, senderName, sendingMode } = this;
-      let { sendDate, status } = this;
+      let { sendDate } = this;
       const action = 'campaign_id' in this.$route.query ? 'update' : 'new';
       const campaignId = this.$route.query.campaign_id || null;
+      const status = this.isDraft ? 'draft' : 'live';
       sendDate = (sendingMode === 'immediate') ? '' : sendDate;
-      status = status ? 'draft' : 'live';
-      // return a promise
+
       return this.createOrUpdateCampaign({ action, listId, name, text, senderName, sendDate, status, campaignId });
     },
     populateCampainFields() {
