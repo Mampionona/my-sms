@@ -152,10 +152,11 @@ export default {
       this.$jQuery('#confirm-user-delete').modal('hide');
       this.$jQuery('#delete-user-pending-message').modal('show');
       document.body.classList.add('deletion-in-progress');
+
       this.deleteUser(this.userToDelete.id)
         .catch(error => setTimeout(() => this.$eventBus.$emit('fetch-data-error', error), 600))
         .finally(() => {
-          this.$jQuery('#delete-user-pending-message').modal('hide');
+          setTimeout(() => this.$jQuery('#delete-user-pending-message').modal('hide'), 500);
           document.body.classList.remove('deletion-in-progress');
         });
     },

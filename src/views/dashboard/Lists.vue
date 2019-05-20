@@ -41,7 +41,7 @@
           <strong>{{ filename }}</strong>
         </i18n>
       </modal>
-      <modal id="delete-file-pending-message" data-backdrop="static" data-keyboard="false">
+      <modal id="delete-file-pending-message">
         <p class="text-center">Suppression du fichier en cours.<br>Ne fermez pas votre navigateur.</p>
         <div class="text-center">
           <loading-progress
@@ -103,12 +103,10 @@ export default {
       this.$jQuery('#confirm-list-delete').modal('show');
     },
     deleteFile() {
-      const confirmListDelete = this.$jQuery('#confirm-list-delete');
-      const deleteNotification = this.$jQuery('#delete-file-pending-message');
-
       document.body.classList.add('deletion-in-progress');
-      confirmListDelete.modal('hide');
-      deleteNotification.modal('show');
+      this.$jQuery('#confirm-list-delete').modal('hide');
+      this.$jQuery('#delete-file-pending-message').modal('show');
+
       this.deleteList(this.deleteId)
         .then(() => {
           const newLists = this.lists.filter(({ id }) => id !== this.deleteId);
@@ -116,7 +114,8 @@ export default {
         })
         .catch(error => setTimeout(() => this.$eventBus.$emit('fetch-data-error', error), 600))
         .finally(() => {
-          deleteNotification.modal('hide');
+          this.$jQuery('#delete-file-pending-message').modal('hide');
+          setTimeout(() => this.$jQuery('#delete-file-pending-message').modal('hide'), 500);
           document.body.classList.remove('deletion-in-progress');
         });
     },
