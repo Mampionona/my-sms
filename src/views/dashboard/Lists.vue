@@ -27,6 +27,19 @@
           <strong>{{ filename }}</strong>
         </i18n>
       </modal>
+      <modal id="delete-file-pending-message" data-backdrop="static" data-keyboard="false">
+        <p class="text-center">Suppression du fichier en cours.<br>Ne fermez pas votre navigateur.</p>
+        <div class="text-center">
+          <loading-progress
+            indeterminate
+            hide-background
+            size="32"
+            rotate
+            fillDuration="2"
+            rotationDuration="1"
+          />
+        </div>
+      </modal>
     </div>
   </div>
 </template>
@@ -75,13 +88,21 @@ export default {
       this.$jQuery('#confirm-list-delete').modal('show');
     },
     deleteFile() {
-      if (this.deleteId) {
-        this.deleteList(this.deleteId).then(() => {
+      const confirmListDelete = this.$jQuery('#confirm-list-delete');
+      const deleteNotification = this.$jQuery('#delete-file-pending-message');
+
+      confirmListDelete.modal('hide');
+      deleteNotification.modal('show');
+      this.deleteList(this.deleteId)
+        .then(() => {
           const newLists = this.lists.filter(({ id }) => id !== this.deleteId);
           this.updateLists(newLists);
-          this.$jQuery('#confirm-list-delete').modal('hide');
+          deleteNotification.modal('hide');
+        })
+        .catch((error) => {
+          deleteNotification.modal('hide');
+          setTimeout(() => this.$eventBus.$emit('fetch-data-error', error), 600);
         });
-      }
     },
     showList(listId) {
       this.$router.push({ name: 'contacts', params: { listId } });

@@ -13,7 +13,7 @@
         </div>
         <datatable :columns="columns" :data="users" :filter-by="filter" class="vertical-align-middle">
           <template slot-scope="{ row }">
-            <user :user="row" @edit="editUser" @showDeleteUserModal="showDeleteUserModal"></user>
+            <user :user="row" @edit="editUser" @show-delete-user-modal="showDeleteUserModal"></user>
           </template>
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
@@ -47,6 +47,20 @@
         cancel-button-label="Non"
       >
         Etes-vous certain de vouloir supprimer l'utilisateur ?
+      </modal>
+
+      <modal id="delete-user-pending-message" data-backdrop="static" data-keyboard="false">
+        <p class="text-center">Suppression de l'utilisateur en cours.<br>Ne fermez pas votre navigateur.</p>
+        <div class="text-center">
+          <loading-progress
+            indeterminate
+            hide-background
+            size="32"
+            rotate
+            fillDuration="2"
+            rotationDuration="1"
+          />
+        </div>
       </modal>
     </div>
   </div>
@@ -119,7 +133,14 @@ export default {
       this.$jQuery('#confirm-user-delete').modal('show');
     },
     confirmDeleteUser() {
-      this.deleteUser(this.userToDelete.id).then(() => this.$jQuery('#confirm-user-delete').modal('hide'));
+      this.$jQuery('#confirm-user-delete').modal('hide');
+      this.$jQuery('#delete-user-pending-message').modal('show');
+      this.deleteUser(this.userToDelete.id)
+        .then(() => this.$jQuery('#delete-user-pending-message').modal('hide'))
+        .catch((error) => {
+          this.$jQuery('#delete-user-pending-message').modal('hide');
+          setTimeout(() => this.$eventBus.$emit('fetch-data-error', error), 600);
+        });
     },
     onSubmit(user) {
       if (this.isAdmin) {

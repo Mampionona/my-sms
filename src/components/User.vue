@@ -6,7 +6,7 @@
     <td>{{ user.userRole }}</td>
     <td>{{ user.credits | formatNumber }} SMS</td>
     <td class="text-right" v-if="isAdmin">
-      <button class="btn btn-danger" @click="$emit('showDeleteUserModal', user)"><i class="fas fa-trash-alt"></i></button>
+      <button class="btn btn-danger" @click="$emit('show-delete-user-modal', user)"><i class="fas fa-trash-alt"></i></button>
       <button class="btn btn-secondary" @click="$emit('edit', user)"><i class="fas fa-pencil-alt"></i></button>
     </td>
   </tr>
