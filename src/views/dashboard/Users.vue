@@ -135,11 +135,12 @@ export default {
     confirmDeleteUser() {
       this.$jQuery('#confirm-user-delete').modal('hide');
       this.$jQuery('#delete-user-pending-message').modal('show');
+      document.body.classList.add('deletion-in-progress');
       this.deleteUser(this.userToDelete.id)
-        .then(() => this.$jQuery('#delete-user-pending-message').modal('hide'))
-        .catch((error) => {
+        .catch(error => setTimeout(() => this.$eventBus.$emit('fetch-data-error', error), 600))
+        .finally(() => {
           this.$jQuery('#delete-user-pending-message').modal('hide');
-          setTimeout(() => this.$eventBus.$emit('fetch-data-error', error), 600);
+          document.body.classList.remove('deletion-in-progress');
         });
     },
     onSubmit(user) {

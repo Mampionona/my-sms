@@ -35,7 +35,7 @@ import ProfileHeader from '@/components/partials/ProfileHeader';
 export default {
   components: { SideNav, TopNav, Breadcrumb, ProfileHeader },
   mounted() {
-    loadProgressBar();
+    loadProgressBar({ showSpinner: false });
   },
   computed: {
     ...mapGetters({
@@ -72,7 +72,7 @@ export default {
     display: none !important;
   }
 
-  .spinner-icon {
+  .deletion-in-progress & {
     display: none;
   }
 }

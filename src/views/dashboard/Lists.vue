@@ -91,17 +91,18 @@ export default {
       const confirmListDelete = this.$jQuery('#confirm-list-delete');
       const deleteNotification = this.$jQuery('#delete-file-pending-message');
 
+      document.body.classList.add('deletion-in-progress');
       confirmListDelete.modal('hide');
       deleteNotification.modal('show');
       this.deleteList(this.deleteId)
         .then(() => {
           const newLists = this.lists.filter(({ id }) => id !== this.deleteId);
           this.updateLists(newLists);
-          deleteNotification.modal('hide');
         })
-        .catch((error) => {
+        .catch(error => setTimeout(() => this.$eventBus.$emit('fetch-data-error', error), 600))
+        .finally(() => {
           deleteNotification.modal('hide');
-          setTimeout(() => this.$eventBus.$emit('fetch-data-error', error), 600);
+          document.body.classList.remove('deletion-in-progress');
         });
     },
     showList(listId) {
