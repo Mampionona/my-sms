@@ -91,7 +91,6 @@ import Contact from '@/components/Contact';
 import vBtn from '@/components/vBtn';
 import SelectAll from '@/components/SelectAll';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
-import store from '@/store';
 import { arrayToCSV } from '@/utils';
 import Modal from '@/components/Modal';
 
