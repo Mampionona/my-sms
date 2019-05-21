@@ -58,7 +58,7 @@
             </div>
           </div>
         </div>
-        <datatable :columns="columns" :data="getData">
+        <datatable :columns="columns" :data="getData" class="vertical-align-middle">
           <template slot-scope="{ row }">
             <contact :contact="row" :key="row.id" @delete-contact="confirmDelete">
               <div slot="checkbox" class="custom-control custom-checkbox">
