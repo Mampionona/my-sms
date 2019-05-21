@@ -25,7 +25,7 @@ export default {
       const { attributes } = this.contact;
       const $keys = Object.keys(attributes);
       if (!$keys.length) return false;
-      return $keys.map(attribute => `${attribute}: ${attributes[attribute]}`);
+      return $keys.map(attribute => `${attribute} : ${attributes[attribute]}`);
     }
   },
   props: {
