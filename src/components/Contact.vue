@@ -23,8 +23,9 @@ export default {
   computed: {
     attributes() {
       const { attributes } = this.contact;
-      if (!Object.keys(attributes).length) return false;
-      return Object.keys(attributes).map(attribute => `${attribute}: ${attributes[attribute]}`);
+      const $keys = Object.keys(attributes);
+      if (!$keys.length) return false;
+      return $keys.map(attribute => `${attribute}: ${attributes[attribute]}`);
     }
   },
   props: {
