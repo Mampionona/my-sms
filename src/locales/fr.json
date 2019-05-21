@@ -33,5 +33,6 @@
   "Missing mobile param": "Le numéro de mobile est manquant",
   "Missing email param": "L'adresse email est manquante",
   "Missing password param": "Le mot de passe est manquant",
-  "password must be comprised between 8 and 50 chars": "Le mot de passe doit être compris entre 5 et 50 caractères"
+  "password must be comprised between 8 and 50 chars": "Le mot de passe doit être compris entre 5 et 50 caractères",
+  "User doesn’t have enough credits to send this campaign": "Vous n’avez pas assez de crédits pour envoyer cette campagne"
 }
