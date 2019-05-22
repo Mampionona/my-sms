@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "compress:gz": "find ./dist -path './node_modules' -prune -o \\( -name '*.html' -o -name '*.svg' -o -name '*.js' -o -name '*.css' \\) -exec gzip -9 -k -f '{}' \\;",
+    "compress:br": "find ./dist -path './node_modules' -prune -o \\( -name '*.html' -o -name '*.svg' -o -name '*.js' -o -name '*.css' \\) -exec brotli -Zf '{}' \\;",
+    "compress:clean": "find . -path './node_modules' -prune -o -name '*.gz' -exec rm '{}' \\; && find . -path './node_modules' -prune -o -name '*.br' -exec rm '{}' \\;",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build && npm run compress:gz && npm run compress:br",
     "lint": "vue-cli-service lint",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
