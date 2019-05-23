@@ -122,6 +122,17 @@ const routes = [
         component: () => import('@/views/dashboard/message/List')
       },
       {
+        path: 'message/:campaignId/report',
+        name: 'report',
+        meta: {
+          ...dashboardMetas,
+          title: 'Rapport d\'envoi',
+          breadcrumb: 'Rapport d\'envoi',
+          icon: 'ni ni-send'
+        },
+        component: () => import('@/views/dashboard/message/Sent')
+      },
+      {
         path: 'message/list/scheduled',
         name: 'scheduled_messages',
         meta: {
