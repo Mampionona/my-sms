@@ -39,7 +39,7 @@ export default {
       isFetching: 'payment/isFetching'
     }),
     columns() {
-      return ['Nom', 'Prénom', 'Société', 'E-mail', 'Montant', 'Date'].map(name => this.$t(name));
+      return ['Nom', 'Prénom', 'Société', 'E-mail', 'Montant', 'Date'].map(name => ({ label: this.$t(name) }));
     }
   },
   data() {
