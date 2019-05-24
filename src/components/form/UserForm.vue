@@ -66,7 +66,7 @@
     <div class="text-center" v-if="updateAnyUserLoading">
       <spinner></spinner>
     </div>
-    <p :class="statusClass">{{ $t(statusMessage) }}</p>
+    <p :class="statusClass">{{ $t(status) }}</p>
     <div class="text-center">
       <button type="submit" class="btn btn-primary mt-4">{{ $t(buttonLabel) }}</button>
     </div>
@@ -85,13 +85,6 @@ export default {
     buttonLabel() {
       return this.update ? 'Mettre à jour' : 'Créer le compte';
     },
-    hasError() {
-      return this.errors && Object.keys(this.errors).length > 0;
-    },
-    statusMessage() {
-      if (this.successMessage) return this.successMessage;
-      return '';
-    },
     statusClass() {
       return {
         'text-center': true,
@@ -99,6 +92,10 @@ export default {
         'font-weight-bold': true,
         'text-sm': true
       };
+    },
+    status() {
+      if (this.hasError) return this.hasError.data.error;
+      return this.statusMessage;
     }
   },
   data() {
@@ -154,13 +151,13 @@ export default {
     }
   },
   props: {
-    errors: Object,
+    hasError: null,
     plans: Array,
     policyEnabled: {
       default: false,
       type: Boolean
     },
-    successMessage: String,
+    statusMessage: String,
     update: {
       default: false,
       type: Boolean
