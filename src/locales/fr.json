@@ -16,7 +16,7 @@
   "Téléchargez un exemple de fichier avec variables XLS": "Téléchargez un exemple de fichier avec variables {0}",
   "Missing company param": "Le nom de la société est manquant",
   "Missing siren param": "Le SIREN est manquant",
-  "siren must be 9 chars": "Le SIREN ne peut dépasser 9 caractères",
+  "siren must be 9 chars": "Le SIREN doit être de 9 caractères",
   "Missing tva param": "Le numéro de TVA est manquant",
   "tva must be 13 chars": "Le numéro de TVA doit être de 13 caractères",
   "Missing firstname param": "Le prénom est manquant",
