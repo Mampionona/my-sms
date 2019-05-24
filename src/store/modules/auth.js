@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { doAsync, createAsyncMutation } from '@/async-utils';
-import { updateUser } from '../util';
+import updateUser from '../util';
 
 const SET_TOKEN = 'SET_TOKEN';
 const LOGOUT = 'LOGOUT';

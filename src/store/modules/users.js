@@ -1,5 +1,5 @@
 import { doAsync, createAsyncMutation } from '@/async-utils';
-import { updateUser } from '../util';
+import updateUser from '../util';
 
 const GET_ALL_USERS = createAsyncMutation('GET_ALL_USERS');
 const UPDATE_ANY_USER = createAsyncMutation('UPDATE_ANY_USER');
