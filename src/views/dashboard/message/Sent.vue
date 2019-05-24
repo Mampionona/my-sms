@@ -102,15 +102,19 @@ export default {
         .catch(error => this.$eventBus.$emit('fetch-data-error', error));
     },
     exportCSV() {
-      const pageNumber = Math.ceil(this.messageNumber / this.per_page);
+      const { messageNumber, per_page: perPage } = this;
+      const { campaignId } = this.$route.params;
+      const { name } = this.campaign;
+      const pageNumber = Math.ceil(messageNumber / perPage);
       let initialCounter = 0;
       let exportMessages = [];
+
       const getAllSentMessages = (counter) => {
-        this.getSentMessages({ campaignId: this.$route.params.campaignId, page: (counter + 1) }).then(({ messages }) => {
+        this.getSentMessages({ campaignId, page: (counter + 1) }).then(({ messages }) => {
           initialCounter++;
           exportMessages = [...exportMessages, ...messages];
           if (initialCounter < pageNumber) getAllSentMessages(initialCounter);
-          if (initialCounter === pageNumber) arrayToCSV(exportMessages, this.campaign ? this.campaign.name : 'messages');
+          if (initialCounter === pageNumber) arrayToCSV(exportMessages, name);
         });
       };
 
