@@ -61,6 +61,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import Report from './Report';
+import { arrayToCSV } from '@/utils';
 
 export default {
   components: { Report },
@@ -82,7 +83,8 @@ export default {
       page: 1,
       per_page: 10,
       campaign: null,
-      contacts: 0
+      contacts: 0,
+      messageNumber: 0
     };
   },
   methods: {
@@ -93,11 +95,26 @@ export default {
     }),
     getData(params, setRowData) {
       this.getSentMessages({ campaignId: this.$route.params.campaignId, page: params.page_number })
-        .then(({ messages, messageNumber }) => setRowData(messages, messageNumber))
+        .then(({ messages, messageNumber }) => {
+          setRowData(messages, messageNumber);
+          this.messageNumber = messageNumber;
+        })
         .catch(error => this.$eventBus.$emit('fetch-data-error', error));
     },
     exportCSV() {
-      console.log('exporting');
+      const pageNumber = Math.ceil(this.messageNumber / this.per_page);
+      let initialCounter = 0;
+      let exportMessages = [];
+      const getAllSentMessages = (counter) => {
+        this.getSentMessages({ campaignId: this.$route.params.campaignId, page: (counter + 1) }).then(({ messages }) => {
+          initialCounter++;
+          exportMessages = [...exportMessages, ...messages];
+          if (initialCounter < pageNumber) getAllSentMessages(initialCounter);
+          if (initialCounter === pageNumber) arrayToCSV(exportMessages, this.campaign ? this.campaign.name : 'messages');
+        });
+      };
+
+      getAllSentMessages(initialCounter);
     }
   },
   mounted() {
