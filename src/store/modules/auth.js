@@ -1,11 +1,13 @@
 import Axios from 'axios';
 import { doAsync, createAsyncMutation } from '@/async-utils';
+import { updateUser } from '../util';
 
 const SET_TOKEN = 'SET_TOKEN';
 const LOGOUT = 'LOGOUT';
 const FETCH_USER = createAsyncMutation('FETCH_USER');
 const UPDATE_ACCOUNT = createAsyncMutation('UPDATE_ACCOUNT');
 const GET_LOGIN_LINK_VIA_EMAIL = createAsyncMutation('GET_LOGIN_LINK_VIA_EMAIL');
+const UPDATE_OWN_INFOS = 'UPDATE_OWN_INFOS';
 
 function loggedInOrRegistered(context, token, resolve) {
   // update state
@@ -47,7 +49,11 @@ export default {
     [UPDATE_ACCOUNT.FAILURE]() {},
     [GET_LOGIN_LINK_VIA_EMAIL.PENDING]() {},
     [GET_LOGIN_LINK_VIA_EMAIL.SUCCESS]() {},
-    [GET_LOGIN_LINK_VIA_EMAIL.FAILURE]() {}
+    [GET_LOGIN_LINK_VIA_EMAIL.FAILURE]() {},
+    [UPDATE_OWN_INFOS](state, payload) {
+      const { user } = state;
+      state.user = updateUser(user, payload);
+    }
   },
   actions: {
     authenticate(context, credentials) {
