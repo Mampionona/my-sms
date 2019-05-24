@@ -1,24 +1,22 @@
 <template>
   <div class="row">
     <div class="col-lg-4">
-      <div class="card">
-        <div class="card-header">Envoi immediat</div>
+      <div v-if="campaign" class="card">
+        <div class="card-header">{{ $t(title) }}</div>
         <div class="card-body">
           <div class="sender mb-4">
             <p class="text-center">
               <small>Emetteur</small><br>
-              Nom de l'emetteur
+              {{ campaign.senderName }}
             </p>
           </div>
           <div class="recipients mb-4">
             <p class="text-center">
               <small>Destinataires</small><br>
-              1 152 858
+              {{ contacts | formatNumber }}
             </p>
           </div>
-          <div class="message text-sm bg-secondary p-3 rounded">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum vero nulla, iste facilis assumenda, veritatis voluptatibus est quos facere eaque illo, molestias labore nobis perferendis. Ab totam, sequi quisquam perferendis.
-          </div>
+          <div class="message text-sm bg-secondary p-3 rounded">{{ campaign.text }}</div>
         </div>
       </div>
     </div>
@@ -67,19 +65,32 @@ import Report from './Report';
 export default {
   components: { Report },
   computed: {
-    ...mapGetters({ isFetching: 'campaigns/isFetching' }),
+    ...mapGetters({
+      isFetching: 'campaigns/isFetching',
+      sentMessages: 'campaigns/sent'
+    }),
     columns() {
       return ['Téléphone', 'Statut d\'envoi', 'SMS'].map(label => ({ label }));
+    },
+    title() {
+      if (!this.campaign) return '';
+      return this.campaign.sendDate ? 'Envoi programmé' : 'Envoi immédiat';
     }
   },
   data() {
     return {
       page: 1,
-      per_page: 10
+      per_page: 10,
+      campaign: null,
+      contacts: 0
     };
   },
   methods: {
-    ...mapActions({ getSentMessages: 'campaigns/getSentMessages' }),
+    ...mapActions({
+      getSentMessages: 'campaigns/getSentMessages',
+      getCampaigns: 'campaigns/getUserCampaigns',
+      getLists: 'lists/getUserLists'
+    }),
     getData(params, setRowData) {
       this.getSentMessages({ campaignId: this.$route.params.campaignId, page: params.page_number })
         .then(({ messages, messageNumber }) => setRowData(messages, messageNumber))
@@ -88,6 +99,22 @@ export default {
     exportCSV() {
       console.log('exporting');
     }
+  },
+  mounted() {
+    const { campaignId } = this.$route.params;
+    this.getCampaigns().then((campaigns) => {
+      campaigns.forEach((campaign) => {
+        if (campaign.id === parseInt(campaignId, 10)) {
+          this.campaign = campaign;
+          this.getLists()
+            .then(lists => lists.forEach(({ id, contacts }) => {
+              if (campaign.list_id === id) {
+                this.contacts = contacts;
+              }
+            }));
+        }
+      });
+    });
   }
 };
 </script>
