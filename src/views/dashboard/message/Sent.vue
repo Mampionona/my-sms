@@ -1,8 +1,39 @@
 <template>
   <div class="row">
-    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-header">Envoi immediat</div>
+        <div class="card-body">
+          <div class="sender mb-4">
+            <p class="text-center">
+              <small>Emetteur</small><br>
+              Nom de l'emetteur
+            </p>
+          </div>
+          <div class="recipients mb-4">
+            <p class="text-center">
+              <small>Destinataires</small><br>
+              1 152 858
+            </p>
+          </div>
+          <div class="message text-sm bg-secondary p-3 rounded">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum vero nulla, iste facilis assumenda, veritatis voluptatibus est quos facere eaque illo, molestias labore nobis perferendis. Ab totam, sequi quisquam perferendis.
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="col-lg-8">
       <div class="card">
+        <div class="p-3">
+          <div class="dropdown">
+            <button type="button" id="export" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">
+              <i class="fas fa-download"></i>
+            </button>
+            <div aria-labelledby="export" class="dropdown-menu">
+              <a href="#" class="dropdown-item" @click.prevent="exportCSV">Export CSV</a>
+            </div>
+          </div>
+        </div>
         <datatable :columns="columns" :data="getData" class="vertical-align-middle">
           <template slot-scope="{ row }">
             <report :message="row"></report>
@@ -53,6 +84,9 @@ export default {
       this.getSentMessages({ campaignId: this.$route.params.campaignId, page: params.page_number })
         .then(({ messages, messageNumber }) => setRowData(messages, messageNumber))
         .catch(error => this.$eventBus.$emit('fetch-data-error', error));
+    },
+    exportCSV() {
+      console.log('exporting');
     }
   }
 };
