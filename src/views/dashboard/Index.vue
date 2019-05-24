@@ -83,7 +83,7 @@ export default {
     collection() {
       const items = [
         { label: 'Messages', field: 'messages', color: '#2ca02c' },
-        { label: 'Erreur réseau', field: 'net_err', color: '#fe7f0e' },
+        { label: 'Erreur', field: 'errored', color: '#fe7f0e' },
         { label: 'En attente', field: 'waiting', color: '#2ca02c' },
         { label: 'NPAI', field: 'npai', color: '#4b4d5c' },
         { label: 'Expiré', field: 'expired', color: '#fea730' },

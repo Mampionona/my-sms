@@ -1,7 +1,6 @@
 import Axios from 'axios';
+import retryAxios from 'retry-axios';
 import { UNAUTHENTICATED } from './utils';
-
-const retryAxios = require('retry-axios');
 
 const raxConfig = {
   retry: 10,

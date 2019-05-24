@@ -6,6 +6,7 @@ const GET_USER_CAMPAIGNS = createAsyncMutation('GET_USER_CAMPAIGNS');
 const GET_CAMPAIGN_ANSWERS = createAsyncMutation('GET_CAMPAIGN_ANSWERS');
 const GET_CAMPAIGNS_STATS = createAsyncMutation('GET_CAMPAIGNS_STATS');
 const SEND_TEST_MESSAGE = createAsyncMutation('SEND_TEST_MESSAGE');
+const GET_SENT_MESSAGES = createAsyncMutation('GET_SENT_MESSAGES');
 
 export default {
   namespaced: true,
@@ -13,7 +14,8 @@ export default {
     campaigns: [],
     answers: [],
     stats: [],
-    isFetching: false
+    isFetching: false,
+    messages: []
   },
   getters: {
     // all campaigns
@@ -40,7 +42,8 @@ export default {
       const sentDateB = dateUTC(b.sendDate);
       return sentDateA - sentDateB;
     })[0],
-    isFetching: state => state.isFetching
+    isFetching: state => state.isFetching,
+    messages: state => state.messages
   },
   mutations: {
     // create or update campaign
@@ -85,6 +88,16 @@ export default {
     },
     [SEND_TEST_MESSAGE.FAILURE]() {
       //
+    },
+    [GET_SENT_MESSAGES.PENDING](state) {
+      state.isFetching = true;
+    },
+    [GET_SENT_MESSAGES.SUCCESS](state, payload) {
+      state.isFetching = false;
+      state.messages = payload;
+    },
+    [GET_SENT_MESSAGES.FAILURE](state) {
+      state.isFetching = false;
     }
   },
   actions: {
@@ -128,6 +141,12 @@ export default {
         method: 'post',
         data: message,
         mutationTypes: SEND_TEST_MESSAGE
+      });
+    },
+    getSentMessages(context, { campaignId, page }) {
+      return doAsync(context, {
+        url: `/campaigns/${campaignId}/sentmessages/${page - 1}`,
+        mutationTypes: GET_SENT_MESSAGES
       });
     }
   }

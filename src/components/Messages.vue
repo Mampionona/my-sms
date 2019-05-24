@@ -1,6 +1,6 @@
 <template>
   <div>
-    <datatable :columns="columns" :data="messages">
+    <datatable :columns="columns" :data="messages" class="vertical-align-middle">
       <template slot-scope="{ row }">
         <campaign
           :key="row.id"
@@ -74,7 +74,7 @@ export default {
           { label: 'Emetteur', field: 'senderName' },
           { label: 'Date d\'envoi', field: 'sentDate' },
           { label: 'SMS', representedAs: () => '' },
-          { label: 'Rapport', representedAs: () => '' }
+          { label: 'Rapport', representedAs: () => '', align: 'center' }
         ]
       }
     };

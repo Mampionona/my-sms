@@ -45,8 +45,9 @@
                 :plans="plans"
                 update
                 @submit="onSubmit"
-                :success-message="success"
-                :error="error">
+                :has-error="error"
+                :status-message="statusMessage"
+              >
               </user-form>
             </div>
           </div>
@@ -119,8 +120,8 @@ export default {
   data() {
     return {
       filter: '',
-      error: false,
-      success: '',
+      error: null,
+      statusMessage: '',
       page: 1,
       per_page: 10,
       user: null,
@@ -164,9 +165,11 @@ export default {
       if (this.isAdmin) {
         this.updateAnyUser(user)
           .then(() => {
-            this.success = 'Modifications enregistrées !';
+            this.statusMessage = 'Modifications enregistrées !';
+            this.error = null;
           })
           .catch((error) => {
+            this.statusMessage = '';
             this.error = error;
           });
       }
@@ -178,5 +181,9 @@ export default {
 .modal-scroll-area {
   height: 95vh;
   position: relative;
+}
+
+#edit-user .modal-body {
+  padding: 0;
 }
 </style>

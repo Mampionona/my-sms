@@ -26,8 +26,8 @@ export default {
     ...mapActions({
       getCampaigns: 'campaigns/getUserCampaigns'
     }),
-    onShow({ status, id }) {
-      if (status === 'sent') this.$router.push({ name: 'answers', params: { messageId: id } });
+    onShow({ id }) {
+      this.$router.push({ name: 'report', params: { campaignId: id } });
     }
   },
   mounted() {
