@@ -31,19 +31,19 @@
 import Payment from '@/components/Payment';
 import { mapGetters, mapActions } from 'vuex';
 
-const columns = ['Nom', 'Prénom', 'Société', 'E-mail', 'Montant', 'Date'].map(name => this.$t(name));
-
 export default {
   components: { Payment },
   computed: {
     ...mapGetters({
       items: 'payment/payments',
       isFetching: 'payment/isFetching'
-    })
+    }),
+    columns() {
+      return ['Nom', 'Prénom', 'Société', 'E-mail', 'Montant', 'Date'].map(name => this.$t(name));
+    }
   },
   data() {
     return {
-      columns: columns.map(label => ({ label })),
       page: 1,
       per_page: 10
     };
