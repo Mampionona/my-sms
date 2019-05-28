@@ -19,6 +19,11 @@
           <div class="message text-sm bg-secondary p-3 rounded">{{ campaign.text }}</div>
         </div>
       </div>
+      <div v-if="hasError" class="card">
+        <div class="card-body">
+          <p class="mb-0">{{ $t(errorMessage) }}</p>
+        </div>
+      </div>
     </div>
     <div class="col-lg-8">
       <div class="card">
@@ -84,7 +89,8 @@ export default {
       per_page: 10,
       campaign: null,
       contacts: 0,
-      messageNumber: 0
+      messageNumber: 0,
+      hasError: false
     };
   },
   methods: {
@@ -97,9 +103,16 @@ export default {
       this.getSentMessages({ campaignId: this.$route.params.campaignId, page: params.page_number })
         .then(({ messages, messageNumber }) => {
           setRowData(messages, messageNumber);
+          this.hasError = false;
           this.messageNumber = messageNumber;
         })
-        .catch(error => this.$eventBus.$emit('fetch-data-error', error));
+        .catch((error) => {
+          this.$eventBus.$emit('fetch-data-error', error);
+          if (error) {
+            this.hasError = true;
+            this.errorMessage = error.data.error;
+          }
+        });
     },
     exportCSV() {
       const { messageNumber, per_page: perPage } = this;
@@ -109,12 +122,13 @@ export default {
       let exportMessages = [];
 
       const getAllSentMessages = (counter) => {
-        this.getSentMessages({ campaignId, page: (counter + 1) }).then(({ messages }) => {
-          initialCounter++;
-          exportMessages = [...exportMessages, ...messages];
-          if (initialCounter < pageNumber) getAllSentMessages(initialCounter);
-          if (initialCounter === pageNumber) arrayToCSV(exportMessages, this.campaign ? this.campaign.name : 'export');
-        })
+        this.getSentMessages({ campaignId, page: (counter + 1) })
+          .then(({ messages }) => {
+            initialCounter++;
+            exportMessages = [...exportMessages, ...messages];
+            if (initialCounter < pageNumber) getAllSentMessages(initialCounter);
+            if (initialCounter === pageNumber) arrayToCSV(exportMessages, this.campaign ? this.campaign.name : 'export');
+          })
           .catch(error => this.$eventBus.$emit('fetch-data-error', error));
       };
 

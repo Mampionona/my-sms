@@ -86,7 +86,7 @@ import CustomScrollbar from 'vue-custom-scrollbar';
 import UserForm from '@/components/form/UserForm';
 import User from '@/components/User';
 import Modal from '@/components/Modal';
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
   components: { User, UserForm, CustomScrollbar, Modal },
@@ -95,7 +95,8 @@ export default {
       users: 'users/users',
       plans: 'plans/plans',
       isAdmin: 'auth/isAdmin',
-      isFetching: 'users/isFetching'
+      isFetching: 'users/isFetching',
+      currentUser: 'auth/user'
     }),
     columns() {
       const columns = [
@@ -139,6 +140,10 @@ export default {
       getPlans: 'plans/getPlans',
       updateAnyUser: 'users/updateAnyUser'
     }),
+    ...mapMutations({
+      updateUserInfos: 'users/UPDATE_USER_INFOS',
+      updateOwnInfos: 'auth/UPDATE_OWN_INFOS'
+    }),
     editUser(user) {
       this.user = user;
       this.success = '';
@@ -167,6 +172,8 @@ export default {
           .then(() => {
             this.statusMessage = 'Modifications enregistrées !';
             this.error = null;
+            this.updateUserInfos(user);
+            if (user.userId === this.currentUser.id) this.updateOwnInfos(user);
           })
           .catch((error) => {
             this.statusMessage = '';

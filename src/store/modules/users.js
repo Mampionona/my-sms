@@ -1,9 +1,11 @@
 import { doAsync, createAsyncMutation } from '@/async-utils';
+import updateUser from '../util';
 
 const GET_ALL_USERS = createAsyncMutation('GET_ALL_USERS');
 const UPDATE_ANY_USER = createAsyncMutation('UPDATE_ANY_USER');
 const DELETE_USER = createAsyncMutation('DELETE_USER');
 const UPDATE_USER = 'UPDATE_USER';
+const UPDATE_USER_INFOS = 'UPDATE_USER_INFOS';
 
 export default {
   namespaced: true,
@@ -42,6 +44,14 @@ export default {
     [DELETE_USER.FAILURE]() {},
     [UPDATE_USER](state, userId) {
       state.users = state.users.filter(user => user.id !== userId);
+    },
+    [UPDATE_USER_INFOS](state, payload) {
+      const { users } = state;
+      const { userId } = payload;
+      state.users = users.map((user) => {
+        if (user.id === userId) return updateUser(user, payload);
+        return user;
+      });
     }
   },
   actions: {
