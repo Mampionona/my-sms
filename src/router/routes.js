@@ -149,7 +149,7 @@ const routes = [
         meta: {
           ...dashboardMetas,
           title: 'Acheter des SMS',
-          breadcrumb: 'Sélectionner votre pack de sms',
+          breadcrumb: '',
           icon: 'ni ni-credit-card'
         },
         component: () => import('@/views/dashboard/Packs')

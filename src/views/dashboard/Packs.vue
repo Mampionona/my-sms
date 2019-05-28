@@ -1,10 +1,10 @@
 <template>
   <div class="row">
     <div class="col">
-      <div v-if="!user || !user.planId || user.planId === 1" class="card">
+      <div class="card">
         <datatable :columns="columns" :data="selectedPlan" class="vertical-align-middle">
           <template slot-scope="{ row }">
-            <plan :plan="row" subscribe-button @subscribe="subscribe"></plan>
+            <plan :plan="row" :subscribe-button="selectedPlan.length > 1" @subscribe="subscribe"></plan>
           </template>
           <div slot="no-results" class="text-center">
             <template v-if="isFetching">
@@ -35,63 +35,55 @@
         </div>
       </div>
 
-      <div v-else class="card p-4">
-          <div v-if="user.planId === 2">
-            <p>Vous disposez d'un abonnement {{ user.planName }}.<br>Créditez le volume SMS dont vous avez besoin par virement bancaire&nbsp;:</p>
-            <ol>
-                <li>Evaluer le montant du virement (ex: <strong>0,034 X</strong> le nombre de crédits souhaité).</li>
-                <li>Effectuez le virement du montant du nombre de crédits souhaité.</li>
-                <li>Précisez l’email associé à votre compte en référence de virement.</li>
-            </ol>
-          </div>
+      <modal id="transfer-instructions">
+        <p>
+            Votre commande de {{ numberOfSMS }} SMS est prise en compte, vous allez recevoir un email pour effectuer votre virement ({{ amount | formatCurrency(2) }}&nbsp;TTC).
+            <br>
+            Votre compte sera crédité du nombre de SMS dès réception de votre virement bancaire.
+        </p>
 
-          <div v-else>
-            <p>Vous disposez d'un abonnement {{ user.planName }}.<br>Créditez le volume SMS dont vous avez besoin par virement bancaire&nbsp;:</p>
-            <ol>
-              <li>Evaluer le montant du virement (ex: <strong>0,033 X</strong> le nombre de crédits souhaité).</li>
-              <li>Effectuez le virement du montant du nombre de crédits souhaité.</li>
-              <li>Précisez l’email associé à votre compte en référence de virement.</li>
-            </ol>
-          </div>
+        <p><strong>Nos coordonnées bancaires&nbsp;:</strong></p>
 
-          <p><strong>Nos coordonnées bancaires&nbsp;:</strong></p>
-
-          <address>
-            <p>
-              <strong>IBAN:</strong> FR76 1009 6180 7100 0297 6320 178<br>
-              <strong>BIC:</strong> CMCIFRPP
-            </p>
-            <p>
-              <strong>DOMICILIATION</strong><br>
-              CIC Aix Les Milles
-            </p>
-            <p>
-              <strong>TITULAIRE DU COMPTE</strong><br>
-              S.A.S DELTACOMM - 7 AVENUE ANDRE ROUSSIN - PONANT LITTORAL - 13016 MARSEILLE
-            </p>
-          </address>
-      </div>
+        <p>
+          <strong>IBAN:</strong> FR76 1009 6180 7100 0297 6320 178<br>
+          <strong>BIC:</strong> CMCIFRPP
+        </p>
+        <p>
+          <strong>DOMICILIATION</strong><br>
+          CIC Aix Les Milles
+        </p>
+        <p>
+          <strong>TITULAIRE DU COMPTE</strong><br>
+          S.A.S DELTACOMM - 7 AVENUE ANDRE ROUSSIN - PONANT LITTORAL - 13016 MARSEILLE
+        </p>
+      </modal>
     </div>
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Plan from '@/components/Plan';
 import { VAT } from '@/utils';
+import Plan from '@/components/Plan';
+import Modal from '@/components/Modal';
+
+// TODO: when users already has an account /w id < 3
+// if user is willing to buy nbr of SMS higher than account SMS limit
+// propose to upgrade
 
 export default {
-  components: { Plan },
+  components: { Plan, Modal },
   data() {
     return {
       columns: [
-        { label: '', representedAs: () => '' },
+        { label: 'Type de plan', representedAs: () => '' },
         { label: 'P.U', field: 'smsPrice' },
-        { label: 'Abonnement', field: 'planPrice' },
+        { label: 'Abonnement annuel', field: 'planPrice' },
         { label: '', representedAs: () => '' }
       ],
       numberOfSMS: null,
       plans: [],
       selectedPlan: [],
+      amount: 0,
       buttonLabel: '',
       displayButton: false
     };
@@ -100,7 +92,13 @@ export default {
     this.getPlans()
       .then((plans) => {
         this.plans = plans;
-        this.selectedPlan = plans;
+
+        if (this.user.planId) {
+          this.selectedPlan = plans.filter(plan => plan.id === this.user.planId);
+          this.columns[0].label = 'Votre plan';
+        }
+
+        else this.selectedPlan = plans;
       })
       .catch(() => this.$eventBus.$emit('fetch-data-error'));
   },
@@ -121,14 +119,22 @@ export default {
     subscribe(plan) {
       let amount;
 
-      if (!plan.planPrice) amount = (plan.smsPrice * this.numberOfSMS) / 10; // convert in cents
+      if (!plan.planPrice || this.user.planId !== 1) amount = (plan.smsPrice * this.numberOfSMS) / 10; // convert in cents
       else amount = plan.planPrice * 100; // convert in cents
+
       amount = Math.round(amount + amount * (VAT / 100)); // add taxes
 
-      this.getPaymentUrl({ amount }).then((res) => {
-        localStorage.setItem('planId', plan.id);
-        window.location.replace(res.paymentUrl);
-      });
+      if (this.user.planId === 1) {
+        this.getPaymentUrl({ amount }).then((res) => {
+          localStorage.setItem('planId', plan.id);
+          window.location.replace(res.paymentUrl);
+        });
+      }
+
+      else {
+        this.amount = amount / 100;
+        this.$jQuery('#transfer-instructions').modal('show');
+      }
     }
   },
   watch: {
@@ -138,26 +144,24 @@ export default {
       const GRAND_COMPTE = 3;
       const parsedNumber = parseInt(number, 10);
 
-      this.selectedPlan = this.plans.filter(({ id }) => {
-        if (parsedNumber === 0 || Number.isNaN(parsedNumber)) return true;
-        if (parsedNumber < 200000) return id === LIBERTE;
-        if (parsedNumber >= 200000 && parsedNumber < 1000000) return id === BUSINESS;
-        return id === GRAND_COMPTE;
-      });
+      if (!this.user.planId) {
+        this.selectedPlan = this.plans.filter(({ id }) => {
+          if (parsedNumber === 0 || Number.isNaN(parsedNumber)) return true;
+          if (parsedNumber < 200000) return id === LIBERTE;
+          if (parsedNumber >= 200000 && parsedNumber < 1000000) return id === BUSINESS;
+          return id === GRAND_COMPTE;
+        });
+      }
     },
     selectedPlan(plan) {
       if (plan.length === 1) {
-        if (plan[0].planPrice === 0) {
-          this.buttonLabel = 'Acheter mes SMS';
-          // show button
-          this.displayButton = true;
-          return;
-        }
-        this.buttonLabel = 'Prendre mon abonnement';
-        // show button
+        if (plan[0].planPrice === 0 || this.user.planId) this.buttonLabel = 'Acheter mes SMS';
+        else this.buttonLabel = 'Prendre mon abonnement';
         this.displayButton = true;
+
         return;
       }
+
       // hide button
       this.displayButton = false;
     }
