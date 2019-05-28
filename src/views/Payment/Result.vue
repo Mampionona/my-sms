@@ -2,24 +2,15 @@
   <div class="payment-result">
     <div class="card">
       <div class="card-body">
-        <p v-if="fail" class="card-text mb-0">Le paiement a échoué.<br>Vous pouvez essayer une nouvelle fois ou nous <a :href="`mailto:${mailTo}`">contacter directement.</a></p>
-        <div v-if="success">
-          <div v-if="!isLiberty">
-            <p><strong>Créditez votre compte par virement bancaire&nbsp;:</strong></p>
+        <div v-if="fail" class="card-text mb-0">
+            <h1>Le paiement a échoué</h1>
+            <p>Vous pouvez <router-link :to="{ name: 'packs' }">essayer une nouvelle fois</router-link> ou régler par virement bancaire.</p>
 
-            <p><strong>BUSINESS</strong></p>
-            <ol>
-                <li>Evaluer le montant du virement (ex: <strong>0,034 X</strong> le nombre de crédits souhaité).</li>
-                <li>Effectuez le virement du montant du nombre de crédits souhaité.</li>
-                <li>Précisez l’email associé à votre compte en référence de virement.</li>
-            </ol>
-
-            <p><strong>GRAND COMPTE</strong></p>
-            <ol>
-                <li>Evaluer le montant du virement (ex: <strong>0,033 X</strong> le nombre de crédits souhaité).</li>
-                <li>Effectuez le virement du montant du nombre de crédits souhaité.</li>
-                <li>Précisez l’email associé à votre compte en référence de virement.</li>
-            </ol>
+            <p>
+                Votre commande est prise en compte, vous allez recevoir un email pour effectuer votre virement.
+                <br>
+                Votre compte sera crédité du nombre de SMS dès réception de votre virement bancaire.
+            </p>
 
             <p><strong>Nos coordonnées bancaires&nbsp;:</strong></p>
             <address>
@@ -36,8 +27,13 @@
                 S.A.S DELTACOMM - 7 AVENUE ANDRE ROUSSIN - PONANT LITTORAL - 13016 MARSEILLE
               </p>
             </address>
-          </div>
-          <p v-else class="mb-0">Paiement effectué avec succès<br>Votre compte a été crédité</p>
+        </div>
+
+        <div v-if="success">
+          <h1>Paiement effecuté avec succès</h1>
+
+          <p v-if="!isLiberty">Votre plan a été mis à jour et vous pouvez dès à présent <router-link to="{ name: 'packs' }">acheter vos crédits</router-link>.</p>
+          <p v-else class="mb-0">Votre compte a été crédité</p>
         </div>
       </div>
     </div>
@@ -45,13 +41,9 @@
 </template>
 <script>
 import { mapActions } from 'vuex';
-import { MAIL_TO } from '@/utils';
 
 export default {
   computed: {
-    mailTo() {
-      return MAIL_TO;
-    },
     fail() {
       return this.paymentStatus === 'failure';
     },

@@ -77,6 +77,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import Plan from '@/components/Plan';
+import { VAT } from '@/utils';
 
 export default {
   components: { Plan },
@@ -120,8 +121,9 @@ export default {
     subscribe(plan) {
       let amount;
 
-      if (!plan.planPrice) amount = Math.round((plan.smsPrice * this.numberOfSMS) / 10); // convert in cents
+      if (!plan.planPrice) amount = (plan.smsPrice * this.numberOfSMS) / 10; // convert in cents
       else amount = plan.planPrice * 100; // convert in cents
+      amount = Math.round(amount + amount * (VAT / 100)); // add taxes
 
       this.getPaymentUrl({ amount }).then((res) => {
         localStorage.setItem('planId', plan.id);

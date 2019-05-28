@@ -7,6 +7,7 @@ export const COUNT_MIN_LINES = 5;
 export const validFileExtensions = ['.xls', '.xlsx', '.csv'];
 export const MAIL_TO = 'help@my-sms.pro';
 export const TELEPHONE = '08 99 02 07 20';
+export const VAT = 20;
 export const dateUTC = date => Date.parse(date);
 
 export function workbookToArray(file) {
