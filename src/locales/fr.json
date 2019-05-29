@@ -17,6 +17,8 @@
   "Missing company param": "Le nom de la société est manquant",
   "Missing siren param": "Le SIREN est manquant",
   "siren must be 9 chars": "Le SIREN doit être de 9 caractères",
+  "Some contacts don’t have phone numbers": "Il semble que certains contacts n'aient pas de numéro de téléphone (cela peut-être du à un problème d'expert du fichier)",
+  "Some phone numbers in this file are in an incorrecot format": "Le format de certains numéros dans ce fichier sont incorrect",
   "Missing tva param": "Le numéro de TVA est manquant",
   "tva must be 13 chars": "Le numéro de TVA doit être de 13 caractères",
   "Missing firstname param": "Le prénom est manquant",
