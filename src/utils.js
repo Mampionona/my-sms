@@ -20,6 +20,7 @@ export function workbookToArray(file) {
         reject(errors);
         return;
       }
+
       resolve({ contacts, count });
     });
   });

@@ -138,9 +138,7 @@
           </div>
         </div>
       </div>
-      <modal id="import-error-modal" cancel-button cancel-button-label="Fermer">
-        <p class="mb-0">{{ $t(modalBody) }}</p>
-      </modal>
+
       <modal id="import-progress" data-backdrop="static" data-keyboard="false">
         <p class="mb-5 text-center">{{ $t('Importation des contacts en cours.') }}<br>{{ $t('Ne fermez pas votre navigateur.') }}</p>
         <div class="row justify-content-center">
@@ -157,6 +155,10 @@
             </div>
           </div>
         </div>
+      </modal>
+
+      <modal id="import-error-modal" cancel-button cancel-button-label="Fermer">
+        <p class="mb-0">{{ $t(modalBody) }}</p>
       </modal>
     </div>
   </div>
@@ -185,7 +187,6 @@ export default {
       publicPath: process.env.BASE_URL,
       certify: false,
       filename: '',
-      contacts: [],
       selectedFile: false,
       errorMessage: [],
       customName: '',
@@ -219,7 +220,7 @@ export default {
       this.prepareImport(files);
     },
     prepareImport(files) {
-      this.contacts = [];
+      this.$contacts = [];
       if (files.length > 0) {
         const file = files[0];
         this.filename = file.name;
@@ -237,7 +238,7 @@ export default {
         workbookToArray(file)
           .then(({ contacts, count }) => {
             this.lines = count;
-            this.contacts = Object.freeze(contacts);
+            this.$contacts = Object.freeze(contacts);
             this.errorMessage = [];
             this.isParsing = false;
             this.isParsed = true;
@@ -250,7 +251,8 @@ export default {
       }
     },
     importWorkbook() {
-      const { customName, filename, contacts, certify } = this;
+      const contacts = this.$contacts;
+      const { customName, filename, certify } = this;
       const len = contacts.length;
 
       this.errors = [];
@@ -276,8 +278,7 @@ export default {
       const saveContacts = (_counter) => {
         this.addContacts({ listId, contacts: $contacts[_counter] })
           .then(() => {
-            counter++;
-            if (counter < len) saveContacts(counter);
+            if (++counter < len) saveContacts(counter);
             if (counter === len) {
               this.$jQuery('#import-progress').modal('hide');
               this.$router.push({ name: 'contacts', params: { listId } });
@@ -302,7 +303,7 @@ export default {
     },
     dismissFile() {
       this.selectedFile = false;
-      this.contacts = [];
+      this.$contacts = [];
       this.filename = '';
       this.errorMessage = [];
       this.$refs.csv.value = '';
