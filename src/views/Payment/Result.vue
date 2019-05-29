@@ -30,7 +30,7 @@
         </div>
 
         <div v-if="success">
-          <h1>Paiement effecuté avec succès</h1>
+          <h1>Paiement effectué avec succès</h1>
 
           <p v-if="!isLiberty">Votre plan a été mis à jour et vous pouvez dès à présent <router-link to="{ name: 'packs' }">acheter vos crédits</router-link>.</p>
           <p v-else class="mb-0">Votre compte a été crédité</p>
