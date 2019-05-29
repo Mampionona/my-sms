@@ -13,7 +13,7 @@
     </div>
     <div class="col-lg-8">
       <div class="card">
-        <datatable :columns="columns" :data="answers">
+        <datatable :columns="columns" :data="answers" class="vertical-align-middle">
           <template slot-scope="{ row }">
             <answer :answer="row" @delete-answer="showConfirmModal"></answer>
           </template>
