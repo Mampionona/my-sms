@@ -123,10 +123,9 @@
               </p>
             </div>
             <ul class="mb-0">
-              <li><p>{{ $t('J\'ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.') }}</p></li>
-              <li><p>{{ $t('Aucun de mes contacts n\'a été acquis via des listes de diffusion tierces.') }}</p></li>
-              <!-- <li><p>J\'inclurai la mention <strong>STOP au 36105</strong> dans toute campagne marketing.</p></li> -->
-              <li><p>{{ $t('Je n\'enverrai avec My SMS que des informations légales et légitimes.') }}</p></li>
+              <li><p>{{ $t('J’ai obtenu de tous mes contacts le consentement libre et spécifique à leur envoyer des SMS.') }}</p></li>
+              <li><p>{{ $t('Aucun de mes contacts n’a été acquis via des listes de diffusion tierces.') }}</p></li>
+              <li><p>{{ $t('Je n’enverrai avec My SMS que des informations légales et légitimes.') }}</p></li>
             </ul>
           </div>
           <alert v-if="hasError" color="danger" icon="fas fa-exclamation-triangle" class="mb-5">
