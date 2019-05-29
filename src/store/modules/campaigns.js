@@ -71,24 +71,14 @@ export default {
     [GET_CAMPAIGN_ANSWERS.FAILURE](state) {
       state.isFetching = false;
     },
-    [GET_CAMPAIGNS_STATS.PENDING]() {
-      //
-    },
+    [GET_CAMPAIGNS_STATS.PENDING]() {},
     [GET_CAMPAIGNS_STATS.SUCCESS](state, payload) {
       state.stats = payload;
     },
-    [GET_CAMPAIGNS_STATS.FAILURE]() {
-      //
-    },
-    [SEND_TEST_MESSAGE.PENDING]() {
-      //
-    },
-    [SEND_TEST_MESSAGE.SUCCESS]() {
-      //
-    },
-    [SEND_TEST_MESSAGE.FAILURE]() {
-      //
-    },
+    [GET_CAMPAIGNS_STATS.FAILURE]() {},
+    [SEND_TEST_MESSAGE.PENDING]() {},
+    [SEND_TEST_MESSAGE.SUCCESS]() {},
+    [SEND_TEST_MESSAGE.FAILURE]() {},
     [GET_SENT_MESSAGES.PENDING](state) {
       state.isFetching = true;
     },

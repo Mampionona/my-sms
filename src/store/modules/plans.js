@@ -27,15 +27,9 @@ export default {
     [GET_PLANS.FAILURE](state) {
       state.isFetching = false;
     },
-    [UPDATE_PLAN.PENDING]() {
-      //
-    },
-    [UPDATE_PLAN.SUCCESS]() {
-      //
-    },
-    [UPDATE_PLAN.FAILURE]() {
-      //
-    }
+    [UPDATE_PLAN.PENDING]() {},
+    [UPDATE_PLAN.SUCCESS]() {},
+    [UPDATE_PLAN.FAILURE]() {}
   },
 
   actions: {

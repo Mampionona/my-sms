@@ -23,24 +23,16 @@ export default {
   },
 
   mutations: {
-    [INIT_PAYMENT.PENDING]() {
-      //
-    },
+    [INIT_PAYMENT.PENDING]() {},
     [INIT_PAYMENT.SUCCESS](state, payload) {
       state.paymentUrl = payload;
     },
-    [INIT_PAYMENT.FAILURE]() {
-      //
-    },
-    [CONFIRM_PAYMENT.PENDING]() {
-      //
-    },
+    [INIT_PAYMENT.FAILURE]() {},
+    [CONFIRM_PAYMENT.PENDING]() {},
     [CONFIRM_PAYMENT.SUCCESS](state, payload) {
       state.paymentStatus = payload;
     },
-    [CONFIRM_PAYMENT.FAILURE]() {
-      //
-    },
+    [CONFIRM_PAYMENT.FAILURE]() {},
     [GET_PAYMENTS_LIST.PENDING](state) {
       state.isFetching = true;
     },
