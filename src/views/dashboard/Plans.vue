@@ -88,7 +88,6 @@ export default {
         { label: '', representedAs: () => '' }
       ],
       plan: null,
-      planId: null,
       planName: '',
       name: '',
       smsPrice: 0,
@@ -109,7 +108,7 @@ export default {
       const { id, name, smsPrice, planPrice, maxVolume } = plan;
 
       this.isVisible = true;
-      this.planId = id;
+      this.$planId = id;
       this.planName = name;
       this.name = name;
       this.smsPrice = smsPrice;
@@ -118,7 +117,8 @@ export default {
       this.$nextTick(() => this.$jQuery('#edit-plan').modal('show'));
     },
     update() {
-      const { planId, name, smsPrice, planPrice, maxVolume } = this;
+      const planId = this.$planId;
+      const { name, smsPrice, planPrice, maxVolume } = this;
       this.updatePlan({ planId, name, smsPrice, planPrice, maxVolume })
         .then(() => {
           this.statusMessage = 'Modification enregistrée !';
