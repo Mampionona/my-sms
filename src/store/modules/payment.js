@@ -3,6 +3,7 @@ import { doAsync, createAsyncMutation } from '@/async-utils';
 const INIT_PAYMENT = createAsyncMutation('INIT_PAYMENT');
 const CONFIRM_PAYMENT = createAsyncMutation('CONFIRM_PAYMENT');
 const GET_PAYMENTS_LIST = createAsyncMutation('GET_PAYMENTS_LIST');
+const SEND_TRANSFER_INSTRUCTIONS = createAsyncMutation('SEND_TRANSFER_INSTRUCTIONS');
 
 export default {
   namespaced: true,
@@ -49,7 +50,10 @@ export default {
     },
     [GET_PAYMENTS_LIST.FAILURE](state) {
       state.isFetching = false;
-    }
+    },
+    [SEND_TRANSFER_INSTRUCTIONS.PENDING]() {},
+    [SEND_TRANSFER_INSTRUCTIONS.SUCCESS]() {},
+    [SEND_TRANSFER_INSTRUCTIONS.FAILURE]() {}
   },
 
   actions: {
@@ -71,6 +75,14 @@ export default {
       return doAsync(context, {
         url: '/payments',
         mutationTypes: GET_PAYMENTS_LIST
+      });
+    },
+    sendTransferEmailInstructions(context, amount) {
+      return doAsync(context, {
+        url: '/payments/transferemailinstructions',
+        method: 'post',
+        data: { amount },
+        mutationTypes: SEND_TRANSFER_INSTRUCTIONS
       });
     }
   }

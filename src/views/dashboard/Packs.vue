@@ -111,7 +111,8 @@ export default {
   methods: {
     ...mapActions({
       getPlans: 'plans/getPlans',
-      getPaymentUrl: 'payment/getPaymentUrl'
+      getPaymentUrl: 'payment/getPaymentUrl',
+      sendTransferEmailInstructions: 'payment/sendTransferEmailInstructions'
     }),
     processPayment() {
       this.subscribe(this.selectedPlan[0]);
@@ -125,14 +126,17 @@ export default {
       amount = Math.round(amount + amount * (VAT / 100)); // add taxes
 
       if (this.user.planId === 1) {
-        this.getPaymentUrl({ amount }).then((res) => {
-          localStorage.setItem('planId', plan.id);
-          window.location.replace(res.paymentUrl);
-        });
+        this.getPaymentUrl({ amount })
+          .then((res) => {
+            localStorage.setItem('planId', plan.id);
+            window.location.replace(res.paymentUrl);
+          })
+          .catch(() => this.$eventBus.$emit('fetch-data-error'));
       }
 
       else {
         this.amount = amount / 100;
+        this.sendTransferEmailInstructions(amount).catch(() => this.$eventBus.$emit('fetch-data-error'));
         this.$jQuery('#transfer-instructions').modal('show');
       }
     }
