@@ -43,7 +43,7 @@
         :cancel-button-label="`${$t('Non')}`"
         @accept="deleteAnswer(answerId)"
       >
-        <p>Etes-vous certain d'effacer ce message ?</p>
+        <p>Etes-vous certain de vouloir effacer ce message ?</p>
       </modal>
     </div>
   </div>
