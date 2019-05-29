@@ -18,7 +18,6 @@ export default {
   getters: {
     listId: state => state.listId,
     contacts: state => state.contactsOfList,
-    stops: (state, getters) => getters.contacts.filter(contact => contact.stop === 1),
     isFetching: state => state.isFetching
   },
 
@@ -57,6 +56,17 @@ export default {
       return new Promise((resolve, reject) => {
         doAsync(context, {
           url: `/contacts/lists/${listId}/${page - 1}`, // -1 cause 0 based in api
+          mutationTypes: GET_CONTACTS
+        })
+          .then(data => resolve(data))
+          .catch(error => reject(error));
+      });
+    },
+    getStopContactsOfList(context, { listId, page }) {
+      context.commit(LIST_ID, listId);
+      return new Promise((resolve, reject) => {
+        doAsync(context, {
+          url: `/contacts/lists/${listId}/stops/${page - 1}`, // -1 cause 0 based in api
           mutationTypes: GET_CONTACTS
         })
           .then(data => resolve(data))

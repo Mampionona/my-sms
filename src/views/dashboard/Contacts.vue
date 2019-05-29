@@ -45,8 +45,8 @@
               {{ $t('Filtres') }}
             </button>
             <div class="dropdown-menu" aria-labelledby="filtres">
-              <a class="dropdown-item" href="#" @click.prevent="items = contacts">{{ $t('Aucun filtre') }}</a>
-              <a class="dropdown-item" href="#" @click.prevent="items = stops">{{ $t('Voir les STOP SMS') }}</a>
+              <a class="dropdown-item" href="#" @click.prevent="toggleStopsOnly">{{ $t('Aucun filtre') }}</a>
+              <a class="dropdown-item" href="#" @click.prevent="toggleStopsOnly">{{ $t('Voir les STOP SMS') }}</a>
             </div>
           </div>
           <div class="dropdown">
@@ -58,32 +58,35 @@
             </div>
           </div>
         </div>
-        <datatable :columns="columns" :data="getData" class="vertical-align-middle">
-          <template slot-scope="{ row }">
-            <contact :contact="row" :key="row.id" @delete-contact="confirmDelete">
-              <div slot="checkbox" class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" :id="`contact-${row.id}`" :value="row.id" v-model="selectedContacts">
-                <label class="custom-control-label" :for="`contact-${row.id}`"></label>
+        <!-- this is used to force component refresh as vm.$forceUpdate() won't refresh children components -->
+        <div v-if="showTable">
+            <datatable :columns="columns" :data="getData" class="vertical-align-middle">
+              <template slot-scope="{ row }">
+                <contact :contact="row" :key="row.id" @delete-contact="confirmDelete">
+                  <div slot="checkbox" class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" :id="`contact-${row.id}`" :value="row.id" v-model="selectedContacts">
+                    <label class="custom-control-label" :for="`contact-${row.id}`"></label>
+                  </div>
+                </contact>
+              </template>
+              <div slot="no-results" class="text-center">
+                <template v-if="isFetching">
+                  <loading-progress
+                    indeterminate
+                    hide-background
+                    size="28"
+                    rotate
+                    fillDuration="2"
+                    rotationDuration="1"
+                  />
+                </template>
+                <template v-else>
+                  {{ $t('Aucun contact trouvé') }}
+                </template>
               </div>
-            </contact>
-          </template>
-          <div slot="no-results" class="text-center">
-            <template v-if="isFetching">
-              <loading-progress
-                indeterminate
-                hide-background
-                size="28"
-                rotate
-                fillDuration="2"
-                rotationDuration="1"
-              />
-            </template>
-            <template v-else>
-              {{ $t('Aucun contact trouvé') }}
-            </template>
-          </div>
-        </datatable>
-        <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
+            </datatable>
+            <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
+        </div>
         <modal
           id="confirm-contact-delete"
           accept-button
@@ -126,6 +129,7 @@ export default {
       selectedContacts: [],
       name: '',
       list: null,
+      showTable: true,
       countContacts: 0,
       updateSuccess: false,
       updateError: false,
@@ -144,18 +148,18 @@ export default {
     });
 
     this.getLists().then(lists => lists.forEach((list) => {
-      const { id, name, contacts } = list;
+      const { id, name, contacts, stops } = list;
       if (id === parseInt(this.$route.params.listId, 10)) {
         this.list = list;
         this.name = name;
         this.countContacts = contacts;
+        this.$stops = stops;
       }
     }));
   },
   computed: {
     ...mapGetters({
       contacts: 'contacts/contacts',
-      stops: 'contacts/stops',
       isFetching: 'contacts/isFetching'
     }),
     composeUrl() {
@@ -177,6 +181,7 @@ export default {
   methods: {
     ...mapActions({
       getContacts: 'contacts/getContactsOfList',
+      getStopContacts: 'contacts/getStopContactsOfList',
       getAllContacts: 'contacts/getAllContacts',
       update: 'lists/updateListName',
       remove: 'contacts/removeContact',
@@ -186,10 +191,26 @@ export default {
       updateContacts: 'contacts/UPDATE_CONTACTS'
     }),
     getData(params, setRowData) {
-      this.getContacts({ listId: this.$route.params.listId, page: params.page_number }).then((contacts) => {
-        setRowData(contacts, this.countContacts);
-      })
-        .catch(error => this.$eventBus.$emit('fetch-data-error', error));
+      if (this.$stopsOnly) {
+        this.getStopContacts({ listId: this.$route.params.listId, page: params.page_number }).then((contacts) => {
+          setRowData(contacts, this.$stops);
+        })
+          .catch(error => this.$eventBus.$emit('fetch-data-error', error));
+      }
+
+      else {
+        this.getContacts({ listId: this.$route.params.listId, page: params.page_number }).then((contacts) => {
+          setRowData(contacts, this.countContacts);
+        })
+          .catch(error => this.$eventBus.$emit('fetch-data-error', error));
+      }
+    },
+    toggleStopsOnly() {
+      this.$stopsOnly = !this.$stopsOnly;
+      this.showTable = false;
+      this.$nextTick(() => {
+        this.showTable = true;
+      });
     },
     updateListName() {
       const { name } = this;
@@ -226,8 +247,13 @@ export default {
           contactId: id
         })
           .then(() => {
-            // update contacts array
+            this.showTable = false;
             this.updateContacts(this.contacts.filter(contact => contact.id !== id));
+
+            this.$nextTick(() => {
+              this.showTable = true;
+            });
+
             // uncheck select all
             if (this.contacts.length === 0) this.allContacts = false;
             resolve();
