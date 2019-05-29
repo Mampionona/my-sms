@@ -7,6 +7,8 @@ const GET_CAMPAIGN_ANSWERS = createAsyncMutation('GET_CAMPAIGN_ANSWERS');
 const GET_CAMPAIGNS_STATS = createAsyncMutation('GET_CAMPAIGNS_STATS');
 const SEND_TEST_MESSAGE = createAsyncMutation('SEND_TEST_MESSAGE');
 const GET_SENT_MESSAGES = createAsyncMutation('GET_SENT_MESSAGES');
+const DELETE_AN_ANSWER = createAsyncMutation('DELETE_AN_ANSWER');
+const UPDATE_ANSWERS = 'UPDATE_ANSWERS';
 
 export default {
   namespaced: true,
@@ -98,6 +100,18 @@ export default {
     },
     [GET_SENT_MESSAGES.FAILURE](state) {
       state.isFetching = false;
+    },
+    [DELETE_AN_ANSWER.PENDING]() {
+      // 
+    },
+    [DELETE_AN_ANSWER.SUCCESS]() {
+      //
+    },
+    [DELETE_AN_ANSWER.FAILURE]() {
+      //
+    },
+    [UPDATE_ANSWERS](state, payload) {
+      state.answers = payload;
     }
   },
   actions: {
@@ -147,6 +161,13 @@ export default {
       return doAsync(context, {
         url: `/campaigns/${campaignId}/sentmessages/${page - 1}`,
         mutationTypes: GET_SENT_MESSAGES
+      });
+    },
+    deleteAnAnswer(context, { campaignId, answerId }) {
+      return doAsync(context, {
+        url: `/campaigns/${campaignId}/answers/${answerId}/`,
+        method: 'delete',
+        mutationTypes: DELETE_AN_ANSWER
       });
     }
   }
