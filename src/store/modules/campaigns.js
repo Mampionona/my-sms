@@ -102,7 +102,7 @@ export default {
       state.isFetching = false;
     },
     [DELETE_AN_ANSWER.PENDING]() {
-      // 
+      //
     },
     [DELETE_AN_ANSWER.SUCCESS]() {
       //
