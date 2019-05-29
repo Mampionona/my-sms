@@ -1,3 +1,4 @@
+// last version pre-worker 1b7507d21aa5e43abb9e7345766630c310f1cce1
 import XLSX from 'xlsx';
 import { formatNumber } from './filters';
 
@@ -20,6 +21,7 @@ onmessage = (e) => {
     rows = rows.filter(row => row.length > 0);
     const countLines = rows.length;
     const titles = rows.shift();
+    const telephoneIndex = titles.indexOf('telephone');
 
     if (!titles.includes('telephone')) errors.push('Le fichier Excel/CSV doit avoir au moins une colonne nommée "telephone"');
 
@@ -35,7 +37,8 @@ onmessage = (e) => {
       const chunkIndex = Math.floor(index / perChunk);
       // start a new chunk
       if (!resultArray[chunkIndex]) resultArray[chunkIndex] = [];
-      resultArray[chunkIndex].push(item);
+      if (item[telephoneIndex]) resultArray[chunkIndex].push(item);
+
       return resultArray;
     }, []);
 
