@@ -5,7 +5,9 @@ const LIST_ID = 'LIST_ID';
 const GET_CONTACTS = createAsyncMutation('GET_CONTACTS');
 const ADD_CONTACTS = createAsyncMutation('ADD_CONTACTS');
 const REMOVE_CONTACT_FROM_A_LIST = createAsyncMutation('REMOVE_CONTACT_FROM_A_LIST');
+const REMOVE_STOP_STATUS = createAsyncMutation('REMOVE_STOP_STATUS');
 const UPDATE_CONTACTS = 'UPDATE_CONTACTS';
+const UPDATE_CONTACT_STOP_STATUS = 'UPDATE_CONTACT_STOP_STATUS';
 
 export default {
   namespaced: true,
@@ -42,11 +44,19 @@ export default {
     [ADD_CONTACTS.SUCCESS]() {},
     [ADD_CONTACTS.FAILURE]() {},
     // remove a contact from a list
+    [REMOVE_STOP_STATUS.PENDING]() {},
+    [REMOVE_STOP_STATUS.SUCCESS]() {},
+    [REMOVE_STOP_STATUS.FAILURE]() {},
     [REMOVE_CONTACT_FROM_A_LIST.PENDING]() {},
     [REMOVE_CONTACT_FROM_A_LIST.SUCCESS]() {},
     [REMOVE_CONTACT_FROM_A_LIST.FAILURE]() {},
     [UPDATE_CONTACTS](state, payload) {
       state.contactsOfList = payload;
+    },
+    [UPDATE_CONTACT_STOP_STATUS](state, contactId) {
+      state.contactsOfList.forEach((contact) => {
+        if (contact.id === contactId) contact.stop = 0;
+      });
     }
   },
 
@@ -76,6 +86,14 @@ export default {
     getAllContacts(context, listId) {
       return Axios.get(`/contacts/lists/${listId}/`)
         .then(({ data }) => data);
+    },
+    removeStopStatus(context, { contactId, listId }) {
+      return doAsync(context, {
+        url: `/contacts/${contactId}/lists/${listId}/`,
+        method: 'patch',
+        mutationTypes: REMOVE_CONTACT_FROM_A_LIST
+      })
+        .then(() => context.commit('UPDATE_CONTACT_STOP_STATUS', contactId));
     },
     removeContact(context, { contactId, listId }) {
       return doAsync(context, {

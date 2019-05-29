@@ -11,6 +11,7 @@
       <span v-else>Aucun Paramètre</span>
     </td>
     <td class="text-right">
+      <v-btn v-if="contact.stop" icon="fas fa-envelope-open" title="Retirer de la liste des stops" @click.native="$emit('remove-stop', contact)"></v-btn>
       <v-btn icon="fas fa-trash-alt" color="danger" @click.native="$emit('delete-contact', contact)"></v-btn>
     </td>
   </tr>

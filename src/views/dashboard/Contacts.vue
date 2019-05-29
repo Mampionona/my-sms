@@ -62,7 +62,7 @@
         <div v-if="showTable">
             <datatable :columns="columns" :data="getData" class="vertical-align-middle">
               <template slot-scope="{ row }">
-                <contact :contact="row" :key="row.id" @delete-contact="confirmDelete">
+                <contact :contact="row" :key="row.id" @delete-contact="confirmDelete" @remove-stop="removeStop">
                   <div slot="checkbox" class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" :id="`contact-${row.id}`" :value="row.id" v-model="selectedContacts">
                     <label class="custom-control-label" :for="`contact-${row.id}`"></label>
@@ -134,8 +134,7 @@ export default {
       updateSuccess: false,
       updateError: false,
       updateTextStatus: '',
-      telephone: '',
-      deleteId: null
+      telephone: ''
     };
   },
   mounted() {
@@ -184,6 +183,7 @@ export default {
       getStopContacts: 'contacts/getStopContactsOfList',
       getAllContacts: 'contacts/getAllContacts',
       update: 'lists/updateListName',
+      removeStopStatus: 'contacts/removeStopStatus',
       remove: 'contacts/removeContact',
       getLists: 'lists/getUserLists'
     }),
@@ -226,13 +226,20 @@ export default {
           this.updateError = true;
         });
     },
+    removeStop({ id }) {
+      this.removeStopStatus({
+        listId: this.$route.params.listId,
+        contactId: id
+      })
+        .catch(error => this.$eventBus.$emit('fetch-data-error', error));
+    },
     confirmDelete({ id, telephone }) {
-      this.deleteId = id;
+      this.$deleteId = id;
       this.telephone = telephone;
       this.$jQuery('#confirm-contact-delete').modal('show');
     },
     deleteContact() {
-      this.delete(this.deleteId).then(() => {
+      this.delete(this.$deleteId).then(() => {
         this.$jQuery('#confirm-contact-delete').modal('hide');
       });
     },
