@@ -13,9 +13,9 @@
     </div>
     <div class="col-lg-8">
       <div class="card">
-        <datatable :columns="columns" :data="answers">
+        <datatable :columns="columns" :data="answers" class="vertical-align-middle">
           <template slot-scope="{ row }">
-            <answer :answer="row" @delete-answer="deleteAnswer"></answer>
+            <answer :answer="row" @delete-answer="showConfirmModal"></answer>
           </template>
           <div slot="no-results" class="text-center">
             <template v-if="isFetching">
@@ -35,16 +35,27 @@
         </datatable>
         <datatable-pager v-model="page" type="abbreviated" :per-page="per_page"></datatable-pager>
       </div>
+      <modal
+        id="confirm-message-delete"
+        accept-button
+        :accept-button-label="`${$t('Supprimer')}`"
+        cancel-button
+        :cancel-button-label="`${$t('Non')}`"
+        @accept="deleteAnswer(answerId)"
+      >
+        <p>Etes-vous certain de vouloir effacer ce message ?</p>
+      </modal>
     </div>
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import Answer from '@/components/Answer';
 import vueCustomScrollbar from 'vue-custom-scrollbar';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
+import Answer from '@/components/Answer';
+import Modal from '@/components/Modal';
 
 export default {
-  components: { Answer, vueCustomScrollbar },
+  components: { Answer, vueCustomScrollbar, Modal },
   computed: {
     ...mapGetters({
       answers: 'campaigns/answers',
@@ -70,18 +81,33 @@ export default {
       campaign: null,
       columns: [
         { label: 'Téléphone', field: 'telephone' },
-        { label: 'Message', field: 'text' }
-      ]
+        { label: 'Message', field: 'text' },
+        { label: '' }
+      ],
+      answerId: null
     };
   },
   methods: {
     ...mapActions({
       getAnswers: 'campaigns/campaignAnswers',
-      getCampaigns: 'campaigns/getUserCampaigns'
+      getCampaigns: 'campaigns/getUserCampaigns',
+      deleteAnAnswer: 'campaigns/deleteAnAnswer'
     }),
-    deleteAnswer(threadId) {
-      const { threads } = this;
-      this.threads = threads.filter(thread => thread.id !== threadId);
+    ...mapMutations({
+      updateAnswers: 'campaigns/UPDATE_ANSWERS'
+    }),
+    deleteAnswer(answerId) {
+      this.deleteAnAnswer({
+        campaignId: this.$route.params.messageId,
+        answerId
+      })
+        .then(() => this.updateAnswers(this.answers.filter(answer => answer.id !== answerId)))
+        .catch(error => this.$eventBus.$emit('fetch-data-error', error))
+        .finally(() => this.$jQuery('#confirm-message-delete').modal('hide'));
+    },
+    showConfirmModal(answerId) {
+      this.answerId = answerId;
+      this.$jQuery('#confirm-message-delete').modal('show');
     }
   }
 };
