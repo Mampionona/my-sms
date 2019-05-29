@@ -1,6 +1,8 @@
 import Axios from 'axios';
-import retryAxios from 'retry-axios';
 import { UNAUTHENTICATED } from './utils';
+
+// silencely fail w/ import syntax, contacts import won't work
+const retryAxios = require('retry-axios'); // sile w/ import
 
 const raxConfig = {
   retry: 10,
