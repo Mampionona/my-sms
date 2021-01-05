@@ -12,7 +12,7 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "axios-progress-bar": "^1.2.0",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
